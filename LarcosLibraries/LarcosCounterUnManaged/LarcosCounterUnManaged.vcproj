@@ -6,7 +6,6 @@
 	ProjectGUID="{DA361848-46CB-481C-98E1-8D1206422DDC}"
 	RootNamespace="LarcosCounterUnManaged"
 	Keyword="Win32Proj"
-	AssemblyReferenceSearchPaths="&quot;..\..\..\KSquareLibraries\KKBase&quot;;&quot;..\..\..\KSquareLibraries\KKLineScanner&quot;;&quot;..\..\..\KSquareLibraries\KKMachineLearning&quot;"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -44,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(KKBase)&quot;;&quot;$(SolutionDir)\KKLibraries\KKMachineLearning&quot;;&quot;$(SolutionDir)\KKLibraries\KKLineScanner&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosBase&quot;;&quot;$(PUREGEV_ROOT)\Includes&quot;;&quot;$(PUREGEV_ROOT)\eBUS SDK\Includes&quot;"
+				AdditionalIncludeDirectories="&quot;$(KSQUARELIBRARIES)\KKBase&quot;;&quot;$(KSquareLibraries)\KKLineScanner&quot;;&quot;$(KSquareLibraries)\KKMachineLearning&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosBase&quot;;&quot;$(PUREGEV_ROOT)\Includes&quot;;&quot;$(PUREGEV_ROOT)\eBUS SDK\Includes&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -112,7 +111,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\KKLibraries\KKBase&quot;;&quot;$(SolutionDir)\KKLibraries\KKMachineLearning&quot;;&quot;$(SolutionDir)\KKLibraries\KKLineScanner&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosBase&quot;;&quot;$(PUREGEV_ROOT)\Includes&quot;"
+				AdditionalIncludeDirectories="&quot;$(KSquareLibraries)KKBase&quot;;&quot;$(KSquareLibraries)\KKLineScanner&quot;;&quot;$(KSquareLibraries)\KKMachineLearning&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosBase&quot;;&quot;$(PUREGEV_ROOT)\Includes&quot;;&quot;$(PUREGEV_ROOT)\eBUS SDK\Includes&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -151,6 +150,10 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{76C41245-C049-43AC-AD3A-DB674C25144D}"
+			RelativePathToProject=".\LarcosLibraries\LarcosBase\LarcosBase.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
