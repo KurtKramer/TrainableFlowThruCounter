@@ -48,11 +48,11 @@ namespace LarcosCounterUnManaged
  
     void  FlowMeterCounter         (kkuint32  _flowMeterCounter)          {flowMeterCounter         = _flowMeterCounter;}
     void  FlowMeterCounterScanLine (kkuint32  _flowMeterCounterScanLine)  {flowMeterCounterScanLine = _flowMeterCounterScanLine;}
-    void  Processed                (bool    _processed)                 {processed                = _processed;}
-    void  SeqNum                   (kkint64 _seqNum)                    {seqNum                   = _seqNum;}
-    void  WaitingToProcess         (bool    _waitingToProcess)          {waitingToProcess         = _waitingToProcess;}
-    void  WaitingToWriteToDisk     (bool    _waitingToWriteToDisk)      {waitingToWriteToDisk     = _waitingToWriteToDisk;}
-    void  WrittenToDisk            (bool    _writtenToDisk)             {writtenToDisk            = _writtenToDisk;}
+    void  Processed                (bool      _processed)                 {processed                = _processed;}
+    void  SeqNum                   (kkint64   _seqNum)                    {seqNum                   = _seqNum;}
+    void  WaitingToProcess         (bool      _waitingToProcess)          {waitingToProcess         = _waitingToProcess;}
+    void  WaitingToWriteToDisk     (bool      _waitingToWriteToDisk)      {waitingToWriteToDisk     = _waitingToWriteToDisk;}
+    void  WrittenToDisk            (bool      _writtenToDisk)             {writtenToDisk            = _writtenToDisk;}
 
     uchar  operator() (kkint32 row,  kkint32 col)  const;
 
