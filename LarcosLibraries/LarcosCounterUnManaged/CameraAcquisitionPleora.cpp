@@ -2,7 +2,7 @@
  * Copyright (C) 2011-2013  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in LarcosCounterUnManaged.txt
  */
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
 #include <errno.h>
 #include <istream>
