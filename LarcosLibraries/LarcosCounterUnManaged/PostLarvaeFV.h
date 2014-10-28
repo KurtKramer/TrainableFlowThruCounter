@@ -2,7 +2,7 @@
 #define  _POSTLARVAEFV_
 
 /**
- *@class KKMachineLearning::PostLarvaeFV
+ *@class LarcosCounterUnManaged::PostLarvaeFV
  *@brief  Specialized version of KKMachineLearning::FeatureVector that will be used 
  *to represent the features of a POST Larvaeimage.
  *@author  Kurt Kramer
@@ -26,7 +26,6 @@
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace KKB;
-
             
 
 #include "Attribute.h"
@@ -34,11 +33,13 @@ using namespace KKB;
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "FileDesc.h"
+#include "MLClass.h"
+using namespace  KKMachineLearning;
+
+#define   CurrentFeatureFileVersionNum  315
 
 
-#define   CurrentFeatureFileVersionNum  312
-
-namespace KKMachineLearning 
+namespace LarcosCounterUnManaged 
 {
 
   #ifndef  _FEATURENUMLIST_
@@ -614,16 +615,16 @@ namespace KKMachineLearning
 
   private:
 
-    kkint16        version;    /**< Represents the version of the Feature data,  when ever I update
-                                * the way Feastures are calculated I increment CurrentFeatureFileVersionNum
-                                * by 1.   This way if we load a older FeatureData file we can be aware
-                                * of this.  Methods like FeatureDataReSink will force the recalculation
-                                * of Feature data if not up-to-date.  Also works in coordination
-                                * with the version field in the PostLarvaeFV object.  A value of
-                                * 0 indicates that we do not know what Version the feature data is.
-                                * This can happen when not all the PostLarvaeFV objects in the list 
-                                * have the same version number.
-                                */
+    kkint16  version;    /**< Represents the version of the Feature data,  when ever I update
+                          * the way Feastures are calculated I increment CurrentFeatureFileVersionNum
+                          * by 1.   This way if we load a older FeatureData file we can be aware
+                          * of this.  Methods like FeatureDataReSink will force the recalculation
+                          * of Feature data if not up-to-date.  Also works in coordination
+                          * with the version field in the PostLarvaeFV object.  A value of
+                          * 0 indicates that we do not know what Version the feature data is.
+                          * This can happen when not all the PostLarvaeFV objects in the list 
+                          * have the same version number.
+                          */
 
   };  /* PostLarvaeFVList */
 
@@ -635,7 +636,7 @@ namespace KKMachineLearning
 
 
 
-}  /* namespace KKMachineLearning */
+}  /* namespace LarcosCounterUnManaged */
 
 #endif
 
