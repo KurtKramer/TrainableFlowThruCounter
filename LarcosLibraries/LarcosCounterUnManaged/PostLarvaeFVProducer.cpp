@@ -24,13 +24,13 @@ using namespace std;
 using namespace KKB;
 
 
-#include "PostLarvaeFVComputer.h"
+#include "PostLarvaeFVProducer.h"
 #include "PostLarvaeFV.h"
 using  namespace  LarcosCounterUnManaged;
 
 
 
-PostLarvaeFVComputer::PostLarvaeFVComputer ():
+PostLarvaeFVProducer::PostLarvaeFVProducer ():
     FeatureVectorComputer ("PostLarvaeFV",
                            PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
                           ),
@@ -41,7 +41,7 @@ PostLarvaeFVComputer::PostLarvaeFVComputer ():
 
 
 
-PostLarvaeFVComputer::~PostLarvaeFVComputer ()
+PostLarvaeFVProducer::~PostLarvaeFVProducer ()
 {
 }
 
@@ -49,7 +49,7 @@ PostLarvaeFVComputer::~PostLarvaeFVComputer ()
 
 
 
-const type_info*   PostLarvaeFVComputer::FeatureVectorTypeId () const
+const type_info*   PostLarvaeFVProducer::FeatureVectorTypeId () const
 {
   return  &(typeid (PostLarvaeFV));
 }
@@ -58,7 +58,7 @@ const type_info*   PostLarvaeFVComputer::FeatureVectorTypeId () const
 
 
 
-FeatureVectorPtr  PostLarvaeFVComputer::ComputefeatureVector (RasterPtr  image,
+FeatureVectorPtr  PostLarvaeFVProducer::ComputefeatureVector (RasterPtr  image,
                                                               RunLog&    runLog
                                                              )
 {

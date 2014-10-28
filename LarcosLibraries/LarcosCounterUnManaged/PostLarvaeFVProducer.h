@@ -1,5 +1,5 @@
-#if  !defined(_POSTLARVAEFVCOMPUTER_)
-#define  _POSTLARVAEFVCOMPUTER_
+#if  !defined(_POSTLARVAEFVPRODUCER_)
+#define  _POSTLARVAEFVPRODUCER_
 
 #include "KKBaseTypes.h"
 #include "RunLog.h"
@@ -13,11 +13,11 @@ using namespace  KKMachineLearning;
 
 namespace LarcosCounterUnManaged
 {
-  class PostLarvaeFVComputer:  public FeatureVectorComputer
+  class PostLarvaeFVProducer:  public FeatureVectorComputer
   {
   public:
-    PostLarvaeFVComputer ();
-    virtual ~PostLarvaeFVComputer ();
+    PostLarvaeFVProducer ();
+    virtual ~PostLarvaeFVProducer ();
 
 
     virtual  FeatureVectorPtr  ComputefeatureVector (RasterPtr  image,
@@ -47,7 +47,7 @@ namespace LarcosCounterUnManaged
                                     * be adjusted such that the resultant dimensions will fit within this
                                     * constraint.
                                     */
-  };  /* PostLarvaeFVComputer */
+  };  /* PostLarvaeFVProducer */
 
 
 }  /* LarcosCounterUnManaged */
