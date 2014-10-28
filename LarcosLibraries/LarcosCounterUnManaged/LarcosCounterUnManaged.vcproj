@@ -266,6 +266,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PostLarvaeFV.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PostLarvaeFVComputer.cpp"
 				>
 			</File>
@@ -409,6 +413,10 @@
 			</File>
 			<File
 				RelativePath=".\PlayBackButtonThread.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PostLarvaeFV.h"
 				>
 			</File>
 			<File
