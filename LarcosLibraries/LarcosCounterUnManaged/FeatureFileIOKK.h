@@ -97,7 +97,7 @@ namespace KKMachineLearning
      * file to be recomputed.  The feature file version number gets incremented whenever we change
      * the feature file computation routine.
      */
-    static
+    virtual
     PostLarvaeFVListPtr  FeatureDataReSink (KKStr           _dirName, 
                                             const KKStr&    _fileName, 
                                             MLClassPtr      _unknownClass,
