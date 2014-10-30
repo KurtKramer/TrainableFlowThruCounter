@@ -58,10 +58,12 @@ const type_info*   PostLarvaeFVProducer::FeatureVectorTypeId () const
 
 
 
-FeatureVectorPtr  PostLarvaeFVProducer::ComputefeatureVector (RasterPtr  image,
+FeatureVectorPtr  PostLarvaeFVProducer::ComputeFeatureVector (RasterPtr  image,
                                                               RunLog&    runLog
                                                              )
 {
-  return NULL;
+  return 
+  
+
 }
 

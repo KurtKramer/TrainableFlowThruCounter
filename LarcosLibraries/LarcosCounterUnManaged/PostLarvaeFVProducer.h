@@ -5,7 +5,7 @@
 #include "RunLog.h"
 using namespace  KKB;
 
-#include "FeatureVectorComputer.h"
+#include "FeatureVectorProducer.h"
 using namespace  KKMachineLearning;
 
 #include "CameraThread.h"
@@ -13,14 +13,14 @@ using namespace  KKMachineLearning;
 
 namespace LarcosCounterUnManaged
 {
-  class PostLarvaeFVProducer:  public FeatureVectorComputer
+  class PostLarvaeFVProducer:  public FeatureVectorProducer
   {
   public:
     PostLarvaeFVProducer ();
     virtual ~PostLarvaeFVProducer ();
 
 
-    virtual  FeatureVectorPtr  ComputefeatureVector (RasterPtr  image,
+    virtual  FeatureVectorPtr  ComputeFeatureVector (RasterPtr  image,
                                                      RunLog&    runLog
                                                     );
 
@@ -29,11 +29,6 @@ namespace LarcosCounterUnManaged
      */
     virtual  const type_info*  FeatureVectorTypeId () const;
 
-
-    /**
-     *@brief  Returns a short description of the FeatureVector which can be used as part/all of a File or Direecttory name.
-     */
-    virtual  const KKStr&   Name () const;
 
 
   private:
