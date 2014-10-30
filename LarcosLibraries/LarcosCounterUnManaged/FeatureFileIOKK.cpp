@@ -25,12 +25,14 @@ using namespace std;
 using namespace KKB;
 
 
-#include "FeatureFileIOKK.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "PostLarvaeFV.h"
 using namespace KKMachineLearning;
 
+
+#include "FeatureFileIOKK.h"
+using namespace LarcosCounterUnManaged;
 
 FeatureFileIOKK  FeatureFileIOKK::driver;
 

@@ -251,6 +251,9 @@ namespace LarcosCounterUnManaged
 
   typedef  PostLarvaeFV::PostLarvaeFVPtr  PostLarvaeFVPtr;
 
+#define  _PostLarvaeFV_Defined_
+
+
 
   class  PostLarvaeFVList:  public FeatureVectorList
   {
@@ -629,11 +632,9 @@ namespace LarcosCounterUnManaged
   };  /* PostLarvaeFVList */
 
 
-
-
-
   typedef  PostLarvaeFVList::PostLarvaeFVListPtr  PostLarvaeFVListPtr;
 
+#define  _PostLarvaeFVList_Defined_
 
 
 }  /* namespace LarcosCounterUnManaged */

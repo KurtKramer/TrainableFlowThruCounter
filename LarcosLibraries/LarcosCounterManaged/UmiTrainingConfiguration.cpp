@@ -76,8 +76,7 @@ UmiTrainingConfiguration::UmiTrainingConfiguration (String^                  _co
 
   strstream  logStr;
   KKStr  configFileName = UmiKKStr::SystemStringToKKStr (_configFileName);
-  FileDescPtr  fileDesc = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
-  config = new LarcosTrainingConfiguration (fileDesc, configFileName, op, log->Log (), true);
+  config = new LarcosTrainingConfiguration (configFileName, op, log->Log (), true);
   valid = gcnew System::Boolean (config->FormatGood ());
   if  (!config->FormatGood ())
      loadLogStream = gcnew String (logStr.str ());
@@ -113,12 +112,10 @@ UmiTrainingConfiguration::UmiTrainingConfiguration (DirectoryInfo^            di
   KKStr  modelNameKKStr = osGetRootNameOfDirectory (dirName) + ".cfg";
   KKStr  configFileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + modelNameKKStr;
     
-  FileDescPtr fd = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
   delete  classes;  classes = NULL;
 
   config = LarcosTrainingConfiguration::CreateFromDirectoryStructure 
-                                        (fd,
-                                         configFileName,
+                                        (configFileName,
                                          dirName,
                                          op,
                                          log->Log (),

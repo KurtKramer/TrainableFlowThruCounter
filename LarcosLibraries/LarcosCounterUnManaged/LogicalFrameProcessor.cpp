@@ -42,6 +42,7 @@ using  namespace KKMachineLearning;
 #include "LarcosCounterStats.h"
 #include "OperatingParameters.h"
 #include "ParticleEntry.h"
+#include "PostLarvaeFVProducer.h"
 #include "ShrimpLengthComputer.h"
 using  namespace  LarcosCounterUnManaged;
 
@@ -626,7 +627,7 @@ void  LogicalFrameProcessor::LoadClassifer ()
     // Since the 'LarcosCounterManager' has already built and saved this classifier we already know 
     // that it is good and we can go ahead and load the saved copy.
     trainer = new TrainingProcess2 (classifierName,
-                                    PostLarvaeFV::PostLarvaeFeaturesFileDesc (),
+                                    PostLarvaeFVProducerFactory::Factory (&log),
                                     log,
                                     false,              /**<  'false' = Features are already normalized. */
                                     TerminateFlag (),

@@ -7,7 +7,7 @@ using namespace System::Diagnostics;
 
 
 #include  "PostLarvaeFV.h"
-using namespace  KKMachineLearning;
+using namespace  LarcosCounterUnManaged ;
 
 #include  "UmiClass.h"
 #include  "UmiClassList.h"
@@ -16,7 +16,8 @@ using namespace  KKMachineLearning;
 #include  "UmiRunLog.h"
 
 
-namespace LarcosCounterManaged {
+namespace LarcosCounterManaged 
+{
   public  ref class  ParsedImageFileName
   {
   public:

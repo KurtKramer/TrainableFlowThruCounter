@@ -5,7 +5,7 @@
 #include  "PostLarvaeFV.h"
 
 
-namespace KKMachineLearning 
+namespace LarcosCounterUnManaged 
 {
 
   /**
@@ -130,14 +130,13 @@ namespace KKMachineLearning
      *            feature file will contain all entries from all sub-directories below it.
      * @return - A PostLarvaeFVList container object.  This object will own all the examples loaded.
      */
-    static
-      PostLarvaeFVListPtr  LoadInSubDirectoryTree (KKStr          _rootDir,
-                                                   MLClassList&   _mlClasses,
-                                                   bool           _useDirectoryNameForClassName,
-                                                   VolConstBool&  _cancelFlag,    /**< will be monitored, if set to True  Load will terminate. */
-                                                   bool           _rewiteRootFeatureFile,
-                                                   RunLog&        _log
-                                                  );
+    PostLarvaeFVListPtr  LoadInSubDirectoryTree (KKStr          _rootDir,
+                                                 MLClassList&   _mlClasses,
+                                                 bool           _useDirectoryNameForClassName,
+                                                 VolConstBool&  _cancelFlag,    /**< will be monitored, if set to True  Load will terminate. */
+                                                 bool           _rewiteRootFeatureFile,
+                                                 RunLog&        _log
+                                                );
 
 
 
@@ -178,7 +177,9 @@ namespace KKMachineLearning
 
   typedef  FeatureFileIOKK::FeatureFileIOKKPtr  FeatureFileIOKKPtr;
 
-}  /* namespace KKMachineLearning */
+#define  _FeatureFileIOKK_Defined_
+
+}  /* namespace LarcosCounterUnManaged */
 
 
 #endif

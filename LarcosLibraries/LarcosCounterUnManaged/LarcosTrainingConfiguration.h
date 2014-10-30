@@ -20,8 +20,7 @@ namespace  LarcosCounterUnManaged
     typedef  LarcosTrainingConfiguration*  LarcosTrainingConfigurationPtr;
 
 
-    LarcosTrainingConfiguration (FileDescPtr            _fileDesc,
-                                 const KKStr&           _configFileName,
+    LarcosTrainingConfiguration (const KKStr&           _configFileName,
                                  OperatingParametersPtr _initialOperatingParameters,
                                  RunLog&                _log,
                                  bool                   validateDirectories = true
@@ -34,8 +33,7 @@ namespace  LarcosCounterUnManaged
     /**
      *@brief Use this one if you want to create a default Configuration object.
      */
-    LarcosTrainingConfiguration (FileDescPtr             _fileDesc,
-                                 MLClassListPtr          _mlClasses,
+    LarcosTrainingConfiguration (MLClassListPtr          _mlClasses,
                                  KKStr                   _parameterStr,
                                  OperatingParametersPtr  _initialOperatingParameters,
                                  RunLog&                 _log
@@ -46,8 +44,7 @@ namespace  LarcosCounterUnManaged
 
     static
     LarcosTrainingConfiguration*  CreateFromDirectoryStructure 
-                                            (FileDescPtr             _fileDesc,
-                                             const KKStr&            _existingConfigFileName,
+                                            (const KKStr&            _existingConfigFileName,
                                              const KKStr&            _subDir,
                                              OperatingParametersPtr  _initialOperatingParameters,
                                              RunLog&                 _log,

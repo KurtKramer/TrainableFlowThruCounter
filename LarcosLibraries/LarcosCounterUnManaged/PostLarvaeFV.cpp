@@ -216,7 +216,7 @@ DarkSpotsStatsList*  darkSportStats500 = NULL;
 
 
 
-void  KKMachineLearning::PostLarvaeFVResetDarkSpotCounts ()
+void  LarcosCounterUnManaged::PostLarvaeFVResetDarkSpotCounts ()
 {
   delete  darkSportStats001;  darkSportStats001 = NULL;
   delete  darkSportStats010;  darkSportStats010 = NULL;
@@ -234,7 +234,7 @@ void  KKMachineLearning::PostLarvaeFVResetDarkSpotCounts ()
 
 
 
-void  KKMachineLearning::PostLarvaeFVPrintReport (ostream& o)
+void  LarcosCounterUnManaged::PostLarvaeFVPrintReport (ostream& o)
 {
   if  (darkSportStats001 != NULL)
     darkSportStats001->PrintReport (o);
@@ -254,7 +254,7 @@ void  KKMachineLearning::PostLarvaeFVPrintReport (ostream& o)
 
 
 
-void  KKMachineLearning::PostLarvaeFVAddBlobList (MLClassPtr     c,
+void  LarcosCounterUnManaged::PostLarvaeFVAddBlobList (MLClassPtr     c,
                                                   KKB::BlobListPtr  blobs 
                                                  )
 {

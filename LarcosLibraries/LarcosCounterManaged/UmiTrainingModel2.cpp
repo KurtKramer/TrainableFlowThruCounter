@@ -30,25 +30,28 @@ using namespace KKB;
 //using namespace  KKLSC;
 
 
-#include  "Classifier2.h"
-#include  "FeatureFileIOKK.h"
-#include  "TrainingConfiguration2.h"
+#include "Classifier2.h"
+#include "FeatureFileIOKK.h"
+#include "TrainingConfiguration2.h"
 using namespace KKMachineLearning;
 
-
-#include  "LarcosVariables.h"
+#include "LarcosVariables.h"
 using namespace  LarcosBase;
 
 
-#include  "UmiFeatureVector.h"
-#include  "UmiFeatureVectorList.h"
-#include  "UmiVariables.h"
-#include  "UmiTrainingConfiguration.h"
-#include  "UmiKKStr.h"
-#include  "UmiOSservices.h"
-#include  "UmiRaster.h"
+#include "PostLarvaeFVProducer.h"
+using namespace LarcosCounterUnManaged;
 
-#include  "UmiTrainingModel2.h"
+
+#include "UmiFeatureVector.h"
+#include "UmiFeatureVectorList.h"
+#include "UmiVariables.h"
+#include "UmiTrainingConfiguration.h"
+#include "UmiKKStr.h"
+#include "UmiOSservices.h"
+#include "UmiRaster.h"
+
+#include "UmiTrainingModel2.h"
 using namespace LarcosCounterManaged;
 
 
@@ -202,8 +205,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^      _umiRunLog,
   try
   {
     config = LarcosTrainingConfiguration::CreateFromDirectoryStructure 
-                                          (fd,
-                                           configFileName,
+                                          (configFileName,
                                            dirName,
                                            NULL,           // operatingParameters,
                                            *runLog,
@@ -521,7 +523,7 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
   {
     trainer = new TrainingProcess2 (configFileName,
                                     NULL,
-                                    fd,
+                                    PostLarvaeFVProducerFactory::Factory (runLog),
                                     *runLog,
                                     level,
                                     *cancelFlag,
@@ -567,7 +569,8 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
 
   GC::Collect ();
 
-  FileDescPtr fd = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
+  FactoryFVProducer*  fvProducerFactory = PostLarvaeFVProducerFactory::Factory (runLog);
+  FileDescPtr fd = fvProducerFactory->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
 
@@ -576,7 +579,7 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
   try
   {
     trainer = new TrainingProcess2 (configFileName, 
-                                    fd, 
+                                    fvProducerFactory, 
                                     *runLog,
                                     false,         // false = Features are not Already Normalized
                                     *cancelFlag, 
@@ -635,7 +638,8 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
 
   GC::Collect ();
 
-  FileDescPtr fd = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
+  FactoryFVProducer*  fvProducerFactory = PostLarvaeFVProducerFactory::Factory (runLog);
+  FileDescPtr fd = fvProducerFactory->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
 
@@ -645,7 +649,7 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
   {
     trainer = new TrainingProcess2 (configFileName, 
                                     NULL,              // Exclude List
-                                    fd, 
+                                    fvProducerFactory, 
                                     *runLog,
                                     NULL,              // report file stream
                                     forceRebuild,
@@ -734,7 +738,8 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
 
   PostLarvaeFVResetDarkSpotCounts ();
 
-  FileDescPtr fd = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
+  FactoryFVProducer*  fvProducerFactory = PostLarvaeFVProducerFactory::Factory (runLog);
+  FileDescPtr fd = fvProducerFactory->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
   *cancelFlag = false;
@@ -753,7 +758,7 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
                                     trainingData, 
                                     classes, 
                                     NULL, 
-                                    fd, 
+                                    fvProducerFactory, 
                                     *runLog,
                                     false,              // false = Features are NOT already normalized.
                                     *cancelFlag, 
@@ -1529,9 +1534,7 @@ TrainingConfiguration2Ptr  UmiTrainingModel2::GetConfigToUse ()
 
   if  (!configToUse)
   {
-    FileDescPtr  fd = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
-    config  = new LarcosTrainingConfiguration (fd, 
-                                               UmiKKStr::SystemStringToKKStr (modelName), 
+    config  = new LarcosTrainingConfiguration (UmiKKStr::SystemStringToKKStr (modelName), 
                                                NULL,   // initialOperatingParameters
                                                *runLog, 
                                                false

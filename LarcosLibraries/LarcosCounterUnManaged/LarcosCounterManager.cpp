@@ -37,6 +37,7 @@ using namespace  KKLSC;
 #include "Classifier2.h"
 #include "TrainingProcess2.h"
 #include "PostLarvaeFV.h"
+#include "PostLarvaeFVProducer.h"
 using namespace KKMachineLearning;
 
 #include "LarcosVariables.h"
@@ -983,7 +984,7 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
     trainerCancelFlag = false;
     trainer = new TrainingProcess2 (trainingModelName,
                                     NULL,                // _excludeList,
-                                    PostLarvaeFV::PostLarvaeFeaturesFileDesc (),
+                                    PostLarvaeFVProducerFactory::Factory (runLog),
                                     *runLog,
                                     NULL,               // _report,
                                     false,              // _forceRebuild,
@@ -3390,9 +3391,7 @@ void  LarcosCounterManager::SetTrainingModel (const KKStr&            _trainingM
   }
   else
   {
-    FileDescPtr  fileDesc = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
-
-    config = new LarcosTrainingConfiguration (fileDesc, _trainingModelName, operatingParameters, *runLog, false);
+    config = new LarcosTrainingConfiguration (_trainingModelName, operatingParameters, *runLog, false);
     if  (!config->FormatGood ())
     {
       runLog->Level (-1) << "SetTrainingModel   ***ERROR***  Model: " << _trainingModelName << "  Invalid Format." << endl;
@@ -3583,7 +3582,7 @@ void  LarcosCounterManager::ReadConfiguration ()
   {
     // retrieve any parameters specified in the default training model.
     FileDescPtr  fileDesc = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
-    LarcosTrainingConfigurationPtr  config = new LarcosTrainingConfiguration (fileDesc, trainModelName, operatingParameters, *runLog, false);
+    LarcosTrainingConfigurationPtr  config = new LarcosTrainingConfiguration (trainModelName, operatingParameters, *runLog, false);
     if  (!config->FormatGood ())
     {
       runLog->Level (-1) << "ReadConfiguration   ***ERROR***  Default Training Model: " << trainModelName << "  is Invalid." << endl;

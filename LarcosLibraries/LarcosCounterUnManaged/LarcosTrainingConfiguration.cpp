@@ -33,17 +33,17 @@ using namespace  LarcosBase;
 
 #include "LarcosTrainingConfiguration.h"
 #include "OperatingParameters.h"
+#include "PostLarvaeFVProducer.h"
 using namespace  LarcosCounterUnManaged;
 
 
 
-LarcosTrainingConfiguration::LarcosTrainingConfiguration (FileDescPtr            _fileDesc,
-                                                          const KKStr&           _configFileName, 
+LarcosTrainingConfiguration::LarcosTrainingConfiguration (const KKStr&           _configFileName, 
                                                           OperatingParametersPtr _initialOperatingParameters,
                                                           RunLog&                _log,
                                                           bool                   _validateDirectories
                                                          ):
-  TrainingConfiguration2 (_fileDesc, _configFileName, _log, _validateDirectories),
+  TrainingConfiguration2 (_configFileName, PostLarvaeFVProducerFactory::Factory (&_log), _validateDirectories, _log),
   operatingParms (NULL)
 
 {
@@ -57,13 +57,12 @@ LarcosTrainingConfiguration::LarcosTrainingConfiguration (FileDescPtr           
 
 
 
-LarcosTrainingConfiguration::LarcosTrainingConfiguration (FileDescPtr             _fileDesc,
-                                                          MLClassListPtr          _mlClasses,
+LarcosTrainingConfiguration::LarcosTrainingConfiguration (MLClassListPtr          _mlClasses,
                                                           KKStr                   _parameterStr,
                                                           OperatingParametersPtr  _initialOperatingParameters,
                                                           RunLog&                 _log
                                                          ):
-  TrainingConfiguration2 (_fileDesc, _mlClasses, _parameterStr, _log),
+  TrainingConfiguration2 (_mlClasses, _parameterStr, PostLarvaeFVProducerFactory::Factory (&_log), _log),
   operatingParms (NULL)
 {
   if  (_initialOperatingParameters)
@@ -134,8 +133,7 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromFeatureVe
   mlClasses->SortByName ();
 
   LarcosTrainingConfigurationPtr  config 
-      = new LarcosTrainingConfiguration (fileDesc,
-                                         mlClasses, 
+      = new LarcosTrainingConfiguration (mlClasses, 
                                          "-m 200 -s 0 -n 0.11 -t 2 -g 0.024717  -c 10  -u 100  -up  -mt OneVsOne  -sm P", 
                                          _initialOperatingParameters,
                                          _log
@@ -153,8 +151,7 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromFeatureVe
 
 
 LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectoryStructure 
-                                                    (FileDescPtr             _fileDesc,
-                                                     const KKStr&            _existingConfigFileName,
+                                                    (const KKStr&            _existingConfigFileName,
                                                      const KKStr&            _subDir,
                                                      OperatingParametersPtr  _initialOperatingParameters,
                                                      RunLog&                 _log,
@@ -168,9 +165,6 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectory
 
   _successful = true;
 
-  if  (_fileDesc == NULL)
-    _fileDesc = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
-
   KKStr  directoryConfigFileName = osGetRootNameOfDirectory (_subDir);
   if  (directoryConfigFileName.Empty ())
     directoryConfigFileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + "Root.cfg";
@@ -183,8 +177,7 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectory
   {
     if  (osFileExists (_existingConfigFileName))
     {
-      config = new LarcosTrainingConfiguration (_fileDesc,
-                                                _existingConfigFileName,
+      config = new LarcosTrainingConfiguration (_existingConfigFileName,
                                                 _initialOperatingParameters,
                                                 _log, 
                                                 false
@@ -202,8 +195,7 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectory
   {
     if  (osFileExists (directoryConfigFileName))
     {
-      config = new LarcosTrainingConfiguration (_fileDesc,
-                                                directoryConfigFileName,
+      config = new LarcosTrainingConfiguration (directoryConfigFileName,
                                                 _initialOperatingParameters,
                                                 _log,
                                                 false
@@ -219,8 +211,7 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectory
 
   if  (!config)
   {
-    config = new LarcosTrainingConfiguration (_fileDesc,
-                                              NULL,      // Not supplying the MLClassList
+    config = new LarcosTrainingConfiguration (NULL,      // Not supplying the MLClassList
                                               "=-s 0 -n 0.11 -t 2 -g 0.01507  -c 12  -u 100  -up  -mt OneVsOne  -sm P",
                                               _initialOperatingParameters,
                                               _log

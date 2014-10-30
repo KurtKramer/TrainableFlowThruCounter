@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(KSQUARELIBRARIES)\KKBase&quot;;&quot;$(KSquareLibraries)\KKLineScanner&quot;;&quot;$(KSquareLibraries)\KKMachineLearning&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosBase&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged&quot;"
+				AdditionalIncludeDirectories="&quot;$(KSquareLibraries)\KKBase&quot;;&quot;$(KSquareLibraries)\KKLineScanner&quot;;&quot;$(KSquareLibraries)\KKMachineLearning&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosBase&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
@@ -60,9 +60,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="KKBase.lib KKLineScanner.lib LarcosBase.lib LarcosCounterUnManaged.lib fftw.lib USER32.LIB Winmm.lib $(NOINHERIT)"
+				AdditionalDependencies="KKBase.lib KKLineScanner.lib KKMachineLearning.lib LarcosBase.lib LarcosCounterUnManaged.lib libfftw3-3.lib zlib.lib USER32.LIB Winmm.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(KSQUARELIBRARIES)\Libraries\$(ConfigurationName)&quot;;&quot;$(SolutionDir)\Libraries\$(ConfigurationName)&quot;;&quot;C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\Libraries\$(ConfigurationName)&quot;;&quot;C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries&quot;;&quot;$(OutsidePackages)\fftw-3.3.2&quot;"
 				GenerateManifest="true"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -119,7 +119,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;$(KSQUARELIBRARIES)\KKBase&quot;;&quot;$(KSquareLibraries)\KKLineScanner&quot;;&quot;$(KSquareLibraries)\KKMachineLearning&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosBase&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged&quot;"
+				AdditionalIncludeDirectories="&quot;$(KSquareLibraries)\KKBase&quot;;&quot;$(KSquareLibraries)\KKLineScanner&quot;;&quot;$(KSquareLibraries)\KKMachineLearning&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosBase&quot;;&quot;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -138,9 +138,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="KKBase.lib KKLineScanner.lib LarcosBase.lib LarcosCounterUnManaged.lib fftw.lib USER32.LIB Winmm.lib $(NOINHERIT)"
+				AdditionalDependencies="KKBase.lib KKLineScanner.lib KKMachineLearning.lib LarcosBase.lib LarcosCounterUnManaged.lib libfftw3-3.lib zlib.lib USER32.LIB Winmm.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(KSQUARELIBRARIES)\Libraries\$(ConfigurationName)&quot;;&quot;$(SolutionDir)\Libraries\$(ConfigurationName)&quot;;&quot;C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\Libraries\$(ConfigurationName)&quot;;&quot;C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries&quot;;&quot;$(OutsidePackages)\fftw-3.3.2&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
