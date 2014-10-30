@@ -21,7 +21,7 @@ namespace LarcosCounterUnManaged
   class PostLarvaeFVProducer:  public FeatureVectorProducer
   {
   public:
-    PostLarvaeFVProducer ();
+    PostLarvaeFVProducer (FactoryFVProducerPtr  factory);
 
     virtual ~PostLarvaeFVProducer ();
 
