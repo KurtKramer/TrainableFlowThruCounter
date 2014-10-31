@@ -34,9 +34,17 @@ using namespace KKMachineLearning;
 #include "FeatureFileIOKK.h"
 using namespace LarcosCounterUnManaged;
 
-FeatureFileIOKK  FeatureFileIOKK::driver;
+
+FeatureFileIOKKPtr  FeatureFileIOKK::driver = CreateAndRegisterInstance ()
 
 
+
+FeatureFileIOKKPtr  FeatureFileIOKK::CreateAndRegisterInstance ()
+{
+  FeatureFileIOKKPtr d = new FeatureFileIOKK ();
+  FeatureFileIO::RegisterDriver (d);
+  return d;
+}
 
 
 

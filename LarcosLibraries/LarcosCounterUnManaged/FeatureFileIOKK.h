@@ -72,7 +72,7 @@ namespace LarcosCounterUnManaged
                              );
 
 
-    static  FeatureFileIOKKPtr  Driver () {return &driver;}
+    static  FeatureFileIOKKPtr  Driver () {return driver;}
    
 
     /**                       FeatureDataReSink
@@ -141,7 +141,15 @@ namespace LarcosCounterUnManaged
 
 
   private:
-    static FeatureFileIOKK  driver;
+    FeatureFileIOKKPtr  CreateAndRegisterInstance ();
+
+
+    /**
+     *@brief  Will point to instance of 'FeatureFileIOKK' that is created when static members 
+     * are initialzed dutring module load.  The instance will be Registered with 'FeatureFileIO::RegisterDriver'
+     * by call 'CreateAndRegisterInstance'.
+     */
+    static FeatureFileIOKKPtr  driver;
 
 
     typedef  enum  {rfFeatureData,
