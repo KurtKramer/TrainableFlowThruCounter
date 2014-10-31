@@ -75,73 +75,9 @@ namespace LarcosCounterUnManaged
     static  FeatureFileIOKKPtr  Driver () {return driver;}
    
 
-    /**                       FeatureDataReSink
-     * @brief Synchronizes the contents of a feature data file with a directory of images.
-     *        Used with  applications to verify that feature file is up-to-date.
-     *        Was specifically meant to work with training libraries, to account for
-     *        images being added and deleted from training library.  If there are no 
-     *        changes, then function will run very quickly.
-     * @param[in] dirName,      Directory where source images are located.
-     * @param[in] fileName,     Feature file that is being synchronized.
-     * @param[in] unknownClass, Class to be used when class is unknown
-     * @param[in] useDirectoryNameForClassName, if true then class name of each entry
-     *            will be set to directory name.
-     * @param[in] mlClasses,  list of classes
-     * @param[in] log, where to send diagnostic messages to.
-     * @param[out] changesMade, If returns as true then there were changes made to the 
-     *             feature file 'fileName'.  If set to false, then no changes were made.
-     * @param[out] Timestamp of feature file.
-     * @return - A PostLarvaeFVList container object.  This object will own all the examples loaded
-     *
-     * A change in feature file version number would also cause all entries in the feature
-     * file to be recomputed.  The feature file version number gets incremented whenever we change
-     * the feature file computation routine.
-     */
-    virtual
-    PostLarvaeFVListPtr  FeatureDataReSink (KKStr           _dirName, 
-                                            const KKStr&    _fileName, 
-                                            MLClassPtr      _unknownClass,
-                                            bool            _useDirectoryNameForClassName,
-                                            MLClassList&    _mlClasses,
-                                            VolConstBool&   _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
-                                            bool&           _changesMade,
-                                            KKB::DateTime&  _timeStamp,
-                                            RunLog&         _log
-                                           );
-
-
-
-
-
-
-    /**                       LoadInSubDirectoryTree
-     * @brief Creates a feature vector list of all images located in the specified sub-directory tree.
-     * @details Meant to work with images, it starts at a specified sub-directory and
-     *        processes all sub-directories.  It makes use of FeatureDataReSink for each specific
-     *        sub-directory.  Will make use of FeatureData files that already exist in any of the
-     *        sub-directories.
-     * @param[in] rootDir  Starting directory.
-     * @param[in,out] mlClasses, List of classes, any new classes in fileName will be added.
-     * @param[in] useDirectoryNameForClassName, if true set class names to sub-directory name.
-     *            This happens because the user may manually move images between directories using
-     *            the sub-directory name as the class name.
-     * @param[in] log, where to send diagnostic messages to.
-     * @param[in] rewiteRootFeatureFile, If true rewrite the feature file in the specified 'rootDir'.  This
-     *            feature file will contain all entries from all sub-directories below it.
-     * @return - A PostLarvaeFVList container object.  This object will own all the examples loaded.
-     */
-    PostLarvaeFVListPtr  LoadInSubDirectoryTree (KKStr          _rootDir,
-                                                 MLClassList&   _mlClasses,
-                                                 bool           _useDirectoryNameForClassName,
-                                                 VolConstBool&  _cancelFlag,    /**< will be monitored, if set to True  Load will terminate. */
-                                                 bool           _rewiteRootFeatureFile,
-                                                 RunLog&        _log
-                                                );
-
-
 
   private:
-    FeatureFileIOKKPtr  CreateAndRegisterInstance ();
+    static  FeatureFileIOKKPtr  CreateAndRegisterInstance ();
 
 
     /**

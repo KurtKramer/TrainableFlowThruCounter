@@ -93,6 +93,19 @@ FeatureFileIOPtr  PostLarvaeFVProducerFactory::DefaultFeatureFileIO ()  const
 }
 
 
+const type_info*  PostLarvaeFVProducerFactory::FeatureVectorTypeId ()  const  
+{
+  return  &typeid (PostLarvaeFV);
+}
+
+
+
+const type_info*  PostLarvaeFVProducerFactory::FeatureVectorListTypeId  () const  
+{
+  return  &typeid (PostLarvaeFVList);
+}
+
+
 
 FileDescPtr  PostLarvaeFVProducerFactory::FileDesc ()  const
 {

@@ -36,7 +36,7 @@ using namespace KKB;
 #include "MLClass.h"
 using namespace  KKMachineLearning;
 
-#define   CurrentFeatureFileVersionNum  315
+#define   CurrentFeatureFileVersionNum  316
 
 
 namespace LarcosCounterUnManaged 
@@ -119,25 +119,14 @@ namespace LarcosCounterUnManaged
     void  CentroidRow      (float    _centroidRow)      {centroidRow      = _centroidRow;}
     void  NumOfEdgePixels  (kkint32  _numOfEdgePixels)  {numOfEdgePixels  = _numOfEdgePixels;}
 
-    void  Version          (kkint16  _version)          {version          = _version;}
-
 
     float   CentroidCol        () const  {return  centroidCol;}    // Centroid with respect to image
     float   CentroidRow        () const  {return  centroidRow;}    //  ""    ""    ""    ""    ""
     kkint32 NumOfEdgePixels    () const  {return  numOfEdgePixels;}
-    kkint16 Version            () const  {return  version;}
-
-
-    void  ResetNumOfFeatures (kkint32  newNumOfFeatures);  /**< Used to reallocate memory for feature data. */
-    void  ResetVersion       (kkint16  newVersion);
-
 
     void    CalcFeatures (Raster&        raster,
                           RasterListPtr  intermediateImages
                          );
-
-    //virtual  const char*  UnderlyingClass () const  {return  "PostLarvaeFV";}
-
 
 
     static  void  ParseImageFileName (const KKStr&  fullFileName, 
@@ -151,8 +140,8 @@ namespace LarcosCounterUnManaged
     
     static  FileDescPtr    PostLarvaeFeaturesFileDesc ();
 
-    static  KKStr   FeatureName (kkint32  fieldNum);
-    static  kkint32 MaxNumOfFeatures () {return maxNumOfFeatures;}
+    static  KKStr    FeatureName (kkint32  fieldNum);
+    static  kkint32  MaxNumOfFeatures () {return maxNumOfFeatures;}
 
     
 
@@ -172,12 +161,6 @@ namespace LarcosCounterUnManaged
     float     centroidCol;     /**<  cnetroid Collumn with just respect to image. */
     float     centroidRow;     /**<  cnetroid Row with just respect to image. */
     kkint32   numOfEdgePixels;
-    kkint16   version;         /**< This is the same versionNumber as in PostLarvaeFVList
-                                * It is related to the Feature calculation routine.  This
-                                * will assist in us changing the feature calcs in the 
-                                * future and  objects and methods having a meens of 
-                                * knowing if the features are similar.
-                                */
 
     static  kkint16  maxNumOfFeatures;
     static  const    kkint32  SizeThreshold;
@@ -454,9 +437,6 @@ namespace LarcosCounterUnManaged
                                                    );
 
 
-    kkint16                Version () const  {return  version;}
-   
-    void                   Version (kkint16  _version)  {version = _version;}
 
     //virtual  const char*   UnderlyingClass ()  const  {return  "PostLarvaeFVList";}
 
@@ -617,18 +597,6 @@ namespace LarcosCounterUnManaged
 
 
   private:
-
-    kkint16  version;    /**< Represents the version of the Feature data,  when ever I update
-                          * the way Feastures are calculated I increment CurrentFeatureFileVersionNum
-                          * by 1.   This way if we load a older FeatureData file we can be aware
-                          * of this.  Methods like FeatureDataReSink will force the recalculation
-                          * of Feature data if not up-to-date.  Also works in coordination
-                          * with the version field in the PostLarvaeFV object.  A value of
-                          * 0 indicates that we do not know what Version the feature data is.
-                          * This can happen when not all the PostLarvaeFV objects in the list 
-                          * have the same version number.
-                          */
-
   };  /* PostLarvaeFVList */
 
 

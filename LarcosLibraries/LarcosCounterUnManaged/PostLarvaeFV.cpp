@@ -464,10 +464,9 @@ FileDescPtr  PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
 PostLarvaeFV::PostLarvaeFV (kkint32  _numOfFeatures):
        FeatureVector (_numOfFeatures),
 
-        centroidCol      (-1),
-        centroidRow      (-1),
-        numOfEdgePixels  (-1),
-        version          (0)
+        centroidCol     (-1),
+        centroidRow     (-1),
+        numOfEdgePixels (-1)
 {
 }
 
@@ -476,10 +475,9 @@ PostLarvaeFV::PostLarvaeFV (kkint32  _numOfFeatures):
 PostLarvaeFV::PostLarvaeFV (const PostLarvaeFV&  _image):
   FeatureVector (_image),
 
-  centroidCol      (_image.centroidCol),
-  centroidRow      (_image.centroidRow),
-  numOfEdgePixels  (_image.numOfEdgePixels),
-  version          (_image.version)
+  centroidCol     (_image.centroidCol),
+  centroidRow     (_image.centroidRow),
+  numOfEdgePixels (_image.numOfEdgePixels)
 
 {
 }
@@ -487,16 +485,14 @@ PostLarvaeFV::PostLarvaeFV (const PostLarvaeFV&  _image):
 
 
 
-PostLarvaeFV::PostLarvaeFV (const BmpImage&      _image,
+PostLarvaeFV::PostLarvaeFV (const BmpImage&   _image,
                             const MLClassPtr  _mlClass,
-                            RasterListPtr        _intermediateImages
+                            RasterListPtr     _intermediateImages
                            ):
   FeatureVector (MaxNumOfFeatures ()),
   centroidCol      (-1),
   centroidRow      (-1),
-  numOfEdgePixels  (-1),
-  version          (0)
-
+  numOfEdgePixels  (-1)
 {
   MLClass       (_mlClass);
   ImageFileName (_image.FileName ());
@@ -514,12 +510,9 @@ PostLarvaeFV::PostLarvaeFV (      Raster&     _raster,
                             RasterListPtr     _intermediateImages
                            ):
   FeatureVector (MaxNumOfFeatures ()),
-
   centroidCol      (-1),
   centroidRow      (-1),
-  numOfEdgePixels  (-1),
-  version          (0)
-
+  numOfEdgePixels  (-1)
 {
   MLClass    (_mlClass);
   ImageFileName (_raster.FileName ());
@@ -536,11 +529,9 @@ PostLarvaeFV::PostLarvaeFV (KKStr          _fileName,
                            ):
 
   FeatureVector (MaxNumOfFeatures ()),
-
   centroidCol      (-1),
   centroidRow      (-1),
-  numOfEdgePixels  (-1),
-  version          (0)
+  numOfEdgePixels  (-1)
 
 {
   MLClass       (_mlClass);
@@ -577,20 +568,18 @@ PostLarvaeFV::PostLarvaeFV (const FeatureVector&  featureVector):
    FeatureVector    (featureVector),
    centroidCol      (-1),
    centroidRow      (-1),
-   numOfEdgePixels  (-1),
-   version          (0)
+   numOfEdgePixels  (-1)
 
 {
   //if  (strcmp (featureVector.UnderlyingClass (), "PostLarvaeFV") == 0)
   if  (typeid (featureVector) == typeid(PostLarvaeFV))
   {
-    // The underlying class is anothr PostLarvaeFV object.
+    // The underlying class is another PostLarvaeFV object.
     const PostLarvaeFV&  example = dynamic_cast<const PostLarvaeFV&>(featureVector);
 
     centroidCol      = example.CentroidCol     ();
     centroidRow      = example.CentroidRow     ();
     numOfEdgePixels  = example.NumOfEdgePixels ();
-    version          = example.Version         ();
   }
 }
 
@@ -599,15 +588,6 @@ PostLarvaeFV::PostLarvaeFV (const FeatureVector&  featureVector):
 PostLarvaeFV::~PostLarvaeFV ()
 {
 }
-
-
-
-
-void  PostLarvaeFV::ResetVersion (kkint16  newVersion)
-{
-  Version (newVersion);
-}  /* ResetVersionMum */
-
 
 
 
@@ -686,7 +666,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
 {
   RunLog  log;
 
-  version = CurrentFeatureFileVersionNum;
+  Version (CurrentFeatureFileVersionNum);
   kkuint32  intensityHistBuckets[8];
 
   bool  weOwnRaster = false;
@@ -1048,8 +1028,7 @@ PostLarvaeFVList::PostLarvaeFVList (FileDescPtr  _fileDesc,
                                     RunLog&      _log
                                    ):
 
-    FeatureVectorList (_fileDesc, _owner, _log),
-    version           (0)
+    FeatureVectorList (_fileDesc, _owner, _log)
 {
 
 }
@@ -1063,8 +1042,7 @@ PostLarvaeFVList::PostLarvaeFVList (RunLog&       _log,
                                     KKStr         _fileName
                                    ):
 
-  FeatureVectorList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), true, _log),
-  version       (0)
+  FeatureVectorList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), true, _log)
 
 {
   FeatureExtraction (_dirName, _fileName, _mlClass);
@@ -1074,9 +1052,7 @@ PostLarvaeFVList::PostLarvaeFVList (RunLog&       _log,
 
 
 PostLarvaeFVList::PostLarvaeFVList (const PostLarvaeFVList&  examples):
-
-   FeatureVectorList (examples.FileDesc (), examples.Owner (), examples.log),
-   version           (examples.version)
+   FeatureVectorList (examples.FileDesc (), examples.Owner (), examples.log)
 {
   const_iterator  idx;
   for  (idx = examples.begin ();  idx != examples.end ();  idx++)
@@ -1093,11 +1069,10 @@ PostLarvaeFVList::PostLarvaeFVList (const PostLarvaeFVList&  examples):
 
 
 PostLarvaeFVList::PostLarvaeFVList (const PostLarvaeFVList&  examples,
-                                    bool                      _owner
+                                    bool                     _owner
                                    ):
 
-   FeatureVectorList (examples.FileDesc (), _owner, examples.log),
-   version           (examples.version)
+   FeatureVectorList (examples.FileDesc (), _owner, examples.log)
 {
   const_iterator  idx;
   for  (idx = examples.begin ();  idx != examples.end ();  idx++)
@@ -1118,15 +1093,12 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList,
   FeatureVectorList (featureVectorList.FileDesc (),
                      _owner, 
                      featureVectorList.log
-                    ),
-  version (0)
-
+                    )
 {
   //if  (strcmp (featureVectorList.UnderlyingClass (), "PostLarvaeFVList") == 0)
   if  (typeid (featureVectorList) == typeid (PostLarvaeFVList))
   {
     const PostLarvaeFVList&  examples = dynamic_cast<const PostLarvaeFVList&> (featureVectorList);
-    version = examples.Version ();
   }
 
 
@@ -1166,14 +1138,13 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList,
       else
       {
         // ****    ERROR  ****
+        KKStr  errMSsg = "PostLarvaeFVList   One of the elements in 'featureVectorList' is not of 'PostLarvaeFV'  type.";
         log.Level (-1) << endl << endl << endl
-             << "PostLarvaeFVList ::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)              ***ERROR***" << endl
-             << endl
-             << "One of the elements in 'featureVectorList' is not of 'PostLarvaeFV'  type.  We can not  recast this element"
-             << "FileName[" << featureVector->ImageFileName () << "]"  << endl
+             << "PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)   ***ERROR***" << endl
+             << "        " << errMSsg  << endl
+             << "       FileName[" << featureVector->ImageFileName () << "]"  << endl
              << endl;
-        osWaitForEnter ();
-        exit (-1);
+        throw KKException (errMSsg);
       }
     }
   }
@@ -1196,9 +1167,8 @@ PostLarvaeFVList::PostLarvaeFVList (MLClassList&     _mlClasses,
                                       PostLarvaeFVList&  _examples,
                                       RunLog&             _log
                                      ):
-  FeatureVectorList (_mlClasses, _examples, _log),
-  version           (_examples.version)
-
+  FeatureVectorList (_mlClasses, _examples, _log)
+  
 {
 }
 
@@ -1209,15 +1179,12 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)
   FeatureVectorList (featureVectorList.FileDesc (),
                      featureVectorList.Owner (), 
                      featureVectorList.log
-                    ),
-  version (0)
-
+                    )
 {
   //if  (strcmp (featureVectorList.UnderlyingClass (), "PostLarvaeFVList") == 0)
   if  (typeid (featureVectorList) == typeid (PostLarvaeFVList))
   {
     const PostLarvaeFVList&  examples = dynamic_cast<const PostLarvaeFVList&> (featureVectorList);
-    version = examples.Version ();
   }
 
 
@@ -1344,20 +1311,6 @@ PostLarvaeFVPtr  PostLarvaeFVList::PopFromBack ()
 
 void  PostLarvaeFVList::AddQueue (PostLarvaeFVList&  imagesToAdd)
 {
-  if  (QueueSize () < 1)
-  {
-    // Since we don't have any examples in the existing queue then the version number
-    // of the queue that we are adding will be our version number.
-    Version (imagesToAdd.Version ());
-  }
-  else
-  {
-    // Since there are examples in both queues,  then they should have the same version number
-    // otherwise the version number of the resulting KKQueue will be undefined (-1).
-    if  (imagesToAdd.Version () != Version ())
-      Version (0);
-  }
-
   FeatureVectorList::AddQueue (imagesToAdd);
 }  /* AddQueue */
 

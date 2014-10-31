@@ -38,6 +38,7 @@ namespace LarcosCounterUnManaged
      */
     virtual  const type_info*  FeatureVectorTypeId () const;
 
+    virtual  kkint16  Version ()  const {return 316;}
 
 
   private:
@@ -72,6 +73,10 @@ namespace LarcosCounterUnManaged
   public:
 
     virtual  FeatureFileIOPtr  DefaultFeatureFileIO ()  const;
+
+    virtual  const type_info*  FeatureVectorTypeId ()  const;
+
+    virtual  const type_info*  FeatureVectorListTypeId ()  const;
 
     virtual  FileDescPtr  FileDesc ()  const;
 

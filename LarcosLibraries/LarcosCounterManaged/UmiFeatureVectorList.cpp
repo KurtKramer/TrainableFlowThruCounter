@@ -15,19 +15,23 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+
 #include "KKBaseTypes.h"
 #include "..\\KKBase\\GoalKeeper.h"
 #include "OSservices.h"
-
+#include "Raster.h"
 using namespace KKB;
 
 
+#include "FactoryFVProducer.h"
 #include "FeatureFileIo.h"
 #include "FeatureFileIOKK.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-#include "OSservices.h"
-#include "Raster.h"
+using namespace  KKMachineLearning;
+
+#include "PostLarvaeFVProducer.h"
+using namespace  LarcosCounterUnManaged;
 
 #include "UmiClassList.h"
 #include "UmiKKStr.h"
@@ -36,9 +40,8 @@ using namespace KKB;
 #include "UmiFeatureVector.h"
 #include "UmiFeatureVectorList.h"
 #include "UmiOSservices.h"
-
-
 using namespace  LarcosCounterManaged;
+
 
 using namespace System;
 using namespace System::Threading;
@@ -175,12 +178,15 @@ UmiFeatureVectorList^   UmiFeatureVectorList::CreateListForAGivenLevel (kkuint32
 
 
 void  UmiFeatureVectorList::LoadInSubDirectoryTree 
-                                       (String^       rootDir,
-                                        bool          useDirectoryNameForClassName,
+                                       (String^     rootDir,
+                                        bool        useDirectoryNameForClassName,
                                         UmiRunLog^  log,
-                                        bool          rewiteRootFeatureFile
+                                        bool        rewiteRootFeatureFile
                                        )
 {
+  FactoryFVProducerPtr  fvProducerFactory = PostLarvaeFVProducerFactory::Factory (&(log->Log ()));
+  FeatureFileIOPtr  ioDriver = fvProducerFactory->DefaultFeatureFileIO ();
+
   if  (classes)
   {
     delete  classes;
@@ -192,8 +198,9 @@ void  UmiFeatureVectorList::LoadInSubDirectoryTree
   if  (!cancelFlag)
     cancelFlag = new bool (false);
 
-  PostLarvaeFVListPtr  featureData = FeatureFileIOKK::Driver ()->LoadInSubDirectoryTree 
-                                     (UmiKKStr::SystemStringToKKStr (rootDir),
+  FeatureVectorListPtr  featureData = ioDriver->LoadInSubDirectoryTree 
+                                     (fvProducerFactory,
+                                      UmiKKStr::SystemStringToKKStr (rootDir),
                                       *classes,
                                       useDirectoryNameForClassName,
                                       *cancelFlag,
@@ -208,19 +215,34 @@ void  UmiFeatureVectorList::LoadInSubDirectoryTree
     return;
   }
 
+  PostLarvaeFVListPtr  larcosFeatureData = NULL;
+
+  if  (typeid (featureData) == typeid (PostLarvaeFVList))
+  {
+    larcosFeatureData = dynamic_cast<PostLarvaeFVList*>(featureData);
+    featureData= NULL;
+  }
+  else
+  {
+    larcosFeatureData = new PostLarvaeFVList (*featureData, true);
+    delete  featureData;
+    featureData= NULL;
+  }
+
+
   featureData->Owner (false);  // The owership of the individule ImageFeature objects will be taken over by 
-                                // this container object "UmiFeatureVectorList".
+                               // this container object "UmiFeatureVectorList".
 
   PostLarvaeFVList::iterator  idx;
-  for  (idx = featureData->begin ();  idx != featureData->end ();  idx++)
+  for  (idx = larcosFeatureData->begin ();  idx != larcosFeatureData->end ();  idx++)
   {
     PostLarvaeFVPtr fv = *idx;
     UmiFeatureVector^   pfv = gcnew UmiFeatureVector (fv);  // We just turned ownership of 'fv' over to 'UmiFeatureVectorList'
     Add (pfv);
   }
 
-  delete  featureData;
-  featureData = NULL;
+  delete  larcosFeatureData;
+  larcosFeatureData = NULL;
 
   return;
 }  /* LoadInSubDirectoryTree */
