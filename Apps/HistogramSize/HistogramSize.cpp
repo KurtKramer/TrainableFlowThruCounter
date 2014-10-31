@@ -22,11 +22,12 @@ using namespace std;
 #include "ImageIO.h"
 #include "KKStr.h"
 #include "MorphOpStretcher.h"
+#include "MsgQueue.h"
 #include "OSservices.h"
 using namespace  KKB;
 
-
-
+#include "LarcosCounterManager.h"
+using namespace   LarcosCounterUnManaged;
 
 #include  "HistogramSize.h"
 
@@ -795,7 +796,7 @@ void  ScannerFileCharacteristics_ProcessOneDir (const KKStr&  dir,
     KKStr  fn = **idx;
     KKStr  fullName = osAddSlash (dir) + fn;
 
-    int64  fileSizeBytes = KKB::osGetFileSize (fullName);
+    kkint64  fileSizeBytes = KKB::osGetFileSize (fullName);
 
     ScannerFilePtr  sf = ScannerFile::CreateScannerFile (fullName, runLog);
     if  (!sf)
@@ -1205,7 +1206,7 @@ void  CombineScannerFiles ()
         bool   successful = false;
         InstallationConfig  instalalationConfig ("D:\\Larcos\\Configurations\\Installations\\ModelA.cfg", successful, runLog);
         if  (successful)
-          instalalationConfig.AddHeaderFields (out->HeaderFields ());
+          instalalationConfig.AddToHeaderFields (out->HeaderFields ());
 
         out->InitiateWritting ();
       }
@@ -1424,6 +1425,13 @@ void  MergeInFlowRateDataForAllFiles ()
 
 void  main (int  argc,  char** argv)
 {
+  {
+    MsgQueuePtr  msgQueue = new MsgQueue ("Test1");
+    MsgQueuePtr  msgQueue2 = new MsgQueue ("Test2");
+
+    LarcosCounterManager*  manager = new LarcosCounterManager (msgQueue, msgQueue2, 4);
+  }
+
   {
     MergeInFlowRateDataForAllFiles ();
     exit (-1);

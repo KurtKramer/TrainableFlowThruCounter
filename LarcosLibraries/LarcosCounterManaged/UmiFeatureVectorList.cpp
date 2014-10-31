@@ -229,6 +229,37 @@ void  UmiFeatureVectorList::LoadInSubDirectoryTree
     featureData= NULL;
   }
 
+//  2>C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sgen.exe /assembly:D:\Users\kkramer\GitHub\LarcosCounter\LarcosLibraries\LarcosControls\obj\Debug\LarcosControls.dll 
+//  /proxytypes /reference:D:\Users\kkramer\GitHub\LarcosCounter\KKLibraries\KKManagedRoutines\bin\Debug\KKManagedRoutines.dll 
+//  /reference:d:\Users\kkramer\GitHub\LarcosCounter\Debug\LarcosCounterManaged.dll
+//  /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll"
+//  /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Data.DataSetExtensions.dll"
+//  /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll 
+//  /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll 
+//  /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Drawing.dll 
+//  /reference:"C:\Program Files (x86)\Microsoft Chart Controls\Assemblies\System.Windows.Forms.DataVisualization.dll" 
+//  /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll 
+//  /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll 
+//  /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Xml.Linq.dll" 
+
+  /*
+
+  2>C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sgen.exe 
+    /assembly:D:\Users\kkramer\GitHub\LarcosCounter\LarcosLibraries\LarcosControls\obj\Debug\LarcosControls.dll 
+    /proxytypes 
+    /reference:D:\Users\kkramer\GitHub\LarcosCounter\KKLibraries\KKManagedRoutines\bin\Debug\KKManagedRoutines.dll 
+    /reference:d:\Users\kkramer\GitHub\LarcosCounter\Debug\LarcosCounterManaged.dll 
+    /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll" 
+    /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Data.DataSetExtensions.dll" 
+    /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll 
+    /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll 
+    /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Drawing.dll 
+    /reference:"C:\Program Files (x86)\Microsoft Chart Controls\Assemblies\System.Windows.Forms.DataVisualization.dll" 
+    /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll 
+    /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll 
+    /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Xml.Linq.dll" 
+*/
+
 
   featureData->Owner (false);  // The owership of the individule ImageFeature objects will be taken over by 
                                // this container object "UmiFeatureVectorList".
