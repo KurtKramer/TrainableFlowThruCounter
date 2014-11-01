@@ -18,11 +18,11 @@ namespace LarcosCounterUnManaged
     * *  description of the rest of the data file.  Any row that starts with "//" will be treated as  *
     * *  comment line.                                                                                *
     * *  First Row:  Identifies the file as a feature Data File.  An example on the next line.        *
-    * *              "FEATURE_DATA_FILE Version	101	NumOfFeatures	20	NumOfExamples  258"             *
+    * *              "FEATURE_DATA_FILE Version	101	NumOfFeatures	20	NumOfExamples  258"   *
     * *              Each field will be separated by a tab character.  This line says that the        *
     * *              version number is 101. There are 20 features and 258 examples or feature vectors.*
     * *              The version number gets incremented whenever there is a change in the way        *
-    * *              tha feature data is computed.                                                    *
+    * *              that feature data is computed.                                                   *
     * *                                                                                               *
     * *  Second Row: List all the fields in the feature data file.  The first fields are feature      *
     * *              data.  The first non feature field will be: "ClassName".  There are several non  *
@@ -82,7 +82,7 @@ namespace LarcosCounterUnManaged
 
     /**
      *@brief  Will point to instance of 'FeatureFileIOKK' that is created when static members 
-     * are initialzed dutring module load.  The instance will be Registered with 'FeatureFileIO::RegisterDriver'
+     * are initialzed during module load.  The instance will be Registered with 'FeatureFileIO::RegisterDriver'
      * by call 'CreateAndRegisterInstance'.
      */
     static FeatureFileIOKKPtr  driver;

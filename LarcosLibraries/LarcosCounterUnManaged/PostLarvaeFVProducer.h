@@ -66,7 +66,7 @@ namespace LarcosCounterUnManaged
 
   protected:
     /**
-     *@brief  A Factory can neer be deleted until the application terminates;  the atexit method will perform the deletes.
+     *@brief  A Factory can never be deleted until the application terminates;  the atexit method will perform the deletes.
      */
     virtual ~PostLarvaeFVProducerFactory ();
 
@@ -92,15 +92,15 @@ namespace LarcosCounterUnManaged
 
     /**
      *@brief  Returns instance of "PostLarvaeFVProducerFactory"  that is registered with "FactoryFVProducer::RegisterFactory".
-     *@details If instance does not exist yet oit will create an instance and register it.
+     *@details If instance does not exist yet out will create an instance and register it.
      */
     static  PostLarvaeFVProducerFactory*  Factory (RunLog*  runLog);
 
 
   private:
     /**
-     *@brief  This instance of 'PostLarvaeFVProducerFactory'  will be registerd with "FactoryFVProducer::RegisterFactory".  
-     *@details  It will deleyed by the "FactoryFVProducer::FinaleCleanUp" upon application shutdown.
+     *@brief  This instance of 'PostLarvaeFVProducerFactory'  will be registered with "FactoryFVProducer::RegisterFactory".
+     *@details  It will deleted by the "FactoryFVProducer::FinaleCleanUp" upon application shutdown.
      */
     static  PostLarvaeFVProducerFactory*  factory;
 

@@ -1,5 +1,5 @@
 MemberFilterActionGroup.COutlineViewer.4=true
-content_assist_disabled_computers=org.eclipse.cdt.ui.textProposalCategory\u0000
+content_assist_disabled_computers=org.eclipse.cdt.ui.parserProposalCategory\u0000org.eclipse.cdt.ui.textProposalCategory\u0000
 content_assist_proposals_timeout=5000
 eclipse.preferences.version=1
 formatter_profile=_KSquare

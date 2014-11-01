@@ -11,6 +11,8 @@
 #include <PvBuffer.h>
 #include <PvStream.h>
 
+#include "MsgQueue.h"
+
 #include "CameraAcquisition.h"
 #include "PreClassDefinitions.h"
 
