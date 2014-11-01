@@ -1506,7 +1506,7 @@ void  PostLarvaeFVList::RecalcFeatureValuesFromImagesInDirTree (KKStr  rootDir,
     return;
   }
 
-  KKStrPtr  dirPath = NULL;
+  KKStrConstPtr  dirPath = NULL;
 
   iterator  idx;
   PostLarvaeFVPtr  example = NULL;
