@@ -77,9 +77,9 @@ namespace LarcosCounterUnManaged
 
 
     LarcosFeatureVector (      Raster&     _raster,
-                  const MLClassPtr  _mlClass,
-                  RasterListPtr     _intermediateImages
-                 );
+                         const MLClassPtr  _mlClass,
+                         RasterListPtr     _intermediateImages
+                        );
 
     LarcosFeatureVector (const BmpImage&   _image,
                   const MLClassPtr  _mlClass,
@@ -142,9 +142,6 @@ namespace LarcosCounterUnManaged
 
     static  KKStr    FeatureName (kkint32  fieldNum);
     static  kkint32  MaxNumOfFeatures () {return maxNumOfFeatures;}
-
-    
-
 
   private:
     static  RunLog  runLog;

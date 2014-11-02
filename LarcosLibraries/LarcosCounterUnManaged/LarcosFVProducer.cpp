@@ -16,6 +16,7 @@
 using namespace std;
 
 
+#include "ConvexHull.h"
 #include "KKBaseTypes.h"
 #include "GlobalGoalKeeper.h"
 #include "Raster.h"
@@ -32,8 +33,6 @@ using namespace  KKMachineLearning;
 #include "FeatureFileIOKK.h"
 #include "LarcosFeatureVector.h"
 using  namespace  LarcosCounterUnManaged;
-
-
 
 
 
@@ -102,7 +101,7 @@ kkint16  LarcosFVProducer::DarkSpotCount8        = 54;
 kkint16  LarcosFVProducer::DarkSpotCount9        = 55;
 
 
-const  KKStr  LarcosFVProducer::FeatureNames[] =
+const  KKStr  LarcosFVProducer::featureNames[] =
 {
   "Size",                    //  0
   "Moment1",                 //  1 
@@ -176,8 +175,7 @@ const  KKStr  LarcosFVProducer::FeatureNames[] =
 
 LarcosFVProducer::LarcosFVProducer (FactoryFVProducerPtr  factory):
     FeatureVectorProducer ("PostLarvaeFV",
-                           factory,
-                           PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
+                           factory
                           ),
     totPixsForMorphOps (4000000),
     workRaster1Area (NULL),
@@ -215,8 +213,8 @@ void  LarcosFVProducer::ReductionByMultiple (kkint32        multiple,
   kkint32  srcHeight = srcRaster.Height ();
   kkint32  srcWidth  = srcRaster.Width ();
 
-  kkint32  destHeight = (height + multiple - 1) / multiple;
-  kkint32  destWidth  = (width  + multiple - 1) / multiple;
+  kkint32  destHeight = (srcHeight + multiple - 1) / multiple;
+  kkint32  destWidth  = (srcWidth  + multiple - 1) / multiple;
 
   kkint32  srcRow  = 0;
   kkint32  srcCol  = 0;
@@ -226,8 +224,8 @@ void  LarcosFVProducer::ReductionByMultiple (kkint32        multiple,
   uchar**  srcMatrix  = srcRaster.Green  ();
   uchar**  destMatrix = destRaster.Green ();
 
-  kkint32  heightOffset = (height % multiple) / 2;
-  kkint32  widthOffset  = (width  % multiple) / 2;
+  kkint32  heightOffset = (srcHeight % multiple) / 2;
+  kkint32  widthOffset  = (srcWidth  % multiple) / 2;
 
   srcRow = -heightOffset;
   srcCol = -widthOffset;
@@ -243,7 +241,7 @@ void  LarcosFVProducer::ReductionByMultiple (kkint32        multiple,
       kkint32  srcRowStart = Max (0, srcRow);
       kkint32  srcRowEnd   = Min (srcRow + multiple, srcHeight);
       kkint32  srcColStart = Max (0, srcCol);
-      kkint32  srcColEnd   = Min (crcCol + multiple, srcWidth);
+      kkint32  srcColEnd   = Min (srcCol + multiple, srcWidth);
 
       kkint32  count = 0;
 
@@ -295,16 +293,35 @@ void  LarcosFVProducer::SaveIntermediateImage (const Raster&  raster,
 
 
 
-
-
-PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcImage,
-                                                         const MLClassPtr  knownClass,
-                                                         RasterListPtr     intermediateImages,
-                                                         RunLog&           runLog
-                                                        )
+void  LarcosFVProducer::BinarizeImageByThreshold (uchar          lower,
+                                                  uchar          upper,
+                                                  const Raster&  src,
+                                                  Raster&        dest
+                                                 )
 {
+  uchar const *  srcData  = src.GreenArea ();
+  uchar *        destData = dest.GreenArea ();
+  
+  kkint32  totPixels = src.TotPixels ();
+
+  memset (destData, 0, totPixels);
+
+  kkint32 x = 0;
+  for  (x = 0;  x < totPixels;  ++x)
+  {
+    if  ((srcData[x] >= lower)  &&  (srcData[x] < upper))
+      destData[x] = 255;
+  }
+}  /* BinarizeImageByThreshold */
 
 
+
+LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcImage,
+                                                                const MLClassPtr  knownClass,
+                                                                RasterListPtr     intermediateImages,
+                                                                RunLog&           runLog
+                                                               )
+{
   LarcosFeatureVectorPtr  fv = new LarcosFeatureVector (maxNumOfFeatures);
   float*  featureData = fv->FeatureDataAlter ();
 
@@ -313,24 +330,24 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
   kkint32 areaBeforeReduction = 0;
   float  weighedSizeBeforeReduction = 0.0f;
 
-  kkuint32 row = 0;
-  kkuint32 row = 0;
+  kkint32 row = 0;
+  kkint32 col = 0;
 
   kkuint32  intensityHistBuckets[8];
-  srcRaster->CalcAreaAndIntensityFeatures (areaBeforeReduction, 
-                                           weighedSizeBeforeReduction,
-                                           intensityHistBuckets
-                                          );
+  srcImage.CalcAreaAndIntensityFeatures (areaBeforeReduction, 
+                                         weighedSizeBeforeReduction,
+                                         intensityHistBuckets
+                                        );
 
-  kkuint32 srcHeight = srcImage->Height ();
-  kkuint32 srcWidth  = srcImage->Width  ();
+  kkint32 srcHeight = srcImage.Height ();
+  kkint32 srcWidth  = srcImage.Width  ();
 
-  kkuint32 reducedHeight = srcHeight;
-  kkuint32 reducedWidth  = srcWidth;
+  kkint32 reducedHeight = srcHeight;
+  kkint32 reducedWidth  = srcWidth;
 
-  kkuint32 reducedSquareArea = reducedHeight * reducedWidth;
+  kkint32 reducedSquareArea = reducedHeight * reducedWidth;
 
-  kkuint32 reductionMultiple = 1;
+  kkint32 reductionMultiple = 1;
 
   while  (reducedSquareArea > totPixsForMorphOps)
   {
@@ -340,9 +357,11 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
     reducedSquareArea = reducedHeight * reducedWidth;
   }
 
-  delete  workRaster1Rows;  workRaster1Rows = new uchar[reducedHeight];
-  delete  workRaster2Rows;  workRaster2Rows = new uchar[reducedHeight];
-  delete  workRaster3Rows;  workRaste32Rows = new uchar[reducedHeight];
+  kkint32  reductionMultipleSquared = reductionMultiple * reductionMultiple;
+
+  delete  workRaster1Rows;  workRaster1Rows = new uchar*[reducedHeight];
+  delete  workRaster2Rows;  workRaster2Rows = new uchar*[reducedHeight];
+  delete  workRaster3Rows;  workRaster2Rows = new uchar*[reducedHeight];
 
   uchar*  wp1 = workRaster1Area;
   uchar*  wp2 = workRaster2Area;
@@ -362,13 +381,13 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
   Raster  workRaster2 (reducedHeight, reducedWidth, workRaster2Area, workRaster2Rows);
   Raster  workRaster3 (reducedHeight, reducedWidth, workRaster3Area, workRaster3Rows);
 
-  RasterPtr  initRaster = NULL;
-  RasterPtr  wr1        = NULL;
-  RasterPtr  wr2        = NULL;
+  Raster const * initRaster = NULL;
+  RasterPtr      wr1        = NULL;
+  RasterPtr      wr2        = NULL;
 
   if  (reductionMultiple > 1)
   {
-    ReductionByMultiple (reductionMultiple, srcImage, workRaster1Rows);
+    ReductionByMultiple (reductionMultiple, srcImage, workRaster1);
     initRaster = &workRaster1;
     wr1        = &workRaster2;
     wr2        = &workRaster3;
@@ -382,7 +401,7 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
 
   if  (areaBeforeReduction < 20)
   {
-    for  (kkint32 tp = 0; tp < numOfFeatures; tp++)
+    for  (kkint32 tp = 0;  tp < maxNumOfFeatures;  tp++)
       featureData[tp] = 9999999;
     return fv;
   }
@@ -394,7 +413,7 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
   kkint32  pixelCountReduced = 0;
   float    pixelCountWeightedReduced = 0.0f;
 
-  initRaster.CentralMoments (pixelCountReduced, pixelCountWeightedReduced, centralMoments, centralMomentsWeighted);
+  initRaster->ComputeCentralMoments (pixelCountReduced, pixelCountWeightedReduced, centralMoments, centralMomentsWeighted);
 
 
   float  edgeMomentf[9];
@@ -512,7 +531,7 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
 
     // Need to adjust for any reduction in Image Size
     featureData[SizeIndex]           = float (areaBeforeReduction);
-    featureData[EdgeSizeIndex]       = float (edgeMomentf[0] * (float)reductionFactor);
+    featureData[EdgeSizeIndex]       = float (edgeMomentf[0] * (float)(reductionMultipleSquared));
     featureData[WeighedMoment0Index] = weighedSizeBeforeReduction;
   }
 
@@ -533,11 +552,11 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
  
   {
     // This part has to be done after 'CalcOrientationAndEigerRatio' is called.  That is where the example centroid is calced.
-    centroidCol = raster->CentroidCol () * reductionFactor;
-    centroidRow = raster->CentroidRow () * reductionFactor;
+    fv->CentroidCol (initRaster->CentroidCol () * reductionMultiple);
+    fv->CentroidRow (initRaster->CentroidRow () * reductionMultiple);
   }
 
-  featureData[ConvexAreaIndex]       = convexf * reductionFactorSquared;
+  featureData[ConvexAreaIndex]       = convexf * reductionMultipleSquared;
   featureData[TransparancySizeIndex] = (float)(centralMoments[0] / convexf);
   featureData[TransparancyWtdIndex]  = (float)(centralMomentsWeighted[0] / convexf);
 
@@ -555,15 +574,14 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
   {
     RasterPtr  darkSpots = NULL;
 
-    if  (false)
-    {
-      darkSpots = initRaster->BinarizeByThreshold (200, 255);
-    }
+    BinarizeImageByThreshold (200, 255, initRaster, wr1); 
 
-    else
-    {
-      darkSpots = origSizeImage->BinarizeByThreshold (200, 255);
-    }
+    wr1.
+
+
+
+
+    darkSpots = KKKK initRaster->BinarizeByThreshold (200, 255, wr1);
 
     darkSpots->Erosion (SQUARE3);
     darkSpots->Erosion (SQUARE3);
@@ -627,6 +645,55 @@ const type_info*   LarcosFVProducer::FeatureVectorTypeId () const
 }
 
 
+const type_info*  LarcosFVProducer::FeatureVectorListTypeId () const
+{
+  return  &(typeid (LarcosFeatureVectorList));
+}
+
+
+
+FileDescPtr  LarcosFVProducer::DefineFileDesc ()  const
+{
+  return  DefineFileDescStatic ();
+}  /* DefineFileDesc */
+
+
+
+static  LarcosFVProducer::FileDescPtr  existingFileDesc = NULL;
+
+FileDescPtr  LarcosFVProducer::DefineFileDescStatic ()
+{
+  if  (existingFileDesc)
+    return  existingFileDesc;
+
+  GlobalGoalKeeper::StartBlock ();
+  if  (!existingFileDesc)
+  {
+    FileDescPtr  existingFileDesc = new FileDesc ();
+    for  (kkint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
+    {
+      existingFileDesc->AddAAttribute (featureNames[fieldNum], NumericAttribute, alreadyExists);
+    }
+    existingFileDesc = FileDesc::GetExistingFileDesc (existingFileDesc);
+  }
+  GlobalGoalKeeper::EndBlock ();
+
+  // Lets make sure that one was already created by opening up a data file.
+  return existingFileDesc;
+}
+
+
+
+
+FeatureVectorListPtr  LarcosFVProducer::ManufacturFeatureVectorList (bool     owner,
+                                                                     RunLog&  runLog
+                                                                    )
+{
+  return  new LarcosFeatureVectorList (FileDesc (), owner, runLog);
+}
+
+
+
 
 
 
@@ -665,14 +732,8 @@ const type_info*  LarcosFVProducerFactory::FeatureVectorListTypeId  () const
 
 FileDescPtr  LarcosFVProducerFactory::FileDesc ()  const
 {
-  return  PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
+  return  LarcosFVProducer::DefineFileDescStatic ();
 }
-
-
-
-
-
-
 
 
 
@@ -697,11 +758,11 @@ LarcosFVProducerPtr  LarcosFVProducerFactory::ManufactureInstance (RunLog&  runL
 
 
 
-PostLarvaeFVListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
-                                                                               RunLog&  runLog
-                                                                              )
+LarcosFeatureVectorListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
+                                                                                  RunLog&  runLog
+                                                                                 )
 {
-  return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner, runLog);
+  return new LarcosFeatureVectorList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner, runLog);
 }
 
 

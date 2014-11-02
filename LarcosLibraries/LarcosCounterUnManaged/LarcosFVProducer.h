@@ -11,13 +11,12 @@ using namespace  KKB;
 #include "FeatureVectorProducer.h"
 using namespace  KKMachineLearning;
 
-#include "CameraThread.h"
-#include "PostLarvaeFV.h"
-#include "PreClassDefinitions.h"
+#include "LarcosFeatureVector.h"
 
 
 namespace LarcosCounterUnManaged
 {
+
   class LarcosFVProducer:  public FeatureVectorProducer
   {
   public:
@@ -26,11 +25,11 @@ namespace LarcosCounterUnManaged
     virtual ~LarcosFVProducer ();
 
 
-    virtual  PostLarvaeFVPtr  ComputeFeatureVector (const Raster&     srcImage,
-                                                    const MLClassPtr  knownClass,
-                                                    RasterListPtr     intermediateImages,
-                                                    RunLog&           runLog
-                                                   );
+    virtual  LarcosFeatureVectorPtr  ComputeFeatureVector (const Raster&     srcImage,
+                                                           const MLClassPtr  knownClass,
+                                                           RasterListPtr     intermediateImages,
+                                                           RunLog&           runLog
+                                                          );
 
 
     /**
@@ -38,20 +37,36 @@ namespace LarcosCounterUnManaged
      */
     virtual  const type_info*  FeatureVectorTypeId () const;
 
+    virtual  const type_info*  FeatureVectorListTypeId () const;
+
+
+    virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
+                                                                RunLog&  runLog
+                                                               );
+
     virtual  kkint16  Version ()  const {return 316;}
+
+  protected:
+    virtual  FileDescPtr  DefineFileDesc ()  const;
 
 
   private:
-    void  SaveIntermediateImage (const Raster&  raster, 
-                                 const KKStr&   desc,
-                                 RasterListPtr  intermediateImages
-                                );
-
+    void  BinarizeImageByThreshold (uchar          lower,
+                                    uchar          upper,
+                                    const Raster&  src,
+                                    Raster&        dest
+                                   );
 
     void  ReductionByMultiple (kkint32        multiple,
                                const Raster&  srcRaster,
                                Raster&        destRaster
                               );
+
+    void  SaveIntermediateImage (const Raster&  raster, 
+                                 const KKStr&   desc,
+                                 RasterListPtr  intermediateImages
+                                );
+
 
 
     uchar*   workRaster1Area;
@@ -62,16 +77,16 @@ namespace LarcosCounterUnManaged
     uchar**  workRaster3Rows;
 
 
-    kkuint32  totPixsForMorphOps;  /**<  When this instance is created this is the amount of memory each 
-                                    * raster work area will be restricted to.  The Height and width will 
-                                    * be adjusted such that the resultant dimensions will fit within this
-                                    * constraint.
-                                    */
+    kkint32  totPixsForMorphOps;  /**<  When this instance is created this is the amount of memory each 
+                                   * raster work area will be restricted to.  The Height and width will 
+                                   * be adjusted such that the resultant dimensions will fit within this
+                                   * constraint.
+                                   */
 
     static  kkint16  maxNumOfFeatures;
     static  const    kkint32  SizeThreshold;
 
-    static  const    KKStr  FeatureNames[];
+    static  const    KKStr  featureNames[];
 
     static  kkint16  SizeIndex;                   // 0;
     static  kkint16  Moment1Index;                // 1;
@@ -135,15 +150,15 @@ namespace LarcosCounterUnManaged
     static  kkint16  DarkSpotCount8;              // 54
     static  kkint16  DarkSpotCount9;              // 55
 
+    static FileDescPtr  DefineFileDescStatic ();
+    static FileDescPtr  existingFileDesc;
+
 
   };  /* LarcosFVProducer */
 
   typedef  LarcosFVProducer*  LarcosFVProducerPtr;
 
 #define  _LarcosFVProducer_Defined_
-
-
-
 
 
 
@@ -175,9 +190,9 @@ namespace LarcosCounterUnManaged
     /**
      *@brief Manufactures a instance of a 'PostLarvaeFVList' class that will own its contents.
      */
-    virtual  PostLarvaeFVListPtr  ManufacturFeatureVectorList (bool     owner,
-                                                               RunLog&  runLog
-                                                              );
+    virtual  LarcosFeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
+                                                                      RunLog&  runLog
+                                                                     );
 
     /**
      *@brief  Returns instance of "LarcosFVProducerFactory"  that is registered with "FactoryFVProducer::RegisterFactory".
