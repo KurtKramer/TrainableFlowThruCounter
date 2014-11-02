@@ -42,10 +42,24 @@ namespace LarcosCounterUnManaged
 
 
   private:
+    void  SaveIntermediateImage (const Raster&  raster, 
+                                 const KKStr&   desc,
+                                 RasterListPtr  intermediateImages
+                                );
+
+
+    void  ReductionByMultiple (kkint32        multiple,
+                               const Raster&  srcRaster,
+                               Raster&        destRaster
+                              );
+
+
     uchar*   workRaster1Area;
     uchar*   workRaster2Area;
+    uchar*   workRaster3Area;
     uchar**  workRaster1Rows;
     uchar**  workRaster2Rows;
+    uchar**  workRaster3Rows;
 
 
     kkuint32  totPixsForMorphOps;  /**<  When this instance is created this is the amount of memory each 

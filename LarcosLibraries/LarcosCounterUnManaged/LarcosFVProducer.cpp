@@ -182,8 +182,10 @@ LarcosFVProducer::LarcosFVProducer (FactoryFVProducerPtr  factory):
     totPixsForMorphOps (4000000),
     workRaster1Area (NULL),
     workRaster2Area (NULL),
+    workRaster3Area (NULL),
     workRaster1Rows (NULL),
-    workRaster2Rows (NULL)
+    workRaster2Rows (NULL),
+    workRaster3Rows (NULL)
 {
   workRaster1Area = new uchar[totPixsForMorphOps];
   workRaster2Area = new uchar[totPixsForMorphOps];
@@ -196,9 +198,102 @@ LarcosFVProducer::~LarcosFVProducer ()
 {
   delete  workRaster1Area;  workRaster1Area = NULL;
   delete  workRaster2Area;  workRaster2Area = NULL;
+  delete  workRaster3Area;  workRaster3Area = NULL;
   delete  workRaster1Rows;  workRaster1Rows = NULL;
   delete  workRaster2Rows;  workRaster2Rows = NULL;
+  delete  workRaster3Rows;  workRaster3Rows = NULL;
 }
+
+
+
+void  LarcosFVProducer::ReductionByMultiple (kkint32        multiple,
+                                             const Raster&  srcRaster,
+                                             Raster&        destRaster
+                                            )  
+                                            
+{
+  kkint32  srcHeight = srcRaster.Height ();
+  kkint32  srcWidth  = srcRaster.Width ();
+
+  kkint32  destHeight = (height + multiple - 1) / multiple;
+  kkint32  destWidth  = (width  + multiple - 1) / multiple;
+
+  kkint32  srcRow  = 0;
+  kkint32  srcCol  = 0;
+  kkint32  destRow = 0;
+  kkint32  destCol = 0;
+
+  uchar**  srcMatrix  = srcRaster.Green  ();
+  uchar**  destMatrix = destRaster.Green ();
+
+  kkint32  heightOffset = (height % multiple) / 2;
+  kkint32  widthOffset  = (width  % multiple) / 2;
+
+  srcRow = -heightOffset;
+  srcCol = -widthOffset;
+
+  kkint32  r, c;
+
+  for  (destRow = 0;  destRow < destHeight;  ++destRow)
+  {
+    for  (destCol = 0;  destCol < destHeight;  ++destCol)
+    {
+      kkint32 total = 0;
+
+      kkint32  srcRowStart = Max (0, srcRow);
+      kkint32  srcRowEnd   = Min (srcRow + multiple, srcHeight);
+      kkint32  srcColStart = Max (0, srcCol);
+      kkint32  srcColEnd   = Min (crcCol + multiple, srcWidth);
+
+      kkint32  count = 0;
+
+      for  (r = srcRowStart;  r <srcRowEnd;  ++r)
+      {
+        for  (c = srcColStart;  c <srcColEnd;  ++c)
+        {
+          total += srcMatrix[r][c];
+          ++count;
+        }
+      }
+      
+      destMatrix[destRow][destCol] = (uchar)(total / count);
+      srcCol += multiple;
+    }
+    srcRow += multiple;
+  }
+}  /* ReduceByEvenMultiple */
+
+
+
+
+void  LarcosFVProducer::SaveIntermediateImage (const Raster&  raster, 
+                                               const KKStr&   desc,
+                                               RasterListPtr  intermediateImages
+                                              )
+{
+  if  (!intermediateImages)
+    return;
+
+  RasterPtr  newRaster = NULL;
+
+  kkint32  largestDim = Max (raster.Height (), raster.Width ());
+  if  (largestDim < 300)
+  {
+    newRaster = new Raster (raster);
+  }
+  else
+  {
+    kkint32  reductionMultiple = 2;
+    while  ((largestDim / reductionMultiple) > 300)
+     reductionMultiple++;
+    newRaster = raster.ReduceByEvenMultiple (reductionMultiple);
+  }
+
+  newRaster->FileName (desc);
+  intermediateImages->PushOnBack (newRaster);
+}  /* SaveIntermediateImage */
+
+
 
 
 
@@ -240,161 +335,73 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
   while  (reducedSquareArea > totPixsForMorphOps)
   {
     ++reductionMultiple;
-    reducedHeight = srcHeight    / reductionMultiple;
-    reducedWidth  = reducedWidth / reductionMultiple;
+    reducedHeight = (srcHeight + reductionMultiple - 1) / reductionMultiple;
+    reducedWidth  = (srcWidth  + reductionMultiple - 1) / reductionMultiple;
     reducedSquareArea = reducedHeight * reducedWidth;
   }
 
   delete  workRaster1Rows;  workRaster1Rows = new uchar[reducedHeight];
   delete  workRaster2Rows;  workRaster2Rows = new uchar[reducedHeight];
+  delete  workRaster3Rows;  workRaste32Rows = new uchar[reducedHeight];
 
   uchar*  wp1 = workRaster1Area;
   uchar*  wp2 = workRaster2Area;
+  uchar*  wp3 = workRaster3Area;
 
   for  (row = 0;  row < reducedHeight; ++row)
   {
     workRaster1Rows[row] = wp1;
     workRaster2Rows[row] = wp2;
-
+    workRaster3Rows[row] = wp3;
     wp1 += reducedWidth;
     wp2 += reducedWidth;
-
+    wp3 += reducedWidth;
   }
 
-  
+  Raster  workRaster1 (reducedHeight, reducedWidth, workRaster1Area, workRaster1Rows);
+  Raster  workRaster2 (reducedHeight, reducedWidth, workRaster2Area, workRaster2Rows);
+  Raster  workRaster3 (reducedHeight, reducedWidth, workRaster3Area, workRaster3Rows);
 
- 
+  RasterPtr  initRaster = NULL;
+  RasterPtr  wr1        = NULL;
+  RasterPtr  wr2        = NULL;
 
-
-
-
-
-
-
-    kkint32  reducedMinDim = Min (raster->Height (), raster->Width ());
-
-    kkint32  reducedSize = areaBeforeReduction;
-    reductionFactor = 1;
-    while  ((reducedSize > SizeThreshold)  &&  (reducedMinDim > 20))
-    {
-      reductionFactor = reductionFactor + 1;
-      reductionFactorSquared = reductionFactor * reductionFactor;
-      reducedSize = areaBeforeReduction / reductionFactorSquared;
-      reducedMinDim = Min (raster->Height (), raster->Width ()) / reductionFactor;
-    }
-
-    RasterPtr  reducedRaster = raster->ReduceByEvenMultiple (reductionFactor);
-
-    if  (intermediateImages)
-      SaveIntermediateImage (*reducedRaster, "Reduced_" + StrFormatInt (reductionFactor, "ZZZZZZ0"), intermediateImages);
-
-    if  (weOwnRaster)
-    {
-      delete  raster;
-      raster = NULL;
-    }
-
-    raster = reducedRaster;
-    weOwnRaster = true;
+  if  (reductionMultiple > 1)
+  {
+    ReductionByMultiple (reductionMultiple, srcImage, workRaster1Rows);
+    initRaster = &workRaster1;
+    wr1        = &workRaster2;
+    wr2        = &workRaster3;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  else
+  {
+    initRaster = &srcImage;
+    wr1        = &workRaster1;
+    wr2        = &workRaster2;
+  }
 
   if  (areaBeforeReduction < 20)
   {
     for  (kkint32 tp = 0; tp < numOfFeatures; tp++)
       featureData[tp] = 9999999;
-    
-    if  (weOwnRaster)
-    {
-      delete  raster;
-      raster = NULL;
-    }
-    return;
+    return fv;
   }
   
-  KKStr  driveLetter, path, root, extension;
-
   float  convexf = 0.0;
+  float  centralMoments[9];
+  float  centralMomentsWeighted[9];
 
-  osParseFileSpec (ImageFileName (), driveLetter, path, root, extension);
-  KKStr  baseName = "c:\\Temp\\TestImages2\\" + root + "\\" + root;
+  kkint32  pixelCountReduced = 0;
+  float    pixelCountWeightedReduced = 0.0f;
 
-  if  (intermediateImages)
-    SaveIntermediateImage (*raster, "Original_" + StrFormatInt (areaBeforeReduction, "ZZZZZZ0"), intermediateImages);
+  initRaster.CentralMoments (pixelCountReduced, pixelCountWeightedReduced, centralMoments, centralMomentsWeighted);
 
-  //raster->ConnectedComponent ();
-  //SaveIntermediateImage (*raster, baseName, "ConnectedComponent", saveImage);
-
-  float  momentf[9];
-  raster->CentralMoments (momentf);
-
-  float  momentfWeighted[9];
-  raster->CentralMomentsWeighted (momentfWeighted);
-
-  kkint32  height = raster->Height ();
-  kkint32  width  = raster->Width  ();
-
-  RasterPtr  wr1 = new Raster (height, width);
-  RasterPtr  wr2 = new Raster (height, width);
 
   float  edgeMomentf[9];
 
-  raster->Dialation (wr1);
+  initRaster->Dialation (wr1);
   wr1->Dialation (wr2);
   wr2->FillHole (wr1);
-
-  if  (false)
-  {
-    KKB::osCreateDirectoryPath ("c:\\Temp\\TestImages2\\" + root);
-    SaveImage (*raster, baseName + "_01-Orig.bmp");
-    SaveImage (*wr2,    baseName + "_02-HoleFilled.bmp");
-
-    Raster  r1 (height, width, true);
-
-    for  (int r = 0;  r < height;  ++r)
-    {
-      uchar**  mask = wr1->Green ();
-      for  (int c = 0;  c < width;  ++c)
-      {
-        if  (mask[r][c] == 0)
-          r1.SetPixelValue (r, c, PixelValue::Red);
-
-        else if  (mask[r][c] == 1)
-          r1.SetPixelValue (r, c, PixelValue::Green);
-
-        else if  (mask[r][c] == 255)
-          r1.SetPixelValue (r, c, PixelValue::Blue);
-
-        else
-          r1.SetPixelValue (r, c, PixelValue::Black);
-      }
-    }
-
-    SaveImage (r1, baseName + "_02-Mask.bmp");
-  }
 
   wr1->Erosion (wr2);
   wr2->Edge (wr1);
@@ -405,10 +412,10 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
     SaveIntermediateImage (*wr2, "Edge_Image_" + StrFormatInt (numEdgePixelsFound, "ZZZZ0"), intermediateImages);
   }
 
-  kkint32 area = (kkint32)(momentf[0] + 0.5f);  // Moment-0 is the same as the number of forground pixels in example.
+  kkint32 area = (kkint32)(centralMoments[0] + 0.5f);  // Moment-0 is the same as the number of forground pixels in example.
   {
     ConvexHullPtr  ch = new ConvexHull ();
-    ch->Filter (*raster, wr1);
+    ch->Filter (*initRaster, wr1);
     convexf = (float)ch->ConvexArea ();
 
     if  (intermediateImages)
@@ -424,20 +431,20 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
     ch = NULL;
   }
 
-  raster->Erosion (wr1);
+  initRaster->Erosion (wr1);
   wr1->Dialation (wr2);
   float  areaOpen3 = (float)(wr2->ForegroundPixelCount());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening3_" + StrFormatInt ((kkint32)areaOpen3, "ZZZZZZ0"), intermediateImages);
 
 
-  raster->Erosion (wr1, KKB::SQUARE5);
+  initRaster->Erosion (wr1, KKB::SQUARE5);
   wr1->Dialation (wr2, KKB::SQUARE5);
   float  areaOpen5 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening5_" + StrFormatInt ((kkint32)areaOpen5, "ZZZZZZ0"), intermediateImages);
 
-  raster->Erosion (wr1, KKB::SQUARE7);
+  initRaster->Erosion (wr1, KKB::SQUARE7);
   wr1->Dialation (wr2, KKB::SQUARE7);
   float  areaOpen7 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
@@ -449,7 +456,7 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening9_" + StrFormatInt ((kkint32)areaOpen9, "ZZZZZZ0"), intermediateImages);
 
-  raster->Dialation (wr1);
+  initRaster->Dialation (wr1);
   wr1->Erosion (wr2);
   float  areaClose3 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
@@ -460,13 +467,13 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "FillHole_" + StrFormatInt ((kkint32)tranf, "ZZZZZZ0"), intermediateImages);
 
-  raster->Dialation (wr1, KKB::SQUARE5);
+  initRaster->Dialation (wr1, KKB::SQUARE5);
   wr1->Erosion (wr2, KKB::SQUARE5);
   float  areaClose5 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Close5_" + StrFormatInt ((kkint32)areaClose5, "ZZZZZZ0"), intermediateImages);
   
-  raster->Dialation (wr1, KKB::SQUARE7);
+  initRaster->Dialation (wr1, KKB::SQUARE7);
   wr1->Erosion   (wr2, KKB::SQUARE7);
   float  areaClose7 = float (wr2->ForegroundPixelCount ());
   if  (intermediateImages)
@@ -474,24 +481,24 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
 
   {
     featureData[SizeIndex]    = float (areaBeforeReduction);
-    featureData[Moment1Index] = float (momentf[1]);
-    featureData[Moment2Index] = float (momentf[2]);
-    featureData[Moment3Index] = float (momentf[3]);
-    featureData[Moment4Index] = float (momentf[4]);
-    featureData[Moment5Index] = float (momentf[5]);
-    featureData[Moment6Index] = float (momentf[6]);
-    featureData[Moment7Index] = float (momentf[7]);
-    featureData[Moment8Index] = float (momentf[8]);
+    featureData[Moment1Index] = float (centralMoments[1]);
+    featureData[Moment2Index] = float (centralMoments[2]);
+    featureData[Moment3Index] = float (centralMoments[3]);
+    featureData[Moment4Index] = float (centralMoments[4]);
+    featureData[Moment5Index] = float (centralMoments[5]);
+    featureData[Moment6Index] = float (centralMoments[6]);
+    featureData[Moment7Index] = float (centralMoments[7]);
+    featureData[Moment8Index] = float (centralMoments[8]);
 
-    featureData[WeighedMoment0Index] = momentfWeighted[0];
-    featureData[WeighedMoment1Index] = momentfWeighted[1];
-    featureData[WeighedMoment2Index] = momentfWeighted[2];
-    featureData[WeighedMoment3Index] = momentfWeighted[3];
-    featureData[WeighedMoment4Index] = momentfWeighted[4];
-    featureData[WeighedMoment5Index] = momentfWeighted[5];
-    featureData[WeighedMoment6Index] = momentfWeighted[6];
-    featureData[WeighedMoment7Index] = momentfWeighted[7];
-    featureData[WeighedMoment8Index] = momentfWeighted[8];
+    featureData[WeighedMoment0Index] = centralMomentsWeighted[0];
+    featureData[WeighedMoment1Index] = centralMomentsWeighted[1];
+    featureData[WeighedMoment2Index] = centralMomentsWeighted[2];
+    featureData[WeighedMoment3Index] = centralMomentsWeighted[3];
+    featureData[WeighedMoment4Index] = centralMomentsWeighted[4];
+    featureData[WeighedMoment5Index] = centralMomentsWeighted[5];
+    featureData[WeighedMoment6Index] = centralMomentsWeighted[6];
+    featureData[WeighedMoment7Index] = centralMomentsWeighted[7];
+    featureData[WeighedMoment8Index] = centralMomentsWeighted[8];
 
     featureData[EdgeSizeIndex]    = (float)edgeMomentf[0];
     featureData[EdgeMoment1Index] = (float)edgeMomentf[1];
@@ -531,8 +538,8 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
   }
 
   featureData[ConvexAreaIndex]       = convexf * reductionFactorSquared;
-  featureData[TransparancySizeIndex] = (float)(momentf[0] / convexf);
-  featureData[TransparancyWtdIndex]  = (float)(momentfWeighted[0] / convexf);
+  featureData[TransparancySizeIndex] = (float)(centralMoments[0] / convexf);
+  featureData[TransparancyWtdIndex]  = (float)(centralMomentsWeighted[0] / convexf);
 
   float  areaD = float (areaBeforeReduction);
 
@@ -550,7 +557,7 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
 
     if  (false)
     {
-      darkSpots = raster->BinarizeByThreshold (200, 255);
+      darkSpots = initRaster->BinarizeByThreshold (200, 255);
     }
 
     else
@@ -599,37 +606,24 @@ PostLarvaeFVPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcIm
 
   if  (intermediateImages)
   {
-    RasterPtr  thinnedImage = raster->ThinContour ();
+    RasterPtr  thinnedImage = initRaster->ThinContour ();
     SaveIntermediateImage  (*thinnedImage, "_Thinned", intermediateImages);
     delete  thinnedImage;  
     thinnedImage = NULL;
   }
 
   featureData[0] = (float)areaBeforeReduction;  // Incase the example was reduced.
-  OrigSize ((float)areaBeforeReduction);
-
-  Probability (-1.0f);
-
-  delete  wr1;  wr1 = NULL;
-  delete  wr2;  wr2 = NULL;
-
-  if  (weOwnRaster)
-    delete  raster;
-
-
-
+  fv->OrigSize ((float)areaBeforeReduction);
+ 
   return fv;
-
-
-
-}
+}  /* ComputeFeatureVector */
 
 
 
 
 const type_info*   LarcosFVProducer::FeatureVectorTypeId () const
 {
-  return  &(typeid (PostLarvaeFV));
+  return  &(typeid (LarcosFeatureVector));
 }
 
 
@@ -637,7 +631,7 @@ const type_info*   LarcosFVProducer::FeatureVectorTypeId () const
 
 
 LarcosFVProducerFactory::LarcosFVProducerFactory ():
-   FactoryFVProducer("LarcosFVProducerFactory", "PostLarvaeFV", "Post-Larvae FeatureVector Producer Factory")
+   FactoryFVProducer("LarcosFVProducerFactory", "LarcosFeatureVector", "LarcosFeatureVector")
 {
 }
 
@@ -657,14 +651,14 @@ FeatureFileIOPtr  LarcosFVProducerFactory::DefaultFeatureFileIO ()  const
 
 const type_info*  LarcosFVProducerFactory::FeatureVectorTypeId ()  const  
 {
-  return  &typeid (PostLarvaeFV);
+  return  &typeid (LarcosFeatureVector);
 }
 
 
 
 const type_info*  LarcosFVProducerFactory::FeatureVectorListTypeId  () const  
 {
-  return  &typeid (PostLarvaeFVList);
+  return  &typeid (LarcosFeatureVectorList);
 }
 
 
