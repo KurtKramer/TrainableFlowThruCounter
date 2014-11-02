@@ -226,6 +226,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LarcosFeatureVector.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LarcosFVProducer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LarcosScannerFileEntry.cpp"
 				>
 			</File>
@@ -377,6 +385,14 @@
 			</File>
 			<File
 				RelativePath=".\LarcosDataRec.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LarcosFeatureVector.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LarcosFVProducer.h"
 				>
 			</File>
 			<File
