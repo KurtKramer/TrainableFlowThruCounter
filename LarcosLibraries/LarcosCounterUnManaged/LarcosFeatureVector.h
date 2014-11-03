@@ -28,12 +28,11 @@
 using namespace KKB;
             
 
-//#include "Attribute.h"
-//#include "ClassStatistic.h"
 //#include "FeatureNumList.h"
+#include "FactoryFVProducer.h"
 #include "FeatureVector.h"
-//#include "FileDesc.h"
-//#include "MLClass.h"
+#include "FileDesc.h"
+#include "MLClass.h"
 using namespace  KKMachineLearning;
 
 #define   CurrentFeatureFileVersionNum  316
@@ -54,14 +53,6 @@ namespace LarcosCounterUnManaged
   typedef  MLClassList*  MLClassListPtr;
   #endif
 
-  void  PostLarvaeFVResetDarkSpotCounts ();
-
-  void  PostLarvaeFVPrintReport (ostream& o);
-
-  void  PostLarvaeFVAddBlobList (MLClassPtr        c,
-                                 KKB::BlobListPtr  blobs 
-                                );
-
 
   class  LarcosFeatureVector:  public  FeatureVector 
   {
@@ -69,29 +60,10 @@ namespace LarcosCounterUnManaged
     typedef  LarcosFeatureVector*  LarcosFeatureVectorPtr;
     typedef  KKB::uchar  uchar;
 
-    //LarcosFeatureVector (MLClassPtr  mlClass);
-
     LarcosFeatureVector (kkint32  _numOfFeatures);
 
-    LarcosFeatureVector (const LarcosFeatureVector&  _image);
+    LarcosFeatureVector (const LarcosFeatureVector&  _fv);
 
-
-    LarcosFeatureVector (      Raster&     _raster,
-                         const MLClassPtr  _mlClass,
-                         RasterListPtr     _intermediateImages
-                        );
-
-    LarcosFeatureVector (const BmpImage&   _image,
-                  const MLClassPtr  _mlClass,
-                  RasterListPtr     _intermediateImages
-                 );
-
-
-    LarcosFeatureVector (KKStr          _fileName,
-                  MLClassPtr     _mlClass,
-                  bool&          _successfull,
-                  RasterListPtr  _intermediateImages
-                 );
 
 
     /**
@@ -124,108 +96,15 @@ namespace LarcosCounterUnManaged
     float   CentroidRow        () const  {return  centroidRow;}    //  ""    ""    ""    ""    ""
     kkint32 NumOfEdgePixels    () const  {return  numOfEdgePixels;}
 
-    void    CalcFeatures (Raster&        raster,
-                          RasterListPtr  intermediateImages
-                         );
-
-
-    static  void  ParseImageFileName (const KKStr&  fullFileName, 
-                                      KKStr&        scannerFileName,
-                                      kkuint32&     scanLineNum,
-                                      kkuint32&     scanCol
-                                     );
-
-
-    static  FileDescPtr    postLarvaeFeaturesFileDesc;
-    
-    static  FileDescPtr    PostLarvaeFeaturesFileDesc ();
-
-    static  KKStr    FeatureName (kkint32  fieldNum);
-    static  kkint32  MaxNumOfFeatures () {return maxNumOfFeatures;}
 
   private:
-    static  RunLog  runLog;
-
-  
-    void   SaveIntermediateImage (Raster&        raster, 
-                                  const KKStr&   desc,
-                                  RasterListPtr  intermediateImages
-                                 );
-
     static  RasterListPtr  calcImages;
-    static  VectorKKStr*   calcImagesDescs;
 
     float     centroidCol;     /**<  cnetroid Collumn with just respect to image. */
     float     centroidRow;     /**<  cnetroid Row with just respect to image. */
     kkint32   numOfEdgePixels;
 
-    static  kkint16  maxNumOfFeatures;
-    static  const    kkint32  SizeThreshold;
-
-    static  const    char*  FeatureNames[];
-
-    static  kkint16  SizeIndex;                   // 0;
-    static  kkint16  Moment1Index;                // 1;
-    static  kkint16  Moment2Index;                // 2;
-    static  kkint16  Moment3Index;                // 3;
-    static  kkint16  Moment4Index;                // 4;
-    static  kkint16  Moment5Index;                // 5;
-    static  kkint16  Moment6Index;                // 6;
-    static  kkint16  Moment7Index;                // 7;
-    static  kkint16  Moment8Index;                // 8;
-
-    static  kkint16  EdgeSizeIndex;               // 9;
-    static  kkint16  EdgeMoment1Index;            // 10;
-    static  kkint16  EdgeMoment2Index;            // 11;
-    static  kkint16  EdgeMoment3Index;            // 12;
-    static  kkint16  EdgeMoment4Index;            // 13;
-    static  kkint16  EdgeMoment5Index;            // 14;
-    static  kkint16  EdgeMoment6Index;            // 15;
-    static  kkint16  EdgeMoment7Index;            // 16;
-    static  kkint16  EdgeMoment8Index;            // 17;
-
-    static  kkint16  TransparancyConvexHullIndex; // 18;
-    static  kkint16  TransparancyPixelCountIndex; // 19;
-    static  kkint16  TransparancyOpen3Index;      // 20;
-    static  kkint16  TransparancyOpen5Index;      // 21;
-    static  kkint16  TransparancyOpen7Index;      // 22;
-    static  kkint16  TransparancyOpen9Index;      // 23;
-    static  kkint16  TransparancyClose3Index;     // 24;
-    static  kkint16  TransparancyClose5Index;     // 25;
-    static  kkint16  TransparancyClose7Index;     // 26;
-
-    static  kkint16  ConvexAreaIndex;             // 27
-    static  kkint16  TransparancySizeIndex;       // 28
-    static  kkint16  TransparancyWtdIndex;        // 29
-
-    static  kkint16  WeighedMoment0Index;         // 30
-    static  kkint16  WeighedMoment1Index;         // 31
-    static  kkint16  WeighedMoment2Index;         // 32
-    static  kkint16  WeighedMoment3Index;         // 33
-    static  kkint16  WeighedMoment4Index;         // 34
-    static  kkint16  WeighedMoment5Index;         // 35
-    static  kkint16  WeighedMoment6Index;         // 36
-    static  kkint16  WeighedMoment7Index;         // 37
-    static  kkint16  WeighedMoment8Index;         // 38
-
-    static  kkint16  IntensityHist1Index;         // 39
-    static  kkint16  IntensityHist2Index;         // 40
-    static  kkint16  IntensityHist3Index;         // 41
-    static  kkint16  IntensityHist4Index;         // 42
-    static  kkint16  IntensityHist5Index;         // 43
-    static  kkint16  IntensityHist6Index;         // 44
-    static  kkint16  IntensityHist7Index;         // 45
-    static  kkint16  DarkSpotCount0;              // 46
-    static  kkint16  DarkSpotCount1;              // 47
-    static  kkint16  DarkSpotCount2;              // 48
-    static  kkint16  DarkSpotCount3;              // 49
-    static  kkint16  DarkSpotCount4;              // 50
-    static  kkint16  DarkSpotCount5;              // 51
-    static  kkint16  DarkSpotCount6;              // 52
-    static  kkint16  DarkSpotCount7;              // 53
-    static  kkint16  DarkSpotCount8;              // 54
-    static  kkint16  DarkSpotCount9;              // 55
-  };
+  };  /* LarcosFeatureVector */
 
 
   typedef  LarcosFeatureVector::LarcosFeatureVectorPtr  LarcosFeatureVectorPtr;
@@ -240,9 +119,9 @@ namespace LarcosCounterUnManaged
     typedef  LarcosFeatureVectorList*  LarcosFeatureVectorListPtr;
 
     LarcosFeatureVectorList (FileDescPtr  _fileDesc,
-                      bool         _owner,
-                      RunLog&      _log
-                     );
+                             bool         _owner,
+                             RunLog&      _log
+                            );
 
   private:
     /**
@@ -271,8 +150,8 @@ namespace LarcosCounterUnManaged
      *                        the existing instances and not own the.
      */
     LarcosFeatureVectorList (const LarcosFeatureVectorList&  _examples,
-                      bool                     _owner
-                     );
+                             bool                            _owner
+                            );
 
 
     /**
@@ -294,8 +173,8 @@ namespace LarcosCounterUnManaged
      *                        the existing instances and not own the.
      */
     LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList,
-                      bool                      _owner
-                     );
+                             bool                      _owner
+                            );
 
 
     /**
@@ -307,16 +186,18 @@ namespace LarcosCounterUnManaged
      * assigned the class specified by '_mlClass'.  A new data file containg the extracted features will be 
      * saved in fileName.
      *
-     *@param _log[in]         Log file to write messages to.
-     *@param _mlClass[in]  Class to assign to new 'LarcosFeatureVector' objects.
-     *@param _dirName[in]     Directory to scan for examples.
-     *@param _fileName        Name of file to contain the extracted feature data.  Will be og the Raw format.
+     *@param[in] _fvProducerFactory
+     *@param[in] _mlClass   Class to assign to new 'LarcosFeatureVector' objects.
+     *@param[in] _dirName   Directory to scan for examples.
+     *@param[in] _fileName  Name of file to contain the extracted feature data.  Will be og the Raw format.
+     *@param[in] _log       Log file to write messages to.
      */
-    LarcosFeatureVectorList (RunLog&     _log,
-                      MLClassPtr  _mlClass,
-                      KKStr       _dirName,
-                      KKStr       _fileName
-                     );
+    LarcosFeatureVectorList (FactoryFVProducerPtr  _fvProducerFactory,
+                             MLClassPtr            _mlClass,
+                             KKStr                 _dirName,
+                             KKStr                 _fileName,
+                             RunLog&               _log
+                            );
 
 
 
@@ -331,10 +212,10 @@ namespace LarcosCounterUnManaged
      *@param[in] _examples        Source examples that we want to scan.
      *@param[in] _log           
      */
-    LarcosFeatureVectorList (MLClassList&    _mlClasses,
-                      LarcosFeatureVectorList&  _examples,
-                      RunLog&            _log
-                     );
+    LarcosFeatureVectorList (MLClassList&              _mlClasses,
+                             LarcosFeatureVectorList&  _examples,
+                             RunLog&                   _log
+                           );
 
 
     /**
@@ -361,48 +242,21 @@ namespace LarcosCounterUnManaged
     virtual  ~LarcosFeatureVectorList ();
 
 
-    void                   AddSingleImageFeatures (LarcosFeatureVectorPtr  _imageFeatures);  // Same as PushOnBack
-
     void                   AddQueue (LarcosFeatureVectorList&  imagesToAdd);
 
-    LarcosFeatureVectorPtr        BackOfQueue ();
+    LarcosFeatureVectorPtr       BackOfQueue ();
 
-    LarcosFeatureVectorPtr        BinarySearchByName (const KKStr&  _imageFileName)  const;
+    LarcosFeatureVectorPtr       BinarySearchByName (const KKStr&  _imageFileName)  const;
 
-    VectorFloat            CalculateDensitesByQuadrat (float        scanRate,         // Scan Lines per Sec.
-                                                       float        quadratSize,      // Meters.
-                                                       float        defaultFlowRate,  // Meters per Sec
-                                                       const bool&  cancelFlag,
-                                                       RunLog&      log
-                                                      );
+    LarcosFeatureVectorListPtr   DuplicateListAndContents ()  const;
 
-    LarcosFeatureVectorListPtr    DuplicateListAndContents ()  const;
-
-
-    /**
-     *@brief Returns: a list of 'LarcosFeatureVector' objects that have duplicate root file names.
-     *@details
-     *@code
-     ***************************************************************************************************
-     ** Returns: a list of 'LarcosFeatureVector' objects that have duplicate root file names.  The returned   *
-     ** list will not own these items.  All instances of the duplicate objects will be returned.       *
-     ** Ex:  if three insatnces have the same ImageFileName all three will be returned.                * 
-     ***************************************************************************************************
-     *@endcode
-     */
     LarcosFeatureVectorListPtr   ExtractDuplicatesByRootImageFileName ();
 
-
     LarcosFeatureVectorListPtr   ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                       kkint32     _maxToExtract = -1,
-                                                       float       _minSize      = -1.0f
-                                                      )  const;
+                                                              kkint32     _maxToExtract = -1,
+                                                              float       _minSize      = -1.0f
+                                                             )  const;
 
-
-    void                  FeatureExtraction (KKStr       _dirName, 
-                                             KKStr       _fileName, 
-                                             MLClassPtr  _mlClass
-                                            );
 
     LarcosFeatureVectorPtr       IdxToPtr (kkint32 idx) const;
 
@@ -416,25 +270,22 @@ namespace LarcosCounterUnManaged
      *@brief  Using list of ImageFileNames in a file('fileName') create a new LarcosFeatureVectorList instance 
      * with examples in order based off contens of file. If error occurs will return NULL.
      */
-    LarcosFeatureVectorListPtr    OrderUsingNamesFromAFile (const KKStr&  fileName);
+    LarcosFeatureVectorListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName);
 
-    LarcosFeatureVectorPtr        PopFromBack ();
+    LarcosFeatureVectorPtr       PopFromBack ();
 
-    void                   RecalcFeatureValuesFromImagesInDirTree (KKStr  rootDir,
-                                                                   bool&  successful
-                                                                  );
+    void                         RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
+                                                                         const KKStr&          rootDir,
+                                                                         bool&                 successful
+                                                                        );
 
-    LarcosFeatureVectorListPtr    StratifyAmoungstClasses (kkint32  numOfFolds);
-
-
-    LarcosFeatureVectorListPtr    StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                    kkint32         maxImagesPerClass,
-                                                    kkint32         numOfFolds
-                                                   );
+    LarcosFeatureVectorListPtr   StratifyAmoungstClasses (kkint32  numOfFolds);
 
 
-
-    //virtual  const char*   UnderlyingClass ()  const  {return  "LarcosFeatureVectorList";}
+    LarcosFeatureVectorListPtr   StratifyAmoungstClasses (MLClassListPtr  mlClasses,
+                                                          kkint32         maxImagesPerClass,
+                                                          kkint32         numOfFolds
+                                                         );
 
 
     class  const_iterator
@@ -587,12 +438,15 @@ namespace LarcosCounterUnManaged
       }
     };
 
-
-    
-    //iterator  begin ()  {return  KKQueue<FeatureVector>::begin ();}
-
-
   private:
+    void   FeatureExtraction (FactoryFVProducerPtr  _fvProducerFactory,
+                              KKStr                 _dirName, 
+                              KKStr                 _fileName, 
+                              MLClassPtr            _mlClass
+                             );
+
+
+
   };  /* LarcosFeatureVectorList */
 
 
