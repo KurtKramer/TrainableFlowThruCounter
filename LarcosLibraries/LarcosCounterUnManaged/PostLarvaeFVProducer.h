@@ -26,7 +26,7 @@ namespace LarcosCounterUnManaged
     virtual ~PostLarvaeFVProducer ();
 
 
-    virtual  PostLarvaeFVPtr  ComputeFeatureVector (Raster&           image,
+    virtual  PostLarvaeFVPtr  ComputeFeatureVector (const Raster&     image,
                                                     const MLClassPtr  knownClass,
                                                     RasterListPtr     intermediateImages,
                                                     RunLog&           runLog
@@ -38,7 +38,20 @@ namespace LarcosCounterUnManaged
      */
     virtual  const type_info*  FeatureVectorTypeId () const;
 
+    virtual  const type_info*  FeatureVectorListTypeId () const;
+
     virtual  kkint16  Version ()  const {return 316;}
+
+    /**
+     *@brief Manufactures a instance of a derived 'FeatureVectorList' class that is appropriate for containing instances
+     *of FeatureVectors by this FeatureVectorProducer.
+     */
+    virtual  PostLarvaeFVListPtr  ManufacturFeatureVectorList (bool     owner,
+                                                               RunLog&  runLog
+                                                              );
+
+  protected:
+    virtual  FileDescPtr  DefineFileDesc () const;
 
 
   private:

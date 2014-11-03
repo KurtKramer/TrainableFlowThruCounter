@@ -15,7 +15,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
+#include "Blob.h"
 #include "ConvexHull.h"
 #include "KKBaseTypes.h"
 #include "GlobalGoalKeeper.h"
@@ -26,6 +26,7 @@ using namespace KKB;
 
 #include "FactoryFVProducer.h"
 #include "FeatureVectorProducer.h"
+#include "FileDesc.h"
 using namespace  KKMachineLearning;
 
 #include "LarcosFVProducer.h"
@@ -574,19 +575,12 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
   {
     RasterPtr  darkSpots = NULL;
 
-    BinarizeImageByThreshold (200, 255, initRaster, wr1); 
+    BinarizeImageByThreshold (200, 255, *initRaster, *wr1); 
+   
+    wr1->Erosion (wr2, SQUARE3);
+    wr2->Erosion (wr1, SQUARE3);
 
-    wr1.
-
-
-
-
-    darkSpots = KKKK initRaster->BinarizeByThreshold (200, 255, wr1);
-
-    darkSpots->Erosion (SQUARE3);
-    darkSpots->Erosion (SQUARE3);
-
-    KKB::BlobListPtr  blobs = darkSpots->ExtractBlobs (3);
+    KKB::BlobListPtr  blobs = wr1->ExtractBlobs (3);
 
     int  darkSpotFreq[10];
     int x;
@@ -618,8 +612,8 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
     featureData[DarkSpotCount8] = (float)darkSpotFreq[8];
     featureData[DarkSpotCount9] = (float)darkSpotFreq[9];
 
-    delete  blobs;      blobs     = NULL;
-    delete  darkSpots;  darkSpots = NULL;
+    delete  blobs;
+    blobs = NULL;
   }
 
   if  (intermediateImages)
@@ -659,7 +653,7 @@ FileDescPtr  LarcosFVProducer::DefineFileDesc ()  const
 
 
 
-static  LarcosFVProducer::FileDescPtr  existingFileDesc = NULL;
+FileDescPtr  LarcosFVProducer::existingFileDesc = NULL;
 
 FileDescPtr  LarcosFVProducer::DefineFileDescStatic ()
 {
@@ -669,7 +663,8 @@ FileDescPtr  LarcosFVProducer::DefineFileDescStatic ()
   GlobalGoalKeeper::StartBlock ();
   if  (!existingFileDesc)
   {
-    FileDescPtr  existingFileDesc = new FileDesc ();
+    bool  alreadyExists = false;
+    FileDescPtr  existingFileDesc = new KKMachineLearning::FileDesc ();
     for  (kkint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
     {
       existingFileDesc->AddAAttribute (featureNames[fieldNum], NumericAttribute, alreadyExists);
@@ -739,13 +734,8 @@ FileDescPtr  LarcosFVProducerFactory::FileDesc ()  const
 
 LarcosFVProducerPtr  LarcosFVProducerFactory::ManufactureInstance (RunLog&  runLog)
 {
-  
-
-
-
-}  /* ManufactureInstance */
-
-
+  return new LarcosFVProducer (this);
+} /* ManufactureInstance */
 
 
 

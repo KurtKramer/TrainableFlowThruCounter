@@ -37,8 +37,7 @@ using  namespace  LarcosCounterUnManaged;
 
 PostLarvaeFVProducer::PostLarvaeFVProducer (FactoryFVProducerPtr  factory):
     FeatureVectorProducer ("PostLarvaeFV",
-                           factory,
-                           PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
+                           factory
                           ),
     totPixsForMorphOps (100000)
 {
@@ -53,7 +52,7 @@ PostLarvaeFVProducer::~PostLarvaeFVProducer ()
 
 
 
-PostLarvaeFVPtr  PostLarvaeFVProducer::ComputeFeatureVector (Raster&           image,
+PostLarvaeFVPtr  PostLarvaeFVProducer::ComputeFeatureVector (const Raster&     image,
                                                              const MLClassPtr  knownClass,
                                                              RasterListPtr     intermediateImages,
                                                              RunLog&           runLog
@@ -68,6 +67,27 @@ PostLarvaeFVPtr  PostLarvaeFVProducer::ComputeFeatureVector (Raster&           i
 const type_info*   PostLarvaeFVProducer::FeatureVectorTypeId () const
 {
   return  &(typeid (PostLarvaeFV));
+}
+
+
+const type_info*   PostLarvaeFVProducer::FeatureVectorListTypeId () const
+{
+  return  &(typeid (PostLarvaeFVList));
+}
+
+
+
+PostLarvaeFVListPtr  PostLarvaeFVProducer::ManufacturFeatureVectorList (bool     owner,
+                                                                        RunLog&  runLog
+                                                                       )
+{
+  return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner, runLog);
+}
+
+
+FileDescPtr  PostLarvaeFVProducer::DefineFileDesc () const
+{
+  return  PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
 }
 
 

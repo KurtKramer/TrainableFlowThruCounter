@@ -32,6 +32,8 @@ namespace LarcosCounterUnManaged
                                                           );
 
 
+    static FileDescPtr  DefineFileDescStatic ();
+
     /**
      *@brief  Returns the 'type_info' of the Feature Vector that this instance of 'FeatureComputer' creates.
      */
@@ -150,7 +152,6 @@ namespace LarcosCounterUnManaged
     static  kkint16  DarkSpotCount8;              // 54
     static  kkint16  DarkSpotCount9;              // 55
 
-    static FileDescPtr  DefineFileDescStatic ();
     static FileDescPtr  existingFileDesc;
 
 
