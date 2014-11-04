@@ -673,9 +673,9 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::ExtractDuplicatesByRootImag
 
 
 LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                                     kkint32        _maxToExtract,
-                                                                     float          _minSize
-                                                                    )  const
+                                                                                   kkint32     _maxToExtract,
+                                                                                   float       _minSize
+                                                                                  )  const
 {
   FeatureVectorListPtr  featureVectorList = FeatureVectorList::ExtractImagesForAGivenClass (_mlClass, _maxToExtract, _minSize);
   LarcosFeatureVectorListPtr  imageFeaturesList = new LarcosFeatureVectorList (*featureVectorList);
@@ -689,9 +689,9 @@ LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ExtractImagesForAGivenClas
 
 
 LarcosFeatureVectorListPtr  LarcosFeatureVectorList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                                kkint32            maxImagesPerClass,
-                                                                kkint32            numOfFolds
-                                                               )
+                                                                              kkint32         maxImagesPerClass,
+                                                                              kkint32         numOfFolds
+                                                                             )
 {
   FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (mlClasses, maxImagesPerClass, numOfFolds);
   LarcosFeatureVectorListPtr  stratifiedImagefeatures  = new LarcosFeatureVectorList (*stratifiedFeatureVectors);
