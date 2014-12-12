@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item value="false" key="org.eclipse.cdt.ui.formatter_page.show_invisible_characters"/>
-	<item value="24" key="org.eclipse.cdt.uiformatter_page.white_space.c_view.option"/>
-	<item value="0" key="org.eclipse.cdt.uiformatter_page.white_space_tab_page.node"/>
-	<item value="1037" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_height"/>
 	<item value="1" key="org.eclipse.cdt.uiformatter_page.line_wrapping_tab_page.last_category_index"/>
-	<item value="true" key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit"/>
-	<item value="304" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_x"/>
+	<item value="1037" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_height"/>
+	<item value="0" key="org.eclipse.cdt.uiformatter_page.white_space_tab_page.node"/>
+	<item value="24" key="org.eclipse.cdt.uiformatter_page.white_space.c_view.option"/>
 	<item value="true" key="LexicalSortingAction.sort"/>
-	<item value="2" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.last_focus"/>
+	<item value="304" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_x"/>
+	<item value="true" key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit"/>
 	<item value="35" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y"/>
+	<item value="2" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.last_focus"/>
 	<item value="1313" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_width"/>
 	<item value="0" key="formatter_page.modify_dialog_tab_page.last_focus_index"/>
 	<item value="37" key="org.eclipse.cdt.uiformatter_page.white_space.c_view.inner"/>
@@ -25,8 +25,8 @@
 		<item value="false" key="systemFilter"/>
 	</section>
 	<section name="org.eclipse.cdt.internal.ui.typehierarchy.QuickHierarchy">
-		<item value="300" key="org.eclipse.cdt.internal.ui.typehierarchy.THInformationControlDIALOG_HEIGHT"/>
 		<item value="350" key="org.eclipse.cdt.internal.ui.typehierarchy.THInformationControlDIALOG_WIDTH"/>
+		<item value="300" key="org.eclipse.cdt.internal.ui.typehierarchy.THInformationControlDIALOG_HEIGHT"/>
 		<item value="1239" key="org.eclipse.cdt.internal.ui.typehierarchy.THInformationControlDIALOG_X_ORIGIN"/>
 		<item value="true" key="org.eclipse.cdt.internal.ui.typehierarchy.THInformationControlDIALOG_USE_PERSISTED_LOCATION"/>
 		<item value="623" key="org.eclipse.cdt.internal.ui.typehierarchy.THInformationControlDIALOG_Y_ORIGIN"/>
@@ -37,15 +37,15 @@
 	<section name="org.eclipse.cdt.ui.OPEN_ACTION_SELECTION_DIALOG_SECTION">
 		<item value="398" key="DIALOG_WIDTH"/>
 		<item value="245" key="DIALOG_Y_ORIGIN"/>
-		<item value="460" key="DIALOG_X_ORIGIN"/>
 		<item value="438" key="DIALOG_HEIGHT"/>
+		<item value="460" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.cdt.ui.STRING_VARIABLE_SELECTION_DIALOG_SECTION">
 		<item value="452" key="DIALOG_WIDTH"/>
 		<item value="142" key="DIALOG_Y_ORIGIN"/>
-		<item value="423" key="DIALOG_X_ORIGIN"/>
 		<item value="750" key="DIALOG_HEIGHT"/>
+		<item value="423" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Cantarell|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
