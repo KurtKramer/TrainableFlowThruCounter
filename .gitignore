@@ -189,3 +189,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 /CameraControl
 *.spr
+Apps/GEVPlayerSample/SampleDebug/vc90.idb
