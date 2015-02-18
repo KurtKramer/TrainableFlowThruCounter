@@ -61,7 +61,6 @@ namespace KKManagedRoutines
       int  pixelsPerScanLine = cameraManager.ImagingChamberWidthPixels ();
       pixelsPerMM = (float)pixelsPerScanLine /  width;
       int  erosionStructSize = particles.ErosionStructSize;
-      
 
       lengthComputer = new UmiShrimpLengthComputer (pixelsPerScanLine, cameraManager.ImagingChamberWidth (), erosionStructSize, backgroundPixelTH);
 
