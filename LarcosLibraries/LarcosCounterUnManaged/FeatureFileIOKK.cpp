@@ -641,7 +641,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
       {
         kkint32  imageClassIdx = GetClassIdx (classIdx, example->MLClass ());
         kkint32  predClassIdx  = GetClassIdx (classIdx, example->PredictedClass ());
-        kkint32  p = _out.precision ();
+        kkint32  p = (kkint32)_out.precision();
         _out.precision (11);
         _out << example->ClassName          () << "\t" 
              << imageClassIdx                  << "\t"

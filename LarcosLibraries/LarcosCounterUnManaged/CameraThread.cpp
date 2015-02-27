@@ -33,7 +33,7 @@ CameraThread::CameraThread (LarcosCounterManagerPtr _manager,
                             const KKStr&            _threadName,
                             MsgQueuePtr             _msgQueue
                            ):
-    KKThread (_threadName, _msgQueue),
+    KKThread (_threadName, NULL, _msgQueue),
     log       (_msgQueue),
     manager   (_manager)
 {

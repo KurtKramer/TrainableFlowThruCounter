@@ -78,7 +78,7 @@ public:
     uint  x;
     o << c->Name () << "\t" << count;
 
-    int  oldPrecision = o.precision ();
+    int  oldPrecision = (int)o.precision ();
     o.precision (3);
 
     for  (x = 0;  x < sizeHist.size ();  ++x)
