@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{3f358b5c-62f3-427c-8f95-958c311efccb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{beea39af-c57e-48a5-bf1e-7664fa4be7da}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AboutBox.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="BitmapButton.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferOptionsDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectionThread.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EventMonitorDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FilteringDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GEVPlayer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GEVPlayerDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlDialog.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageSaveDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingThread.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="LogBuffer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ParameterInfo.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="RegisterInterfaceDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SavingThread.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SetupDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SplashPage.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadDisplay.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GEVPlayer.rc">
+      <Filter>Source</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LogBuffer.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutBox.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BitmapButton.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferOptionsDlg.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionThread.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EventMonitorDlg.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FilteringDlg.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GEVPlayer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GEVPlayerDlg.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlDialog.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageSaveDlg.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingThread.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LockableQueue.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ParameterInfo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressDlg.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SavingThread.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SetupDlg.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashPage.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadDisplay.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

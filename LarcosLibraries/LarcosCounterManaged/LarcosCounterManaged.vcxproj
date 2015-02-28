@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{69108ADE-3BF7-4329-BFC2-9AB5FA70923D}</ProjectGuid>
+    <RootNamespace>LarcosCounterManaged</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;$(KSquareLibraries)\KKLineScanner;$(KSquareLibraries)\KKMachineLearning;$(SolutionDir)\LarcosLibraries\LarcosBase;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged;$(PUREGEV_ROOT)\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;fftw.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries;$(SolutionDir)\Libraries\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;$(KSquareLibraries)\KKLineScanner;$(KSquareLibraries)\KKMachineLearning;$(SolutionDir)\LarcosLibraries\LarcosBase;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;fftw.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries;$(SolutionDir)\Libraries\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Data">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Xml">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="CameraParametersManaged.cpp" />
+    <ClCompile Include="LarcosCounterManaged.cpp" />
+    <ClCompile Include="LarcosCounterManagerWrapper.cpp" />
+    <ClCompile Include="LarcosCounterState.cpp" />
+    <ClCompile Include="LarcosCounterStatsManaged.cpp" />
+    <ClCompile Include="LarcosOperatingModes.cpp" />
+    <ClCompile Include="LarcosTrainingModelManaged.cpp" />
+    <ClCompile Include="StatusSnapshotManaged.cpp" />
+    <ClCompile Include="Stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="UmiClass.cpp" />
+    <ClCompile Include="UmiClassList.cpp" />
+    <ClCompile Include="UmiClassStatistic.cpp" />
+    <ClCompile Include="UmiFeatureFileIO.cpp" />
+    <ClCompile Include="UmiFeatureVector.cpp" />
+    <ClCompile Include="UmiFeatureVectorList.cpp" />
+    <ClCompile Include="UmiGoalKeeper.cpp" />
+    <ClCompile Include="UmiInstallationConfig.cpp" />
+    <ClCompile Include="UmiInterface.cpp" />
+    <ClCompile Include="UmiKKStr.cpp" />
+    <ClCompile Include="UmiMethods.cpp" />
+    <ClCompile Include="UmiMsgQueue.cpp" />
+    <ClCompile Include="UmiOperatingParameters.cpp" />
+    <ClCompile Include="UmiOSservices.cpp" />
+    <ClCompile Include="UmiParticleEntry.cpp" />
+    <ClCompile Include="UmiPrediction.cpp" />
+    <ClCompile Include="UmiPredictionList.cpp" />
+    <ClCompile Include="UmiRaster.cpp" />
+    <ClCompile Include="UmiRunLog.cpp" />
+    <ClCompile Include="UmiScannerClock.cpp" />
+    <ClCompile Include="UmiScannerFile.cpp" />
+    <ClCompile Include="UmiScannerFileBuffered.cpp" />
+    <ClCompile Include="UmiScannerFrame.cpp" />
+    <ClCompile Include="UmiScannerHeaderFields.cpp" />
+    <ClCompile Include="UmiSessionParameters.cpp" />
+    <ClCompile Include="UmiShrimpLengthComputer.cpp" />
+    <ClCompile Include="UmiStartStopPoint.cpp" />
+    <ClCompile Include="UmiTrainingClass.cpp" />
+    <ClCompile Include="UmiTrainingConfiguration.cpp" />
+    <ClCompile Include="UmiTrainingModel2.cpp" />
+    <ClCompile Include="UmiVariables.cpp" />
+    <ClCompile Include="UnManagedInterface.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CameraParametersManaged.h" />
+    <ClInclude Include="LarcosCounterManaged.h" />
+    <ClInclude Include="LarcosCounterManagerWrapper.h" />
+    <ClInclude Include="LarcosCounterState.h" />
+    <ClInclude Include="LarcosCounterStatsManaged.h" />
+    <ClInclude Include="LarcosOperatingModes.h" />
+    <ClInclude Include="LarcosTrainingModelManaged.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="StatusSnapshotManaged.h" />
+    <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="UmiClass.h" />
+    <ClInclude Include="UmiClassList.h" />
+    <ClInclude Include="UmiClassStatistic.h" />
+    <ClInclude Include="UmiFeatureFileIO.h" />
+    <ClInclude Include="UmiFeatureVector.h" />
+    <ClInclude Include="UmiFeatureVectorList.h" />
+    <ClInclude Include="UmiGoalKeeper.h" />
+    <ClInclude Include="UmiInstallationConfig.h" />
+    <ClInclude Include="UmiInterface.h" />
+    <ClInclude Include="UmiKKStr.h" />
+    <ClInclude Include="UmiMethods.h" />
+    <ClInclude Include="UmiMsgQueue.h" />
+    <ClInclude Include="UmiOperatingParameters.h" />
+    <ClInclude Include="UmiOSservices.h" />
+    <ClInclude Include="UmiParticleEntry.h" />
+    <ClInclude Include="UmiPrediction.h" />
+    <ClInclude Include="UmiPredictionList.h" />
+    <ClInclude Include="UmiRaster.h" />
+    <ClInclude Include="UmiRunLog.h" />
+    <ClInclude Include="UmiScannerClock.h" />
+    <ClInclude Include="UmiScannerFile.h" />
+    <ClInclude Include="UmiScannerFileBuffered.h" />
+    <ClInclude Include="UmiScannerFrame.h" />
+    <ClInclude Include="UmiScannerHeaderFields.h" />
+    <ClInclude Include="UmiSessionParameters.h" />
+    <ClInclude Include="UmiShrimpLengthComputer.h" />
+    <ClInclude Include="UmiStartStopPoint.h" />
+    <ClInclude Include="UmiTrainingClass.h" />
+    <ClInclude Include="UmiTrainingConfiguration.h" />
+    <ClInclude Include="UmiTrainingModel2.h" />
+    <ClInclude Include="UmiVariables.h" />
+    <ClInclude Include="UnManagedInterface.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LarcosBase\LarcosBase.vcxproj">
+      <Project>{76c41245-c049-43ac-ad3a-db674c25144d}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\LarcosCounterUnManaged\LarcosCounterUnManaged.vcxproj">
+      <Project>{da361848-46cb-481c-98e1-8d1206422ddc}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

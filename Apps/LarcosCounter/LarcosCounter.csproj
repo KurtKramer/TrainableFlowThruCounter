@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LarcosCounter</RootNamespace>
     <AssemblyName>LarcosCounter</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <StartupObject>LarcosCounter.Program</StartupObject>
@@ -29,6 +29,12 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -248,7 +254,7 @@
       <Project>{221BBCA9-12F3-447D-AC47-D0248B10F833}</Project>
       <Name>LarcosControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\LarcosLibraries\LarcosCounterManaged\LarcosCounterManaged.vcproj">
+    <ProjectReference Include="..\..\LarcosLibraries\LarcosCounterManaged\LarcosCounterManaged.vcxproj">
       <Project>{69108ADE-3BF7-4329-BFC2-9AB5FA70923D}</Project>
       <Name>LarcosCounterManaged</Name>
     </ProjectReference>

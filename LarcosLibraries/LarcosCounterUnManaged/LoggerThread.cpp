@@ -36,7 +36,7 @@ LoggerThread::LoggerThread (MsgQueuePtr  _msgQueue,
                             const KKStr& _threadName
                            ):
 
-    KKThread (_threadName, _msgQueue),
+    KKThread (_threadName, NULL, _msgQueue),
     logFile         (NULL),
     logFileName     (),
     loggedMsgs      (_loggedMsgs),
