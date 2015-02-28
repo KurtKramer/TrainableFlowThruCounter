@@ -190,3 +190,4 @@ FakesAssemblies/
 /CameraControl
 *.spr
 Apps/GEVPlayerSample/SampleDebug/vc90.idb
+/Apps/GEVPlayerSample/SampleDebug/*.idb
