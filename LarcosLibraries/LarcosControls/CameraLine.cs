@@ -801,7 +801,7 @@ namespace LarcosControls
 
     private void RequestedSensitivityModeCB_SelectedIndexChanged (object sender, EventArgs e)
     {
-
+      cameraManager.RequestedSensitivityMode (RequestedSensitivityModeCB.Text);
     }
 
     private void MediumSmootingWindow_ValueChanged (object sender, EventArgs e)

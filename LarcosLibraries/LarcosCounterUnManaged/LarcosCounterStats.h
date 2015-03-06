@@ -7,7 +7,8 @@
 #if  !defined(_LARCOSCOUNTERSTATS_)
 #define  _LARCOSCOUNTERSTATS_
 
-#include  "KKBaseTypes.h"
+#include "KKBaseTypes.h"
+#include "KKStr.h"
 
 
 namespace LarcosCounterUnManaged
@@ -24,15 +25,16 @@ namespace LarcosCounterUnManaged
 
     void  Assign (const LarcosCounterStats& stats);
 
-    kkint64  BytesWritten                    () const {return bytesWritten;}
-    kkint64  BytesWrittenAllSegs             () const {return bytesWrittenAllSegs;}
+    kkint64  BytesWritten                      () const {return bytesWritten;}
+    kkint64  BytesWrittenAllSegs               () const {return bytesWrittenAllSegs;}
     kkint32  CropLeft                          () const {return cropLeft;}
     kkint32  CropRight                         () const {return cropRight;}
-    float  CurAnalogGain                     () const {return curAnalogGain;}
+    float  CurAnalogGain                       () const {return curAnalogGain;}
     kkint32  CurDigitalGain                    () const {return curDigitalGain;}
+    const KKStr&  CurSensitivity               () const {return curSensitivity;}
     kkint32  DiskWritingSeqNumBreaks           () const {return diskWritingSeqNumBreaks;}
-    float  FlowRate                          () const {return flowRate;}
-    float  FrameRate                         () const {return frameRate;}
+    float  FlowRate                            () const {return flowRate;}
+    float  FrameRate                           () const {return frameRate;}
     kkint32  CameraTemparature                 () const {return cameraTemparature;}
     kkint32  LogicalFrameProcessorsAvailable   () const {return logicalFrameProcessorsAvailable;} /**< Number of FrameProcessors that are sleeping until available Frame to process. */
     kkint32  LogicalFramesCreated              () const {return logicalFramesCreated;}            /**< Number of logical frames created by the FrameBuilder thread. */
@@ -49,16 +51,17 @@ namespace LarcosCounterUnManaged
     kkint32  PhysicalSeqNumsSkipped            () const {return physicalSeqNumsSkipped;}
     kkint32  ScanLinesRead                     () const {return scanLinesRead;}                   /**< Number of scan lines read by camera acquisition thread. */
     kkint32  ScanLinesWritten                  () const {return scanLinesWritten;}
-    float  ScanRate                          () const {return scanRate;}
-    kkint64  TotalBytesToRead                () const {return totalBytesToRead;}
-    kkint32  TotalLostPackets                () const {return totalLostPackets;}
-    kkint32  WaitingToWriteToDisk            () const {return waitingToWriteToDisk;}            /**< Number of physical frames retrieved from the camera that have not been written to disk. */
+    float    ScanRate                          () const {return scanRate;}
+    kkint64  TotalBytesToRead                  () const {return totalBytesToRead;}
+    kkint32  TotalLostPackets                  () const {return totalLostPackets;}
+    kkint32  WaitingToWriteToDisk              () const {return waitingToWriteToDisk;}            /**< Number of physical frames retrieved from the camera that have not been written to disk. */
 
 
     void  BytesWritten                    (kkint64  _bytesWritten)                   {bytesWritten                   = _bytesWritten;}
     void  BytesWrittenAllSegs             (kkint64  _bytesWrittenAllSegs)            {bytesWrittenAllSegs            = _bytesWrittenAllSegs;}
     void  CurAnalogGain                   (float    _curAnalogGain)                  {curAnalogGain                  = _curAnalogGain;}
     void  CurDigitalGain                  (kkint32  _curDigitalGain)                 {curDigitalGain                 = _curDigitalGain;}
+    void  CurSensitivity                  (const KKStr&  _curSensitivity)            {curSensitivity                 = _curSensitivity;}
     void  CropLeft                        (kkint32  _cropLeft)                       {cropLeft                       = _cropLeft;}
     void  CropRight                       (kkint32  _cropRight)                      {cropRight                      = _cropRight;}
     void  DiskWritingSeqNumBreaks         (kkint32  _diskWritingSeqNumBreaks)        {diskWritingSeqNumBreaks        = _diskWritingSeqNumBreaks;}
@@ -86,13 +89,14 @@ namespace LarcosCounterUnManaged
     void  WaitingToWriteToDisk            (kkint32  _waitingToWriteToDisk)           {waitingToWriteToDisk           = _waitingToWriteToDisk;}
 
   private:
-    kkint64   bytesWritten;
+    kkint64  bytesWritten;
     kkint64  bytesWrittenAllSegs;
     kkint32  cameraTemparature;
     kkint32  cropLeft;
     kkint32  cropRight;
     float    curAnalogGain;
     kkint32  curDigitalGain;
+    KKStr    curSensitivity;
     kkint32  diskWritingSeqNumBreaks;
     float    flowRate;
     float    frameRate;

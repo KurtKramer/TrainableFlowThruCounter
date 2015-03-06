@@ -18,6 +18,7 @@ using namespace LarcosCounterUnManaged;
 
 
 #include "LarcosCounterStatsManaged.h"
+#include "UmiKKStr.h"
 using namespace  LarcosCounterManaged;
 
 
@@ -34,6 +35,7 @@ LarcosCounterStatsManaged::LarcosCounterStatsManaged (LarcosCounterStatsPtr  sta
     cropRight                      (0),
     curAnalogGain                  (0.0f),
     curDigitalGain                 (0),
+    curSensitivity                 (nullptr),
     diskWritingSeqNumBreaks        (0),
     frameRate                      (0),
     cameraTemparature              (-1),
@@ -61,34 +63,35 @@ LarcosCounterStatsManaged::LarcosCounterStatsManaged (LarcosCounterStatsPtr  sta
 {
   if  (stats)
   {
-    bytesWritten                   = stats->BytesWritten                   ();
-    bytesWrittenAllSegs            = stats->BytesWrittenAllSegs            ();
-    cropLeft                       = stats->CropLeft                       ();
-    cropRight                      = stats->CropRight                      ();
-    curAnalogGain                  = stats->CurAnalogGain                  ();
-    curDigitalGain                 = stats->CurDigitalGain                 ();
-    frameRate                      = stats->FrameRate                      ();
-    cameraTemparature              = stats->CameraTemparature              ();
+    bytesWritten                    = stats->BytesWritten                   ();
+    bytesWrittenAllSegs             = stats->BytesWrittenAllSegs            ();
+    cropLeft                        = stats->CropLeft                       ();
+    cropRight                       = stats->CropRight                      ();
+    curAnalogGain                   = stats->CurAnalogGain                  ();
+    curDigitalGain                  = stats->CurDigitalGain                 ();
+    curSensitivity                  = UmiKKStr::KKStrToSystenStr (stats->CurSensitivity ());
+    frameRate                       = stats->FrameRate                      ();
+    cameraTemparature               = stats->CameraTemparature              ();
     logicalFrameProcessorsAvailable = stats->LogicalFrameProcessorsAvailable ();
-    logicalFramesCreated           = stats->LogicalFramesCreated           ();
-    logicalFramesDropped           = stats->LogicalFramesDropped           ();
-    logicalFramesOnQueue           = stats->LogicalFramesOnQueue           ();
-    logicalFramesProcessed         = stats->LogicalFramesProcessed         ();
-    diskWritingSeqNumBreaks        = stats->DiskWritingSeqNumBreaks        ();
-    particlesExtracted             = stats->ParticlesExtracted             ();
-    particlesWaitingProcessing     = stats->ParticlesWaitingProcessing     ();
-    particlesCounted               = stats->ParticlesCounted               ();
-    physicalFramesDropped          = stats->PhysicalFramesDropped          ();
-    physicalFramesProcessed        = stats->PhysicalFramesProcessed        ();
-    physicalFramesRead             = stats->PhysicalFramesRead             ();
-    physicalFramesWaitingToProcess = stats->PhysicalFramesWaitingToProcess ();
-    physicalSeqNumsSkipped         = stats->PhysicalSeqNumsSkipped         ();
-    scanLinesRead                  = stats->ScanLinesRead                  ();
-    scanLinesWritten               = stats->ScanLinesWritten               ();
-    scanRate                       = stats->ScanRate                       ();
-    totalBytesToRead               = stats->TotalBytesToRead               ();
-    totalLostPackets               = stats->TotalLostPackets               ();
-    waitingToWriteToDisk           = stats->WaitingToWriteToDisk           ();
+    logicalFramesCreated            = stats->LogicalFramesCreated           ();
+    logicalFramesDropped            = stats->LogicalFramesDropped           ();
+    logicalFramesOnQueue            = stats->LogicalFramesOnQueue           ();
+    logicalFramesProcessed          = stats->LogicalFramesProcessed         ();
+    diskWritingSeqNumBreaks         = stats->DiskWritingSeqNumBreaks        ();
+    particlesExtracted              = stats->ParticlesExtracted             ();
+    particlesWaitingProcessing      = stats->ParticlesWaitingProcessing     ();
+    particlesCounted                = stats->ParticlesCounted               ();
+    physicalFramesDropped           = stats->PhysicalFramesDropped          ();
+    physicalFramesProcessed         = stats->PhysicalFramesProcessed        ();
+    physicalFramesRead              = stats->PhysicalFramesRead             ();
+    physicalFramesWaitingToProcess  = stats->PhysicalFramesWaitingToProcess ();
+    physicalSeqNumsSkipped          = stats->PhysicalSeqNumsSkipped         ();
+    scanLinesRead                   = stats->ScanLinesRead                  ();
+    scanLinesWritten                = stats->ScanLinesWritten               ();
+    scanRate                        = stats->ScanRate                       ();
+    totalBytesToRead                = stats->TotalBytesToRead               ();
+    totalLostPackets                = stats->TotalLostPackets               ();
+    waitingToWriteToDisk            = stats->WaitingToWriteToDisk           ();
   }
 }
 

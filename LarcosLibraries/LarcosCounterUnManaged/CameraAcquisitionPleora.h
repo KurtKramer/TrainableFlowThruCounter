@@ -196,9 +196,9 @@ namespace LarcosCounterUnManaged
 
     static
     kkint32  GetPvParameterEnum (PvGenParameterArray*  params,
-                               const KKStr&          paramName,
-                               kkint32               defaultValue
-                              );
+                                 const KKStr&          paramName,
+                                 kkint32               defaultValue
+                                );
 
     static
     KKStr  GetPvParameterEnumStr (PvGenParameterArray*  params,

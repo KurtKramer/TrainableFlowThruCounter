@@ -32,6 +32,7 @@ namespace LarcosCounterManaged
     property  kkint32  CropRight                       {kkint32  get ()  {return cropRight;};}
     property  float    CurAnalogGain                   {float    get ()  {return curAnalogGain;};}
     property  kkint32  CurDigitalGain                  {kkint32  get ()  {return curDigitalGain;};}
+    property  String^  CurSensitivity                  {String^  get ()  {return curSensitivity;};}
     property  kkint32  DiskWritingSeqNumBreaks         {kkint32  get ()  {return diskWritingSeqNumBreaks;};}
     property  float    FrameRate                       {float    get ()  {return frameRate;};}
     property  kkint32  CameraTemparature               {kkint32  get ()  {return cameraTemparature;};}
@@ -65,6 +66,7 @@ namespace LarcosCounterManaged
     kkint32  cropRight;
     float    curAnalogGain;
     kkint32  curDigitalGain;
+    String^  curSensitivity;
     kkint32  diskWritingSeqNumBreaks;    
     float    frameRate;
     kkint32  cameraTemparature;

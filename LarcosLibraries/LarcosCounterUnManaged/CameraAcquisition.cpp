@@ -141,9 +141,6 @@ CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
   }
 }
 
-
-
-
   
   
   CommandEntryQueue::CommandEntryQueue ():
@@ -493,6 +490,7 @@ void  CameraAcquisition::GetStats (LarcosCounterStats&  larcosCameraStats) const
 {
   larcosCameraStats.CurAnalogGain          (curAnalogGain);
   larcosCameraStats.CurDigitalGain         (curDigitalGain);
+  larcosCameraStats.CurSensitivity         (curSensitivityMode);
   larcosCameraStats.PhysicalFramesRead     (physicalFramesRead);
   larcosCameraStats.FrameRate              (frameRate);
   larcosCameraStats.CameraTemparature      (cameraTemparature);

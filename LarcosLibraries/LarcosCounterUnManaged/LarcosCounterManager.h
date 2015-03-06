@@ -7,7 +7,7 @@
 #if  !defined(_LARCOSCOUNTERMANAGER_)
 #define  _LARCOSCOUNTERMANAGER_
 
-#include "KKBaseTypes.h"
+
 #include "GoalKeeper.h"
 #include "KKThread.h"
 #include "MsgQueue.h"

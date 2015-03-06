@@ -1273,6 +1273,9 @@ Bitmap^  LarcosCounterManagerWrapper::BuildBitmapFillTargetWidth2 (RasterPtr  ra
   RasterPtr  targetRaster = raster;
   bool  deleteTargetRaster = false;
 
+  if  (targetHeight < 0)
+    return nullptr;
+
   if  (targetWidth > 0)
   {
     float  ratioWidth  = 1.0f;

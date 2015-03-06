@@ -168,8 +168,8 @@ LarcosCounterManager::LarcosCounterManager (MsgQueuePtr  _msgQueue,
     cropLeft                       (0),
     cropRight                      (2047),
 
-    frameHeightMax                 (10000),
-    logicalFrameQueueSizeMax       (15),
+    frameHeightMax                 (14000),
+    logicalFrameQueueSizeMax       (10),
 
     liveVideoHeight                (848),
     liveVideoWidth                 (400),
@@ -3167,7 +3167,7 @@ void  LarcosCounterManager::RequestedSensitivityMode (const KKStr&  _requestedSe
 {
   operatingParameters->RequestedSensitivityMode (_requestedSensitivityMode);
   if  (acquisitionThread)
-    acquisitionThread->RequestedCameraParameters (operatingParameters);
+    acquisitionThread->RequestedSensitivityMode (_requestedSensitivityMode);
 }
 
 
