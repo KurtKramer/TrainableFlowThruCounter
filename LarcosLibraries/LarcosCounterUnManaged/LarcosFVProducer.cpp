@@ -744,16 +744,11 @@ LarcosFVProducerPtr  LarcosFVProducerFactory::ManufactureInstance (RunLog&  runL
 
 
 
-
-
-
-
-
 LarcosFeatureVectorListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
                                                                                   RunLog&  runLog
                                                                                  )
 {
-  return new LarcosFeatureVectorList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner, runLog);
+  return new LarcosFeatureVectorList (LarcosFVProducer::DefineFileDescStatic (), owner, runLog);
 }
 
 

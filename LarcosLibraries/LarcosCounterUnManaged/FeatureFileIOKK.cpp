@@ -27,14 +27,15 @@ using namespace KKB;
 
 #include "FileDesc.h"
 #include "MLClass.h"
-#include "PostLarvaeFV.h"
+#include "LarcosFeatureVector.h"
+
 using namespace KKMachineLearning;
-
-
+           
+           
 #include "FeatureFileIOKK.h"
 using namespace LarcosCounterUnManaged;
-
-
+           
+           
 FeatureFileIOKKPtr  FeatureFileIOKK::driver = CreateAndRegisterInstance ();
 
 
@@ -253,16 +254,16 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
 
 
 
-PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
-                                                const FileDescPtr _fileDesc,
-                                                MLClassList&      _classes, 
-                                                istream&          _in,
-                                                kkint32           _maxCount,    // Maximum # images to load,  less than '0'  indicates all.
-                                                VolConstBool&     _cancelFlag,
-                                                bool&             _changesMade,
-                                                KKStr&            _errorMessage,
-                                                RunLog&           _log
-                                               )
+LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
+                                                       const FileDescPtr _fileDesc,
+                                                       MLClassList&      _classes, 
+                                                       istream&          _in,
+                                                       kkint32           _maxCount,    // Maximum # images to load,  less than '0'  indicates all.
+                                                       VolConstBool&     _cancelFlag,
+                                                       bool&             _changesMade,
+                                                       KKStr&            _errorMessage,
+                                                       RunLog&           _log
+                                                      )
 {
   _log.Level (10) << "FeatureFileIOKK::LoadFile   Loading file[" << _fileName << "]." << endl;
   _log.Flush ();
@@ -321,11 +322,10 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
 
   VectorInt   indirectionTable = CreateIndirectionTable (fields, numOfFeatures);
 
-
-  PostLarvaeFVListPtr examples = new PostLarvaeFVList (_fileDesc, 
-                                                       true,          // true=Owner  examples will own the PostLarvaeFV instances it contains.
-                                                       _log
-                                                      );
+  LarcosFeatureVectorListPtr  examples = new LarcosFeatureVectorList (_fileDesc, 
+                                                                      true,          // true=Owner  examples will own the LarcosFeatureVector instances it contains.
+                                                                      _log
+                                                                      );
 
   examples->Version (version);
 
@@ -365,7 +365,7 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
     {
       // We have an example.
       fieldNum  = 0;
-      PostLarvaeFVPtr  example = new PostLarvaeFV (numOfFeatures);
+      LarcosFeatureVectorPtr  example = new LarcosFeatureVector (numOfFeatures);
       example->Version (version);
 
       while  ((!eol)  &&  (!eof))
@@ -549,21 +549,20 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
                                   RunLog&                _log
                                  )
 {
-  PostLarvaeFVListPtr  examples  = NULL;
+  LarcosFeatureVectorListPtr  examples  = NULL;
 
   _numExamplesWritten = 0;
 
   bool  weOwnImages = false;
 
-  //if  (strcmp (_data.UnderlyingClass (), "PostLarvaeFV") == 0)
-  if  (typeid (_data) == typeid (PostLarvaeFV))
+  if  (typeid (_data) == typeid (LarcosFeatureVector))
   {
-    examples = dynamic_cast<PostLarvaeFVListPtr>(&_data);
+    examples = dynamic_cast<LarcosFeatureVectorListPtr>(&_data);
   }
   else
   {
     weOwnImages = true;
-    examples = new PostLarvaeFVList (_data, true);
+    examples = new LarcosFeatureVectorList (_data, true);
   }
 
   const FileDescPtr  fileDesc = _data.FileDesc ();
@@ -626,7 +625,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
 
   {
     // Write out the actual examples.
-    PostLarvaeFVPtr   example = NULL;
+    LarcosFeatureVectorPtr   example = NULL;
     for  (kkint32 idx = 0; idx < (kkint32)examples->size (); idx++)
     {
       example = examples->IdxToPtr (idx);
