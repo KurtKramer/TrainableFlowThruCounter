@@ -365,7 +365,7 @@ namespace LarcosCounter
       String  origQuality = (String)waterQuality.SelectedItem;
 
       String[]  listOfSizes = trainModels.GetListOfSizes (s);
-      if  ((listOfSizes != null)  &&  (listOfSizes.Length > 1))
+      if  ((listOfSizes != null)  &&  (listOfSizes.Length > 0))
       {
         subjectSize.DataSource = listOfSizes;
         subjectSize.SelectedItem = origSize;

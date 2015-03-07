@@ -36,8 +36,8 @@ using namespace  KKLSC;
 
 #include "Classifier2.h"
 #include "TrainingProcess2.h"
-#include "PostLarvaeFV.h"
-#include "PostLarvaeFVProducer.h"
+#include "LarcosFeatureVector.h"
+#include "LarcosFVProducer.h"
 using namespace KKMachineLearning;
 
 #include "LarcosVariables.h"
@@ -168,8 +168,8 @@ LarcosCounterManager::LarcosCounterManager (MsgQueuePtr  _msgQueue,
     cropLeft                       (0),
     cropRight                      (2047),
 
-    frameHeightMax                 (10000),
-    logicalFrameQueueSizeMax       (15),
+    frameHeightMax                 (14000),
+    logicalFrameQueueSizeMax       (10),
 
     liveVideoHeight                (848),
     liveVideoWidth                 (400),
@@ -984,7 +984,7 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
     trainerCancelFlag = false;
     trainer = new TrainingProcess2 (trainingModelName,
                                     NULL,                // _excludeList,
-                                    PostLarvaeFVProducerFactory::Factory (runLog),
+                                    LarcosFVProducerFactory::Factory (runLog),
                                     *runLog,
                                     NULL,               // _report,
                                     false,              // _forceRebuild,
@@ -3167,7 +3167,7 @@ void  LarcosCounterManager::RequestedSensitivityMode (const KKStr&  _requestedSe
 {
   operatingParameters->RequestedSensitivityMode (_requestedSensitivityMode);
   if  (acquisitionThread)
-    acquisitionThread->RequestedCameraParameters (operatingParameters);
+    acquisitionThread->RequestedSensitivityMode (_requestedSensitivityMode);
 }
 
 
@@ -3581,7 +3581,7 @@ void  LarcosCounterManager::ReadConfiguration ()
   if  (!trainModelName.Empty ())
   {
     // retrieve any parameters specified in the default training model.
-    FileDescPtr  fileDesc = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
+    FileDescPtr  fileDesc = LarcosFVProducer::DefineFileDescStatic ();
     LarcosTrainingConfigurationPtr  config = new LarcosTrainingConfiguration (trainModelName, operatingParameters, *runLog, false);
     if  (!config->FormatGood ())
     {

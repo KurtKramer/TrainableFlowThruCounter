@@ -2,7 +2,7 @@
 #define  _FEATUREFILEIOKK_
 
 #include  "FeatureFileIO.h"
-#include  "PostLarvaeFV.h"
+#include  "LarcosFeatureVector.h"
 
 
 namespace LarcosCounterUnManaged 
@@ -48,16 +48,16 @@ namespace LarcosCounterUnManaged
                                       );
 
 
-    virtual  PostLarvaeFVListPtr  LoadFile (const KKStr&       _fileName,
-                                            const FileDescPtr  _fileDesc,
-                                            MLClassList&       _classes, 
-                                            std::istream&      _in,
-                                            kkint32            _maxCount,    // Maximum # images to load.
-                                            VolConstBool&      _cancelFlag,
-                                            bool&              _changesMade,
-                                            KKStr&             _errorMessage,
-                                            RunLog&            _log
-                                           );
+    virtual  LarcosFeatureVectorListPtr  LoadFile (const KKStr&       _fileName,
+                                                   const FileDescPtr  _fileDesc,
+                                                   MLClassList&       _classes, 
+                                                   std::istream&      _in,
+                                                   kkint32            _maxCount,    // Maximum # images to load.
+                                                   VolConstBool&      _cancelFlag,
+                                                   bool&              _changesMade,
+                                                   KKStr&             _errorMessage,
+                                                   RunLog&            _log
+                                                  );
 
 
     virtual  void   SaveFile (FeatureVectorList&     _data,

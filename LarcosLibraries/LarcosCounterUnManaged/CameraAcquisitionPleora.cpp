@@ -1787,12 +1787,12 @@ void  CameraAcquisitionPleora::Run ()
                 kkint32 flowRateCount = sld[0] + sld[1] * 256 + (sld[2] * 256 * 256) + (sld[3] * 256 * 256 * 256);
                 if  (flowRateCount != lastFlowRateCount)
                 {
-                  *flowRate << physicalFramesRead     << "\t" 
-                            << flowRateScanLineCount  << "\t"
-                            << (int)(sld[0])          << "\t" 
-                            << (int)(sld[1])          << "\t" 
-                            << (int)(sld[2])          << "\t" 
-                            << (int)(sld[3])          << "\t" 
+                  *flowRate << physicalFramesRead    << "\t" 
+                            << flowRateScanLineCount << "\t"
+                            << (int)(sld[0])         << "\t" 
+                            << (int)(sld[1])         << "\t" 
+                            << (int)(sld[2])         << "\t" 
+                            << (int)(sld[3])         << "\t" 
                             << flowRateCount
                             << endl;
                   lastFlowRateCount = flowRateCount;

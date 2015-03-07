@@ -179,6 +179,8 @@
       this.ExitButton = new System.Windows.Forms.Button ();
       this.FlowRateLabel = new System.Windows.Forms.Label ();
       this.FlowRate = new System.Windows.Forms.TextBox ();
+      this.SensitivityLabel = new System.Windows.Forms.Label ();
+      this.Sensitivity = new System.Windows.Forms.TextBox ();
       this.StatsPannel.SuspendLayout ();
       this.TabDisplayed.SuspendLayout ();
       this.Throughput.SuspendLayout ();
@@ -454,6 +456,8 @@
       // StatsPannel
       // 
       this.StatsPannel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.StatsPannel.Controls.Add (this.SensitivityLabel);
+      this.StatsPannel.Controls.Add (this.Sensitivity);
       this.StatsPannel.Controls.Add (this.ScanLinesReadLabel);
       this.StatsPannel.Controls.Add (this.ScanLinesRead);
       this.StatsPannel.Controls.Add (this.LogicalFrameProcessorsAvailabeLabel);
@@ -535,7 +539,7 @@
       // 
       this.LogicalFrameProcessorsAvailabeLabel.AutoSize = true;
       this.LogicalFrameProcessorsAvailabeLabel.Font = new System.Drawing.Font ("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.LogicalFrameProcessorsAvailabeLabel.Location = new System.Drawing.Point (379, 327);
+      this.LogicalFrameProcessorsAvailabeLabel.Location = new System.Drawing.Point (560, 327);
       this.LogicalFrameProcessorsAvailabeLabel.Name = "LogicalFrameProcessorsAvailabeLabel";
       this.LogicalFrameProcessorsAvailabeLabel.Size = new System.Drawing.Size (105, 13);
       this.LogicalFrameProcessorsAvailabeLabel.TabIndex = 83;
@@ -544,7 +548,7 @@
       // LogicalFrameProcessorsAvailable
       // 
       this.LogicalFrameProcessorsAvailable.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.LogicalFrameProcessorsAvailable.Location = new System.Drawing.Point (382, 343);
+      this.LogicalFrameProcessorsAvailable.Location = new System.Drawing.Point (563, 343);
       this.LogicalFrameProcessorsAvailable.Name = "LogicalFrameProcessorsAvailable";
       this.LogicalFrameProcessorsAvailable.ReadOnly = true;
       this.LogicalFrameProcessorsAvailable.Size = new System.Drawing.Size (66, 22);
@@ -1593,6 +1597,26 @@
       this.FlowRate.TabIndex = 229;
       this.FlowRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       // 
+      // SensitivityLabel
+      // 
+      this.SensitivityLabel.AutoSize = true;
+      this.SensitivityLabel.Font = new System.Drawing.Font ("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.SensitivityLabel.Location = new System.Drawing.Point (341, 327);
+      this.SensitivityLabel.Name = "SensitivityLabel";
+      this.SensitivityLabel.Size = new System.Drawing.Size (54, 13);
+      this.SensitivityLabel.TabIndex = 87;
+      this.SensitivityLabel.Text = "Sensitivity";
+      // 
+      // Sensitivity
+      // 
+      this.Sensitivity.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.Sensitivity.Location = new System.Drawing.Point (344, 343);
+      this.Sensitivity.Name = "Sensitivity";
+      this.Sensitivity.ReadOnly = true;
+      this.Sensitivity.Size = new System.Drawing.Size (72, 22);
+      this.Sensitivity.TabIndex = 86;
+      this.Sensitivity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      // 
       // LarcosCounter
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF (6F, 13F);
@@ -1755,6 +1779,8 @@
     private System.Windows.Forms.Label DataIsToBeCountedLabel;
     private System.Windows.Forms.TextBox DataIsToBeRecorded;
     private System.Windows.Forms.Label DataIsToBeRecordedLabel;
+    private System.Windows.Forms.Label SensitivityLabel;
+    private System.Windows.Forms.TextBox Sensitivity;
   }
 }
 

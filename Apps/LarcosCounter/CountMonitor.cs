@@ -608,6 +608,7 @@ namespace LarcosCounter
       ScanLinesRead.Text                   = stats.ScanLinesRead.ToString                   ("###,###,##0");
       AnalogGain.Text                      = stats.CurAnalogGain.ToString                   ("#0.0");
       DigitalGain.Text                     = stats.CurDigitalGain.ToString                  ("##,##0");
+      Sensitivity.Text                     = stats.CurSensitivity;
       BytesWritten.Text                    = stats.BytesWrittenAllSegs.ToString             ("#,###,###,##0");
       ScanLines.Text                       = stats.ScanLinesWritten.ToString                ("##,###,##0");
       WaitingToWriteToDisk.Text            = stats.WaitingToWriteToDisk.ToString            ("##,###,##0");
