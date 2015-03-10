@@ -39,7 +39,8 @@ using namespace KKMachineLearning;
 using namespace  LarcosBase;
 
 
-#include "PostLarvaeFVProducer.h"
+//#include "PostLarvaeFVProducer.h"
+#include "LarcosFVProducer.h"
 using namespace LarcosCounterUnManaged;
 
 
@@ -523,7 +524,7 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
   {
     trainer = new TrainingProcess2 (configFileName,
                                     NULL,
-                                    PostLarvaeFVProducerFactory::Factory (runLog),
+                                    LarcosFVProducerFactory::Factory (runLog),
                                     *runLog,
                                     level,
                                     *cancelFlag,
@@ -569,7 +570,7 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
 
   GC::Collect ();
 
-  FactoryFVProducer*  fvProducerFactory = PostLarvaeFVProducerFactory::Factory (runLog);
+  FactoryFVProducer*  fvProducerFactory = LarcosFVProducerFactory::Factory (runLog);
   FileDescPtr fd = fvProducerFactory->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
@@ -638,7 +639,10 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
 
   GC::Collect ();
 
-  FactoryFVProducer*  fvProducerFactory = PostLarvaeFVProducerFactory::Factory (runLog);
+  //FactoryFVProducer*  fvProducerFactory =   PostLarvaeFVProducerFactory::Factory (runLog);
+  FactoryFVProducer*  fvProducerFactory =   LarcosFVProducerFactory::Factory (runLog);
+
+  
   FileDescPtr fd = fvProducerFactory->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
@@ -738,7 +742,7 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
 
   PostLarvaeFVResetDarkSpotCounts ();
 
-  FactoryFVProducer*  fvProducerFactory = PostLarvaeFVProducerFactory::Factory (runLog);
+  FactoryFVProducer*  fvProducerFactory = LarcosFVProducerFactory::Factory (runLog);
   FileDescPtr fd = fvProducerFactory->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
