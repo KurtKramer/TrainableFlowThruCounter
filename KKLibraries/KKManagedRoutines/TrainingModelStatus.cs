@@ -160,21 +160,17 @@ namespace KKManagedRoutines
     private  void  LoadTrainingModel ()
     {
       trainingModelRunning = true;
-
       if  (trainingModel != null)
       {
         trainingModel = null;
         GC.Collect ();
       }
-
       trainingModel = new UmiTrainingModel2 (runLog, trainingModelName);
       trainingModelLogFileName = trainingModel.RunLogFileName;
-
       if  (forceRebuild)
         trainingModel.LoadTrainigLibrary (true);  // true = Force Rebuild of Model
       else
         trainingModel.LoadExistingModelOtherwiseBuild ();
-
       if  (trainingModel.Valid)
       {
         validModel = true;
@@ -189,7 +185,6 @@ namespace KKManagedRoutines
         validModel = false;
         trainingModel = null;
       }
-
       trainingModelRunning = false;
     }  /* LoadTrainingModel */
 

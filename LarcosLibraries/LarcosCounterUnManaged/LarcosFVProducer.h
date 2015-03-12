@@ -14,6 +14,8 @@ using namespace  KKMachineLearning;
 #include "LarcosFeatureVector.h"
 
 
+#define _LarcosFVProducer_VersionNum_  335
+
 namespace LarcosCounterUnManaged
 {
 
@@ -46,7 +48,7 @@ namespace LarcosCounterUnManaged
                                                                 RunLog&  runLog
                                                                );
 
-    virtual  kkint16  Version ()  const {return 316;}
+    virtual  kkint16  Version ()  const {return _LarcosFVProducer_VersionNum_;}
 
   protected:
     virtual  FileDescPtr  DefineFileDesc ()  const;

@@ -189,6 +189,7 @@ LarcosFVProducer::LarcosFVProducer (FactoryFVProducerPtr  factory):
 {
   workRaster1Area = new uchar[totPixsForMorphOps];
   workRaster2Area = new uchar[totPixsForMorphOps];
+  workRaster3Area = new uchar[totPixsForMorphOps];
 }
 
 
@@ -230,13 +231,13 @@ void  LarcosFVProducer::ReductionByMultiple (kkint32        multiple,
   kkint32  widthOffset  = (srcWidth  % multiple) / 2;
 
   srcRow = -heightOffset;
-  srcCol = -widthOffset;
 
   kkint32  r, c;
 
   for  (destRow = 0;  destRow < destHeight;  ++destRow)
   {
-    for  (destCol = 0;  destCol < destHeight;  ++destCol)
+    srcCol = -widthOffset;
+    for  (destCol = 0;  destCol < destWidth;  ++destCol)
     {
       kkint32 total = 0;
 
@@ -255,13 +256,12 @@ void  LarcosFVProducer::ReductionByMultiple (kkint32        multiple,
           ++count;
         }
       }
-      
       destMatrix[destRow][destCol] = (uchar)(total / count);
       srcCol += multiple;
     }
     srcRow += multiple;
   }
-}  /* ReduceByEvenMultiple */
+}  /* ReductionByMultiple */
 
 
 
@@ -325,9 +325,10 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
                                                                )
 {
   LarcosFeatureVectorPtr  fv = new LarcosFeatureVector (maxNumOfFeatures);
+  fv->MLClass (knownClass);
   float*  featureData = fv->FeatureDataAlter ();
 
-  fv->Version (254);
+  fv->Version (Version ());
 
   kkint32 areaBeforeReduction = 0;
   float  weighedSizeBeforeReduction = 0.0f;
@@ -363,7 +364,7 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
 
   delete  workRaster1Rows;  workRaster1Rows = new uchar*[reducedHeight];
   delete  workRaster2Rows;  workRaster2Rows = new uchar*[reducedHeight];
-  delete  workRaster3Rows;  workRaster2Rows = new uchar*[reducedHeight];
+  delete  workRaster3Rows;  workRaster3Rows = new uchar*[reducedHeight];
 
   uchar*  wp1 = workRaster1Area;
   uchar*  wp2 = workRaster2Area;
@@ -389,7 +390,15 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
 
   if  (reductionMultiple > 1)
   {
-    ReductionByMultiple (reductionMultiple, srcImage, workRaster1);
+    try
+    {
+      ReductionByMultiple (reductionMultiple, srcImage, workRaster1);
+    }
+    catch  (...)
+    {
+      runLog.Level (-1) << endl << "LarcosFVProducer::ComputeFeatureVector   ***ERROR***  Exception calling 'ReductionByMultiple'."  << endl << endl;
+      return NULL;
+    }
     initRaster = &workRaster1;
     wr1        = &workRaster2;
     wr2        = &workRaster3;
@@ -665,12 +674,15 @@ FileDescPtr  LarcosFVProducer::DefineFileDescStatic ()
   if  (!existingFileDesc)
   {
     bool  alreadyExists = false;
-    FileDescPtr  existingFileDesc = new KKMachineLearning::FileDesc ();
+    FileDescPtr  tempFileDesc = new KKMachineLearning::FileDesc ();
     for  (kkint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
     {
-      existingFileDesc->AddAAttribute (featureNames[fieldNum], NumericAttribute, alreadyExists);
+      tempFileDesc->AddAAttribute (featureNames[fieldNum], NumericAttribute, alreadyExists);
     }
-    existingFileDesc = FileDesc::GetExistingFileDesc (existingFileDesc);
+    tempFileDesc->Version (_LarcosFVProducer_VersionNum_);
+
+    existingFileDesc = FileDesc::GetExistingFileDesc (tempFileDesc);
+    tempFileDesc = NULL;
   }
   GlobalGoalKeeper::EndBlock ();
 

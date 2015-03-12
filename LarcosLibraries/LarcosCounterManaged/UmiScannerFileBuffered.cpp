@@ -434,6 +434,8 @@ array<array<byte>^ >^  UmiScannerFileBuffered::GetScanLines  (kkint32  scanLineS
                                                               kkint32  scanLineEnd
                                                              )
 {
+  if  (scanLineStart < 0)
+    scanLineStart = 0;
   kkint32  numScanLines = scanLineEnd - scanLineStart + 1;
   array<array<byte>^ >^  scanLines = gcnew array<array<byte>^ > (numScanLines);
   int                    scanLinesNextRow = 0;
@@ -667,6 +669,11 @@ UmiRaster^  UmiScannerFileBuffered::GetRasterForParticle (UmiParticleEntry^ pe)
   int  peScannerCol  = pe->ScannerCol - 1;
   int  peWidth       = pe->Width + 2;
 
+  if  (peScannerRow < 0)
+  {
+    peWidth = peWidth + peScannerRow;
+    peScannerRow = 0;
+  }
 
   Int32  scanLineStart = peScannerRow;
   Int32  scanLineEnd   = peScannerRow + peHeight - 1;

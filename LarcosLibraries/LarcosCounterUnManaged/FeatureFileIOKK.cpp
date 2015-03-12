@@ -8,10 +8,11 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <typeinfo> 
 #include <vector>
 #include <string.h>
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 
 using namespace std;
 
@@ -555,7 +556,13 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
 
   bool  weOwnImages = false;
 
-  if  (typeid (_data) == typeid (LarcosFeatureVector))
+  const type_info& _dataTI     = typeid(_data);
+  const type_info& _larcosFVTI = typeid(LarcosFeatureVectorList);
+
+  const type_info* _dataTIPtr    =  &(typeid(_data));
+  const type_info* _larcosFVTIPtr = &(typeid(LarcosFeatureVectorList));
+
+  if  (typeid (_data) == typeid (LarcosFeatureVectorList))
   {
     examples = dynamic_cast<LarcosFeatureVectorListPtr>(&_data);
   }
@@ -563,6 +570,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
   {
     weOwnImages = true;
     examples = new LarcosFeatureVectorList (_data, true);
+    examples->Version (_data.Version ());
   }
 
   const FileDescPtr  fileDesc = _data.FileDesc ();

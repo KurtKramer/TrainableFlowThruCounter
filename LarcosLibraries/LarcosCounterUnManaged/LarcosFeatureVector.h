@@ -35,7 +35,7 @@ using namespace KKB;
 #include "MLClass.h"
 using namespace  KKMachineLearning;
 
-#define   CurrentFeatureFileVersionNum  316
+#define   CurrentFeatureFileVersionNum  322
 
 
 namespace LarcosCounterUnManaged 
