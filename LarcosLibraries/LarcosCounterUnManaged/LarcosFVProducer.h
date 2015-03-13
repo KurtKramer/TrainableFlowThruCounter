@@ -50,6 +50,8 @@ namespace LarcosCounterUnManaged
 
     virtual  kkint16  Version ()  const {return _LarcosFVProducer_VersionNum_;}
 
+    static   kkint32  MaxNumFeatures  ()  {return 56;}
+
   protected:
     virtual  FileDescPtr  DefineFileDesc ()  const;
 
@@ -191,7 +193,7 @@ namespace LarcosCounterUnManaged
 
 
     /**
-     *@brief Manufactures a instance of a 'PostLarvaeFVList' class that will own its contents.
+     *@brief Manufactures a instance of a 'LarcosFeatureVectorList' class that will own its contents.
      */
     virtual  LarcosFeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                       RunLog&  runLog

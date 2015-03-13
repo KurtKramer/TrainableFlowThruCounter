@@ -8,6 +8,8 @@ using namespace System::Diagnostics;
 
 
 #include "Classifier2.h"
+#include "FactoryFVProducer.h"
+#include "FeatureVectorProducer.h"
 #include "TrainingProcess2.h"
 
 #include "LarcosTrainingConfiguration.h"
@@ -202,7 +204,8 @@ namespace LarcosCounterManaged
     double**                        crossProbTable;
     int                             crossProbTableNumClasses;
     List<String^>^                  errorMsgs;     /**< Error messages for later recall are added to this list. */
-
+    FactoryFVProducerPtr            factoryFVProducer;
+    FeatureVectorProducerPtr        fvProducer;
     bool                            loadTrainingLibraryRunning;
     System::String^                 modelName;
     UmiRunLog^                      umiRunLog;

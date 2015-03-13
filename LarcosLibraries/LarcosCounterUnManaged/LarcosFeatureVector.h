@@ -4,7 +4,7 @@
 /**
  *@class LarcosCounterUnManaged::LarcosFeatureVector
  *@brief  Specialized version of KKMachineLearning::FeatureVector that will be used 
- *to represent the features of a POST Larvaeimage.
+ *to represent the features of a Shrimp.
  *@author  Kurt Kramer
  *@details
  * Used for the representation of a Single Plankton Image.  You create an instance of this object for 
@@ -34,8 +34,6 @@ using namespace KKB;
 #include "FileDesc.h"
 #include "MLClass.h"
 using namespace  KKMachineLearning;
-
-#define   CurrentFeatureFileVersionNum  322
 
 
 namespace LarcosCounterUnManaged 
@@ -92,9 +90,9 @@ namespace LarcosCounterUnManaged
     void  NumOfEdgePixels  (kkint32  _numOfEdgePixels)  {numOfEdgePixels  = _numOfEdgePixels;}
 
 
-    float   CentroidCol        () const  {return  centroidCol;}    // Centroid with respect to image
-    float   CentroidRow        () const  {return  centroidRow;}    //  ""    ""    ""    ""    ""
-    kkint32 NumOfEdgePixels    () const  {return  numOfEdgePixels;}
+    float   CentroidCol      () const  {return  centroidCol;}    // Centroid with respect to image
+    float   CentroidRow      () const  {return  centroidRow;}    //  ""    ""    ""    ""    ""
+    kkint32 NumOfEdgePixels  () const  {return  numOfEdgePixels;}
 
 
   private:

@@ -671,7 +671,7 @@ UmiRaster^  UmiScannerFileBuffered::GetRasterForParticle (UmiParticleEntry^ pe)
 
   if  (peScannerRow < 0)
   {
-    peWidth = peWidth + peScannerRow;
+    peHeight = peHeight + peScannerRow;
     peScannerRow = 0;
   }
 

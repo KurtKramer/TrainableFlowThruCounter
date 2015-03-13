@@ -50,7 +50,7 @@ UmiFeatureVector::UmiFeatureVector (UmiFeatureVector^  umiFeatureVector):
     features (NULL),
     mlClass (nullptr)
 {
-  features    = new PostLarvaeFV (*(umiFeatureVector->Features ()));
+  features    = new LarcosFeatureVector (*(umiFeatureVector->Features ()));
   mlClass  = UmiClassList::GetUniqueClass (features->MLClass ());
 
   GC::AddMemoryPressure (MemPreasPerFV);
@@ -69,7 +69,7 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
   RasterPtr r = raster->UnmanagedClass ();
   if  (r == NULL)
   {
-    features = new PostLarvaeFV (PostLarvaeFV::MaxNumOfFeatures ());
+    features = new LarcosFeatureVector (LarcosFeatureVector::   KKKK     MaxNumOfFeatures ());
     return;
   }
 

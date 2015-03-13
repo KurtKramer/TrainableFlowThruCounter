@@ -70,7 +70,6 @@ using namespace System::Threading;
 UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^       _umiRunLog,
                                       System::String^  _modelName
                                      ):
-
               cancelFlag                 (new bool),
               classifier                 (NULL),
               classes                    (NULL),
@@ -79,6 +78,8 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^       _umiRunLog,
               config                     (NULL),
               crossProbTable             (NULL),
               crossProbTableNumClasses   (0),
+              factoryFVProducer          (NULL),
+              fvProducer                 (NULL),
               loadTrainingLibraryRunning (false),
               modelName                  (System::String::Copy (_modelName)),
               umiRunLog                  (_umiRunLog),
@@ -103,6 +104,8 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^       _umiRunLog,
   CreateRunLog ();
 
   osRunAsABackGroundProcess ();
+
+  factoryFVProducer =  LarcosFVProducerFactory::Factory (runLog);
 }
 
 
@@ -121,6 +124,8 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^                 _umiRunLog,
               config                     (NULL),
               crossProbTable             (NULL),
               crossProbTableNumClasses   (0),
+              factoryFVProducer          (NULL),
+              fvProducer                 (NULL),
               loadTrainingLibraryRunning (false),
               modelName                  (_config->ModelName ()),
               umiRunLog                  (_umiRunLog),
@@ -147,6 +152,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^                 _umiRunLog,
   osRunAsABackGroundProcess ();
 
   config = new LarcosTrainingConfiguration (*(_config->Config ()));
+  factoryFVProducer =  LarcosFVProducerFactory::Factory (runLog);
 }
 
 
@@ -164,6 +170,8 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^      _umiRunLog,
               config                     (NULL),
               crossProbTable             (NULL),
               crossProbTableNumClasses   (0),
+              factoryFVProducer          (NULL),
+              fvProducer                 (NULL),
               loadTrainingLibraryRunning (false),
               modelName                  (nullptr),
               umiRunLog                  (_umiRunLog),
@@ -200,8 +208,8 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^      _umiRunLog,
 
   KKStr  configFileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + modelNameKKStr;
 
-  FileDescPtr fd = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
-
+  FileDescPtr fd = LarcosFVProducer::DefineFileDescStatic ();
+  factoryFVProducer =  LarcosFVProducerFactory::Factory (runLog);
 
   try
   {
@@ -514,7 +522,7 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
 
   int x = 0;
 
-  FileDescPtr fd = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
+  FileDescPtr fd = LarcosFVProducer::DefineFileDescStatic ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
 
@@ -640,10 +648,8 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
   GC::Collect ();
 
   //FactoryFVProducer*  fvProducerFactory =   PostLarvaeFVProducerFactory::Factory (runLog);
-  FactoryFVProducer*  fvProducerFactory =   LarcosFVProducerFactory::Factory (runLog);
-
   
-  FileDescPtr fd = fvProducerFactory->FileDesc ();
+  FileDescPtr fd = factoryFVProducer->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
 
@@ -653,7 +659,7 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
   {
     trainer = new TrainingProcess2 (configFileName, 
                                     NULL,              // Exclude List
-                                    fvProducerFactory, 
+                                    factoryFVProducer, 
                                     *runLog,
                                     NULL,              // report file stream
                                     forceRebuild,
@@ -836,7 +842,7 @@ UmiPredictionList^   UmiTrainingModel2::BinaryProbailitiesForClass (UmiClass^  l
 
 UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (UmiFeatureVector^  umiFeatureVector)
 {
-  PostLarvaeFVPtr  unKnownExample = new PostLarvaeFV (*(umiFeatureVector->Features ()));
+  LarcosFeatureVectorPtr  unKnownExample = new LarcosFeatureVector (*(umiFeatureVector->Features ()));
   int  numClasses = classes->QueueSize ();
 
   try
@@ -1020,6 +1026,11 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
                                                              )
 {
   bool  sucessful = false;
+
+
+  if  (!fvProducer)
+    fvProducer = factoryFVProducer->ManufactureInstance (*runLog);
+
   
   RasterListPtr  tempIntermediateImages = NULL;
   if  (intermediateImages != nullptr)
@@ -1027,16 +1038,16 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
 
   MLClassPtr  unKnownClass = classes->IdxToPtr (0);
 
-  PostLarvaeFVPtr  fv = NULL;
+  LarcosFeatureVectorPtr  fv = NULL;
   try
   {
-    fv = new PostLarvaeFV (UmiKKStr::SystemStringToKKStr (imageFileName), unKnownClass, sucessful, tempIntermediateImages);
+    fv = new LarcosFeatureVector (UmiKKStr::SystemStringToKKStr (imageFileName), unKnownClass, sucessful, tempIntermediateImages);
   }
   catch  (Exception^ e)
   {
     fv = NULL;
     sucessful = false;
-    System::Windows::Forms::MessageBox::Show ("Exception occured when Constructing a 'PostLarvaeFV' object" + "\n\n" +
+    System::Windows::Forms::MessageBox::Show ("Exception occured when Constructing a 'LarcosFeatureVector' object" + "\n\n" +
                                               e->ToString (),
                                               "UmiTrainingModel2::PredictProbabilities"
                                              );

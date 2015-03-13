@@ -525,7 +525,7 @@ void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProd
 
   delete  fvProducer;  fvProducer = NULL;
 
-  Version (CurrentFeatureFileVersionNum);
+  Version (_LarcosFVProducer_VersionNum_);
 
   kkuint32  numExamplesWritten = 0;
 

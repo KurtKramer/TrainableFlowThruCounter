@@ -6,14 +6,15 @@ using namespace System::Collections;
 using namespace System::Diagnostics;
 
 
-#include  "PostLarvaeFV.h"
+//#include "PostLarvaeFV.h"
+#include "LarcosFeatureVector.h"
 using namespace  LarcosCounterUnManaged ;
 
-#include  "UmiClass.h"
-#include  "UmiClassList.h"
-#include  "UmiRaster.h"
+#include "UmiClass.h"
+#include "UmiClassList.h"
+#include "UmiRaster.h"
 
-#include  "UmiRunLog.h"
+#include "UmiRunLog.h"
 
 
 namespace LarcosCounterManaged 
@@ -48,10 +49,10 @@ namespace LarcosCounterManaged
     UmiFeatureVector (UmiFeatureVector^  umiFeatureVector);  
 
 
-    
+
     //**************************************************************************
     //* Will calculate features off the image that is in "raster"; see         *
-    //* ScsLibrary::PostLarvaeFV::CalcFeatures.  Features that are            *
+    //* LarcosFVProducer::ComputeFeatureVector.  Features that are             *
     //* based off instrumentation data will come from the IntrumentDataManager *
     //* the "imageFileName" will be parsed to get ScannerFileName and ScanLine. *
     //**************************************************************************
@@ -63,9 +64,9 @@ namespace LarcosCounterManaged
 
     //**************************************************************************
     //* Will calculate features off the image that is in "raster"; see         *
-    //* ScsLibrary::PostLarvaeFV::CalcFeatures.  Features that are            *
+    //* LarcosFVProducer::ComputeFeatureVector.  Features that are             *
     //* based off instrumentation data will come from the IntrumentDataManager *
-    //* the "imageFileName" will be parsed to get ScannerFileName and ScanLine. *
+    //* the "imageFileName" will be parsed to get ScannerFileName and ScanLine.*
     //**************************************************************************
     UmiFeatureVector (UmiRaster^       raster,
                       System::String^  imageFileName,
@@ -99,8 +100,7 @@ namespace LarcosCounterManaged
     property float      Probability        {float       get ();  void  set (float      _probability);}
     property bool       Validated          {bool        get ();  void  set (bool       _validated);}
 
-
-    PostLarvaeFVPtr  Features ()  {return  features;}
+   LarcosFeatureVectorPtr  Features ()  {return  features;}
 
 
     String^  FeatureName (int featureNum);
@@ -118,15 +118,14 @@ namespace LarcosCounterManaged
                                       kkuint32%     _scanCol
                                      );
 
-    PostLarvaeFVPtr  UnManagedClass ()  {return  features;}
-
+    LarcosFeatureVectorPtr  UnManagedClass ()  {return  features;}
 
 
   private:
     void  CleanUpUnmanagedResources ();
 
 
-    PostLarvaeFVPtr  features;
-    UmiClass^        mlClass;
+    LarcosFeatureVectorPtr  features;
+    UmiClass^               mlClass;
   };  /* UmiFeatureVector */
 }  /* LarcosCounterManaged */
