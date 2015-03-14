@@ -7,12 +7,17 @@ using namespace System::ComponentModel;
 using namespace System::Collections;
 using namespace System::Diagnostics;
 
+#include "FeatureVector.h"
+using namespace  KKMachineLearning;
+
+#include "LarcosFeatureVector.h"
+using namespace  LarcosCounterUnManaged;
+
 
 #include "MLClass.h"
-#include "PostLarvaeFV.h"
 #include "UmiRunLog.h"
-
 #include "UmiFeatureVector.h"
+
 
 namespace LarcosCounterManaged
 {
@@ -21,7 +26,7 @@ namespace LarcosCounterManaged
   public:
     UmiFeatureVectorList ();
 
-    UmiFeatureVectorList (PostLarvaeFVList&  examples);   /**< Will take ownership of "examples"  contents. */
+    UmiFeatureVectorList (LarcosFeatureVectorList&  examples);   /**< Will take ownership of "examples"  contents. */
 
     UmiFeatureVectorList (FeatureVectorList&  examples);  /**< Will take ownership of "examples"  contents  and reduce it to an empty list.
                                                            * will convert constents into instances of 'PostLarvaeFV'.  If current contents 

@@ -17,24 +17,27 @@
 using namespace std;
 
 #include "KKBaseTypes.h"
-#include "..\\KKBase\\GoalKeeper.h"
+#include "GoalKeeper.h"
 #include "OSservices.h"
-
+#include "Raster.h"
 using namespace KKB;
 
 
+#include "FeatureVector.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-#include "FeatureFileIOKK.h"
-#include "Raster.h"
+using namespace  KKMachineLearning;
 
+#include "FeatureFileIOKK.h"
+#include "LarcosFVProducer.h"
+using namespace  LarcosCounterUnManaged;
+
+
+#include "UmiFeatureVector.h"
 #include "UmiClassList.h"
 #include "UmiKKStr.h"
 #include "UmiRaster.h"
 #include "UmiRunLog.h"
-
-#include "UmiFeatureVector.h"
-
 using namespace  LarcosCounterManaged;
 
 
@@ -69,26 +72,21 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
   RasterPtr r = raster->UnmanagedClass ();
   if  (r == NULL)
   {
-    features = new LarcosFeatureVector (LarcosFeatureVector::   KKKK     MaxNumOfFeatures ());
+    features = new LarcosFeatureVector (LarcosFVProducer::MaxNumOfFeatures ());
     return;
   }
-
   if  (imageFileName != nullptr)
     r->FileName (UmiKKStr::SystemStringToKKStr (imageFileName));
-
   RasterListPtr  tempIntermediateImages = NULL;
   if  (intermediateImages != nullptr)
     tempIntermediateImages = new RasterList (true);
-
-  features = new PostLarvaeFV (*r, mlClass->UnmanagedImageClass (), tempIntermediateImages);
-
+  LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
+  features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), tempIntermediateImages, log->Log ());
   UmiRasterList::CopyOverIntermediateImages (tempIntermediateImages, intermediateImages);
-
+  delete  fvp;
+  fvp = NULL;
   GC::AddMemoryPressure (MemPreasPerFV);
 }
-
-
-
 
 
 
@@ -102,22 +100,21 @@ UmiFeatureVector::UmiFeatureVector (System::Array^   raster,
   RasterPtr r = UmiRaster::BuildRasterObj (raster);
   if  (r == NULL)
   {
-    features = new PostLarvaeFV (PostLarvaeFV::MaxNumOfFeatures ());
+    features = new LarcosFeatureVector (LarcosFVProducer::MaxNumOfFeatures ());
     return;
   }
-
   if  (imageFileName != nullptr)
     r->FileName (UmiKKStr::SystemStringToKKStr (imageFileName));
-
-  features = new PostLarvaeFV (*r, mlClass->UnmanagedImageClass (), nullptr);
-
-  delete  r;  r = NULL;
+  LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
+  features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), NULL, log->Log ());
+  delete  fvp;  fvp = NULL;
+  delete  r;    r   = NULL;
   GC::AddMemoryPressure (MemPreasPerFV);
 }
 
 
 
-UmiFeatureVector::UmiFeatureVector (PostLarvaeFVPtr  _features):
+UmiFeatureVector::UmiFeatureVector (FeatureVectorPtr  _features):
    mlClass (nullptr)
 {
   if  (_features == NULL)
@@ -140,19 +137,15 @@ UmiFeatureVector::UmiFeatureVector (String^         _imageFileName,
   if  (mlClass == nullptr)
     mlClass = UmiClassList::GetUnKnownClassStatic ();
 
-
   RasterListPtr  tempIntermediateImages = NULL;
   if  (_intermediateImages != nullptr)
     tempIntermediateImages = new RasterList (true);
-
-  features = new PostLarvaeFV (UmiKKStr::SystemStringToKKStr (_imageFileName),
-                                mlClass->UnmanagedImageClass (), 
-                                successful, 
-                                tempIntermediateImages
-                               );
-  GC::AddMemoryPressure (MemPreasPerFV);
-
+  LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
+  features = fvp->ComputeFeatureVectorFromImage (UmiKKStr::SystemStringToKKStr (_imageFileName), mlClass->UnmanagedImageClass (), tempIntermediateImages, log->Log ());
   UmiRasterList::CopyOverIntermediateImages (tempIntermediateImages, _intermediateImages);
+  delete  fvp;
+  fvp = NULL;
+  GC::AddMemoryPressure (MemPreasPerFV);
 }
 
 
@@ -185,10 +178,8 @@ String^  UmiFeatureVector::ClassName::get ()
 {
   if  (mlClass != nullptr)
     return  mlClass->Name;
-
   if  (features == NULL)
     return  "";
-
   return  UmiKKStr::KKStrToSystenStr (features->ClassName ());
 }
 
@@ -198,12 +189,10 @@ UmiClass^   UmiFeatureVector::MLClass::get ()
 {
   if  (mlClass != nullptr)
     return mlClass;
-
   if  (!features)
     mlClass = UmiClassList::GetUnKnownClassStatic ();
   else
     mlClass = UmiClassList::GetUniqueClass (features->MLClass ());
-
   return  mlClass;
 }
 
@@ -213,7 +202,6 @@ String^  UmiFeatureVector::ImageFileName::get ()
 {
   if  (!features)
     return "";
-
   return  UmiKKStr::KKStrToSystenStr (features->ImageFileName ());
 }
 
@@ -223,7 +211,6 @@ int  UmiFeatureVector::NumFeatures::get ()
 {
   if  (!features)
     return 0;
-
   return  features->NumOfFeatures ();
 }
 
@@ -251,7 +238,6 @@ bool   UmiFeatureVector::Validated::get ()
 {
   if  (!features)
     return false;
-
   return features->Validated ();
 }
 
@@ -262,12 +248,9 @@ void  UmiFeatureVector::MLClass::set (UmiClass^  umiClass)
 {
   if  (umiClass == nullptr)
     umiClass = UmiClassList::GetUnKnownClassStatic ();
-
   mlClass = umiClass;
-
   if  (!features)
     return;
-
    features->MLClass (umiClass->UnmanagedImageClass ());
 }
 

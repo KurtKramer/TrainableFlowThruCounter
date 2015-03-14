@@ -50,7 +50,7 @@ namespace LarcosCounterUnManaged
 
     virtual  kkint16  Version ()  const {return _LarcosFVProducer_VersionNum_;}
 
-    static   kkint32  MaxNumFeatures  ()  {return 56;}
+    static   kkint32  MaxNumOfFeatures  ()  {return maxNumOfFeatures;}
 
   protected:
     virtual  FileDescPtr  DefineFileDesc ()  const;

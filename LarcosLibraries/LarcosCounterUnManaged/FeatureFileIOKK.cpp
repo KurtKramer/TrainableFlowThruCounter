@@ -29,6 +29,7 @@ using namespace KKB;
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "LarcosFeatureVector.h"
+#include "LarcosFVProducer.h"
 
 using namespace KKMachineLearning;
            
@@ -580,7 +581,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
   kkint32  fileVersionNum = examples->Version ();
   if  (fileVersionNum < 1)
   {
-    fileVersionNum = CurrentFeatureFileVersionNum;
+    fileVersionNum = _LarcosFVProducer_VersionNum_;
     examples->Version (fileVersionNum);
   }
 

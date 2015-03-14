@@ -49,7 +49,6 @@ using namespace System::Windows::Forms;
 
 
 
-
 UmiFeatureVectorList::UmiFeatureVectorList ():
   cancelFlag            (new bool (false)),
   classes               (NULL),
@@ -61,7 +60,7 @@ UmiFeatureVectorList::UmiFeatureVectorList ():
 
 
 
-UmiFeatureVectorList::UmiFeatureVectorList (PostLarvaeFVList&  examples): // Will take ownership of "examples"  contents.
+UmiFeatureVectorList::UmiFeatureVectorList (LarcosFeatureVectorList&  examples): // Will take ownership of "examples"  contents.
   cancelFlag            (new bool (false)),
   classes               (NULL),
   numExamplesWritten    (NULL),

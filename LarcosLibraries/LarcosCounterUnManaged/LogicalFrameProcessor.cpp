@@ -885,9 +885,8 @@ void  LogicalFrameProcessor::AnalyseParticlePostLarvae (RasterPtr  particle,
                                                        )
 {
   RasterPtr  darkSpots = particle->BinarizeByThreshold (200, 255);
-  darkSpots->Erosion (SQUARE3);
-  darkSpots->Erosion (SQUARE3);
-
+  darkSpots->Erosion (MorphOp::SQUARE3);
+  darkSpots->Erosion (MorphOp::SQUARE3);
 
   KKB::BlobListPtr  blobs = darkSpots->ExtractBlobs (1);
   kkint32 countThisParticle = 0;

@@ -593,7 +593,6 @@ UmiRaster^   UmiRaster::BinarizeByThreshold (kkuint32  min,
 UmiRaster^   UmiRaster::ErodeImage (MaskType  mt)
 {
   RasterPtr  erodedRaster = raster->CreateErodedImage ((KKB::MaskTypes)mt);
-
   return  gcnew UmiRaster (erodedRaster);
 }  /* ErodeImage */
 

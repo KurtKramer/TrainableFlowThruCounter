@@ -295,6 +295,7 @@ void  UmiTrainingModel2::CleanUpUnmanagedResources ()
   delete  cancelFlag;      cancelFlag     = NULL;
   delete  classes;         classes        = NULL;
   delete  config;          config         = NULL;
+  delete  fvProducer;      fvProducer     = NULL;
   delete  statusMsg;       statusMsg      = NULL;
   delete  valid;           valid          = NULL;
   delete  probabilities;   probabilities  = NULL;
@@ -803,10 +804,6 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
 
 
 
-
-
-
-
 UmiPredictionList^   UmiTrainingModel2::BinaryProbailitiesForClass (UmiClass^  leftClass)
 {
   if  (!crossProbTable)
@@ -1007,14 +1004,15 @@ void  UmiTrainingModel2::PredictClass (System::String^   imageFileName,
                                       )
 {
   if  (!classifier)
-  {
     return;
-  }
-
-  UmiFeatureVector^  fv = gcnew UmiFeatureVector (raster, imageFileName, umiRunLog);
-
+  if  (!fvProducer)
+    fvProducer = factoryFVProducer->ManufactureInstance (*runLog);
+  UmiRaster^  r = gcnew UmiRaster (raster);
+  r->FileName = imageFileName;
+  MLClassPtr  unknownClass = classes->GetUnKnownClass ();
+  FeatureVectorPtr  fvp = fvProducer->ComputeFeatureVector (*(r->UnmanagedClass ()), unknownClass, NULL, *runLog);
+  UmiFeatureVector^  fv = gcnew UmiFeatureVector (fvp);
   PredictClass (fv, prediction1, prediction2);
-
   return;
 }  /* PredictClass */
 
@@ -1025,23 +1023,18 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
                                                               UmiRasterList^   intermediateImages
                                                              )
 {
-  bool  sucessful = false;
-
-
+  bool  sucessful = true;
   if  (!fvProducer)
     fvProducer = factoryFVProducer->ManufactureInstance (*runLog);
 
-  
   RasterListPtr  tempIntermediateImages = NULL;
   if  (intermediateImages != nullptr)
     tempIntermediateImages = new RasterList (true);
-
   MLClassPtr  unKnownClass = classes->IdxToPtr (0);
-
-  LarcosFeatureVectorPtr  fv = NULL;
+  FeatureVectorPtr  fv = NULL;
   try
   {
-    fv = new LarcosFeatureVector (UmiKKStr::SystemStringToKKStr (imageFileName), unKnownClass, sucessful, tempIntermediateImages);
+    fv = fvProducer->ComputeFeatureVectorFromImage (UmiKKStr::SystemStringToKKStr (imageFileName), unKnownClass, tempIntermediateImages, *runLog);
   }
   catch  (Exception^ e)
   {
@@ -1052,11 +1045,19 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
                                               "UmiTrainingModel2::PredictProbabilities"
                                              );
   }
+  catch  (std::exception&  e2)
+  {
+    fv = NULL;
+    sucessful = false;
+    KKStr  msg = e2.what ();
+    String^  exceptionMsg = UmiKKStr::KKStrToSystenStr (msg);
+    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'ComputeFeatureVectorFromImage'.\n\n" + exceptionMsg, "TrainingModel2::PredictProbabilities");
+  }
   catch  (...)
   {
     fv = NULL;
     sucessful = false;
-    System::Windows::Forms::MessageBox::Show ("Exception occured when Constructing a 'PostLarvaeFV' object\n\nTrainingModel2::PredictProbabilities");
+    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'ComputeFeatureVectorFromImage'.", "TrainingModel2::PredictProbabilities");
   }
 
   UmiRasterList::CopyOverIntermediateImages (tempIntermediateImages, intermediateImages);
@@ -1077,15 +1078,22 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
   }
   catch (Exception^ e)
   {
-    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'PredictProbabilities'" + "\n\n" +
-                                              e->ToString (),
+    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'PredictProbabilities'" + "\n\n" +  e->ToString (),
                                               "UmiTrainingModel2::PredictProbabilities"
                                              );
     predictions = nullptr;
   }
+  catch  (std::exception&  e3)
+  {
+    fv = NULL;
+    sucessful = false;
+    KKStr  msg = e3.what ();
+    String^  exceptionMsg = UmiKKStr::KKStrToSystenStr (msg);
+    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'PredictProbabilities'.\n\n" + exceptionMsg, "TrainingModel2::PredictProbabilities");
+  }
   catch  (...)
   {
-    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'PredictProbabilities'."
+    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'PredictProbabilities'.",
                                               "UmiTrainingModel2::PredictProbabilities"
                                              );
     predictions = nullptr;

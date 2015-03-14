@@ -50,7 +50,7 @@ namespace LarcosCounterManaged
       void   set (uchar _backgroundPixelTH) {raster->BackgroundPixelTH (_backgroundPixelTH);}
     }
 
-    property String^  FileName   {String^  get () {return  UmiKKStr::KKStrToSystenStr (raster->FileName ());}}
+    property String^  FileName   {String^  get () {return  UmiKKStr::KKStrToSystenStr (raster->FileName ());}     void  set (String^  _fileName)  {raster->FileName (UmiKKStr::SystemStringToKKStr (_fileName));}}
     property int      Height     {int      get () {return  raster->Height ();}}
     property bool     IsColor    {bool     get () {return  raster->Color  ();}}
     property int      Width      {int      get () {return  raster->Width  ();}}

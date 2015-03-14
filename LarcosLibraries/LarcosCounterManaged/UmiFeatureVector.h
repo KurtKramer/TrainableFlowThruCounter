@@ -7,8 +7,9 @@ using namespace System::Diagnostics;
 
 
 //#include "PostLarvaeFV.h"
-#include "LarcosFeatureVector.h"
-using namespace  LarcosCounterUnManaged ;
+#include "FeatureVector.h"
+using namespace  KKMachineLearning ;
+
 
 #include "UmiClass.h"
 #include "UmiClassList.h"
@@ -28,8 +29,8 @@ namespace LarcosCounterManaged
                         )
     {
       scannerFileName = _scannerFileName;
-      scanLineNum    = _scanLineNum;
-      scanColNum     = _scanColNum;
+      scanLineNum     = _scanLineNum;
+      scanColNum      = _scanColNum;
     }
 
      System::String^  scannerFileName;
@@ -74,7 +75,7 @@ namespace LarcosCounterManaged
                       UmiRunLog^       log
                      );
 
-    UmiFeatureVector (PostLarvaeFVPtr  _features);  // will take ownership of '_features'  from caller
+    UmiFeatureVector (FeatureVectorPtr  _features);  /**< will take ownership of '_features'  from caller  */
 
     
     UmiFeatureVector (String^         _imageFileName,
@@ -100,7 +101,7 @@ namespace LarcosCounterManaged
     property float      Probability        {float       get ();  void  set (float      _probability);}
     property bool       Validated          {bool        get ();  void  set (bool       _validated);}
 
-   LarcosFeatureVectorPtr  Features ()  {return  features;}
+    FeatureVectorPtr  Features ()  {return  features;}
 
 
     String^  FeatureName (int featureNum);
@@ -112,20 +113,18 @@ namespace LarcosCounterManaged
     static  ParsedImageFileName^  ParseImageFileName (System::String^  fullFileName);
 
 
-    static  void  ParseImageFileName (String^   _fullFileName,
-                                      String^%  _scannerFileName,
-                                      kkuint32%     _scanLine,
-                                      kkuint32%     _scanCol
+    static  void  ParseImageFileName (String^     _fullFileName,
+                                      String^%    _scannerFileName,
+                                      kkuint32%   _scanLine,
+                                      kkuint32%   _scanCol
                                      );
 
-    LarcosFeatureVectorPtr  UnManagedClass ()  {return  features;}
-
+    FeatureVectorPtr  UnManagedClass ()  {return  features;}
 
   private:
     void  CleanUpUnmanagedResources ();
 
-
-    LarcosFeatureVectorPtr  features;
-    UmiClass^               mlClass;
+    FeatureVectorPtr  features;
+    UmiClass^         mlClass;
   };  /* UmiFeatureVector */
 }  /* LarcosCounterManaged */
