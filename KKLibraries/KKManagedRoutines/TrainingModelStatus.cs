@@ -104,7 +104,7 @@ namespace KKManagedRoutines
 
     public  void  ForceCancelation ()
     {
-      // This is going to be a very un-graceful way to cancel. I am
+      // This is going to be a very ungraceful way to cancel. I am
       // I am going to attempt to kill the thread.
 
       trainingModelThread.Abort ();

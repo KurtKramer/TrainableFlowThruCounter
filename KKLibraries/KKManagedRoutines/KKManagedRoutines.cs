@@ -7,8 +7,8 @@ using System.Text;
 
 /** 
  *@namespace  KKManagedRoutines
- *@brief Some simple c# routines for perfoming basic support functions such as ImageEditor.
- *@details Since this code is written in c# this library would bneed to be duplicated for other environments to
+ *@brief Some simple c# routines for performing basic support functions such as ImageEditor.
+ *@details Since this code is written in c# this library would need to be duplicated for other environments to
  *implement GUI's.
  */
 

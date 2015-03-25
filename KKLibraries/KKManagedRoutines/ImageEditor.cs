@@ -371,7 +371,7 @@ namespace KKManagedRoutines
         UmiRaster  nextRaster = o.PerformOperation (lastRaster, runLog);
         if  (nextRaster == null)
         {
-          MessageBox.Show ("Morphilogical operation[" + o.ToString () + "] failed.");
+          MessageBox.Show ("Morphological operation[" + o.ToString () + "] failed.");
           break;
         }
         lastRaster = nextRaster;
@@ -667,7 +667,7 @@ namespace KKManagedRoutines
 
             if  (pixelValue < 255)
             {
-              // We are looking at a forground pixel.
+              // We are looking at a foreground pixel.
               if  (row < rowFirst )
                 rowFirst = row;
               rowLast = row;
@@ -688,7 +688,7 @@ namespace KKManagedRoutines
 
 
       {
-        // We are now gping to add some scale lines
+        // We are now going to add some scale lines
         int scaleColRight = Math.Min (colLast + 5, width - 1);
         int scaleColLeft  = Math.Max (0,           colFirst - 5);
 

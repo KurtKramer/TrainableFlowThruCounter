@@ -79,7 +79,7 @@ namespace KKManagedRoutines
 
       if  (raster == null)
       {
-        MessageBox.Show ("The Raster image was not provoded.");
+        MessageBox.Show ("The Raster image was not provided.");
         return;
       }
 
@@ -139,17 +139,17 @@ namespace KKManagedRoutines
     {
       toolTip = new ToolTip ();
       toolTip.SetToolTip (DisplayGridButton,               "Turns on Grid display;  each grid line represents 1 mm.");
-      toolTip.SetToolTip (ComputeLengthButton,             "Will compute length of shrimp and display results in teh form of red line segments.");
+      toolTip.SetToolTip (ComputeLengthButton,             "Will compute length of shrimp and display results in the form of red line segments.");
       toolTip.SetToolTip (LengthInMM,                      "Displays length of Shrimp, if computed, in mm's.");
       toolTip.SetToolTip (OrientationAngle,                "Displays orientation angle,in degrees, of shrimp if computed .");
-      toolTip.SetToolTip (OriginalClass,                   "Class that was last assiged to image.");
+      toolTip.SetToolTip (OriginalClass,                   "Class that was last assigned to image.");
       toolTip.SetToolTip (TrainingModelName,               "Currently Selected Classifier.");
       toolTip.SetToolTip (BreakDownTrainingLibrary1Button, "Press this button to see prediction break-down, ex: probability of each possible class.");
       toolTip.SetToolTip (Lib1Pred1Class,                  "Prediction made by current classifier.");
       toolTip.SetToolTip (Lib1Pred1Prob,                   "Probability assigned by current active classifier.");
-      toolTip.SetToolTip (Lib1Pred1Votes,                  "Number of votes curent classifier made for prediction.");
+      toolTip.SetToolTip (Lib1Pred1Votes,                  "Number of votes current classifier made for prediction.");
       toolTip.SetToolTip (VerifiedClass,                   "Class that user has verified this image belongs to.");
-      toolTip.SetToolTip (UpdateTrainingLibrayButton,      "Press this button to add this image to the training library for currently active classifer.");
+      toolTip.SetToolTip (UpdateTrainingLibrayButton,      "Press this button to add this image to the training library for currently active classifier.");
       toolTip.SetToolTip (AddNewClassButtom,               "Bring up Add-New-Class dialog to add a new class to training model.");
       toolTip.SetToolTip (OkButton,                        "Press this when done viewing this image.");
     }
@@ -301,7 +301,7 @@ namespace KKManagedRoutines
         Brush  hashMarkBrush = Brushes.Red;
         Pen    gridPen   = new Pen (Color.FromArgb (30, 255, 0, 0));
 
-        // Verticle Hash Marks
+        // Vertical Hash Marks
         while  (true)
         {
           int  hashPos = (int)((float)x * zoomedPixelsPerMM + 0.5f);
@@ -385,7 +385,7 @@ namespace KKManagedRoutines
       leftPanelLastHeight = BottomPanel.Height;
       leftPanelLastWidth  = BottomPanel.Width;
 
-      // We wre going to rotate image so Width and Height must me swapped when comparing with window size.
+      // We were going to rotate image so Width and Height must me swapped when comparing with window size.
       float  factorHeight = (float)SubjectImage.Height / (float)(raster.Width  + 1);
       float  factorWidth  = (float)SubjectImage.Width  / (float)(raster.Height + 1);
 
@@ -400,7 +400,7 @@ namespace KKManagedRoutines
 
       LoadSubjectImage (false);
 
-      // Because the raster will be transposed before we deisplay it;  we need to comare Raster.Height with Panel.Width
+      // Because the raster will be transposed before we display it;  we need to compare Raster.Height with Panel.Width
       // Raster.Width with Panel.Height.
       if  (raster.Height < (BottomPanel.Width - 20))
       {
@@ -589,7 +589,7 @@ namespace KKManagedRoutines
       String  className = (String)VerifiedClass.SelectedItem;
       if  (String.IsNullOrEmpty (className))
       {
-        MessageBox.Show (this, "No class specified", "Update Training Libray");
+        MessageBox.Show (this, "No class specified", "Update Training Library");
       }
       else
       {

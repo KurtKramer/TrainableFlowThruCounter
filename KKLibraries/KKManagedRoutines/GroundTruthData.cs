@@ -8,7 +8,7 @@ using LarcosCounterManaged;
 namespace KKManagedRoutines
 {
   /// <summary>
-  /// Object is responsable for maintaining a list of all Ground Truth locations.   
+  /// Object is responsible for maintaining a list of all Ground Truth locations.   
   /// in a ScannerFile.
   /// </summary>
   public  class GroundTruthData
@@ -133,7 +133,7 @@ namespace KKManagedRoutines
         sw.WriteLine ("Add" + "\t" + entry.scanLine + "\t" +entry.col);
       }
 
-      sw.WriteLine ("// Done Writting File");
+      sw.WriteLine ("// Done Writing File");
       sw.Close ();
       sw = null;
 
