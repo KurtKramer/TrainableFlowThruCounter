@@ -599,12 +599,12 @@ UmiRaster^   UmiRaster::ErodeImage (MaskType  mt)
 
 
 
-UmiRaster^   UmiRaster::DialateImage (MaskType  mt)
+UmiRaster^   UmiRaster::DilateImage (MaskType  mt)
 {
-  RasterPtr  dialatedRaster = raster->CreateDialatedRaster ((KKB::MaskTypes)mt);
+  RasterPtr  dialatedRaster = raster->CreateDilatedRaster ((KKB::MaskTypes)mt);
 
   return  gcnew UmiRaster (dialatedRaster);
-}   /* DialateImage */
+}   /* DilateImage */
 
 
 
@@ -622,7 +622,7 @@ UmiRaster^   UmiRaster::MaskExclude (MaskType    mt)
 UmiRaster^   UmiRaster::OpenImage (MaskType  mt)
 {
   RasterPtr  erodedImage = raster->CreateErodedImage         ((KKB::MaskTypes)mt);
-  RasterPtr  opendImage  = erodedImage->CreateDialatedRaster ((KKB::MaskTypes)mt);
+  RasterPtr  opendImage  = erodedImage->CreateDilatedRaster ((KKB::MaskTypes)mt);
   delete  erodedImage;  erodedImage = NULL;
   return  gcnew UmiRaster (opendImage);
 }  /* OpenImage */
@@ -673,7 +673,7 @@ float  UmiRaster::CalcWeightedArea ()
 
 UmiRaster^   UmiRaster::CloseImage (MaskType  mt)
 {
-  RasterPtr  dialatedImage = raster->CreateDialatedRaster     ((KKB::MaskTypes)mt);
+  RasterPtr  dialatedImage = raster->CreateDilatedRaster     ((KKB::MaskTypes)mt);
   RasterPtr  closedImage   = dialatedImage->CreateErodedImage ((KKB::MaskTypes)mt);
   delete  dialatedImage;  dialatedImage = NULL;
   return  gcnew UmiRaster (closedImage);

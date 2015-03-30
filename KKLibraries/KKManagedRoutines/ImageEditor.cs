@@ -174,7 +174,7 @@ namespace KKManagedRoutines
           case  UmiRaster.OperationType.Closing:            result = r.CloseImage          (mask);         break;
           case  UmiRaster.OperationType.ConnectedComponent: result = r.ConnectedComponent  ();             break;
           case  UmiRaster.OperationType.ConvexHull:         result = r.ConvexHull          ();             break;
-          case  UmiRaster.OperationType.Dialation:          result = r.DialateImage        (mask);         break;
+          case  UmiRaster.OperationType.Dialation:          result = r.DilateImage        (mask);         break;
           case  UmiRaster.OperationType.Edge:               result = r.EdgeImage           ();             break;
           case  UmiRaster.OperationType.Erosion:            result = r.ErodeImage          (mask);         break;
           case  UmiRaster.OperationType.FillHoles:          result = r.FillHoles           ();             break;

@@ -123,7 +123,7 @@ namespace LarcosCounterManaged
 
      UmiRaster^   CreateColor ();
 
-     UmiRaster^   DialateImage (MaskType  mt);
+     UmiRaster^   DilateImage (MaskType  mt);
 
      void   DrawLine (int bpRow,    int bpCol,
                       int epRow,    int epCol,

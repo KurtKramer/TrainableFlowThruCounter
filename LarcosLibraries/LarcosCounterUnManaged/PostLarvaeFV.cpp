@@ -763,8 +763,8 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
 
   float  edgeMomentf[9];
 
-  raster->Dialation (wr1);
-  wr1->Dialation (wr2);
+  raster->Dilation (wr1);
+  wr1->Dilation (wr2);
   wr2->FillHole (wr1);
 
   if  (false)
@@ -826,31 +826,31 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   }
 
   raster->Erosion (wr1);
-  wr1->Dialation (wr2);
+  wr1->Dilation (wr2);
   float  areaOpen3 = (float)(wr2->ForegroundPixelCount());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening3_" + StrFormatInt ((kkint32)areaOpen3, "ZZZZZZ0"), intermediateImages);
 
 
   raster->Erosion (wr1, MorphOp::SQUARE5);
-  wr1->Dialation (wr2, MorphOp::SQUARE5);
+  wr1->Dilation (wr2, MorphOp::SQUARE5);
   float  areaOpen5 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening5_" + StrFormatInt ((kkint32)areaOpen5, "ZZZZZZ0"), intermediateImages);
 
   raster->Erosion (wr1, MorphOp::SQUARE7);
-  wr1->Dialation (wr2, MorphOp::SQUARE7);
+  wr1->Dilation (wr2, MorphOp::SQUARE7);
   float  areaOpen7 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening7_" + StrFormatInt ((kkint32)areaOpen7, "ZZZZZZ0"), intermediateImages);
   
   wr2->Erosion (wr1, MorphOp::SQUARE9);
-  wr1->Dialation (wr2, MorphOp::SQUARE9);
+  wr1->Dilation (wr2, MorphOp::SQUARE9);
   float  areaOpen9 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening9_" + StrFormatInt ((kkint32)areaOpen9, "ZZZZZZ0"), intermediateImages);
 
-  raster->Dialation (wr1);
+  raster->Dilation (wr1);
   wr1->Erosion (wr2);
   float  areaClose3 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
@@ -861,13 +861,13 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "FillHole_" + StrFormatInt ((kkint32)tranf, "ZZZZZZ0"), intermediateImages);
 
-  raster->Dialation (wr1, MorphOp::SQUARE5);
+  raster->Dilation (wr1, MorphOp::SQUARE5);
   wr1->Erosion (wr2, MorphOp::SQUARE5);
   float  areaClose5 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Close5_" + StrFormatInt ((kkint32)areaClose5, "ZZZZZZ0"), intermediateImages);
   
-  raster->Dialation (wr1, MorphOp::SQUARE7);
+  raster->Dilation (wr1, MorphOp::SQUARE7);
   wr1->Erosion   (wr2, MorphOp::SQUARE7);
   float  areaClose7 = float (wr2->ForegroundPixelCount ());
   if  (intermediateImages)
