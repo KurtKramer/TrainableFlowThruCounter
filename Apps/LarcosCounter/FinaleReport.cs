@@ -538,7 +538,7 @@ namespace LarcosCounter
       if  (WindowState == FormWindowState.Maximized)
       {
         // Looks like user has pressed the Maximized button.  We have to trap it here because
-        // the ResizeEnd envent does not trap when form is Maximized.
+        // the ResizeEnd event does not trap when form is Maximized.
         //LarcosCommanderFormResized ();
         FinaleReport_Resize (sender, e);
         formIsMaximized = true;
@@ -548,9 +548,9 @@ namespace LarcosCounter
       {
         if  (formIsMaximized)
         {
-          // We normally trap the ResizeEnd event;  but when the form was already maximized and the user
-          // presses the button to unmaximize.  the ResizeEnd does not trap that.  So we check to 
-          // see if the form was already maximize.  If so then we resized the form.
+          // We normally trap the ResizeEnd event; but when the form was already maximized and the user
+          // presses the button to un-maximize. the ResizeEnd does not trap that.  So we check to 
+          // see if the form was already maximize. If so then we resized the form.
           //LarcosCommanderFormResized ();
           FinaleReport_Resize (sender, e);
           formIsMaximized = false;
@@ -664,7 +664,7 @@ namespace LarcosCounter
       }
       catch  (Exception e1)
       {
-        MessageBox.Show (this, "Exception occured redereing Session Report\n\n" + e1.ToString (), "Save Session Report");
+        MessageBox.Show (this, "Exception occurred rendering Session Report\n\n" + e1.ToString (), "Save Session Report");
         renderedReport = null;
       }
 
@@ -680,7 +680,7 @@ namespace LarcosCounter
         }
         catch (Exception e2)
         {
-          MessageBox.Show (this, "Exception occured writting Session Report.\n\n" + e2.ToString (), "Save Session Report");
+          MessageBox.Show (this, "Exception occurred writing Session Report.\n\n" + e2.ToString (), "Save Session Report");
         }
       }
 
