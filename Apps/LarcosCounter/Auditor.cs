@@ -112,7 +112,7 @@ namespace LarcosCounter
       {
         try
         {
-          // Will load header fields from Report ile/ ParticleEntries
+          // Will load header fields from Report File/ ParticleEntries
           UmiParticleEntryList  particleEntriesHeaderFields = new UmiParticleEntryList (scannerFileName, true, runLog);
           trainModelNameReportFile       = particleEntriesHeaderFields.TrainingModelName;
           particlesSessionParameters     = particleEntriesHeaderFields.GetSessionParameters ();
@@ -157,7 +157,7 @@ namespace LarcosCounter
       {
         scannerFile.FrameBytesOffsetsUpdateThreadStart ();
 
-        //  Because 'ParticleEntryDataLoadThreadStart' will startits own thread we want to giove it its own instance of a UmiRunLog.
+        //  Because 'ParticleEntryDataLoadThreadStart' will start its own thread we want to give it its own instance of a UmiRunLog.
         scannerFile.ParticleEntryDataLoadThreadStart (cameraManager.GetUmiRunLogInstance ());
         ScannerFilePanel.SetScannerFile (cameraManager, scannerFile, trainingModelName);
         ScannerFilePanel.PaintWholePanel ();
