@@ -45,13 +45,67 @@ namespace KKManagedRoutines
 
     private  UmiParticleEntry  particleEntry = null;
 
-    private  ToolTip     toolTip = null;
+    private  ToolTip    toolTip = null;
+
+    /// <summary>
+    /// Indicates that the groud-truthing is on; each click defines a new objects or if pointiing to existing one disables it.
+    /// </summary>
+    private  bool       groundTruthing = false;
+    private  Color      groundTruthBackGroundColor = Color.Gray;
 
 
     public  UmiClass  ClassUserValidatesAs  {get {return classUserValidatesAs;}}
 
     public  bool      OkPressed             {get {return okPressed;}}
 
+    Brush  hashMarkBrush = Brushes.Red;
+
+
+    public  class  GroundTruthEntry
+    {
+      public  GroundTruthEntry (int _row, int _col) {row = _row; col = _col;}
+      public  int  row = 0;
+      public  int  col = 0;
+
+      public  long  SquareDistTo (int r, int c)
+      {
+        int  deltaRow = r - row;
+        int  deltaCol = c - col;
+        return  deltaRow * deltaRow + deltaCol * deltaCol;
+      }
+    }
+
+
+    public  class  GroundTruthEntryList:  List<GroundTruthEntry>
+    {
+      public  GroundTruthEntry  FindNearestEntryNearestEntry (int row,
+                                                              int col
+                                                             )
+      {
+        if  (Count < 1)
+          return null;
+
+        GroundTruthEntry  result = null;
+        long  nearestEntryDistSquared = long.MaxValue;
+
+        foreach  (GroundTruthEntry e in this)
+        {
+          long distSquared = e.SquareDistTo (row, col);
+          if  (distSquared < nearestEntryDistSquared)
+          {
+            nearestEntryDistSquared = distSquared;
+            result = e;
+          }
+        }
+
+        return  result;
+      }  /* FindNearestEntry */
+    }  /* GroundTruthEntryList */
+
+
+    private  GroundTruthEntryList  gtEntries = new GroundTruthEntryList ();
+
+    public int  GroundTruthCount  {get{return  (gtEntries == null) ? 0 : gtEntries.Count;}}
 
     public ImageVerifier (LarcosCounterManagerWrapper  _cameraManager,
                           UmiParticleEntry             _particleEntry,
@@ -152,6 +206,7 @@ namespace KKManagedRoutines
       toolTip.SetToolTip (UpdateTrainingLibrayButton,      "Press this button to add this image to the training library for currently active classifier.");
       toolTip.SetToolTip (AddNewClassButtom,               "Bring up Add-New-Class dialog to add a new class to training model.");
       toolTip.SetToolTip (OkButton,                        "Press this when done viewing this image.");
+      toolTip.SetToolTip (GroundTruthButton,               "Enables the groundtruthing function; click on critters to be counted.");
     }
 
 
@@ -298,7 +353,7 @@ namespace KKManagedRoutines
         Graphics  g = Graphics.FromImage (bm);
         float  zoomedPixelsPerMM = zoomFactor * pixelsPerMM;
         int  x = 0;
-        Brush  hashMarkBrush = Brushes.Red;
+
         Pen    gridPen   = new Pen (Color.FromArgb (30, 255, 0, 0));
 
         // Vertical Hash Marks
@@ -338,6 +393,10 @@ namespace KKManagedRoutines
             g.DrawLine (gridPen, hashPos, 0, hashPos, bm.Height - 1);
           x++;
         }
+
+        // Paint Existing Ground Truth Entries
+        foreach  (GroundTruthEntry ge  in  gtEntries)
+          g.FillEllipse (hashMarkBrush, ge.col * zoomFactor, ge.row * zoomFactor, 10, 10);
       }
 
       SubjectImage.Height = bm.Height;
@@ -347,7 +406,7 @@ namespace KKManagedRoutines
     }  /* LoadSubjectImage */
 
 
-    
+        
     private  void  LoadTrainingModel1 (String  modelName,
                                        bool    forceRebuild
                                       )
@@ -377,6 +436,8 @@ namespace KKManagedRoutines
 
     private void  ImageVerifier_Load (object sender, EventArgs e)
     {
+      groundTruthBackGroundColor = GroundTruthButton.BackColor;
+
       InitializeScreenFields ();
 
       lastHeight = Height;
@@ -635,5 +696,58 @@ namespace KKManagedRoutines
       }
     }
 
+
+    private void SubjectImage_MouseClick (object sender, MouseEventArgs e)
+    {
+      if  (!groundTruthing)
+        return;
+
+      if  (zoomFactor <= 0.0)
+        zoomFactor= 1.0f;
+
+      int  row = (int)((float)e.Location.Y  / zoomFactor);
+      int  col = (int)((float)e.Location.X  / zoomFactor);
+  
+      GroundTruthEntry ge = gtEntries.FindNearestEntryNearestEntry (row, col);
+      if  (ge == null)
+      {
+        ge = new GroundTruthEntry (row, col);
+        gtEntries.Add (ge);
+      }
+      else
+      {
+        int  dist = (int)Math.Sqrt ((double)ge.SquareDistTo (row, col));
+        if  (dist < 30)
+        {
+          gtEntries.Remove (ge);
+        }
+        else
+        {
+          ge = new GroundTruthEntry (row, col);
+          gtEntries.Add (ge);
+        }
+      }
+
+      LoadSubjectImage (false);
+
+      GroundTruthCountField.Text = gtEntries.Count.ToString ("##0");
+    }
+
+
+
+    private void GroundTruthButton_Click (object sender, EventArgs e)
+    {
+      groundTruthing = !groundTruthing;
+      if  (groundTruthing)
+      {
+        GroundTruthButton.BackColor = Color.Blue;
+        toolTip.SetToolTip (GroundTruthButton, "Disables the groundtruthing function.");
+      }
+      else
+      {
+        GroundTruthButton.BackColor = groundTruthBackGroundColor;
+        toolTip.SetToolTip (GroundTruthButton, "Enables the groundtruthing function; click on critters to be counted.");
+      }
+    }
   }  /* ImageVerifier*/
 }
