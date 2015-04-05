@@ -48,8 +48,8 @@ void  UmiGoalKeeper::StartBlock ()
       {
         if  (curProcessorId == blockerThreadId)
         {
-          // We are the thread that already holds the block;  so ok for us 
-          // to procees.
+          // We are the thread that already holds the block;  so okay for us 
+          // to process.
           blockerDepth++;
           weAreBlocked = false;
           numBlockedThreads--;
@@ -161,7 +161,7 @@ void   UmiGoalKeeper::EndBlock ()
     throw gcnew Exception ("UmiGoalKeeper::EndBlock    Name[" + name + "]  There was no block established.");
 
   else if  (errorCode == 2)
-    throw gcnew Exception ("UmiGoalKeeper::EndBlock    Name[" + name + "]  ThreadId[" + curProcessorId + "] Curenly holds Block;  our ThreadId[" + curProcessorId + "]");
+    throw gcnew Exception ("UmiGoalKeeper::EndBlock    Name[" + name + "]  ThreadId[" + curProcessorId + "] Currently holds Block;  our ThreadId[" + curProcessorId + "]");
 
   return;
 }  /* EndBlock */

@@ -73,8 +73,8 @@ namespace LarcosCounterManaged
     /**
      *@details  Ratio will be computed from these parameters;  ratio = (1 + _cropColRight - _cropColLeft) / _pixelsPerDisLine
      *@param[in]  _pixelsPerDisLine  Number of displayable pixels
-     *@param[in]  _cropColLeft  Column in Scanner fle that 'LeftCrop' will be set at.
-     *@param[in]  _cropColRight Column in Scanner fle that 'RightCrop' will be set at.
+     *@param[in]  _cropColLeft  Column in Scanner file that 'LeftCrop' will be set at.
+     *@param[in]  _cropColRight Column in Scanner file that 'RightCrop' will be set at.
      */
     void  SetPixelsPerDisplayLine (kkint32 _pixelsPerDisLine,
                                    kkint32 _cropColLeft,
@@ -99,13 +99,13 @@ namespace LarcosCounterManaged
 
     ///
     /// <summary>
-    /// Will populate 'raster' with scan-row data such that each row in raster reprsents a column in the 
-    /// scanner file and each column in 'raster' represents the apropriate 'scannerFile' rows.  This function 
+    /// Will populate 'raster' with scan-row data such that each row in raster represents a column in the 
+    /// scanner file and each column in 'raster' represents the appropriate 'scannerFile' rows.  This function 
     /// will take into count the crop settings and 'ratio' factor.
     /// </summary>
-    /// <param name="displayRowStart">This is the first displayable row to retrieve;  the actual scann file row will be 'displayRowStart' * 'ratio'.</param>
-    /// <param name="displayRowEnd">This is the last displayable row to retrieve;  the actual scann file row will be 'displayRowEnd' * 'ratio'.</param>
-    /// <param name="raster">Thisis the column in the panel that we wish to display; it will be added to 'displayScanRow' to get the relative displayable scan row.</param>
+    /// <param name="displayRowStart">This is the first displayable row to retrieve; the actual scanner file row will be 'displayRowStart' * 'ratio'.</param>
+    /// <param name="displayRowEnd">This is the last displayable row to retrieve;  the actual scanner file row will be 'displayRowEnd' * 'ratio'.</param>
+    /// <param name="raster">This is the column in the panel that we wish to display; it will be added to 'displayScanRow' to get the relative displayable scan row.</param>
     ///
     void  GetDisplayRowsScanColsByScanRows  (kkint32               displayRowStart,
                                              kkint32               displayRowEnd,
@@ -118,8 +118,8 @@ namespace LarcosCounterManaged
     /// <summary>
     /// Will extract a Raster image from the scanner file as it was extracted by the "LogicalFrameProcessor" object;  this 
     /// way we can get the exact same image that was used during the original processing of scanner data.  This includes
-    /// the padding by 2 columns and rows of the image;  this is important so that the feature cmputation routines will 
-    /// work correctly.  some of the routines will be tripped up if they fun into forground pixels that are on the edge 
+    /// the padding by 2 columns and rows of the image;  this is important so that the feature computation routines will 
+    /// work correctly.  some of the routines will be tripped up if they fun into foreground pixels that are on the edge 
     /// of the image.
     /// </summary>
     /// <param name="pe">Particle entry we are to create a raster for.</param>
@@ -132,7 +132,7 @@ namespace LarcosCounterManaged
     /// Will extract a Raster image from the scanner file as it would have been extracted during the counting session.
     /// </summary>
     /// <param name="pe">Particle entry we are to create a raster for.</param>
-    /// <param name="operatingParameters">Parameters used to extract image with;  num erosions etc....</param>
+    /// <param name="operatingParameters">Parameters used to extract image with; number erosions etc....</param>
     ///
     UmiRaster^  GetRasterForParticleAsCounted (UmiParticleEntry^        pe,
                                                UmiOperatingParameters^  operatingParameters
@@ -141,7 +141,7 @@ namespace LarcosCounterManaged
 
     ///
     /// <summary>
-    /// Gets a thumbnail version of te particle specified;  will make sure it fits with in th especifid dimensions.
+    /// Gets a thumbnail version of the particle specified;  will make sure it fits with in the specified dimensions.
     /// </summary>
     /// <param name="pe">Particle entry we are to create a raster for.</param>
     /// <param name="maxHeight">Maximum number of rows.</param>
@@ -160,7 +160,7 @@ namespace LarcosCounterManaged
 
 
 
-    // next group of methods are dedicated to teh StopStart points in a scanner file.  They are 
+    // next group of methods are dedicated to the StopStart points in a scanner file. They are 
     // Managed wrappers of the unmanaged version in "ScannerFile" via the "UmiScannerFile" object. 
 
     void  AddStartPoint (kkint32  _scanLineNum);
@@ -180,10 +180,10 @@ namespace LarcosCounterManaged
     const StartStopPointList&   StartStopPointsUnManaged ();
 
     /*
-     *@brief  Returns an array indication teh record rate in bytes/sec for specified time-intervals.
+     *@brief  Returns an array indication the record rate in bytes/sec for specified time-intervals.
      *@details  Each element in the returned array will give the average number of bytes recorded for the time
-     * the corresponding time interval.  Array element 0 starts atthe beginning of the Scanner file and covers 
-     * the number of scan lines erquired to account for 'intervalSecs' seconds.
+     * the corresponding time interval. Array element 0 starts at the beginning of the Scanner file and covers 
+     * the number of scan lines required to account for 'intervalSecs' seconds.
      */    
     array<float>^  RecordRateByTimeIntervals (int intervalSecs);
 
@@ -216,7 +216,7 @@ namespace LarcosCounterManaged
 
     //  Used to describe which logical column
     kkint32                   cropColLeft;             /**< Scan Column that we start with                                */
-    kkint32                   cropColRight;            /**< Scan Column that we end with;  other clumns will be ignored.  */
+    kkint32                   cropColRight;            /**< Scan Column that we end with; other columns will be ignored.  */
     kkint32                   croppedWidth;
     float                     dispColsPerScanCol;      /**< Should be inverse of ratio.                                   */
     float                     dispRowsPerScanRow;

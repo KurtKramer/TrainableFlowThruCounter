@@ -72,7 +72,7 @@ kkint32  SessionLogger::GetLastSessionId ()
     {
       if  (l.StartsWith ("//"))
       {
-        // We will ignore coment line.
+        // We will ignore comment line.
       }
       else
       {

@@ -246,7 +246,7 @@ const char*  CameraAcquisitionPleora::PvGenTypeToCStr (PvGenType  genType)
   case  PvGenTypeString:     s = "String";     break;
   case  PvGenTypeCommand:    s = "Command";    break;
   case  PvGenTypeFloat:      s = "Float";      break;
-  case  PvGenTypeRegister:   s = "regisetr";   break;
+  case  PvGenTypeRegister:   s = "register";   break;
   case  PvGenTypeUndefined:  s = "Undefined";  break;
   default:
     s = "UnKnown";
@@ -453,7 +453,7 @@ void  CameraAcquisitionPleora::SetPvParameterEnum (const KKStr&  paramName,
   PvGenEnum*  lParam = dynamic_cast<PvGenEnum*> (lDeviceParams->Get (paramName.Str ()));
   if  (!lParam)
   {
-    errMsg = "Paramameter name not valid.";
+    errMsg = "Parameter name not valid.";
     return;
   }
 
@@ -497,7 +497,7 @@ void  CameraAcquisitionPleora::SetPvParameterBool (const KKStr&  paramName,
   PvGenBoolean*  lParam = dynamic_cast<PvGenBoolean*> (lDeviceParams->Get (paramName.Str ()));
   if  (!lParam)
   {
-    errMsg = "Paramameter name not valid.";
+    errMsg = "Parameter name not valid.";
     return;
   }
 
@@ -635,7 +635,7 @@ void  CameraAcquisitionPleora::AddToHeaderField (PvGenParameter*  p)
     break;
 
   case  PvGenTypeRegister:   
-    value = "regisetr";
+    value = "register";
     break;
 
 
@@ -702,14 +702,14 @@ void   CameraAcquisitionPleora::CameraParametersPopulate (PvGenParameterArray*  
   analogGain = (float)GetPvParameterFloat (params, "GainAbs", -1.0);
   scanRate = (float)GetPvParameterFloat  (params, "AcquisitionLineRateAbs", 0.0);
 
-  cameraParams.DeviceVendorName (GetPvParameterString         (params, "DeviceVendorName",       ""));
-  cameraParams.DeviceModelName  (GetPvParameterString         (params, "DeviceModelName",        ""));
-  cameraParams.DeviceVersion    (GetPvParameterString         (params, "DeviceVersion",          ""));
-  cameraParams.DigitalGain      ((kkint32)GetPvParameterInteger (params, "DigitalGainRaw",         -1));
-  cameraParams.FrameHeight      ((kkint32)GetPvParameterInteger (params, "Height",                  0));
-  cameraParams.FrameWidth       ((kkint32)GetPvParameterInteger (params, "Width",                   0));
-  cameraParams.Model            (GetPvParameterString         (params, "DeviceModelName",        ""));
-  cameraParams.SensitivityMode  (GetPvParameterEnumStr        (params, "SensitivityMode",        -1));
+  cameraParams.DeviceVendorName (GetPvParameterString           (params, "DeviceVendorName", ""));
+  cameraParams.DeviceModelName  (GetPvParameterString           (params, "DeviceModelName",  ""));
+  cameraParams.DeviceVersion    (GetPvParameterString           (params, "DeviceVersion",    ""));
+  cameraParams.DigitalGain      ((kkint32)GetPvParameterInteger (params, "DigitalGainRaw",   -1));
+  cameraParams.FrameHeight      ((kkint32)GetPvParameterInteger (params, "Height",            0));
+  cameraParams.FrameWidth       ((kkint32)GetPvParameterInteger (params, "Width",             0));
+  cameraParams.Model            (GetPvParameterString           (params, "DeviceModelName",  ""));
+  cameraParams.SensitivityMode  (GetPvParameterEnumStr          (params, "SensitivityMode",  -1));
 
   kkint64  ipAddr = GetPvParameterInteger (params, "GevCurrentIPAddress",    0);
   cameraParams.IpAddress (Int64ToIpAddress (ipAddr));
@@ -833,7 +833,7 @@ void  CameraAcquisitionPleora::SetSensitivityMode (const KKStr& requestedSensiti
       }
     }
 
-    log.Level (10) << "SetSensitivityMode  Sensativity Mode set to :" << curSensitivityMode << endl;
+    log.Level (10) << "SetSensitivityMode  Sensitivity Mode set to :" << curSensitivityMode << endl;
   }
 
   // Need to get the Pipe Line Running again.
@@ -1215,7 +1215,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
   {
     status = "";
     status << "Unable to connect to Mac-Address: " << MacAddress ();
-    log.Level (-1) << "ConnectToCamera   ***ERROR*** Tryng to connect :" << PvResultToStr (pvConnectResult) << endl
+    log.Level (-1) << "ConnectToCamera   ***ERROR*** Trying to connect :" << PvResultToStr (pvConnectResult) << endl
                    << "   " << status << endl;
     StartStatus (ssConnectionFailed, status);
 
@@ -1237,7 +1237,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
     }
     else
     {
-      log.Level (40) << "ConnectToCamera  IP Address succesfully cnfigured  will now try connecting again." << endl;
+      log.Level (40) << "ConnectToCamera  IP Address successfully configured  will now try connecting again." << endl;
       pvConnectResult = lDevice->Connect (pvMacAddress);
     }
 
@@ -1531,7 +1531,7 @@ void  CameraAcquisitionPleora::DisconnectFromCamera ()
 
   if  (lStream)
   {
-    // Now close the stream. Also optionnal but nice to have
+    // Now close the stream. Also optional but nice to have
     log.Level (20) << "DisconnectFromCamera   Closing Stream." << endl;
     PvResult streamResult = lStream->Close();
     log.Level (40) << "DisconnectFromCamera   Closing Stream Result :" << PvResultToStr (streamResult) << endl;
@@ -1580,7 +1580,7 @@ void  CameraAcquisitionPleora::ComputeFramneIntervals ()
   if  (curScanRate <= 1.0f)
     return;
 
-  // Compoute the number of frames that occur in a 5 second period.
+  // Compute the number of frames that occur in a 5 second period.
   oneSecFrameInterval   = (kkint32)(0.5f + curScanRate *  1.0f / (float)FrameHeight ());
   twoSecFrameInterval   = oneSecFrameInterval *  2;
   threeSecFrameInterval = oneSecFrameInterval *  3;
@@ -1635,7 +1635,7 @@ void  CameraAcquisitionPleora::Run ()
     KKStr  flowMeterName = "C:\\Temp\\FlowMeter_" + dt.Date ().YYYYMMDD () + "-" + dt.Time ().HHMMSS () + ".txt";
     flowRate = new ofstream (flowMeterName.Str ());
     *flowRate << "Frame"  << "\t" << "Scan"  << "\t"  << ""    << "\t"  << ""    << "\t"  << ""    << "\t"  << ""    << "\t"  << ""    << "\t"  << "Total" << endl;
-    *flowRate << "num"    << "\t" << "Line"  << "\t"  << "P0"  << "\t"  << "P1"  << "\t"  << "P2"  << "\t"  << "P3"  << "\t"  << "P4"  << "\t"  << "Count" << endl;
+    *flowRate << "number" << "\t" << "Line"  << "\t"  << "P0"  << "\t"  << "P1"  << "\t"  << "P2"  << "\t"  << "P3"  << "\t"  << "P4"  << "\t"  << "Count" << endl;
   }
 
   // Acquire images until the user instructs us to stop
@@ -1645,7 +1645,7 @@ void  CameraAcquisitionPleora::Run ()
     if  (!lPipeline)
     {
       // We are not communicating to the camera lets try reconnecting.
-      StartStatus (ssDisconnected, "Camera Disconnected !!!  Attempting to reconect.");
+      StartStatus (ssDisconnected, "Camera Disconnected !!!  Attempting to reconnect.");
 
       log.Level (-1) << endl << "CameraAcquisitionPleora::Run    Will Sleep for 2 Seconds." << endl << endl;
 
@@ -1657,7 +1657,7 @@ void  CameraAcquisitionPleora::Run ()
         if  (Manager ()->OperatingMode () == LarcosCounterManager::lomAdvanced)
           Manager ()->AddSecondaryMsg ("Re-connected to Camera.");
 
-        log.Level (-1) << endl << "CameraAcquisitionPleora::Run    *** Conection Re-Established  ***" << endl << endl;
+        log.Level (-1) << endl << "CameraAcquisitionPleora::Run    *** Connection Re-Established  ***" << endl << endl;
 
         lastBlockId = 0;
       }
@@ -1780,7 +1780,7 @@ void  CameraAcquisitionPleora::Run ()
             if  (generateFlowRateReport)
             {
               // This code was added to help get diagnostic info on the 1ast 4 columns of imagery which
-              // are being used to comunicate FlowRate meter pulse count.
+              // are being used to communicate FlowRate meter pulse count.
               const PvUInt8* sld = rawData;
               for (int rrr = 0;  rrr < FrameHeight ();  ++rrr)
               {
@@ -1825,7 +1825,7 @@ void  CameraAcquisitionPleora::Run ()
   delete  flowRate;
   flowRate = NULL;
 
-  Manager ()->AddSecondaryMsg ("Cameras Acquision Stopped.");
+  Manager ()->AddSecondaryMsg ("Cameras Acquisition Stopped.");
 
   StartStatus (ssDisconnected, "Camera Stopped.");
   Status (KKThread::tsStopping);
@@ -2022,7 +2022,7 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
             {
               _runLog.Level (40) << "GetDeviceInfo   IP-Address successfully set." << endl;
               pvDeviveConnectResult = pvDevice->Connect (pvMacAddress);
-              _runLog.Level (10) << "GetDeviceInfo   Connection attemp after IP Address set :" << PvResultToStr (pvDeviveConnectResult) << endl;
+              _runLog.Level (10) << "GetDeviceInfo   Connection attempt after IP Address set :" << PvResultToStr (pvDeviveConnectResult) << endl;
             }
           }
         }
@@ -2121,7 +2121,7 @@ CameraParametersPtr  CameraAcquisitionPleora::GetCameraParameters (const KKStr& 
     else
     {
       CameraParametersPopulate (lDeviceParams, *result, _runLog);
-      _runLog.Level (50) << "GetCameraParameters  Camera Prameters Retrieved." << endl;
+      _runLog.Level (50) << "GetCameraParameters  Camera Parameters Retrieved." << endl;
       lDeviceParams = NULL;
     }
   }
@@ -2367,7 +2367,7 @@ KKStr  CameraAcquisitionPleora::GetPvGenParameterDesc (PvGenParameter*  p,
     break;
 
   case  PvGenTypeRegister:   
-    s = "regisetr";
+    s = "register";
     break;
 
 
@@ -2507,9 +2507,9 @@ bool  CameraAcquisitionPleora::CameraSomePixelsSaturated (float percentThreshold
   kkuint16 numWithHighPoint = 0;
 
   // KAK 2013-10-08
-  // I added a offset to beginning and end of scan-line after there was an issue with Auto Gain tha was
-  // caused by the Flow-Meter count being putinto the first 4 pixels in the column.  This would cause the 
-  // Auto Gain to fail thinking all settings were saturated.  Decided to offset by 30 firm both ends.
+  // I added a offset to beginning and end of scan-line after there was an issue with Auto Gain that was
+  // caused by the Flow-Meter count being put into the first 4 pixels in the column. This would cause the 
+  // Auto Gain to fail thinking all settings were saturated. Decided to offset by 30 firm both ends.
   kkuint16  firstCol = 30;
   kkuint16  lastCol = scanLine->size () - 30;
 
@@ -2788,7 +2788,7 @@ void  CameraAcquisitionPleora::RaiseDigitalGainUntilAtLeastHighValue (int  minHi
 
 /*
  *@details
- *  This cocde was originally implemented for a Dalsa SG-11-02K80.
+ *  This code was originally implemented for a Dalsa SG-11-02K80.
  *@code
  * Background:
  *   Camera: Dalsa SG-11-02K80
@@ -2806,10 +2806,10 @@ void  CameraAcquisitionPleora::RaiseDigitalGainUntilAtLeastHighValue (int  minHi
  *  6) Search for Analog-Gain that is in range of cur value -0.5 to + 1.0 selecting the 1st one
  *     to have "High-Value".
  *
- *    At this point we have the Analog-Gain value we want to live with; we now only neeed to 
+ *    At this point we have the Analog-Gain value we want to live with; we now only need to 
  *    search for the Digital-Gain.
  *  
- *  7) Search for Digital-Gain start with Coarse(increments of a 1000) to fine using incremenst 
+ *  7) Search for Digital-Gain start with Coarse(increments of a 1000) to fine using increment 
  *     of 100, and then 20.
  *@endcode
  */

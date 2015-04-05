@@ -42,7 +42,7 @@ namespace LarcosCounterManaged
     !UmiTrainingConfiguration  ();
 
   public:
-    void                      CancelLoad ();  // Call this methid to set the 'canclFlag' to true.
+    void                      CancelLoad ();  /**< Call this method to set the 'canclFlag' to true.  */
 
     LarcosTrainingConfigurationPtr Config ()  {return config;};
 
@@ -73,7 +73,7 @@ namespace LarcosCounterManaged
 
     String^                   ModelName ();
 
-    kkuint32                  NumHierarchialLevels ();  // returns back the number of hierarchail levels there
+    kkuint32                  NumHierarchialLevels ();  /**< returns back the number of hierarchical levels there.  */
 
     String^                   RootDirExpanded ();
 

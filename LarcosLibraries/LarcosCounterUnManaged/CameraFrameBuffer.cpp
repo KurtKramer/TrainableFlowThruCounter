@@ -538,7 +538,7 @@ void  CameraFrameBuffer::AddFrame (uchar*   cameraData,
 
   // 2014-03-15
   // The 'compensationTable' will now be applied during 'CameraFlatFieldCorrection::ApplyFlatFieldCorrection'
-  // This will resulty in considerble CPU time savings.
+  // This will result in considerable CPU time savings.
   //if  (compensationTable)
   //{
   //  for  (int xx = 0;  xx < cameraDataSize; ++xx)
@@ -552,7 +552,7 @@ void  CameraFrameBuffer::AddFrame (uchar*   cameraData,
   {
     if  (available->QueueSize () < 1)
     {
-      // There are no avaialble frame buffers to use.
+      // There are no available frame buffers to use.
       if  (buffer->QueueSize () < maxNumOfBuffers)
       {
         // We will add a new one or now.
@@ -574,7 +574,7 @@ void  CameraFrameBuffer::AddFrame (uchar*   cameraData,
     {
       if  ((height != frame->FrameHeight ())  ||  (width !=  frame->FrameWidth ()))
       {
-        // We will need to resize the frame; what a pain in the arss.
+        // We will need to resize the frame; what a pain in the ass.
         frame->ReSizeFrame (height, width);
       }
       frame->PopualteFrameFromCameraData (cameraData, 

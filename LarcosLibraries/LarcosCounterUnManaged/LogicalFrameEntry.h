@@ -20,7 +20,7 @@ namespace LarcosCounterUnManaged
   /**
    * @brief  Used to track a single LogicalFrame in a ScannerFile; Scan-Line and Byte-Offset to the start of the frame..
    * @details The 'LogicalFrameProcessor' will create a instance for each LogicalFrame dropped and after recording is
-   *  stopped will use them re re-load the dropped frames and process.
+   *  stopped will use them re-load the dropped frames and process.
    */
   class  LogicalFrameEntry
   {

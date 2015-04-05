@@ -47,7 +47,7 @@ namespace LarcosCounterUnManaged
 
 
     /**
-     *@brief  Call this Method to start writing camera frame data to disk.  Will stay in loop until cancelFlag is true.
+     *@brief  Call this Method to start writing camera frame data to disk; will stay in loop until cancelFlag is true.
      */
     virtual void  Run ();
 

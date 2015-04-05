@@ -1,4 +1,4 @@
-/* StopButtonThread.h -- Stops the processing of a recoding or p;layback seession.
+/* StopButtonThread.h -- Stops the processing of a recoding or playback session.
  * Copyright (C) 2011-2013  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in LarcosCounterUnManaged.txt
  */
@@ -43,7 +43,7 @@ namespace LarcosCounterUnManaged
 
 
     /**
-     *@brief  Call this Method to start writing camera frame data to disk.  Will stay in loop until cancelFlag is true.
+     *@brief  Call this Method to start writing camera frame data to disk; will stay in loop until cancelFlag is true.
      */
     virtual void  Run ();
 

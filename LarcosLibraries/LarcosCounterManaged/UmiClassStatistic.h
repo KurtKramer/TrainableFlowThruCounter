@@ -17,7 +17,7 @@ namespace LarcosCounterManaged
 {
   /*!
    \class  UmiClassStatistic
-   \brief  Used as a vehicle to return statistics for a goven class.
+   \brief  Used as a vehicle to return statistics for a given class.
    */
 
   public ref  class  UmiClassStatistic

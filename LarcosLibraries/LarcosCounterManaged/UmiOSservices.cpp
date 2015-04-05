@@ -201,7 +201,7 @@ String^   UmiOSservices::GetParentDirectoryOfDirPath (String^ path)
 
 String^   UmiOSservices::GetRootNameOfDirectory (String^ path)
 {
-  // Strating with last chracter in string searcgh back until we find a seperating
+  // Starting with last character in string search back until we find a separating
   // character such as a slash or ":".
 
   KKStr  s = UmiKKStr::SystemStringToKKStr (path);

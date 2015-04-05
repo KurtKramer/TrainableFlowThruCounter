@@ -53,20 +53,20 @@ namespace LarcosCounterUnManaged
     kkint32  MemoryConsumedEstimated ()  const;
 
 
-    const KKStr&      ScannerFileRootName () const {return scannerFileRootName;}
-    kkint32           ScannerRow          () const {return scannerRow;}
-    kkint32           ScannerCol          () const {return scannerCol;}
-    kkint32           Height              () const {return height;}
-    kkint32           Width               () const {return width;}
-    MLClassPtr        PredClass           () const {return predClass;}
-    const KKStr&      PredClassName       () const;
-    float             Orientation         () const {return orientation;}
-    float             Length              () const {return length;}
-    float             FlowRateRatio       () const {return flowRateRatio;}
-    float             FlowRate            () const {return flowRate;}
+    const KKStr&  ScannerFileRootName () const {return scannerFileRootName;}
+    kkint32       ScannerRow          () const {return scannerRow;}
+    kkint32       ScannerCol          () const {return scannerCol;}
+    kkint32       Height              () const {return height;}
+    kkint32       Width               () const {return width;}
+    MLClassPtr    PredClass           () const {return predClass;}
+    const KKStr&  PredClassName       () const;
+    float         Orientation         () const {return orientation;}
+    float         Length              () const {return length;}
+    float         FlowRateRatio       () const {return flowRateRatio;}
+    float         FlowRate            () const {return flowRate;}
 
-    float             Probability         () const {return probability;}
-    float             BreakTie            () const {return breakTie;}
+    float         Probability         () const {return probability;}
+    float         BreakTie            () const {return breakTie;}
 
     FeatureVectorPtr  FeatureVector       () const {return featureVector;}
 
@@ -75,18 +75,18 @@ namespace LarcosCounterUnManaged
 
     void  Assign (const ParticleEntry&   _entry);
 
-    void  Assign (const KKStr&   _scannerFileRootName,
-                  kkint32        _scannerRow,
-                  kkint32        _scannewCol,
-                  kkint32        _height,
-                  kkint32        _width,
-                  MLClassPtr     _mlClass,
-                  float          _orientation,
-                  float          _length,
-                  float          _flowRateRatio,
-                  float          _flowRate,
-                  float          _probability,
-                  float          _breakTie
+    void  Assign (const KKStr&  _scannerFileRootName,
+                  kkint32       _scannerRow,
+                  kkint32       _scannewCol,
+                  kkint32       _height,
+                  kkint32       _width,
+                  MLClassPtr    _mlClass,
+                  float         _orientation,
+                  float         _length,
+                  float         _flowRateRatio,
+                  float         _flowRate,
+                  float         _probability,
+                  float         _breakTie
                  );
 
     bool  ExactMatch (kkint32  _scannerRow,

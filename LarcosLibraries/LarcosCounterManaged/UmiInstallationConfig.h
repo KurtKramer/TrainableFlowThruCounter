@@ -34,7 +34,7 @@ namespace LarcosCounterManaged
     /// <summary>
     /// Will duplicate contents of _parms.
     /// <param name="_parms">Parameters being given to this managed instance.</param>
-    /// <param name="runLog">Run Log to report to;  if st to nullptr will create temoraty instance to use.</param>
+    /// <param name="runLog">Run Log to report to;  if st to nullptr will create temporary instance to use.</param>
     /// </summary>
     UmiInstallationConfig  (UmiInstallationConfig^  _parms,
                             UmiRunLog^              runLog
@@ -50,7 +50,7 @@ namespace LarcosCounterManaged
     /// Will allocate create a duplicate of '_parms' and own it.
     /// </summary>
     /// <param name="_parms">Parameters that are to create duplicated.</param>
-    /// <param name="runLog">Run Log to report to;  if st to nullptr will create temoraty instance to use.</param>
+    /// <param name="runLog">Run Log to report to;  if st to nullptr will create temporary instance to use.</param>
     UmiInstallationConfig  (const InstallationConfig&  _parms,
                             UmiRunLog^                 runLog
                            );

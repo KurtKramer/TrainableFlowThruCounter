@@ -19,7 +19,7 @@ namespace LarcosCounterManaged
   /**
    @brief The Managed version of the OSServices methods defined in KKBaseLibrery.
    @details
-    This class is the managed equivelent to the functions defined in UmiOSservices 
+    This class is the managed equivalent to the functions defined in UmiOSservices 
     in KKBaseLibrery.  In some cases we implement the code in the unmanaged world 
     in others we encapsulate the Unmanaged call.
    */
@@ -58,7 +58,7 @@ namespace LarcosCounterManaged
      *@brief  Look for a specified file in a subdirectory structure.
      *@param[in]  fileName  Name of file we are looking for.
      *@param[in]  srcDir    Sub Directory tree we want to search.
-     *@return  Full directory path to where first occurance of fileName is located.  If not 
+     *@return  Full directory path to where first occurrence of fileName is located.  If not 
      *        found will return back nullptr.
      */
     static String^   LookForFile (String^  fileName,

@@ -152,7 +152,7 @@ namespace LarcosCounterUnManaged
 
 
     //************************************************************************************************************************************
-    // Methods that are called in response to user requests such as when a button is pressed; suc as "Start-A-Recprding-Session"
+    // Methods that are called in response to user requests such as when a button is pressed; such as "Start-A-Recording-Session"
 
     void  AutoGainButtonPressed (bool&   _successful,
                                  KKStr&  _errMsg
@@ -164,8 +164,8 @@ namespace LarcosCounterUnManaged
 
     /** 
      *@brief  Call this method when the user presses the Record button.
-     *@details  This will cause the 'RecordButtonThread' to be started.  That thread
-     * will then manage a recording session until it is requested to stop.  It will 
+     *@details  This will cause the 'RecordButtonThread' to be started. That thread
+     * will then manage a recording session until it is requested to stop. It will 
      * initiate several other threads that perform the actual recording and counting of shrimp.
      */
     void  RecordButtonPressed (SessionParametersPtr     _sessionParameters,
@@ -375,7 +375,7 @@ namespace LarcosCounterUnManaged
 
     /**
      *@brief Will derive the next control number by adding one to the training seq number of the previous control number recorded.
-     *@details  Comtrol number is also known as ControlNum and Short-Descriptiomn
+     *@details Control number is also known as ControlNum and Short-Description
      */
     KKStr  GetNextControlNumber ();
 

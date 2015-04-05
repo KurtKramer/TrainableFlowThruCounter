@@ -90,7 +90,7 @@ void  StatusSnapshotThread::Run ()
   lastStats.Reset ();
   while  ((!TerminateFlag ())  &&  (!ShutdownFlag ()))
   {
-    // We will take subsamplings every 0.5 seconds of LogicalFrames on queue and Processors in use.
+    // We will take sub-samplings every 0.5 seconds of LogicalFrames on queue and Processors in use.
     // The mean average will then be used for the snapshot taken at the defined interval of 'snapshotInterval'.
 
     kkint32  numSubSamplingsTaken                 = 0;

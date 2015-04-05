@@ -94,7 +94,7 @@ System::String^   UmiMethods::LatitudeLongitudeToString (double latitude,
                                                          double longitude
                                                         )
 {
-  // It s assumed that both lastitude and longtitude are expressed in degrees
+  // It s assumed that both latitude and longitude are expressed in degrees
 
   bool  north = (latitude >= 0.0);
   latitude = fabs (latitude);

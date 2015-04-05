@@ -14,8 +14,8 @@
 using namespace std;
 
 
-#include  "KKBaseTypes.h"
-#include  "OSservices.h"
+#include "KKBaseTypes.h"
+#include "OSservices.h"
 using namespace KKB;
 
 

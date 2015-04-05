@@ -113,7 +113,7 @@ namespace LarcosCounterUnManaged
 
 
     /**
-     *@brief  Will write the 'OperatingParameters' section of the Traning Model Config section.
+     *@brief  Will write the 'OperatingParameters' section of the Training Model Config section.
      */
     void  WriteConfigSection (ostream&   o)  const;
 

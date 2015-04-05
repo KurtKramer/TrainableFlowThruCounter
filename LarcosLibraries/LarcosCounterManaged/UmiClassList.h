@@ -53,9 +53,9 @@ namespace LarcosCounterManaged
     UmiClassList^   ExtractListOfClassesForAGivenHierarchialLevel (kkuint32 level);
 
 
-    // Will generate an array of 3 String's.  Each String will represent a seperate line to be 
-    // uses as a Class name Header.  Classes will be seperated by the tab('\t') character.
-    // The underscore('_') character in the Class name wil be used to deliminate what goes 
+    // Will generate an array of 3 String's.  Each String will represent a separate line to be 
+    // uses as a Class name Header.  Classes will be separated by the tab('\t') character.
+    // The underscore('_') character in the Class name will be used to deliminate what goes 
     // on which line.  Ex:  The class name "Crustacean_Copepod_Oncea"  will have "Crustacean" 
     // on the 1st line, "Copepod" on the second line, and "Oncea" on the third line.
     List<String^>^    ExtractThreeTitleLines ();
@@ -63,7 +63,7 @@ namespace LarcosCounterManaged
     
     // Using the "_name" parameter will search the global ClassList(allClassesInUniverse)
     // for an existing instance of 'UmiClass' that has the same name.  If one is found
-    // that is what is retuned to the caller; otherwise a new intance is created and returned 
+    // that is what is returned to the caller; otherwise a new instance is created and returned 
     // to the caller.  This new instance will also be added to 'allClassesInUniverse'.
     static  UmiClass^  GetUniqueClass (String^  _name,
                                        String^  _parentName
@@ -138,10 +138,10 @@ namespace LarcosCounterManaged
 
 
     //*********************************************************************************
-    //*  The following structuures support the Concept of only one instance of a      *
-    //*  'UmiClass' object for the same name will be created.  A global list of     *
-    //*  already existinmg instances will be maintained by 'allClassesInUniverse'.    *
-    //*  The ability to locate an existing instance quickly will be acomplised by     *
+    //*  The following structures support the Concept of only one instance of a       *
+    //*  'UmiClass' object for the same name will be created.  A global list of       *
+    //*  already existing instances will be maintained by 'allClassesInUniverse'.     *
+    //*  The ability to locate an existing instance quickly will be accomplished by   *
     //*  'allClassesInUniverseUnManagedIndex' and 'allClassesInUniverseNameIndex'.    *
     //*                                                                               *
     //*********************************************************************************

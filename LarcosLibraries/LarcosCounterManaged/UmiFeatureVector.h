@@ -43,32 +43,33 @@ namespace LarcosCounterManaged
   public  ref class UmiFeatureVector
   {
   public:
-    //**************************************************************************
-    //* Will create a new instance of "features" that will be owned by the new *
-    //* instance of "UmiFeatureVector" that is created.                      *
-    //**************************************************************************
+
+    ///<summary>
+    /// Will create a new instance of "features" that will be owned by the new *
+    /// instance of "UmiFeatureVector" that is created.                      *
+    ///</summary>
     UmiFeatureVector (UmiFeatureVector^  umiFeatureVector);  
 
 
 
-    //**************************************************************************
-    //* Will calculate features off the image that is in "raster"; see         *
-    //* LarcosFVProducer::ComputeFeatureVector.  Features that are             *
-    //* based off instrumentation data will come from the IntrumentDataManager *
-    //* the "imageFileName" will be parsed to get ScannerFileName and ScanLine. *
-    //**************************************************************************
+    ///<summary>
+    /// Will calculate features off the image that is in "raster"; see
+    /// LarcosFVProducer::ComputeFeatureVector.  Features that are
+    /// based off instrumentation data will come from the IntrumentDataManager
+    /// the "imageFileName" will be parsed to get ScannerFileName and ScanLine.
+    ///</summary>
     UmiFeatureVector (System::Array^   raster,
                       System::String^  imageFileName,
                       UmiRunLog^       log                        
                      );
 
 
-    //**************************************************************************
-    //* Will calculate features off the image that is in "raster"; see         *
-    //* LarcosFVProducer::ComputeFeatureVector.  Features that are             *
-    //* based off instrumentation data will come from the IntrumentDataManager *
-    //* the "imageFileName" will be parsed to get ScannerFileName and ScanLine.*
-    //**************************************************************************
+    ///<summary>
+    /// Will calculate features off the image that is in "raster"; see
+    /// LarcosFVProducer::ComputeFeatureVector.  Features that are
+    /// based off instrumentation data will come from the IntrumentDataManager
+    /// the "imageFileName" will be parsed to get ScannerFileName and ScanLine.
+    ///</summary>
     UmiFeatureVector (UmiRaster^       raster,
                       System::String^  imageFileName,
                       UmiRasterList^   intermediateImages,
@@ -113,10 +114,10 @@ namespace LarcosCounterManaged
     static  ParsedImageFileName^  ParseImageFileName (System::String^  fullFileName);
 
 
-    static  void  ParseImageFileName (String^     _fullFileName,
-                                      String^%    _scannerFileName,
-                                      kkuint32%   _scanLine,
-                                      kkuint32%   _scanCol
+    static  void  ParseImageFileName (String^    _fullFileName,
+                                      String^%   _scannerFileName,
+                                      kkuint32%  _scanLine,
+                                      kkuint32%  _scanCol
                                      );
 
     FeatureVectorPtr  UnManagedClass ()  {return  features;}

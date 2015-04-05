@@ -420,7 +420,7 @@ void  LogicalFrameBuilder::PlaceRasterDataIntoLogicalFrameList (ScannerFileEntry
     frame->AssignAFrame (entry,
                          height, width, scanLinesSeqNumOfFisrtScanLine,
                          scannerFileEntry,
-                         curScannerFileScanLineRow,   /**< Row in the Current scanner file that this logicalframe derives from.  */
+                         curScannerFileScanLineRow,   /**< Row in the Current scanner file that this logical frame derives from.  */
                          flowRateRatio,
                          flowRate,
                          logicalFramesSeqNum, scanLinesArea
@@ -449,8 +449,8 @@ void  LogicalFrameBuilder::MoveOutProcessedScanLines ()
   curScannerFileScanLineRow      += (lastScanLineToProcess + 1);
   
   // At this point all scan lines up to and including 'lastScanLineToProcess'  have been selected to add 
-  // to a logical frame.  We will now create that logical frame add add it to the logicalFrame queue for 
-  // later procesing.
+  // to a logical frame.  We will now create that logical frame add it to the logicalFrame queue for 
+  // later processing.
 
   kkint32 linesLeftToProcess = (nextRowToUse - lastScanLineToProcess) - 1;
   if  (linesLeftToProcess > 0)
@@ -497,7 +497,7 @@ void  LogicalFrameBuilder::ProcessDroppedFrames ()
   droppedFramesBeingProcessed = true;
 
   KKStr numFramesDroppedStr = StrFormatInt (numFramesDropped, "##0");
-  AddMsg ("Procesing Dropped Frames [" + numFramesDroppedStr + "]");
+  AddMsg ("Processing Dropped Frames [" + numFramesDroppedStr + "]");
 
   // We will now process all the frames that have been dropped.
   LogicalFrameEntryPtr  frameEntry = droppedFrames->PopFromBack ();
@@ -558,7 +558,7 @@ void  LogicalFrameBuilder::LoadLogicalFrame (ScannerFilePtr        sf,
                      frameWidth, 
                      lineSize,     //  Number pixels read into nextDestRow.
                      colCount,
-                     pixelsInRow   // number of foreground pixels in in row.
+                     pixelsInRow   // number of foreground pixels in row.
                     );
     nextDestRow += frameWidth;
     ++linesRead;

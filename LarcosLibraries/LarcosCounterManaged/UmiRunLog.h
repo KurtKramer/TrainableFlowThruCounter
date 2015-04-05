@@ -48,7 +48,7 @@ namespace LarcosCounterManaged
 
 
     /** 
-     *@brief Returns a duplicate of the Line written to log file;  only if AttachUmiMsgQueue was envoked. 
+     *@brief Returns a duplicate of the Line written to log file;  only if AttachUmiMsgQueue was evoked. 
      *@details This will not effect the current copy of the message queue.  The returned string
      * will be owned by the caller who will be responsible for deleting it.
      */
@@ -64,7 +64,7 @@ namespace LarcosCounterManaged
 
 
     /**
-     *@brief  If there is an attached MsgQueue (AttachUmiMsgQueue was envoked) will retun oldest message in MsgQueue.
+     *@brief  If there is an attached MsgQueue (AttachUmiMsgQueue was evoked) will return oldest message in MsgQueue.
      */
     String^       GetNextMsg ();
 

@@ -98,8 +98,8 @@ namespace LarcosCounterUnManaged
   private:
     static  RasterListPtr  calcImages;
 
-    float     centroidCol;     /**<  cnetroid Collumn with just respect to image. */
-    float     centroidRow;     /**<  cnetroid Row with just respect to image. */
+    float     centroidCol;     /**<  centroid Column with just respect to image. */
+    float     centroidRow;     /**<  centroid Row with just respect to image. */
     kkint32   numOfEdgePixels;
 
   };  /* LarcosFeatureVector */
@@ -138,12 +138,12 @@ namespace LarcosCounterUnManaged
      *@details 
      *@code 
      *  If '_owner' = true 
-     *     Create new instancs of contents and own them.  
+     *     Create new instances of contents and own them.  
      *  else if  'owner' = false, 
      *     Copy over pointers to existing instances.  
      *@endcode
      *@param[in]  _examples   The list of 'LarcosFeatureVector' that is to be copied.
-     *@param[in]  _owner      If 'true' ne instances of 'LarcosFeatureVector' instances will be created
+     *@param[in]  _owner      If 'true' new instances of 'LarcosFeatureVector' instances will be created
      *                        and this new list will own them and if 'false' will just point to
      *                        the existing instances and not own the.
      */
@@ -158,7 +158,7 @@ namespace LarcosCounterUnManaged
      *@details 
      *@code 
      *  If '_owner' = true 
-     *     Create new instancs of contents and own them.  
+     *     Create new instances of contents and own them.  
      *  else if  'owner' = false, 
      *     Copy over pointers to existing instances.  
      *@endcode
@@ -166,7 +166,7 @@ namespace LarcosCounterUnManaged
      * the function will throw an exception.
      *
      *@param[in]  _examples   The list of 'LarcosFeatureVector' that is to be copied.
-     *@param[in]  _owner      If 'true' ne instances of 'LarcosFeatureVector' instances will be created
+     *@param[in]  _owner      If 'true' new instances of 'LarcosFeatureVector' instances will be created
      *                        and this new list will own them and if 'false' will just point to
      *                        the existing instances and not own the.
      */
@@ -180,14 +180,14 @@ namespace LarcosCounterUnManaged
      *        specified directory.
      *@details
      * Will scan the directory _dirName for any image files.  For each image found a new instance of LarcosFeatureVector
-     * will be created whos features will be derived from the image.  These LarcosFeatureVector' objects will be 
-     * assigned the class specified by '_mlClass'.  A new data file containg the extracted features will be 
+     * will be created who's features will be derived from the image. These LarcosFeatureVector' objects will be 
+     * assigned the class specified by '_mlClass'. A new data file containing the extracted features will be 
      * saved in fileName.
      *
      *@param[in] _fvProducerFactory
      *@param[in] _mlClass   Class to assign to new 'LarcosFeatureVector' objects.
      *@param[in] _dirName   Directory to scan for examples.
-     *@param[in] _fileName  Name of file to contain the extracted feature data.  Will be og the Raw format.
+     *@param[in] _fileName  Name of file to contain the extracted feature data.  Will be of the Raw format.
      *@param[in] _log       Log file to write messages to.
      */
     LarcosFeatureVectorList (FactoryFVProducerPtr  _fvProducerFactory,
@@ -200,13 +200,13 @@ namespace LarcosCounterUnManaged
 
 
     /**
-     *@brief  constructor that will create a list of examples from _examples that are assignd one of the 
+     *@brief  constructor that will create a list of examples from _examples that are assigned one of the 
      *        classes listed in _mlClasses.
      *@details
      *   Will Create a list of examples that are a subset of the ones in _examples.  The subset will
      *   consist of the examples who's mlClass is one of the  ones in mlClasses.  We will not own
      *   any the contents only point to the ones already in _examples.
-     *@param[in] _mlClasses  List of classes that we are intrested in.
+     *@param[in] _mlClasses  List of classes that we are interested in.
      *@param[in] _examples        Source examples that we want to scan.
      *@param[in] _log           
      */
@@ -266,7 +266,7 @@ namespace LarcosCounterUnManaged
     
     /**
      *@brief  Using list of ImageFileNames in a file('fileName') create a new LarcosFeatureVectorList instance 
-     * with examples in order based off contens of file. If error occurs will return NULL.
+     * with examples in order based off contents of file. If error occurs will return NULL.
      */
     LarcosFeatureVectorListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName);
 

@@ -35,7 +35,7 @@ namespace LarcosCounterManaged
     /// <summary>
     /// Will allocate/ create a duplicate of '_parms' and own it.
     /// </summary>
-    /// <param name="_parms">Parameters that are to cre duplicated.</param>
+    /// <param name="_parms">Parameters that are to be duplicated.</param>
     UmiOperatingParameters  (const OperatingParameters&  _parms);
 
   private:

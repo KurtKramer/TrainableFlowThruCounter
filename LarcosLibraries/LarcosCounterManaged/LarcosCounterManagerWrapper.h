@@ -33,7 +33,7 @@ using namespace  LarcosCounterUnManaged;
 /**
  *@namespace LarcosCounterManaged
  *@brief Provides a managed interface to the 'LarcosCounterUnManaged' library.
- *@details  The promary class of concern is 'LarcosCounterManagerWrapper' which provies comunication to the 
+ *@details  The primary class of concern is 'LarcosCounterManagerWrapper' which provides communication to the 
  * unmanaged class 'LarcosCounterManager'.  
  */
 
@@ -42,8 +42,8 @@ namespace LarcosCounterManaged
 
   /**
    *@brief  This is a dot-net wrapper class for the unmanaged class 'LarcosCounterManager'.  
-   *@details A ".net" application such as "LarcosCounter" would vreate a single instance of this class
-   * and comnicate to it thru the methods defined below.  Ex: to start a recording session it would 
+   *@details A ".net" application such as "LarcosCounter" would create a single instance of this class
+   * and communicate to it thru the methods defined below. Ex: to start a recording session it would 
    * call the method 'RecordButtonPressed' and then proceed to call in a time event 'CurState', 'GetStats',
    * and 'GetAllLoggedMsgs' for display to the screen.
    */
@@ -76,7 +76,7 @@ namespace LarcosCounterManaged
     LarcosCounterState  CurState ();
 
     ///<summary>
-    ///Returns a copy og the Current InstallationConufig that the LarcosCameraManager instance is operating under.
+    ///Returns a copy of the Current InstallationConufig that the LarcosCameraManager instance is operating under.
     ///</summary>
     UmiInstallationConfig^  Installation (UmiRunLog^  runLog);
 
@@ -88,7 +88,7 @@ namespace LarcosCounterManaged
 
     List<String^>^  GetAllLoggedMsgs ();
 
-    /**@brief  Creates and returns a UmiRunLog instance that will add log messages to 'msgQueue' whuch will be added to Log file by 'LoggerThread'.  */
+    /**@brief  Creates and returns a UmiRunLog instance that will add log messages to 'msgQueue' which will be added to Log file by 'LoggerThread'.  */
     UmiRunLog^  GetUmiRunLogInstance ();
 
 
@@ -104,7 +104,7 @@ namespace LarcosCounterManaged
 
     /**
      *@brief  Will connect to specified line scan camera.
-     *@details  Imagery will be avaialble for display to the screen thru "SnapShotLatestFrame".
+     *@details  Imagery will be available for display to the screen thru "SnapShotLatestFrame".
      */
     void  ConnectButtonPressed ();
 
@@ -147,8 +147,8 @@ namespace LarcosCounterManaged
 
     /** 
      *@brief Specify the parameters that the camera should be using.
-     *@details  Will be used the next time the camera is connected or if already connected will atemp 
-     * to swicth to these parameters.
+     *@details  Will be used the next time the camera is connected or if already connected will attempt 
+     * to switch to these parameters.
      */
     void  RequestedCameraParameters (float   requestedAnalogGain,   /**< Will be used as scan rate when we connect to a camera (create an instance of 'CameraAquisitio')  */
                                      kkint32 requestedDigitalGain,
@@ -172,13 +172,13 @@ namespace LarcosCounterManaged
     void  SampleLastFrameBeforeFlatField (bool _sampleLastFrameBeforeFlatField);
 
     /**
-     *@brief Signal all threads to stop at earliest convience.
-     *@details  For example finish whatever is in their queues before shuting down. 
+     *@brief Signal all threads to stop at earliest convenience.
+     *@details  For example finish whatever is in their queues before shutting down. 
      */
     void  ShutDownAllThreads ();
 
 
-    /** @brief Signal all threads to stop processing imediately.  */
+    /** @brief Signal all threads to stop processing immediately.  */
     void  TerminateAllThreads ();
 
 
@@ -265,15 +265,15 @@ namespace LarcosCounterManaged
     /** 
      *@brief Returns an array representing the highest pixel values for each column over 
      * all the sampling lines maintained by the FlatFieldCorrection routine.
-     *@details It ultimatly calls the "CameraFlatFieldCorrection::CameraHighPoints" method. 
+     *@details It ultimately calls the "CameraFlatFieldCorrection::CameraHighPoints" method. 
      * The array returned will be the same length as the width of the camera.
      */
     array<byte>^  CameraHighPoints ();
 
 
     /**
-     *@brief  Returns an array representing the highest pixel values for each colun over
-     * a specified number of the most recent sampling lines maintaing by the FlatFieldCorrection
+     *@brief Returns an array representing the highest pixel values for each column over
+     * a specified number of the most recent sampling lines maintaining by the FlatFieldCorrection
      * routine.
      *@param[in] n  Number of sample lines to search;  The most recent sampling lines are searched.
      */
@@ -303,7 +303,7 @@ namespace LarcosCounterManaged
                                  );
 
     /**
-     *@brief   Returns cropped part of last frame retrieved from acquision device.
+     *@brief   Returns cropped part of last frame retrieved from acquisition device.
      */
     UmiRaster^  SnapShotLatestFrame ();
 
@@ -353,7 +353,7 @@ namespace LarcosCounterManaged
 
 
     /**
-     *@brief Return Grayscale 8 bits-per-pixel image;  the raster data is assumed to have (background == 0).
+     *@brief Return Gray-scale 8 bits-per-pixel image;  the raster data is assumed to have (background == 0).
      */
     Bitmap^  BuildBitmapFillTargetWidth2 (RasterPtr  raster,
                                           kkint32    targetHeight,
@@ -364,8 +364,8 @@ namespace LarcosCounterManaged
     void     CleanUpMemory ();  /**< Called when u r done with this instance and u want to free its memory. */
 
     /**
-     *@brief updates the memory preasure that this instance is exerting; this method should be called
-     * periodcaly.
+     *@brief updates the memory pressure that this instance is exerting; this method should be called
+     * periodically.
      */
     void     UpdateUnManagedConsumedMemory ();
 

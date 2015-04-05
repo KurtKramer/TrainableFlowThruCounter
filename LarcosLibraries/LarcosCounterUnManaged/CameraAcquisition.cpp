@@ -41,8 +41,6 @@ using  namespace  LarcosCounterUnManaged;
 
 
 
-
-
 CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
                             float              _parameter
                            ):

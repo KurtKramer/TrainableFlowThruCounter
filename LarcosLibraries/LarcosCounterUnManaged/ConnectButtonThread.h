@@ -14,7 +14,7 @@
 namespace LarcosCounterUnManaged
 {
   /**
-   *@brief  manage thread that stops the counting and recording of data;  it performs the actions
+   *@brief  manage thread that stops the counting and recording of data; it performs the actions
    *  required when the 'StopButton' has been pressed by the user.
    */
   class ConnectButtonThread: public  CameraThread
@@ -41,7 +41,7 @@ namespace LarcosCounterUnManaged
 
 
     /**
-     *@brief  Call this Method to start writing camera frame data to disk.  Will stay in loop until cancelFlag is true.
+     *@brief  Call this Method to start writing camera frame data to disk; will stay in loop until cancelFlag is true.
      */
     virtual void  Run ();
 

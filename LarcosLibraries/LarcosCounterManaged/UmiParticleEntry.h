@@ -238,9 +238,9 @@ namespace LarcosCounterManaged
 
     /**
      *@brief  Used by 'LoadFile' to locate entries already loaded such as when there was
-     * a class correctiom and an update was appended to report file.
+     * a class correction and an update was appended to report file.
      *@details  If the contents of the list are sorted by ScannerRow as indicated by 
-     * 'sortedByScanLine' will perform a binary search to locte entry; otherwise will
+     * 'sortedByScanLine' will perform a binary search to locate entry; otherwise will
      * perform a sequential search.
      */
     UmiParticleEntry^  LocateParticle (kkint32  scannerRow,
@@ -271,15 +271,15 @@ namespace LarcosCounterManaged
 
     bool     loaded;   /**< Indicates if loading from file has been completed. */
 
-    String^  baseScannerName;      /**< This wil be the same as the Initila Scanner Files root name.
-                                    * If the scanner fikle had multiple parts we will need to adjust 
-                                    * Scanner File Number when plotting time based off th einitail 
+    String^  baseScannerName;      /**< This will be the same as the Initial Scanner Files root name.
+                                    * If the scanner file had multiple parts we will need to adjust 
+                                    * Scanner File Number when plotting time based off the initial 
                                     * scanner file.
                                     */
 
     
     bool  headerInfoLoaded;   /**< Indicates that "UmiParticleEntryList::LoadFile: method has read past all the  header fields in 
-                               * the report file but may not have finished reading the entire report file.  It will ne initialized 
+                               * the report file but may not have finished reading the entire report file.  It will be initialized 
                                * to false upon construction and set to "true" when the first detail line is read or end of file is
                                * reached.
                                */

@@ -43,19 +43,19 @@ namespace LarcosCounterManaged
                               };
 
     property  System::DateTime  TimeStamp            {System::DateTime  get ()  {return timeStamp;}}
-    property  kkint32  TimeOffset                      {kkint32  get ()  {return timeOffset;}}
-    property  float  LogicalFrameProcessorsAvailable {float  get ()  {return logicalFrameProcessorsAvailable;};}  /**< Number of Fra,eProcessors that are sleeping until available Frame to process. */
-    property  float  LogicalFramesOnQueue            {float  get ()  {return logicalFramesOnQueue;};}
-    property  kkint32  Count                           {kkint32  get ()  {return count;}}
-    property  float  FlowRate                        {float  get ()  {return flowRate;}}
-    property  kkint32  Particles                       {kkint32  get ()  {return particles;}}
-    property  float  CpuUsage                        {float  get ()  {return cpuUsage;}}
-    property  float  AvailableCapacity               {float  get ()  {return availableCapacity;}}
-    property  kkint32  ParticlesWaitingProcessing      {kkint32  get ()  {return particlesWaitingProcessing;};}
-    property  kkint32  PhysicalFramesDropped           {kkint32  get ()  {return physicalFramesDropped;};}
-    property  kkint32  LogicalFramesDropped            {kkint32  get ()  {return logicalFramesDropped;};}         
-    property  kkint32  ScanLinesRead                   {kkint32  get ()  {return scanLinesRead;};}
-    property  kkint32  ScanLinesWritten                {kkint32  get ()  {return scanLinesWritten;};}
+    property  kkint32  TimeOffset                    {kkint32  get ()  {return timeOffset;}}
+    property  float  LogicalFrameProcessorsAvailable {float    get ()  {return logicalFrameProcessorsAvailable;};}  /**< Number of FrameProcessors that are sleeping until available Frame to process. */
+    property  float  LogicalFramesOnQueue            {float    get ()  {return logicalFramesOnQueue;};}
+    property  kkint32  Count                         {kkint32  get ()  {return count;}}
+    property  float  FlowRate                        {float    get ()  {return flowRate;}}
+    property  kkint32  Particles                     {kkint32  get ()  {return particles;}}
+    property  float  CpuUsage                        {float    get ()  {return cpuUsage;}}
+    property  float  AvailableCapacity               {float    get ()  {return availableCapacity;}}
+    property  kkint32  ParticlesWaitingProcessing    {kkint32  get ()  {return particlesWaitingProcessing;};}
+    property  kkint32  PhysicalFramesDropped         {kkint32  get ()  {return physicalFramesDropped;};}
+    property  kkint32  LogicalFramesDropped          {kkint32  get ()  {return logicalFramesDropped;};}         
+    property  kkint32  ScanLinesRead                 {kkint32  get ()  {return scanLinesRead;};}
+    property  kkint32  ScanLinesWritten              {kkint32  get ()  {return scanLinesWritten;};}
 
     static
       System::DateTime   DateTimeKKBtoSystem (const  KKB::DateTime&  date);

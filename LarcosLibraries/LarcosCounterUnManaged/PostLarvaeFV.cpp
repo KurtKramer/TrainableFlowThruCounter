@@ -44,7 +44,7 @@ using namespace  KKMachineLearning;
 using namespace  LarcosCounterUnManaged;
 
 
-// Will be used to histogram the average size of dark spots encounterd.
+// Will be used to histogram the average size of dark spots encountered.
 class  DarkSpotStats
 {
 public:
@@ -278,9 +278,9 @@ void  LarcosCounterUnManaged::PostLarvaeFVAddBlobList (MLClassPtr     c,
 
 
 
-const  kkint32  PostLarvaeFV::SizeThreshold = 10000;  /**< Size of example in num of pixels before we decide to reduce the
-                                                     * example to improve feature calculation.
-                                                     */
+const  kkint32  PostLarvaeFV::SizeThreshold = 10000;  /**< Size of example in number of pixels before we decide to reduce the
+                                                       * example to improve feature calculation.
+                                                       */
 
 
 							
@@ -374,7 +374,7 @@ const  char*  PostLarvaeFV::FeatureNames[] =
   "TransparancyConvexHull",  // 18
   "TransparancyPixelCount",  // 19
   
-  "TransparancyOpen3",       // 20    Granulometric features
+  "TransparancyOpen3",       // 20    Gramulmetric features
   "TransparancyOpen5",       // 21
   "TransparancyOpen7",       // 22
   "TransparancyOpen9",       // 23
@@ -806,7 +806,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
     SaveIntermediateImage (*wr2, "Edge_Image_" + StrFormatInt (numEdgePixelsFound, "ZZZZ0"), intermediateImages);
   }
 
-  kkint32 area = (kkint32)(momentf[0] + 0.5f);  // Moment-0 is the same as the number of forground pixels in example.
+  kkint32 area = (kkint32)(momentf[0] + 0.5f);  // Moment-0 is the same as the number of foreground pixels in example.
   {
     ConvexHullPtr  ch = new ConvexHull ();
     ch->Filter (*raster, wr1);
@@ -926,7 +926,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   featureData[TransparancyClose7Index]     = (float)(area - areaClose7) / (float)area;
  
   {
-    // This part has to be done after 'CalcOrientationAndEigerRatio' is called.  That is where the example centroid is calced.
+    // This part has to be done after 'CalcOrientationAndEigerRatio' is called.  That is where the example centroid is calculated.
     centroidCol = raster->CentroidCol () * reductionFactor;
     centroidRow = raster->CentroidRow () * reductionFactor;
   }
@@ -1006,7 +1006,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
     thinnedImage = NULL;
   }
 
-  featureData[0] = (float)areaBeforeReduction;  // Incase the example was reduced.
+  featureData[0] = (float)areaBeforeReduction;  // In case the example was reduced.
   OrigSize ((float)areaBeforeReduction);
 
   Probability (-1.0f);
@@ -1461,8 +1461,8 @@ void   PostLarvaeFVList::FeatureExtraction (KKStr       _dirName,
 
 
 /**
- * @brief  Creates a duplicate of list and also dupliactes it contents.
- * @return Duplicated list with hardcopy of its contents.
+ * @brief  Creates a duplicate of list and also duplicates it contents.
+ * @return Duplicated list with hard-copy of its contents.
  */
 PostLarvaeFVListPtr  PostLarvaeFVList::DuplicateListAndContents ()  const
 {

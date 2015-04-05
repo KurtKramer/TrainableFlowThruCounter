@@ -112,7 +112,7 @@ namespace LarcosCounterUnManaged
     kkint32  physicalFramesProcessed;         /**< Number of physical frames processed by 'LogicalFrameBuilder'. */
     kkint32  physicalFramesRead;              /**< Number of frames read from the camera.  */
     kkint32  physicalFramesWaitingToProcess;  /**< Number of physical frames that are waiting to be processed by 'LogicalFrameBuilder' thread. */
-    kkint32  physicalSeqNumsSkipped;          /**< Each buffer retrieved is assigned a seq num by pleora S/W; this represents the total number that were skipped indicating that frames were lost. */
+    kkint32  physicalSeqNumsSkipped;          /**< Each buffer retrieved is assigned a seq number by pleora S/W; this represents the total number that were skipped indicating that frames were lost. */
     kkint32  scanLinesRead;                   /**< Number of scan lines read by camera acquisition thread. */
     kkint32  scanLinesWritten;                /**< Total number of scan lines written to Scanner Files. */
     float    scanRate;

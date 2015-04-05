@@ -74,7 +74,7 @@ namespace LarcosCounterManaged
                                                 );
 
 
-    // next group of methods are dedicated to teh StopStart points in a scanner file.  They are 
+    // next group of methods are dedicated to the StopStart points in a scanner file.  They are 
     // Managed wrappers of the unmanaged version in "ScannerFile" via the "UmiScannerFile" object. 
     void  AddStartPoint (kkint32  _scanLineNum);
 
@@ -96,10 +96,10 @@ namespace LarcosCounterManaged
     const StartStopPointList&    StartStopPointsUnManaged ();
 
     /*
-     *@brief  Returns an array indication teh record rate in bytes/sec for specified time-intervals.
+     *@brief  Returns an array indication the record rate in bytes/sec for specified time-intervals.
      *@details  Each element in the returned array will give the average number of bytes recorded for the time
-     * the corresponding time interval.  Array element 0 starts atthe beginning of the Scanner file and covers 
-     * the number of scan lines erquired to account for 'intervalSecs' seconds.
+     * the corresponding time interval.  Array element 0 starts at the beginning of the Scanner file and covers 
+     * the number of scan lines required to account for 'intervalSecs' seconds.
      */    
     array<float>^  RecordRateByTimeIntervals (int intervalSecs);
 
@@ -123,13 +123,13 @@ namespace LarcosCounterManaged
     property  String^    FileName                    {String^    get ();}
     property  long long  FileSizeInBytes             {long long  get ();}
     property  FilePos    FrameBufferFileOffsetNext   {long long  get ();}   /**<  Byte offset of next scan line.          */
-    property  FilePos    FrameBufferFileOffsetLast   {long long  get ();}   /**<  Byte offset of start of last scanline.  */
+    property  FilePos    FrameBufferFileOffsetLast   {long long  get ();}   /**<  Byte offset of start of last scan-line. */
     property  bool       FrameIndexBuilt             {bool       get ();}
     property  bool       FrameOffsetsLoaded          {bool       get ();}   /**< Same as 'FrameIndexBuilt'                */
     property  kkuint32   LastScanLine                {kkuint32   get ();}   /**<  Last Scan line read or written.         */
     property  kkint32    LargestKnowmFrameNum        {kkint32    get ();}
     property  kkuint32   LargestKnownScanLine        {kkuint32   get ();}
-    property  kkuint32   NextScanLine                {kkuint32   get ();}   /**<  Next scanline to be read.               */
+    property  kkuint32   NextScanLine                {kkuint32   get ();}   /**<  Next scan-line to be read.              */
     property  bool       Opened                      {bool       get ();}
     property  kkint32    PixelsPerScanLine           {kkint32    get ();}
     property  kkint32    ScanLinesPerFrame           {kkint32    get ();}
@@ -153,11 +153,11 @@ namespace LarcosCounterManaged
     static
     bool  FileFormatStrValid (String^  _formatStr);
 
-    void  FrameBytesOffsetsUpdateThreadStart ();        /**<  This method starts the thread that updates the 'frameOffsets' table in the *       
-                                                         * underlying ScannerFile instane.                                               *
+    void  FrameBytesOffsetsUpdateThreadStart ();        /**<  This method starts the thread that updates the 'frameOffsets' table in the
+                                                         * underlying ScannerFile instance.
                                                          */
 
-    void  FrameBytesOffsetsUpdateThreadTerminate ();    /**<  Call this method to teminate the 'updateFrameByteOffsetsThread'.           */
+    void  FrameBytesOffsetsUpdateThreadTerminate ();    /**<  Call this method to terminate the 'updateFrameByteOffsetsThread'.   */
 
 
     /**
@@ -184,23 +184,23 @@ namespace LarcosCounterManaged
 
     kkint32           memoryPreasureAdded;
 
-    bool              frameIndexBuilt;                   /**<  Indicates if 'frameByteOffsets'  has been completely built                   */
+    bool              frameIndexBuilt;                   /**<  Indicates if 'frameByteOffsets' has been completely built. */
     kkint32           frameNumLastRead;
     kkint32           frameNumNextRead;
     kkint32           largestKnownScanLine;
     UmiRunLog^        log;
     kkint32           scanLinesPerFrame;
-    ScannerFilePtr    scannerFile;                       /**<  The underlying unmanaged ScannerFile nstance                             */
+    ScannerFilePtr    scannerFile;                       /**<  The underlying unmanaged ScannerFile instance. */
     Thread^           updateFrameByteOffsetsThread;
-    bool              updateFrameByteOffsetsRunning;     /**<  Indicates if the thread that updates the frameByesOffsets is running     */
+    bool              updateFrameByteOffsetsRunning;     /**<  Indicates if the thread that updates the frameByesOffsets is running.   */
     bool*             updateFrameByteOffsetsCancelFlag;  /**<  'true' indicates that the frameByesOffsets load thread should terminate. */
 
     // variables needed to read a single scan line.  We declare a single instance of these variables to avoid the overhead of 
-    // dynamicacly allocating and dealloating them every tim ewe need them.
+    // dynamically allocating and deallocating them every time we need them.
     kkuint32          pixelsPerScanLine;
     uchar*            lineBuff;
     kkuint32          lineSize;
-    kkuint32*           colCount;
+    kkuint32*          colCount;
     kkuint32          pixesInRow;;
   };  /* UmiScannerFile */
 }  /* LarcosCounterManaged */

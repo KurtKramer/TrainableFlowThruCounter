@@ -128,7 +128,7 @@ const  KKStr  LarcosFVProducer::featureNames[] =
   "TransparancyConvexHull",  // 18
   "TransparancyPixelCount",  // 19
   
-  "TransparancyOpen3",       // 20    Granulometric features
+  "TransparancyOpen3",       // 20    Gramulometric features
   "TransparancyOpen5",       // 21
   "TransparancyOpen7",       // 22
   "TransparancyOpen9",       // 23
@@ -442,7 +442,7 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
     SaveIntermediateImage (*wr2, "Edge_Image_" + StrFormatInt (numEdgePixelsFound, "ZZZZ0"), intermediateImages);
   }
 
-  kkint32 area = (kkint32)(centralMoments[0] + 0.5f);  // Moment-0 is the same as the number of forground pixels in example.
+  kkint32 area = (kkint32)(centralMoments[0] + 0.5f);  // Moment-0 is the same as the number of foreground pixels in example.
   {
     ConvexHullPtr  ch = new ConvexHull ();
     ch->Filter (*initRaster, wr1);
@@ -562,7 +562,7 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
   featureData[TransparancyClose7Index]     = (float)(area - areaClose7) / (float)area;
  
   {
-    // This part has to be done after 'CalcOrientationAndEigerRatio' is called.  That is where the example centroid is calced.
+    // This part has to be done after 'CalcOrientationAndEigerRatio' is called.  That is where the example centroid is calculated.
     fv->CentroidCol (initRaster->CentroidCol () * reductionMultiple);
     fv->CentroidRow (initRaster->CentroidRow () * reductionMultiple);
   }
@@ -634,7 +634,7 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
     thinnedImage = NULL;
   }
 
-  featureData[0] = (float)areaBeforeReduction;  // Incase the example was reduced.
+  featureData[0] = (float)areaBeforeReduction;  // In case the example was reduced.
   fv->OrigSize ((float)areaBeforeReduction);
  
   return fv;

@@ -412,7 +412,7 @@ ParticleEntryPtr  ParticleEntryList::LocateParticle (kkint32  scannerRow,
     }
 
     // We found an entry with the same ScannerRow;  there can be several Particles that start on the 
-    // same ScannerRow so we have to search sequentially both forward and backword from current position 'm'.
+    // same ScannerRow so we have to search sequentially both forward and backward from current position 'm'.
 
     int  x = m;
     while  (x >= 0)  
@@ -438,7 +438,7 @@ ParticleEntryPtr  ParticleEntryList::LocateParticle (kkint32  scannerRow,
       ++x;
     }
 
-    // At this point none of th eentries were a match.  This indicates that no entris
+    // At this point none of the entries were a match.  This indicates that no entries
     // match the criteria.
     return  NULL;
   }

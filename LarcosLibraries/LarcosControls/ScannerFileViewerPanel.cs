@@ -34,7 +34,7 @@ namespace LarcosControls
     private  Int32     displayScanRowLeft  = 0;
     private  Int32     displayScanRowRight = 2047;
 
-    //private  Int32     panelHeight2 = 0;  // Will be <= panelHeight; such that allows a proper mutiple of ratio
+    //private  Int32     panelHeight2 = 0;  // Will be <= panelHeight; such that allows a proper multiple of ratio
 
     private  byte[]    displayRow = null;
     private  byte[][]  raster     = null;
@@ -46,10 +46,10 @@ namespace LarcosControls
 
     private  String    trainingModelName = "";
 
-    private  Pen[]                  colorValues = null;   // Pen color to use for each pixel value;  normaly 
-    // each value is set to the appropriate grayscale value.
-    // except when (colorize == true) selectd then Colors
-    // are used for the 7 levels of grayscale that the Scanner
+    private  Pen[]                  colorValues = null;   // Pen color to use for each pixel value; normally 
+    // each value is set to the appropriate gray-scale value.
+    // except when (colorize == true) selected then Colors
+    // are used for the 7 levels of gray-scale that the Scanner
     // camera produces.
 
     private  BlobList               blobs = null;
@@ -142,8 +142,8 @@ namespace LarcosControls
 
     private  void  BuildCountFont ()
     {
-      // A panel height of 400 pixels would get a "Courier New" font size of 10.  We will scale 
-      // linearly frolm that.
+      // A panel height of 400 pixels would get a "Courier New" font size of 10. We will scale 
+      // linearly from that.
       float  fontSize = panel.Height * 10.0f / 400.0f;
       countFont = new Font ("Courier New", fontSize, FontStyle.Bold);
     }
@@ -529,8 +529,8 @@ namespace LarcosControls
 
       if  (scannerFile != null)
       {
-        // The next function call will populate 'rasetr' with scan-row data such that each row in raster will reprsent
-        // a column in the scanner file and each column in 'raster' will represent the apropriate 'scannerFile' rows.
+        // The next function call will populate 'raster' with scan-row data such that each row in raster will represent
+        // a column in the scanner file and each column in 'raster' will represent the appropriate 'scannerFile' rows.
         // this function should take into count the crop settings and 'ratio' factor.
         scannerFile.GetDisplayRowsScanColsByScanRows (displayScanRowLeft, displayScanRowRight, raster);
         particlesOnCurrentScreen = scannerFile.GetParticlesForScanLineRange (displayScanRowLeft, displayScanRowRight);
@@ -662,7 +662,7 @@ namespace LarcosControls
 
     /// <summary>
     /// Scroll the Panel Display (Displayable-Scanner-File ) left by 'numDisplayableScanRows'.  That is shift pixels
-    /// right by 'numDisplayableScanRows' and fill in missing pannel columns with appropriate scanner-rows.
+    /// right by 'numDisplayableScanRows' and fill in missing panel columns with appropriate scanner-rows.
     /// </summary>
     /// <param name="numDisplayableScanRows">Number of displayable scanner rows to shift right;  a negative value indicates shifting pixels left.</param>
     public void  ScrollRows2 (int numDisplayableScanRows)
@@ -749,7 +749,7 @@ namespace LarcosControls
     /// </summary>
     /// <param name="displayCol"></param>
     /// <param name="displayRow"></param>
-    /// <returns>Particle being pinted to or null if not pointing to particle.</returns>
+    /// <returns>Particle being printed to or null if not pointing to particle.</returns>
     public  UmiParticleEntry  SelectParticle (Int32 displayCol,
                                               Int32 displayRow
                                              )

@@ -216,10 +216,10 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
     _log.Level (-1) << endl << endl << endl
                     << "FeatureFileIOKK::GetFileDesc     **** Error ***"  << endl
                     << endl
-                    << "               Num fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl
+                    << "               Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl
                     << endl
                     << endl;
-    _errorMessage << "Num fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl;
+    _errorMessage << "Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl;
     return NULL;
   }
   
@@ -304,7 +304,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
   }
   
 
-  // The second line will have a list of fields;  we will use ths line to build
+  // The second line will have a list of fields;  we will use this line to build
   // an indirection table.
   _in.getline (buff, sizeof (buff) - 1);
   KKStr  fieldDescLine (buff);
@@ -314,10 +314,10 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
     _log.Level (-1) << endl << endl << endl
                    << "FeatureFileIOKK::LoadFile     **** Error ***"  << endl
                    << endl
-                   << "               Num fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl
+                   << "               Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl
                    << endl
                    << endl;
-    _errorMessage << "Num fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl;
+    _errorMessage << "Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl;
     return  NULL;
   }
 

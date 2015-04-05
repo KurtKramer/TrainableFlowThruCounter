@@ -17,7 +17,7 @@ using namespace  KKLSC;
 
 namespace LarcosCounterUnManaged
 {
-  /** @brief  Provides methods for adding and getting datafields from Scanner File Header Fields .*/
+  /** @brief  Provides methods for adding and getting data-fields from Scanner File Header Fields .*/
   class  LarcosDataRec
   {
   public:

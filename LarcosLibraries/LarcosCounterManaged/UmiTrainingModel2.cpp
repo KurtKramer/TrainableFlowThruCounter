@@ -269,7 +269,7 @@ void  UmiTrainingModel2::CleanUpUnmanagedResources ()
   catch  (const exception&  e1)
   {
     runLog->Level (-1) << endl
-      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Objecvt." << endl
+      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Object." << endl
       << "                Exception[" << e1.what () << "]" << endl
       << endl;
 
@@ -278,7 +278,7 @@ void  UmiTrainingModel2::CleanUpUnmanagedResources ()
   catch  (const char* e2)
   {
     runLog->Level (-1) << endl
-      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Objecvt." << endl
+      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Object." << endl
       << "                Exception[" << e2 << "]" << endl
       << endl;
   }
@@ -286,7 +286,7 @@ void  UmiTrainingModel2::CleanUpUnmanagedResources ()
   catch  (...)
   {
     runLog->Level (-1) << endl
-      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Objecvt." << endl
+      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Object." << endl
       << endl;
 
   }
@@ -471,8 +471,7 @@ bool  UmiTrainingModel2::IncludesClass (UmiClass^  mlClass)
 
 
 
-// Will return a list of classes that belong to this model. 
-// It will be created from "classList".  So the the caller 
+// Returns a list of classes that belong to this model. It will be created from "classList"; so the caller 
 // can do with it as they want.
 UmiClassList^  UmiTrainingModel2::ImageClasses ()
 {
@@ -848,7 +847,7 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (UmiFeatureVector^ 
   }
   catch  (exception e)
   {
-    KKStr  errMsg = "Exception occured calling 'ProbabilitiesByClass'.\n\n";
+    KKStr  errMsg = "Exception occurred calling 'ProbabilitiesByClass'.\n\n";
     errMsg << e.what ();
     System::Windows::Forms::MessageBox::Show (UmiKKStr::KKStrToSystenStr (errMsg), "UmiTrainingModel2::PredictProbabilities");
     delete  unKnownExample;  unKnownExample = NULL;
@@ -856,7 +855,7 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (UmiFeatureVector^ 
   }
   catch  (...)
   {
-    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'ProbabilitiesByClass'."
+    System::Windows::Forms::MessageBox::Show ("Exception occurred calling 'ProbabilitiesByClass'."
                                               "UmiTrainingModel2::PredictProbabilities"
                                              );
     delete  unKnownExample;  unKnownExample = NULL;
@@ -872,7 +871,7 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (UmiFeatureVector^ 
   }
   catch  (...)
   {
-    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'RetrieveCrossProbTable'."
+    System::Windows::Forms::MessageBox::Show ("Exception occurred calling 'RetrieveCrossProbTable'."
                                               "UmiTrainingModel2::PredictProbabilities"
                                              );
     return nullptr;
@@ -924,7 +923,7 @@ UmiPrediction^  UmiTrainingModel2::PredictClass (UmiFeatureVector^  example)
   }
   catch  (Exception^ e)
   {
-    System::Windows::Forms::MessageBox::Show ("Exception occured when calling 'Classifyer::ClassifyAImage'  in  'UmiTrainingModel2::PredictClass'" + "\n\n" +
+    System::Windows::Forms::MessageBox::Show ("Exception occurred when calling 'Classifier::ClassifyAImage'  in  'UmiTrainingModel2::PredictClass'" + "\n\n" +
                                               e->ToString (),
                                               "UmiTrainingModel2::PredictClass"
                                              );
@@ -972,7 +971,7 @@ void  UmiTrainingModel2::PredictClass (UmiFeatureVector^  featureVector,
   }
   catch  (Exception^ e)
   {
-    System::Windows::Forms::MessageBox::Show ("Exception occured when calling 'Classifyer::ClassifyAImage'  in  'UmiTrainingModel2::PredictClass'" + "\n\n" +
+    System::Windows::Forms::MessageBox::Show ("Exception occurred when calling 'Classifier::ClassifyAImage'  in  'UmiTrainingModel2::PredictClass'" + "\n\n" +
                                               e->ToString (),
                                               "UmiTrainingModel2::PredictClass"
                                              );
@@ -1040,7 +1039,7 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
   {
     fv = NULL;
     sucessful = false;
-    System::Windows::Forms::MessageBox::Show ("Exception occured when Constructing a 'LarcosFeatureVector' object" + "\n\n" +
+    System::Windows::Forms::MessageBox::Show ("Exception occurred when Constructing a 'LarcosFeatureVector' object" + "\n\n" +
                                               e->ToString (),
                                               "UmiTrainingModel2::PredictProbabilities"
                                              );
@@ -1051,13 +1050,13 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
     sucessful = false;
     KKStr  msg = e2.what ();
     String^  exceptionMsg = UmiKKStr::KKStrToSystenStr (msg);
-    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'ComputeFeatureVectorFromImage'.\n\n" + exceptionMsg, "TrainingModel2::PredictProbabilities");
+    System::Windows::Forms::MessageBox::Show ("Exception occurred calling 'ComputeFeatureVectorFromImage'.\n\n" + exceptionMsg, "TrainingModel2::PredictProbabilities");
   }
   catch  (...)
   {
     fv = NULL;
     sucessful = false;
-    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'ComputeFeatureVectorFromImage'.", "TrainingModel2::PredictProbabilities");
+    System::Windows::Forms::MessageBox::Show ("Exception occurred calling 'ComputeFeatureVectorFromImage'.", "TrainingModel2::PredictProbabilities");
   }
 
   UmiRasterList::CopyOverIntermediateImages (tempIntermediateImages, intermediateImages);
@@ -1078,7 +1077,7 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
   }
   catch (Exception^ e)
   {
-    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'PredictProbabilities'" + "\n\n" +  e->ToString (),
+    System::Windows::Forms::MessageBox::Show ("Exception occurred calling 'PredictProbabilities'" + "\n\n" +  e->ToString (),
                                               "UmiTrainingModel2::PredictProbabilities"
                                              );
     predictions = nullptr;
@@ -1089,11 +1088,11 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
     sucessful = false;
     KKStr  msg = e3.what ();
     String^  exceptionMsg = UmiKKStr::KKStrToSystenStr (msg);
-    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'PredictProbabilities'.\n\n" + exceptionMsg, "TrainingModel2::PredictProbabilities");
+    System::Windows::Forms::MessageBox::Show ("Exception occurred calling 'PredictProbabilities'.\n\n" + exceptionMsg, "TrainingModel2::PredictProbabilities");
   }
   catch  (...)
   {
-    System::Windows::Forms::MessageBox::Show ("Exception occured calling 'PredictProbabilities'.",
+    System::Windows::Forms::MessageBox::Show ("Exception occurred calling 'PredictProbabilities'.",
                                               "UmiTrainingModel2::PredictProbabilities"
                                              );
     predictions = nullptr;
@@ -1141,7 +1140,7 @@ array<LarcosCounterManaged::ProbNamePair^>^
   MLClassPtr  c1Scs = c1->UnmanagedImageClass ();
   MLClassPtr  c2Scs = c2->UnmanagedImageClass ();
 
-  // Will make duplicate of featuire vector Because the Classifier will normalize the data.
+  // Will make duplicate of feature vector Because the Classifier will normalize the data.
   FeatureVectorPtr  dupFV = new FeatureVector (*umiFeatureVector->UnManagedClass ());
 
   vector<KKMachineLearning::ProbNamePair> worstExamples 
@@ -1177,7 +1176,7 @@ array<LarcosCounterManaged::ProbNamePair^>^
   MLClassPtr  c1Scs = c1->UnmanagedImageClass ();
   MLClassPtr  c2Scs = c2->UnmanagedImageClass ();
 
-  // Will make duplicate of featuire vector Because the Classifier will normalize the data.
+  // Will make duplicate of feature vector Because the Classifier will normalize the data.
   FeatureVectorPtr  dupFV = new FeatureVector (*umiFeatureVector->UnManagedClass ());
 
   vector<KKMachineLearning::ProbNamePair> worstExamples 
@@ -1269,7 +1268,7 @@ Bitmap^  UmiTrainingModel2::BuildBitmapFromRasterData (uchar**  r,
 
         if  (pixelValue < 255)
         {
-          // We are looking at a forground pixel.
+          // We are looking at a foreground pixel.
           if  (row < rowFirst )
             rowFirst = row;
           rowLast = row;
@@ -1474,7 +1473,7 @@ void  UmiTrainingModel2::AddClass (UmiClass^  newClass)
 void  UmiTrainingModel2::AddImageToTrainingLibray (String^     imageFileName,
                                                    UmiRaster^  raster, 
                                                    UmiClass^   mlClass,
-                                                   bool        onLine       // If set to true;  will prompt user if they want to add new class if not part of Traning Model.
+                                                   bool        onLine       // If set to true;  will prompt user if they want to add new class if not part of Training Model.
                                                   )
 {
   if  (raster == nullptr)
@@ -1562,7 +1561,7 @@ TrainingConfiguration2Ptr  UmiTrainingModel2::GetConfigToUse ()
                                                *runLog, 
                                                false
                                               );
-    // Don't need to delete 'fd'  'FileDesc' instances are kept in memry and shared when identicle.
+    // Don't need to delete 'fd'  'FileDesc' instances are kept in memory and shared when identical.
     configToUse = config;
   }
   return  configToUse;

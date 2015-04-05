@@ -4,12 +4,12 @@
 /**
  *@class LarcosCounterUnManaged::PostLarvaeFV
  *@brief  Specialized version of KKMachineLearning::FeatureVector that will be used 
- *to represent the features of a POST Larvaeimage.
+ *to represent the features of a POST Larvae image.
  *@author  Kurt Kramer
  *@details
- * Used for the representation of a Single Plankton Image.  You create an instance of this object for 
- * each single image you need to keep track of.  There is a specialized version of KKMachineLearning::FeatureFileIO 
- * caled  KKMachineLearning::FeatureFileIOKK that is used to write and read feature Data files.  What makes this 
+ * Used for the representation of a Single Plankton Image. You create an instance of this object for 
+ * each single image you need to keep track of. There is a specialized version of KKMachineLearning::FeatureFileIO 
+ * called  KKMachineLearning::FeatureFileIOKK that is used to write and read feature Data files.  What makes this 
  * class of KKMachineLearning::FeatureVector special are the additional fields that are Plankton specific such as 
  * centroidCol, centroidRow, latitude, longitude, numOfEdgePixels, Centroid within SIPPEER file 
  * sfCentroidCol, sfCentroidRow and version.<p>
@@ -158,8 +158,8 @@ namespace LarcosCounterUnManaged
     static  RasterListPtr  calcImages;
     static  VectorKKStr*   calcImagesDescs;
 
-    float     centroidCol;     /**<  cnetroid Collumn with just respect to image. */
-    float     centroidRow;     /**<  cnetroid Row with just respect to image. */
+    float     centroidCol;     /**<  centroid Column with just respect to image. */
+    float     centroidRow;     /**<  centroid Row with just respect to image. */
     kkint32   numOfEdgePixels;
 
     static  kkint16  maxNumOfFeatures;
@@ -265,12 +265,12 @@ namespace LarcosCounterUnManaged
      *@details 
      *@code 
      *  If '_owner' = true 
-     *     Create new instancs of contents and own them.  
+     *     Create new instances of contents and own them.  
      *  else if  'owner' = false, 
      *     Copy over pointers to existing instances.  
      *@endcode
      *@param[in]  _examples   The list of 'PostLarvaeFV' that is to be copied.
-     *@param[in]  _owner      If 'true' ne instances of 'PostLarvaeFV' instances will be created
+     *@param[in]  _owner      If 'true' new instances of 'PostLarvaeFV' instances will be created
      *                        and this new list will own them and if 'false' will just point to
      *                        the existing instances and not own the.
      */
@@ -285,7 +285,7 @@ namespace LarcosCounterUnManaged
      *@details 
      *@code 
      *  If '_owner' = true 
-     *     Create new instancs of contents and own them.  
+     *     Create new instances of contents and own them.  
      *  else if  'owner' = false, 
      *     Copy over pointers to existing instances.  
      *@endcode
@@ -293,7 +293,7 @@ namespace LarcosCounterUnManaged
      * the function will throw an exception.
      *
      *@param[in]  _examples   The list of 'PostLarvaeFV' that is to be copied.
-     *@param[in]  _owner      If 'true' ne instances of 'PostLarvaeFV' instances will be created
+     *@param[in]  _owner      If 'true' new instances of 'PostLarvaeFV' instances will be created
      *                        and this new list will own them and if 'false' will just point to
      *                        the existing instances and not own the.
      */
@@ -306,15 +306,15 @@ namespace LarcosCounterUnManaged
      *@brief  Constructor that will extract a list of feature vectors for all the image files in the 
      *        specified directory.
      *@details
-     * Will scan the directory _dirName for any image files.  For each image found a new instance of PostLarvaeFV
-     * will be created whos features will be derived from the image.  These PostLarvaeFV' objects will be 
-     * assigned the class specified by '_mlClass'.  A new data file containg the extracted features will be 
+     * Will scan the directory _dirName for any image files. For each image found a new instance of PostLarvaeFV
+     * will be created who's features will be derived from the image. These PostLarvaeFV' objects will be 
+     * assigned the class specified by '_mlClass'.  A new data file containing the extracted features will be 
      * saved in fileName.
      *
-     *@param _log[in]         Log file to write messages to.
+     *@param _log[in]      Log file to write messages to.
      *@param _mlClass[in]  Class to assign to new 'PostLarvaeFV' objects.
-     *@param _dirName[in]     Directory to scan for examples.
-     *@param _fileName        Name of file to contain the extracted feature data.  Will be og the Raw format.
+     *@param _dirName[in]  Directory to scan for examples.
+     *@param _fileName     Name of file to contain the extracted feature data.
      */
     PostLarvaeFVList (RunLog&     _log,
                       MLClassPtr  _mlClass,
@@ -325,13 +325,13 @@ namespace LarcosCounterUnManaged
 
 
     /**
-     *@brief  constructor that will create a list of examples from _examples that are assignd one of the 
+     *@brief  constructor that will create a list of examples from _examples that are assigned one of the 
      *        classes listed in _mlClasses.
      *@details
      *   Will Create a list of examples that are a subset of the ones in _examples.  The subset will
      *   consist of the examples who's mlClass is one of the  ones in mlClasses.  We will not own
      *   any the contents only point to the ones already in _examples.
-     *@param[in] _mlClasses  List of classes that we are intrested in.
+     *@param[in] _mlClasses  List of classes that we are interested in.
      *@param[in] _examples        Source examples that we want to scan.
      *@param[in] _log           
      */
@@ -390,7 +390,7 @@ namespace LarcosCounterUnManaged
      ***************************************************************************************************
      ** Returns: a list of 'PostLarvaeFV' objects that have duplicate root file names.  The returned   *
      ** list will not own these items.  All instances of the duplicate objects will be returned.       *
-     ** Ex:  if three insatnces have the same ImageFileName all three will be returned.                * 
+     ** Ex:  if three instances have the same ImageFileName all three will be returned.                * 
      ***************************************************************************************************
      *@endcode
      */
@@ -418,7 +418,7 @@ namespace LarcosCounterUnManaged
     
     /**
      *@brief  Using list of ImageFileNames in a file('fileName') create a new PostLarvaeFVList instance 
-     * with examples in order based off contens of file. If error occurs will return NULL.
+     * with examples in order based off contents of file. If error occurs will return NULL.
      */
     PostLarvaeFVListPtr    OrderUsingNamesFromAFile (const KKStr&  fileName);
 

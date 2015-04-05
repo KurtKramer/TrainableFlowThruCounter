@@ -56,7 +56,7 @@ namespace LarcosCounterUnManaged
 
   private:
     kkuint32  totPixsForMorphOps;  /**<  When this instance is created this is the amount of memory each 
-                                    * raster work area will be restricted to.  The Height and width will 
+                                    * raster work area will be restricted to. The Height and width will 
                                     * be adjusted such that the resultant dimensions will fit within this
                                     * constraint.
                                     */

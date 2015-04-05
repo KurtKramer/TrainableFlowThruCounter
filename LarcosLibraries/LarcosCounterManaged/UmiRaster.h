@@ -65,7 +65,7 @@ namespace LarcosCounterManaged
        Closing,
        ConnectedComponent,
        ConvexHull,
-       Dialation, 
+       Dilation, 
        Edge,
        Erosion,
        FillHoles,
@@ -74,7 +74,7 @@ namespace LarcosCounterManaged
        Opening, 
        SmoothAveraging,
        SmoothMedium,
-       Streatching,
+       Stretching,
        Thinning
       };
 
@@ -164,7 +164,7 @@ namespace LarcosCounterManaged
       * pixel location.  If there are no differences than a raster of all 0's will be returned. If dimensions are different
       * then the largest dimensions will be sued.
       *@param[in]  r  Raster to compare with.
-      *@returns A raster that wil reflect the differences between the two instances where each pixel wil represent 
+      *@returns A raster that will reflect the differences between the two instances where each pixel will represent 
       * the magnitude of the differences.
       */
      UmiRaster^   FindMagnitudeDifferences (UmiRaster^  r);
@@ -190,7 +190,7 @@ namespace LarcosCounterManaged
 
      UmiRaster^   ReduceByFactor (float factor);  //  0 < factor <= 1.0  ex: 0.5 = Make raster half size
 
-     UmiRaster^   ReversedImage ();  /**<  Produces image with Forground and Background reversed. */
+     UmiRaster^   ReversedImage ();  /**<  Produces image with Foreground and Background reversed. */
 
      void         Save (String^  fileName);
 
@@ -204,8 +204,8 @@ namespace LarcosCounterManaged
 
      UmiRaster^   Thinning ();
 
-     UmiRaster^   ToColor (); /**< Converts grayscale image into equivelent color image;  that is all
-                               * three color channels will now exists bt still appear as grayscale.
+     UmiRaster^   ToColor (); /**< Converts gray-scale image into equivalent color image; that is all
+                               * three color channels will now exists but still appear as gray-scale.
                                */
 
      UmiRaster^   Transpose ();
@@ -215,7 +215,7 @@ namespace LarcosCounterManaged
 
   private:
      RasterPtr  raster;
-     int        memoryPreasure;  // used by GC::RemoveMemoryPressure  to know how much memory preasure to remove.
+     int        memoryPreasure;  /**< used by GC::RemoveMemoryPressure  to know how much memory pressure to remove. */
   };  /* UmiRaster */
 
 
@@ -226,7 +226,7 @@ namespace LarcosCounterManaged
     UmiRasterList ();
 
     /**
-     *@brief  'UmiRasterList' will be takling ownership of 'images' and its contents.
+     *@brief  'UmiRasterList' will be taking ownership of 'images' and its contents.
      *@details If images does not own its contents then we will create new instances that
      * this instance will then own.  The "Owner" flag on 'images' will be set to 'false' and
      * images will be deleted and set to NULL.
@@ -235,11 +235,11 @@ namespace LarcosCounterManaged
 
 
     /**
-     *@brief Gives owneship of contents of 'images' to this instance 'UmiRasterList'.
+     *@brief Gives ownership of contents of 'images' to this instance 'UmiRasterList'.
      *@details If images does not own its contents then we will create new instances that
      * this instance will then own.  The "Owner" flag on 'images' will be set to 'false'
      * upon return because 'image' will no longer own its contents.  The caller will still
-     * be responsable for 'images' itself.
+     * be responsible for 'images' itself.
      */
     void  GiveOwnership (RasterList&   images);
 

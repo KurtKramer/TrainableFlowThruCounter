@@ -184,7 +184,7 @@ float  ShrimpLengthComputer::CalcHeightWidthRatio (RasterPtr  i)
   kkint32  height = i->Height ();
   kkint32  width  = i->Width  ();
 
-  // Find row range that encompases 80% of pixels of image.
+  // Find row range that encompass 80% of pixels of image.
   kkint32  topRow = (int)floor (centroidRow);
   kkint32  botRow = topRow + 1;
 

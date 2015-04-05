@@ -319,7 +319,7 @@ void  ImportSipper4Images::AddImageToScannerFile (const KKStr&  fileName)
   //KKB::SaveImage (*j, "C:\\Temp\\Sipper4Images\\" + KKB::osGetRootName (fileName) + "_04-Smoothed.bmp");
 
   
-  j->Dialation (SQUARE7);
+  j->Dilation (SQUARE7);
   //KKB::SaveImage (*j, "C:\\Temp\\Sipper4Images\\" + KKB::osGetRootName (fileName) + "_05-Dialated01.bmp");
 
   //j->FillHole ();

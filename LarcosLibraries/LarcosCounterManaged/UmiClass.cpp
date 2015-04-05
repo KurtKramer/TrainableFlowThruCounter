@@ -410,7 +410,7 @@ bool  UmiClass::IsDecendent (UmiClass^  candidate)
 
 
 // Will return the number of generations between this class and the candidate 
-// class.  If 'candidate' is not a decendent then will return -1.
+// class.  If 'candidate' is not a decedent then will return -1.
 int  UmiClass::NumGenerations (UmiClass^  candidate)
 {
   for each  (UmiClass^ pc in children)
@@ -442,7 +442,7 @@ void  UmiClass::Save (String^  directory)
   {
     sw = nullptr;
 
-    MessageBox::Show ("Error occured trying to create UmiClass Description file[" + fileName + "]" + "\n\n" +
+    MessageBox::Show ("Error occurred trying to create UmiClass Description file[" + fileName + "]" + "\n\n" +
                       e->ToString (),
                       "UmiClass.Save[" + fileName + "]",
                       MessageBoxButtons::OK

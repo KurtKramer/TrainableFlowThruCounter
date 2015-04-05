@@ -80,11 +80,11 @@ namespace LarcosCounterManaged
 
     /**
      *@brief  Determines the number of generations between this class and the candidate class.  
-     *@details We search all our children to determine if Candidate is one our decendents. If 
+     *@details We search all our children to determine if Candidate is one our decedents. If 
      *         it is not we return -1 otherwise we return the number of generations below us.
-     *         Our imediate children will be considered 1 generation apart.
+     *         Our immediate children will be considered 1 generation apart.
      *@param[in] Candidate Class that we are searching for amongst out children.
-     *@return The number of generations between us and the candidate or -1 if not one of our decendents.
+     *@return The number of generations between us and the candidate or -1 if not one of our decedents.
      */
     int     NumGenerations (UmiClass^  candidate);
 

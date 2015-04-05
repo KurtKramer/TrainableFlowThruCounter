@@ -38,7 +38,7 @@ namespace LarcosCounterManaged
     /// <summary>
     /// Will allocate/ create a duplicate of '_parms' and own it.
     /// </summary>
-    /// <param name="_parms">Parameters that are to cre duplicated.</param>
+    /// <param name="_parms">Parameters that are to be duplicated.</param>
     UmiSessionParameters  (const SessionParameters&  _parms);
 
   private:
@@ -78,7 +78,7 @@ namespace LarcosCounterManaged
     /// <summary>
     /// Updates member fields from header Fields in specified ScannerFile(sf).
     /// details Earlier version of Larcos did not proceed Session Parameter fields with "SP:" prefix so if 
-    /// a given feild is not found with the prefix will then try looking for field valu without prefix.
+    /// a given field is not found with the prefix will then try looking for field value without prefix.
     /// </summary>
     void  UpdateFromScannerFile (UmiScannerFile^ sf);
 

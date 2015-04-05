@@ -8,14 +8,14 @@
  *@namespace LarcosBase  LarcosVariables.h
  *@brief Classes and structures that are needed to support LARCOS applications.
  *@details The only class in this namespcace is 'LarcosVariables' it provides global 
- * information to all LARCIOS applications such as the LARCOS hime directory.
+ * information to all LARCIOS applications such as the LARCOS home directory.
  */
 
 namespace  LarcosBase 
 {
   /** 
    *@class  Variables
-   *@brief Variables that specic to teh Machine Learning Library.
+   *@brief Variables that specific to the Machine Learning Library.
    *@details  All methods in this library are to use these variables to locate files and directories that they need.
    */
   class  LarcosVariables
@@ -67,9 +67,9 @@ namespace  LarcosBase
 
 
     /** 
-     *@brief  Wil set the Larcos Home Directory to the specifie diractory path in '_larcosHomeDir'.
+     *@brief  Wil set the Larcos Home Directory to the specific directory path in '_larcosHomeDir'.
      *@details  Besides the LarcosHomeDir the "KKMLVariables"  "MachineLearningHomeDir" will be set to 
-     *          a subdirectory off "LarcosHomeDir". Specificacly it will be set to "${LarcosHomeDir}/MachineLearning".
+     *          a subdirectory off "LarcosHomeDir". Specifically it will be set to "${LarcosHomeDir}/MachineLearning".
      */
     static  void   SetLarcosHomeDir (const KKB::KKStr&  _larcosHomeDir);
 

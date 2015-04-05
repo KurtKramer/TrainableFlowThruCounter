@@ -82,7 +82,7 @@ namespace LarcosCounterUnManaged
 
     kkuint32             flowMeterCounterScanLine;
 
-    float                flowRate;             /**< Meters per second as derived from FlowMeter;  if no FlowMeter present wil then compute from 
+    float                flowRate;             /**< Meters per second as derived from FlowMeter;  if no FlowMeter present will then compute from 
                                                 * FlowRateRatio.
                                                 */
 

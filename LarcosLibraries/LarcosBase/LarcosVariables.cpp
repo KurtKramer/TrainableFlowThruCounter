@@ -45,7 +45,7 @@ const KKStr&  LarcosVariables::LarcosHomeDir ()
   if  (!larcosHomeDir.Empty ())
     return  larcosHomeDir;
 
-  // We will fisrt try and get directory from the LarcosHomeDir environment variable.
+  // We will first try and get directory from the LarcosHomeDir environment variable.
   KKStrPtr homeDir = osGetEnvVariable ("LarcosHomeDir");
   if  (homeDir != NULL)
   {
@@ -84,7 +84,7 @@ KKStr  LarcosVariables::TempDir ()
 void   LarcosVariables::SetLarcosHomeDir ()
 {
   // When this method is called the caller wants to set the Larcos home directory to the default location.
-  // so we set 'larcosHomeDir' to a empty string and then call the method 'LarcosHomeDir' which will initilize
+  // so we set 'larcosHomeDir' to a empty string and then call the method 'LarcosHomeDir' which will initialize
   // 'larcosHomeDir' to the default directory.
   larcosHomeDir = "";
   LarcosHomeDir ();

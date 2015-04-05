@@ -376,7 +376,7 @@ LarcosFeatureVectorPtr  LarcosFeatureVectorList::PopFromBack ()
   if  (typeid (*fv) == typeid (LarcosFeatureVector))
   {
     log.Level (-1)  << endl << endl 
-                    << "LarcosFeatureVectorList::BackOfQueue ()    ***ERROR***        Entry poped from back of Queue is not a 'LarcosFeatureVector' object." << endl
+                    << "LarcosFeatureVectorList::BackOfQueue ()    ***ERROR***        Entry pooped from back of Queue is not a 'LarcosFeatureVector' object." << endl
                     << endl;
     return NULL;
   }
@@ -548,8 +548,8 @@ void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProd
 
 
 /**
- * @brief  Creates a duplicate of list and also dupliactes it contents.
- * @return Duplicated list with hardcopy of its contents.
+ * @brief  Creates a duplicate of list and also duplicates it contents.
+ * @return Duplicated list with hard copy of its contents.
  */
 LarcosFeatureVectorListPtr  LarcosFeatureVectorList::DuplicateListAndContents ()  const
 {

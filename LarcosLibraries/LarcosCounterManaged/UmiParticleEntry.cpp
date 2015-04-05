@@ -580,7 +580,7 @@ UmiParticleEntry^  UmiParticleEntryList::LocateParticle (kkint32  scannerRow,
     }
 
     // We found an entry with the same ScannerRow;  there can be several Particles that start on the 
-    // same ScannerRow so we have to search sequentially both forward and backword from current position 'm'.
+    // same ScannerRow so we have to search sequentially both forward and backward from current position 'm'.
 
     int  x = m;
     while  (x >= 0)  
@@ -606,8 +606,7 @@ UmiParticleEntry^  UmiParticleEntryList::LocateParticle (kkint32  scannerRow,
       ++x;
     }
 
-    // At this point none of th eentries were a match.  This indicates that no entris
-    // match the criteria.
+    // At this point none of the entries were a match; returning a nullptr indicates that there were no matches.
     return  nullptr;
   }
   else
@@ -632,7 +631,7 @@ void  UmiParticleEntryList::LoadFile (bool        _loadHeaderOnly,
   baseScannerName = scannerFileRootName;
 
   // Total number of scanner rows read;  since sometimes a recording session can span multiple scanner files
-  // we will acumulate scanner rows of all prev read scanner files.
+  // we will accumulate scanner rows of all prev read scanner files.
   kkint32  scannerRowsTotal = 0;
   kkint32  scannerRowLargestCurrentScannerFile = 0;
   String^  lastScannerFileRootName = "";

@@ -106,14 +106,14 @@ String^           UmiSessionParameters::TrainingModelName::get  () {return UmiKK
 
 void  UmiSessionParameters::SessionId::set (int _sessionId) {sessionParameters->SessionId (_sessionId);}
 
-void  UmiSessionParameters::Comments::set           (String^   _comments)           {sessionParameters->Comments           (UmiKKStr::SystemStringToKKStr   (_comments));}
-void  UmiSessionParameters::DateTimeRecorded::set   (DateTime  _dateTimeRecorded)   {sessionParameters->DateTimeRecorded   (UmiMethods::DateTimeSystemToKKU (_dateTimeRecorded));}
-void  UmiSessionParameters::Destination::set        (String^   _destination)        {sessionParameters->Destination        (UmiKKStr::SystemStringToKKStr   (_destination));}
-void  UmiSessionParameters::PersonInCharge::set     (String^   _personInCharge)     {sessionParameters->PersonInCharge     (UmiKKStr::SystemStringToKKStr   (_personInCharge));}
-void  UmiSessionParameters::ControlNum::set         (String^   _rootName)           {sessionParameters->ControlNum         (UmiKKStr::SystemStringToKKStr   (_rootName));}
-void  UmiSessionParameters::SessionDescription::set (String^   _sessionDescription) {sessionParameters->SessionDescription (UmiKKStr::SystemStringToKKStr   (_sessionDescription));}
-void  UmiSessionParameters::Source::set             (String^   _source)             {sessionParameters->Source             (UmiKKStr::SystemStringToKKStr   (_source));}
-void  UmiSessionParameters::TrainingModelName::set  (String^   _trainingModelName)  {sessionParameters->TrainingModelName  (UmiKKStr::SystemStringToKKStr   (_trainingModelName));}
+void  UmiSessionParameters::Comments::set           (String^  _comments)           {sessionParameters->Comments           (UmiKKStr::SystemStringToKKStr   (_comments));}
+void  UmiSessionParameters::DateTimeRecorded::set   (DateTime _dateTimeRecorded)   {sessionParameters->DateTimeRecorded   (UmiMethods::DateTimeSystemToKKU (_dateTimeRecorded));}
+void  UmiSessionParameters::Destination::set        (String^  _destination)        {sessionParameters->Destination        (UmiKKStr::SystemStringToKKStr   (_destination));}
+void  UmiSessionParameters::PersonInCharge::set     (String^  _personInCharge)     {sessionParameters->PersonInCharge     (UmiKKStr::SystemStringToKKStr   (_personInCharge));}
+void  UmiSessionParameters::ControlNum::set         (String^  _rootName)           {sessionParameters->ControlNum         (UmiKKStr::SystemStringToKKStr   (_rootName));}
+void  UmiSessionParameters::SessionDescription::set (String^  _sessionDescription) {sessionParameters->SessionDescription (UmiKKStr::SystemStringToKKStr   (_sessionDescription));}
+void  UmiSessionParameters::Source::set             (String^  _source)             {sessionParameters->Source             (UmiKKStr::SystemStringToKKStr   (_source));}
+void  UmiSessionParameters::TrainingModelName::set  (String^  _trainingModelName)  {sessionParameters->TrainingModelName  (UmiKKStr::SystemStringToKKStr   (_trainingModelName));}
 
 
 

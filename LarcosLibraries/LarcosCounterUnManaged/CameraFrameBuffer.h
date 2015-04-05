@@ -1,4 +1,4 @@
-/* CameraFrameBuffer.h -- Implements Camera Frame Buffering allowing a camera thread to unload frames quickly for a seprate thread to process.
+/* CameraFrameBuffer.h -- Implements Camera Frame Buffering allowing a camera thread to unload frames quickly for a separate thread to process.
  * Copyright (C) 2011-2013  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in LarcosCounterUnManaged.txt
  */
@@ -57,7 +57,7 @@ namespace LarcosCounterUnManaged
    *    to get the next frame and then call 'DoneWrittingFrameToDisk'  after it is done writing
    *    data to disk.
    *  
-   * A 'GoalKeepeer' object 'gateKeeper' will be used to enforce integrity in the Muli-Threaded
+   * A 'GoalKeepeer' object 'gateKeeper' will be used to enforce integrity in the Multi-Threaded
    * environment.  It will guarantee that only one thread at a time can access the four queues
    * listed below.
    *
@@ -221,7 +221,7 @@ namespace LarcosCounterUnManaged
     kkint32                 frameHeight;
     kkint32                 frameWidth;
     GoalKeeperPtr           gateKeeper;
-    RasterPtr*              lastFrames;                    /**< An array that implements a wrap around buffer that will contain a copy of the
+    RasterPtr*              lastFrames;                 /**< An array that implements a wrap around buffer that will contain a copy of the
                                                          * most current frames added to the 'cameraFrameBuffer'.
                                                          */
 

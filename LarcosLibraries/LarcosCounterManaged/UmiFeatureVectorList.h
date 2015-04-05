@@ -29,9 +29,9 @@ namespace LarcosCounterManaged
     UmiFeatureVectorList (LarcosFeatureVectorList&  examples);   /**< Will take ownership of "examples"  contents. */
 
     UmiFeatureVectorList (FeatureVectorList&  examples);  /**< Will take ownership of "examples"  contents  and reduce it to an empty list.
-                                                           * will convert constents into instances of 'PostLarvaeFV'.  If current contents 
+                                                           * will convert contents into instances of 'PostLarvaeFV'.  If current contents 
                                                            * are instances of 'FeatureVector' will delete them; so make sure that they 
-                                                           * arte not being used anywhere else.
+                                                           * are not being used anywhere else.
                                                            */
 
 
@@ -56,15 +56,15 @@ namespace LarcosCounterManaged
     void  CancelLoad ();
 
 
-    //*********************************************************************************************
-    //*  Will create a list of FeatureVectors where the class assignment will refect the          *
-    //*  specified Hierarhy level specified by 'level'.  The hierarchy of a iven class will       *
-    //*  be indicated by underscore characters in the class name.                                 *
-    //*                                                                                           *
-    //*  ex:   Level 1:  gelatinous                                                               *
-    //*        Level 2:  gelatinous_hydromedusae                                                  *
-    //*        Level 3:  gelatinous_hydromedusae_solmundella                                      *
-    //*********************************************************************************************
+    ///</summary>
+    ///  Will create a list of FeatureVectors where the class assignment will reflect the
+    ///  specified Hierarchy level specified by 'level'.  The hierarchy of a given class will
+    ///  be indicated by underscore characters in the class name.
+    ///
+    ///  ex:   Level 1:  gelatinous
+    ///        Level 2:  gelatinous_hydromedusae
+    ///        Level 3:  gelatinous_hydromedusae_solmundella                                      *
+    ///</summary>
     UmiFeatureVectorList^   CreateListForAGivenLevel (kkuint32      level,
                                                         UmiRunLog^  runLog
                                                        );
@@ -93,7 +93,7 @@ namespace LarcosCounterManaged
     UmiFeatureVectorList^   StratifyAmoungstClasses (int  numOfFolds);
 
     // Will create a "FeatureVectorList" object that will contain the unmanaged instances that are in this list.
-    // it will not own thses instances because the Managed objects that currently own them.  And if you delete them it will cause 
+    // it will not own these instances because the Managed objects that currently own them; and if you delete them it will cause 
     // memory problems.
     FeatureVectorListPtr      ToFeatureVectorList (UmiRunLog^  runLog);  // Creates an unmanaged list of feature vectors.
 
@@ -102,7 +102,7 @@ namespace LarcosCounterManaged
     void  CleanUpUnmanagedResources ();
 
 
-    bool*           cancelFlag;   // the "CancelLoad" methid will monitor this flag;  if set to true will terminate.
+    bool*           cancelFlag;   // the "CancelLoad" method will monitor this flag;  if set to true will terminate.
     MLClassListPtr  classes;
     kkuint32*       numExamplesWritten;  // used by SaveFeatureFile 
     bool            owner;

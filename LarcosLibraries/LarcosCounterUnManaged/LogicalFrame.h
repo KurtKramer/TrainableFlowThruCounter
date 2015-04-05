@@ -76,13 +76,13 @@ namespace LarcosCounterUnManaged
 
     uchar                  backGroundPixelTH;
 
-    kkint32                bytesAllocated;             /**< Total number of pixels in work frame area.                                              */
+    kkint32                bytesAllocated;             /**< Total number of pixels in work frame area. */
     
-    float                  flowRateRatio;              /**< If no FlowMeter will thne be the one provided by LarcsCounterManager otherwise it will
-                                                        * be the one compted by 'FlowMeterTracker'.
+    float                  flowRateRatio;              /**< If no FlowMeter will then use the one provided by LarcsCounterManager otherwise it will
+                                                        * be the one computed by 'FlowMeterTracker'.
                                                         */
 
-    float                  flowRate;                   /**< Meters/Sec as determied by FlowMeter;  if no flow meter present will be computed from 
+    float                  flowRate;                   /**< Meters/Sec as determined by FlowMeter;  if no flow meter present will be computed from 
                                                         * FlowRateFactor(FlowRateRatio).
                                                         */
 

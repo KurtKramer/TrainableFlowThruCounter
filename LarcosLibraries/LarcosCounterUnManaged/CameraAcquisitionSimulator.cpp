@@ -332,7 +332,7 @@ void  CameraAcquisitionSimulator::Run ()
     GetNextFrame2 (buffer, eof);
     while  ((!TerminateFlag ())  &&  (!ShutdownFlag ())  &&  (!eof))
     {
-      // because data is stored with (backGround == 0) and (forground == 255) in scanner files we need to
+      // because data is stored with (backGround == 0) and (foreground == 255) in scanner files we need to
       // complement it all to simulate the data hat a camera would provide.
       if  (embeddedFlowMeter)
       {

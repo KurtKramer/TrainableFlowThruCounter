@@ -155,8 +155,8 @@ kkuint32  UmiFeatureVectorList::NumExamplesWritten::get ()
 
 
 UmiFeatureVectorList^   UmiFeatureVectorList::CreateListForAGivenLevel (kkuint32      level,
-                                                                            UmiRunLog^  runLog
-                                                                           )
+                                                                        UmiRunLog^  runLog
+                                                                       )
 {
   UmiFeatureVectorList^  specificLevelList = gcnew UmiFeatureVectorList ();
 
@@ -228,7 +228,7 @@ void  UmiFeatureVectorList::LoadInSubDirectoryTree
     featureData= NULL;
   }
 
-  featureData->Owner (false);  // The owership of the individule ImageFeature objects will be taken over by 
+  featureData->Owner (false);  // The ownership of the individual ImageFeature objects will be taken over by 
                                // this container object "UmiFeatureVectorList".
 
   PostLarvaeFVList::iterator  idx;

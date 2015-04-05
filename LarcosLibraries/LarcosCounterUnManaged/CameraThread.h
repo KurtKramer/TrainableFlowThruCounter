@@ -23,7 +23,7 @@ namespace  LarcosCounterUnManaged
 
   /**
    *@brief  Base class for all Thread specific classes used by the LarcosCounter.
-   *@details  This is a abstract class that is a specialization of the  the general purpose 
+   *@details  This is a abstract class that is a specialization of the general purpose 
    * class "KKTHread".  It contains data fields  and methods specific to the Larcos Counter.  
    * Each individual thread  in the LarcosCounter will be managed by a instance of a class
    * that was derived from this class (CameraAcquisition, LogicalFrameBuilder, LogicalPrameProcessor,

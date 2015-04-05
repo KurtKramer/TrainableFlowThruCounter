@@ -21,7 +21,7 @@ namespace LarcosCounterUnManaged
    * of this (CameraAutoGainThread) and starts it up
    *
    * The actual code for performing Auto-Gain is implemented in the "CameraAcquisition" instance that is
-   * communicating withthe camera.  This tgread will call the derived virtual method "PerformAutoGainProcedure"
+   * communicating with the camera. This thread will call the derived virtual method "PerformAutoGainProcedure"
    * to perform the "Auto-Gain" function.
    *
 

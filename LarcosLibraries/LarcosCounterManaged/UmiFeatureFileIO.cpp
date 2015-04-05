@@ -257,7 +257,7 @@ UmiFeatureVectorList^  UmiFeatureFileIO::LoadFeatureFile (String^     _fileName,
 
   if  (!(driver->CanWrite ()))
   {
-    lastError = "Driver[" + UmiKKStr::KKStrToSystenStr (driver->DriverName ()) + "] does not support writting.";
+    lastError = "Driver[" + UmiKKStr::KKStrToSystenStr (driver->DriverName ()) + "] does not support writing.";
 
     _runLog->WriteLn (10, "UmiFeatureFileIO::SaveFeatureFile  " + lastError);
     *successful = false;

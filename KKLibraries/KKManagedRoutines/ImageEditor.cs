@@ -112,7 +112,7 @@ namespace KKManagedRoutines
         switch  (operation)
         {
           case  UmiRaster.OperationType.Closing:  
-          case  UmiRaster.OperationType.Dialation:
+          case  UmiRaster.OperationType.Dilation:
           case  UmiRaster.OperationType.Erosion:
           case  UmiRaster.OperationType.Opening:
             {
@@ -174,7 +174,7 @@ namespace KKManagedRoutines
           case  UmiRaster.OperationType.Closing:            result = r.CloseImage          (mask);         break;
           case  UmiRaster.OperationType.ConnectedComponent: result = r.ConnectedComponent  ();             break;
           case  UmiRaster.OperationType.ConvexHull:         result = r.ConvexHull          ();             break;
-          case  UmiRaster.OperationType.Dialation:          result = r.DilateImage        (mask);         break;
+          case  UmiRaster.OperationType.Dilation:          result = r.DilateImage        (mask);         break;
           case  UmiRaster.OperationType.Edge:               result = r.EdgeImage           ();             break;
           case  UmiRaster.OperationType.Erosion:            result = r.ErodeImage          (mask);         break;
           case  UmiRaster.OperationType.FillHoles:          result = r.FillHoles           ();             break;
@@ -851,7 +851,7 @@ namespace KKManagedRoutines
 
     private void DialationButton_Click(object sender, EventArgs e)
     {
-      AddOperation (UmiRaster.OperationType.Dialation);
+      AddOperation (UmiRaster.OperationType.Dilation);
     }
 
     private void SmoothingButton_Click(object sender, EventArgs e)

@@ -233,7 +233,7 @@ System::String^  UmiRaster::OperationTypeToStr (OperationType  ot)
   case  OperationType::Closing:             result = "Closing";             break;
   case  OperationType::ConnectedComponent:  result = "ConnectedComponent";  break;
   case  OperationType::ConvexHull:          result = "ConvexHull";          break;
-  case  OperationType::Dialation:           result = "Dialation";           break;
+  case  OperationType::Dilation:            result = "Dilation";           break;
   case  OperationType::Edge:                result = "Edge";                break;
   case  OperationType::Erosion:             result = "Erosion";             break;
   case  OperationType::FillHoles:           result = "FillHoles";           break;
@@ -241,7 +241,7 @@ System::String^  UmiRaster::OperationTypeToStr (OperationType  ot)
   case  OperationType::Opening:             result = "Opening";             break;
   case  OperationType::SmoothAveraging:     result = "SmoothAveraging";     break;
   case  OperationType::SmoothMedium:        result = "SmoothMedium";        break;
-  case  OperationType::Streatching:         result = "Streatching";         break;
+  case  OperationType::Stretching:          result = "Stretching";         break;
   case  OperationType::Thinning:            result = "Thinning";            break;
   default:                                  result = "UnKnown";             break;
   }  /* end of switch (ot) */
@@ -275,7 +275,7 @@ UmiRaster::OperationType  UmiRaster::OperationTypeFromStr (System::String^  otSt
     return  OperationType::ConvexHull;
 
   if  (otStr == "DIALATION")
-    return  OperationType::Dialation;
+    return  OperationType::Dilation;
 
   if  (otStr == "EDGE")
     return  OperationType::Edge;
@@ -299,7 +299,7 @@ UmiRaster::OperationType  UmiRaster::OperationTypeFromStr (System::String^  otSt
     return  OperationType::SmoothMedium;
 
   if  (otStr == "STREATCHING")
-    return  OperationType::Streatching;
+    return  OperationType::Stretching;
 
   if  (otStr == "THINNING")
     return  OperationType::Thinning;
@@ -651,7 +651,7 @@ void   UmiRaster::Save (String^  fileName)
 
   if  ((extension == "bmp")  &&  (!raster->Color ()))
   {
-    // We want to use the routine in ImageIO from "KKBaseLibrery" to save this image because it is much more efficient in space ussage.
+    // We want to use the routine in ImageIO from "KKBaseLibrery" to save this image because it is much more efficient in space usage.
     //SaveImage (*raster, UmiKKStr::SystemStringToKKStr (fileName));
     SaveImageGrayscaleInverted8Bit (*raster, UmiKKStr::SystemStringToKKStr (fileName));
   }

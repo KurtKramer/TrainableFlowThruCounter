@@ -37,30 +37,30 @@ namespace LarcosCounterUnManaged
 
     void  Assign (const SessionParameters&  parms);
 
-    void  SessionId              (kkint32        _sessionId)              {sessionId           = _sessionId;}
-    void  Comments               (const KKStr&   _comments)               {comments            = _comments;}
-    void  DateTimeRecorded       (KKB::DateTime  _dateTimeRecorded)       {dateTimeRecorded    = _dateTimeRecorded;}
-    void  Destination            (const KKStr&   _destination)            {destination         = _destination;}
-    void  DestScannerFileName    (const KKStr&   _destScannerFileName)    {destScannerFileName = _destScannerFileName;}
-    void  HostName               (const KKStr&   _hostName)               {hostName            = _hostName;}
-    void  PersonInCharge         (const KKStr&   _personInCharge)         {personInCharge      = _personInCharge;}
-    void  SessionDescription     (const KKStr&   _sessionDescription)     {sessionDescription  = _sessionDescription;}
-    void  ControlNum             (const KKStr&   _controlNum)             {controlNum          = _controlNum;}
-    void  Source                 (const KKStr&   _source)                 {source              = _source;}
-    void  TrainingModelName      (const KKStr&   _trainingModelName)      {trainingModelName   = _trainingModelName;}
+    void  SessionId            (kkint32        _sessionId)            {sessionId           = _sessionId;}
+    void  Comments             (const KKStr&   _comments)             {comments            = _comments;}
+    void  DateTimeRecorded     (KKB::DateTime  _dateTimeRecorded)     {dateTimeRecorded    = _dateTimeRecorded;}
+    void  Destination          (const KKStr&   _destination)          {destination         = _destination;}
+    void  DestScannerFileName  (const KKStr&   _destScannerFileName)  {destScannerFileName = _destScannerFileName;}
+    void  HostName             (const KKStr&   _hostName)             {hostName            = _hostName;}
+    void  PersonInCharge       (const KKStr&   _personInCharge)       {personInCharge      = _personInCharge;}
+    void  SessionDescription   (const KKStr&   _sessionDescription)   {sessionDescription  = _sessionDescription;}
+    void  ControlNum           (const KKStr&   _controlNum)           {controlNum          = _controlNum;}
+    void  Source               (const KKStr&   _source)               {source              = _source;}
+    void  TrainingModelName    (const KKStr&   _trainingModelName)    {trainingModelName   = _trainingModelName;}
 
-    kkint32               SessionId              ()  const  {return sessionId;}
+    kkint32               SessionId            ()  const  {return sessionId;}
 
-    const KKStr&          Comments               ()  const  {return comments;}
-    const KKB::DateTime&  DateTimeRecorded       ()  const  {return dateTimeRecorded;}
-    const KKStr&          Destination            ()  const  {return destination;}
-    const KKStr&          DestScannerFileName    ()  const  {return destScannerFileName;}
-    const KKStr&          HostName               ()  const  {return hostName;}
-    const KKStr&          PersonInCharge         ()  const  {return personInCharge;}
-    const KKStr&          SessionDescription     ()  const  {return sessionDescription;}
-    const KKStr&          ControlNum             ()  const  {return controlNum;}
-    const KKStr&          Source                 ()  const  {return source;}
-    const KKStr&          TrainingModelName      ()  const  {return trainingModelName;}
+    const KKStr&          Comments             ()  const  {return comments;}
+    const KKB::DateTime&  DateTimeRecorded     ()  const  {return dateTimeRecorded;}
+    const KKStr&          Destination          ()  const  {return destination;}
+    const KKStr&          DestScannerFileName  ()  const  {return destScannerFileName;}
+    const KKStr&          HostName             ()  const  {return hostName;}
+    const KKStr&          PersonInCharge       ()  const  {return personInCharge;}
+    const KKStr&          SessionDescription   ()  const  {return sessionDescription;}
+    const KKStr&          ControlNum           ()  const  {return controlNum;}
+    const KKStr&          Source               ()  const  {return source;}
+    const KKStr&          TrainingModelName    ()  const  {return trainingModelName;}
 
 
 
@@ -119,7 +119,7 @@ namespace LarcosCounterUnManaged
 
   private:
      /**
-      *@brief Will retrieve value of 'fieldName' fist as a SessionParameter field ("SP:") and if not found then then as 
+      *@brief Will retrieve value of 'fieldName' fist as a SessionParameter field ("SP:") and if not found then as 
       * generic field value.
       *@details  In earlier version of Larcos recorded each field in header with just field name;  but later on we started to add
       * prefix to denote section such as 'SP:' for Session Parameters.

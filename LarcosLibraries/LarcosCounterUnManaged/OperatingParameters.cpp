@@ -201,7 +201,7 @@ void  OperatingParameters::UpdateFromScannerFile (ScannerFilePtr  sf)
   dataIsToBeCounted       = GetScannerFileValueBool  (sf, "DataIsToBeCounted",      dataIsToBeCounted);
   dataIsToBeRecorded      = GetScannerFileValueBool  (sf, "DataIsToBeRecorded",     dataIsToBeRecorded);
 
-  // In earlier version this field was caled 'FlatFieldCorrectionEnabled'  we call the followingmetod 
+  // In earlier version this field was called 'FlatFieldCorrectionEnabled'  we call the following method 
   // twice; 1st with old name and then with new name to make sure that we capture its value.
   flatFieldEnabled        = GetScannerFileValueBool  (sf, "FlatFieldCorrectionEnabled",  flatFieldEnabled);
   flatFieldEnabled        = GetScannerFileValueBool  (sf, "FlatFieldEnabled",            flatFieldEnabled);
@@ -396,7 +396,7 @@ void  OperatingParameters::ValidateParameters (KKStr&  _errMsg)
     _errMsg << "\n" << "Flow Rate Factor is out of range (0.1 thru 10.0).";
 
   if  ((this->erosionStructSize < 0)  ||  (erosionStructSize > 8))
-    _errMsg << "\n" << "Erosion Struct Size[" << erosionStructSize << "] is out of range (0 thru 8).";
+    _errMsg << "\n" << "Erosion Structure Size[" << erosionStructSize << "] is out of range (0 thru 8).";
       
   if  (destScannerFileFormat == ScannerFile::sfUnKnown)
     _errMsg << "\n" << "Invalid File Format specified.";

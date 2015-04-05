@@ -496,7 +496,7 @@ UmiRaster^   UmiScannerFileBuffered::GetImage (UmiParticleEntry^  pe)
 
   if  (rowsReturned < height)
   {
-    // Somethiong went very wrong;  we did not get all the rows that we needed!  Why?
+    // Something went very wrong;  we did not get all the rows that we needed!  Why?
     height = rowsReturned;
   }
 
@@ -585,7 +585,7 @@ void  UmiScannerFileBuffered::GetDisplayRows (kkint32               displayRowSt
 
   array<array<byte>^>^   scanRows = GetScanLines  (startScanRowInt, endScanRowInt);
 
-  //kak   When weOwnScannerFile resize from Max Screen when displaying from UnManagedInterface Comander weOwnScannerFile sometimes Get no Data WHY?
+  //kak   When weOwnScannerFile resize from Max Screen when displaying from UnManagedInterface Commander weOwnScannerFile sometimes Get no Data WHY?
   if  (scanRows == nullptr)
     return;
 
@@ -751,7 +751,7 @@ UmiRaster^  UmiScannerFileBuffered::GetRasterForParticleAsCounted (UmiParticleEn
 
   if  (false)
   {
-    // Ths code is usefull to make sure that we are re-producing the image for ImageViewer that we are using during LogicalFrameProcessing
+    // This code is useful to make sure that we are re-producing the image for ImageViewer that we are using during LogicalFrameProcessing
     // Feature Computation.
     //
     //String  origFileSubDir = "D:\\Larcos\\ScannerFiles\\2014-02-28_WalkingTreeFarms\\2014-02-28_WTF_006\\WTF_006_20140228-104439_00\\";
@@ -838,7 +838,7 @@ void  UmiScannerFileBuffered::GetDisplayRowsScanColsByScanRows  (kkint32        
 
   array<array<byte>^>^   scanRows = GetScanLines  (startScanRowInt, endScanRowInt);
 
-  //kak   When weOwnScannerFile resize from Max Screen when displaying from UnManagedInterface Comander weOwnScannerFile sometimes Get no Data WHY?
+  //kak   When weOwnScannerFile resize from Max Screen when displaying from UnManagedInterface Commander weOwnScannerFile sometimes Get no Data WHY?
   if  (scanRows == nullptr)
     return;
 

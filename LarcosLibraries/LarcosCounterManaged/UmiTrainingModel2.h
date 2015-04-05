@@ -83,7 +83,7 @@ namespace LarcosCounterManaged
     property  List<String^>^    ErrorMsgs                {List<String^>^    get ()  {return  errorMsgs;}}
     property  int               ImagesPerClass           {int               get ();}
     property  String^           ModelName                {String^           get ()  {return  modelName;}}
-    property  kkuint32          NumHierarchialLevels     {kkuint32          get ();}     // returns back the number of hierarchail levels there
+    property  kkuint32          NumHierarchialLevels     {kkuint32          get ();}     /**< returns back the number of hierarchical levels there.  */
     property  String^           ParameterStr             {String^           get ();}
     property  String^           RootDirExpanded          {String^           get ();}
     property  String^           RunLogFileName           {String^           get ();}
@@ -101,11 +101,11 @@ namespace LarcosCounterManaged
     void  BuildTrainingModel (UmiFeatureVectorList^  umiTrainingData);
 
 
-    void  CancelLoad ();   // Sets cancel flag to terminate loading of training model.
+    void  CancelLoad ();   /**< Sets cancel flag to terminate loading of training model.  */
 
-    UmiClassList^  ImageClasses ();  // Will return a list of classes that belong to this model. 
-                                       // It will be created from "classList".  So the the caller 
-                                       // can do with it as they want.
+    UmiClassList^  ImageClasses ();  /**< Will return a list of classes that belong to this model. 
+                                      * It will be created from "classList".  So the caller can do with it as they want.
+                                      */
 
     String^  DirectoryPathForClass (UmiClass^  mlClass);
 
@@ -142,7 +142,9 @@ namespace LarcosCounterManaged
                        );
 
 
-    // This call asasumes that here wea as sucessfull call to PredictProbabilities before.
+    /**
+     *This call assumes that there was a successful call to PredictProbabilities before.
+     */
     UmiPredictionList^   BinaryProbailitiesForClass (UmiClass^  leftClass);
 
     array<LarcosCounterManaged::ProbNamePair^>^  
@@ -215,7 +217,7 @@ namespace LarcosCounterManaged
     int                             runLogLastLineNum;
     KKStrPtr                        statusMsg;
     TrainingProcess2Ptr             trainer;
-    bool*                           valid;     // True if Training Library Valid
+    bool*                           valid;     /**< True if Training Library Valid.  */
     int*                            votes;
 
     UmiClassList^                   classList;

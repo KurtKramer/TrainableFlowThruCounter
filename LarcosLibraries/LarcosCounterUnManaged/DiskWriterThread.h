@@ -114,7 +114,7 @@ namespace LarcosCounterUnManaged
 
 
     /**
-     *@brief  Call this Method to start writing camera frame data to disk.  Will stay in loop until cancelFlag is true.
+     *@brief  Call this Method to start writing camera frame data to disk; will stay in loop until cancelFlag is true.
      */
     virtual void  Run ();
 
@@ -127,33 +127,33 @@ namespace LarcosCounterUnManaged
 
 
 
-    kkint64                 bytesWritten;
-    mutable  kkint64        bytesWrittenAllSegs;
-    kkint64                 bytesWrittenCompletedSegs;
-    CameraFrameBufferPtr    cameraBuffer;
-    KKStr                   curScannerFileName;          /**< Current file that we are writing scanner data to. */
-    KKStr                   curScannerFileRootName;
-    DiskWritingStatus       dwStatus;
-    bool                    firstFrameYet;
-    ScannerFileFormat       format;
-    kkint64                 frameSeqNumLast;
-    kkint32                 frameHeight;
-    kkint32                 frameWidth;
-    long                    framesWritten;
-    MsgQueuePtr             msgs;                        /**< Messages that need to be written to the Scanner file will be queued in this structure. */
-    bool                    msgsAreQueued;               /**< Flag to let the 'WrittingThread' loop know that there are messages queued to be written to the scanner file. */
-    kkint32                 numFramesSinceLastSkip;
-    kkint32                 numSkippedFrames;
-    bool                    dataIsToBeRecorded;
-    kkint32                 scannerFileBaseCount;        /**<  Number of times current Base Scanner File was restarted when old one exceeded 'scannerFileSizeMax'. */
-    KKStr                   scannerFileBaseName;
-    KKStr                   scannerFileBaseExtension;
-    KKStr                   scannerFileDir;
-    kkint64                 scannerFileSize;             /**<  Number bytes written to current ScannerFile   */
-    kkint64                 scannerFileSizeMax;          /**<  Maximum number of bytes to write to a scanner file before starting a new one. */
-    long                    scanLinesWritten;
-    bool                    startNewScannerFile;
-    KKStr                   startNewScannerFileName;
+    kkint64               bytesWritten;
+    mutable  kkint64      bytesWrittenAllSegs;
+    kkint64               bytesWrittenCompletedSegs;
+    CameraFrameBufferPtr  cameraBuffer;
+    KKStr                 curScannerFileName;          /**< Current file that we are writing scanner data to. */
+    KKStr                 curScannerFileRootName;
+    DiskWritingStatus     dwStatus;
+    bool                  firstFrameYet;
+    ScannerFileFormat     format;
+    kkint64               frameSeqNumLast;
+    kkint32               frameHeight;
+    kkint32               frameWidth;
+    long                  framesWritten;
+    MsgQueuePtr           msgs;                        /**< Messages that need to be written to the Scanner file will be queued in this structure. */
+    bool                  msgsAreQueued;               /**< Flag to let the 'WrittingThread' loop know that there are messages queued to be written to the scanner file. */
+    kkint32               numFramesSinceLastSkip;
+    kkint32               numSkippedFrames;
+    bool                  dataIsToBeRecorded;
+    kkint32               scannerFileBaseCount;        /**< Number of times current Base Scanner File was restarted when old one exceeded 'scannerFileSizeMax'. */
+    KKStr                 scannerFileBaseName;
+    KKStr                 scannerFileBaseExtension;
+    KKStr                 scannerFileDir;
+    kkint64               scannerFileSize;             /**< Number bytes written to current ScannerFile   */
+    kkint64               scannerFileSizeMax;          /**< Maximum number of bytes to write to a scanner file before starting a new one. */
+    long                  scanLinesWritten;
+    bool                  startNewScannerFile;
+    KKStr                 startNewScannerFileName;
   };   /* DiskWriterThread */
 
   typedef  DiskWriterThread*  DiskWriterThreadPtr;
