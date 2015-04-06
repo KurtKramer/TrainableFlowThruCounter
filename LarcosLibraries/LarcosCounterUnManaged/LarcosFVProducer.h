@@ -175,7 +175,7 @@ namespace LarcosCounterUnManaged
 
   protected:
     /**
-     *@brief  A Factory can never be deleted until the application terminates;  the atexit method will perform the deletes.
+     *@brief  A Factory can never be deleted until the application terminates; the atexit method will perform the deletes.
      */
     virtual ~LarcosFVProducerFactory ();
 

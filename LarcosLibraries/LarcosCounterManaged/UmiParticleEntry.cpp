@@ -1283,6 +1283,8 @@ array<float>^  UmiParticleEntryList::ParticleFrequencyByTimeIntervals (int    in
 
 
 
+
+
 int  UmiParticleEntryList::SubjectCount (UmiScannerFileBuffered^  scannerFile)
 {
   const StartStopPointList&  startStopPoints = scannerFile->StartStopPointsUnManaged ();

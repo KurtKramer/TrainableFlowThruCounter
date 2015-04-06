@@ -128,7 +128,7 @@ const  KKStr  LarcosFVProducer::featureNames[] =
   "TransparancyConvexHull",  // 18
   "TransparancyPixelCount",  // 19
   
-  "TransparancyOpen3",       // 20    Gramulometric features
+  "TransparancyOpen3",       // 20    Granulometric features
   "TransparancyOpen5",       // 21
   "TransparancyOpen7",       // 22
   "TransparancyOpen9",       // 23

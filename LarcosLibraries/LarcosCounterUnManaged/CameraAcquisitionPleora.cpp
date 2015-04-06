@@ -872,7 +872,7 @@ void  CameraAcquisitionPleora::SetScanRate  (float requestedScanRate)
       requestedScanRate = 1000000.0f / 55.0f;
       KKStr newRequestedScanRateStr = StrFormatDouble (requestedScanRate, "-ZZZ,ZZ0.0");
       KKStr warnMsg (128);
-      warnMsg  << "CameraAcquisitionPleora::SetScanRate   RequestedScanRate: " << requestedScanRateStr << "  too fast; adj to: " << StrFormatDouble (requestedScanRate, "###,##0.00");
+      warnMsg  << "CameraAcquisitionPleora::SetScanRate   RequestedScanRate: " << requestedScanRateStr << "  too fast; adjusted to: " << StrFormatDouble (requestedScanRate, "###,##0.00");
       log.Level (20) << warnMsg << endl;
       requestedScanRateStr = newRequestedScanRateStr;
       acquisitionLinePeriod = 55;

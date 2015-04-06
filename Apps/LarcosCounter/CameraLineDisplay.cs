@@ -167,7 +167,7 @@ namespace LarcosCounter
         cropRightDisplayCol = (int)(leftCol + (float)horzCoarsness * ((float)(cropRightCol - firstCameraCol)) / (float)scallingRatio);
 
       {
-        // Draw Axises
+        // Draw Axis's
         Pen p = new Pen (Color.GreenYellow, 1);
         
         int row255 = botRow - (int)(0.5f + 255.0f * vertCoarsness);
@@ -340,7 +340,7 @@ namespace LarcosCounter
       // Logic will be simple.
       // 1) Smooth camera data using medium filter with currently selected window size.
       // 2) Mind medium value.
-      // 3) Select the 1st columns cmming from left and right that ar egreater that 50% of medium value.
+      // 3) Select the 1st columns going from left and right edges that are greater that 50% of medium value.
 
       cameraData = cameraManager.CameraHighPointsFromLastNSampleLines ((int)numSampleLines);
 
@@ -450,7 +450,7 @@ namespace LarcosCounter
       Font  font = new Font ("Arial", 24);
       Brush  b = new SolidBrush (Color.Red);
       
-      string  msg = "Error Retreiving Camera Line Data";
+      string  msg = "Error Retrieving Camera Line Data";
       Size  spaceNeeded = TextRenderer.MeasureText (msg, font);
       
       int  h = cameraLineWindow.Height;

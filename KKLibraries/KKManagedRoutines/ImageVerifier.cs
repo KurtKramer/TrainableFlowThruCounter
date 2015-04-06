@@ -48,7 +48,7 @@ namespace KKManagedRoutines
     private  ToolTip    toolTip = null;
 
     /// <summary>
-    /// Indicates that the groud-truthing is on; each click defines a new objects or if pointiing to existing one disables it.
+    /// Indicates that the ground-truthing is on; each click defines a new objects or if pointing to existing one disables it.
     /// </summary>
     private  bool       groundTruthing = false;
     private  Color      groundTruthBackGroundColor = Color.Gray;
@@ -206,7 +206,7 @@ namespace KKManagedRoutines
       toolTip.SetToolTip (UpdateTrainingLibrayButton,      "Press this button to add this image to the training library for currently active classifier.");
       toolTip.SetToolTip (AddNewClassButtom,               "Bring up Add-New-Class dialog to add a new class to training model.");
       toolTip.SetToolTip (OkButton,                        "Press this when done viewing this image.");
-      toolTip.SetToolTip (GroundTruthButton,               "Enables the groundtruthing function; click on critters to be counted.");
+      toolTip.SetToolTip (GroundTruthButton,               "Enables the ground-truthing function; click on critters to be counted.");
     }
 
 
@@ -741,12 +741,12 @@ namespace KKManagedRoutines
       if  (groundTruthing)
       {
         GroundTruthButton.BackColor = Color.Blue;
-        toolTip.SetToolTip (GroundTruthButton, "Disables the groundtruthing function.");
+        toolTip.SetToolTip (GroundTruthButton, "Disables the ground-truthing function.");
       }
       else
       {
         GroundTruthButton.BackColor = groundTruthBackGroundColor;
-        toolTip.SetToolTip (GroundTruthButton, "Enables the groundtruthing function; click on critters to be counted.");
+        toolTip.SetToolTip (GroundTruthButton, "Enables the ground-truthing function; click on critters to be counted.");
       }
     }
   }  /* ImageVerifier*/

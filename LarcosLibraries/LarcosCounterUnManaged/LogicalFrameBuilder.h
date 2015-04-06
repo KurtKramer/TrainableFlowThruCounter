@@ -52,7 +52,7 @@ namespace LarcosCounterUnManaged
    *@details Retrieves Frames from "cameraBuffer"(an instance of "CameraFrameBuffer"), which is populated by an
    *         instance of "CameraAcquisition", and creates logical frames ("LogicalFrame") which will then be inserted
    *         into "logicalFrames",an instance of "LogicalFrameList".  Logical frames are created by scanning physical
-   *         frames for 3 blank scan line rows.  If no such break is detected within a specified number of scan-lines
+   *         frames for 3 blank scan line rows. If no such break is detected within a specified number of scan-lines
    *         then the scan-line with the least number of foreground pixels will be selected as a breaking point
    *         for the logical frame.
    */

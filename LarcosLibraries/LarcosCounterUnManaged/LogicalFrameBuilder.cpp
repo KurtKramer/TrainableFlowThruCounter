@@ -42,7 +42,7 @@ using namespace  LarcosBase;
 using  namespace  LarcosCounterUnManaged;
 
 /**
- *@brief  Takes the physical frame data from the camera via 'cameraBuffer'  and breaks it up into 
+ *@brief  Takes the physical frame data from the camera via 'cameraBuffer' and breaks it up into 
  *        logical frames.  The logical frames are then placed into 'logicalFrames' to be further 
  *        processed.
  */

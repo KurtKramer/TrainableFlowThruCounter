@@ -488,7 +488,7 @@ namespace LarcosCounter
       ca.AxisY.Minimum = 0;
       ca.AxisY.Title = "Count";
       ca.AxisX.Minimum = 0;
-      ca.AxisX.Title = "Time (secs)";
+      ca.AxisX.Title = "Time (sec's)";
       ca.AxisY.Minimum = 0;
 
       CountsChart.Series[0].Points.Clear ();

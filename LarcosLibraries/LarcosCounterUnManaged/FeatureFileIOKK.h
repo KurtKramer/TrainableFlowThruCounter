@@ -82,7 +82,7 @@ namespace LarcosCounterUnManaged
 
     /**
      *@brief  Will point to instance of 'FeatureFileIOKK' that is created when static members 
-     * are initialzed during module load.  The instance will be Registered with 'FeatureFileIO::RegisterDriver'
+     * are initialized during module load.  The instance will be Registered with 'FeatureFileIO::RegisterDriver'
      * by call 'CreateAndRegisterInstance'.
      */
     static FeatureFileIOKKPtr  driver;

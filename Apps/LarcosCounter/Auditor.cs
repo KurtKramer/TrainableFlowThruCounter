@@ -257,7 +257,7 @@ namespace LarcosCounter
 
 
 
-    // While PartcleEntries and FrameOffsets are still loading we need to call this method periodily to 
+    // While PartcleEntries and FrameOffsets are still loading we need to call this method periodically to 
     // refresh ScannerFile stats.
     private  void  DisplayScannerFileStats ()
     {

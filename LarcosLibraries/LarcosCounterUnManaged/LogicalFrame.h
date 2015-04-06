@@ -69,42 +69,42 @@ namespace LarcosCounterUnManaged
                            );
 
 
-    LogicalFrameEntryPtr   logicalFrameEntry;          /**< Assigned a value in 'LogicalFrame::AssignAFrame'  which is called from 
-                                                        * 'LogicalFrameBuilder::PlaceRasterDataIntoLogicalFrameList' which is 
-                                                        * called from 'LogicalFrameBuilder::Run'.
-                                                        */
+    LogicalFrameEntryPtr   logicalFrameEntry;       /**< Assigned a value in 'LogicalFrame::AssignAFrame'  which is called from 
+                                                     * 'LogicalFrameBuilder::PlaceRasterDataIntoLogicalFrameList' which is 
+                                                     * called from 'LogicalFrameBuilder::Run'.
+                                                     */
 
     uchar                  backGroundPixelTH;
 
-    kkint32                bytesAllocated;             /**< Total number of pixels in work frame area. */
+    kkint32                bytesAllocated;          /**< Total number of pixels in work frame area. */
     
-    float                  flowRateRatio;              /**< If no FlowMeter will then use the one provided by LarcsCounterManager otherwise it will
-                                                        * be the one computed by 'FlowMeterTracker'.
-                                                        */
+    float                  flowRateRatio;           /**< If no FlowMeter will then use the one provided by LarcsCounterManager otherwise it will
+                                                     * be the one computed by 'FlowMeterTracker'.
+                                                     */
 
-    float                  flowRate;                   /**< Meters/Sec as determined by FlowMeter;  if no flow meter present will be computed from 
-                                                        * FlowRateFactor(FlowRateRatio).
-                                                        */
+    float                  flowRate;                /**< Meters/Sec as determined by FlowMeter;  if no flow meter present will be computed from 
+                                                     * FlowRateFactor(FlowRateRatio).
+                                                     */
 
-    kkint32                frameHeight;                /**< Total number of rows(scan lines) allocated for 'ScanLines', 'blobIds', and 'workArea'.  */
+    kkint32                frameHeight;             /**< Total number of rows(scan lines) allocated for 'ScanLines', 'blobIds', and 'workArea'.  */
     kkint32                frameWidth;
-    kkint32                frameHeightUsed;            /**< The number of scan lines that are actually populated with data.                         */
-    kkint32                frameAreaUsed;              /**< The number of pixels in 'frameLinesArea' that are actually used.                        */
+    kkint32                frameHeightUsed;         /**< The number of scan lines that are actually populated with data. */
+    kkint32                frameAreaUsed;           /**< The number of pixels in 'frameLinesArea' that are actually used. */
 
     uchar*                 frameLinesArea;
     uchar**                frameLines;
 
-    kkint32                scanLineNumStart;           /**< The scan-line that the first row in 'frameLines' represents. */
+    kkint32                scanLineNumStart;        /**< The scan-line that the first row in 'frameLines' represents. */
 
-    kkint32                scanLineNumStartCurSF;      /**< The scan-line that the first row in 'framesLines represents with *
-                                                        * respect to the ScannerFile it was written to or read from.
-                                                        */
+    kkint32                scanLineNumStartCurSF;   /**< The scan-line that the first row in 'framesLines represents with *
+                                                     * respect to the ScannerFile it was written to or read from.
+                                                     */
 
-    ScannerFileEntryPtr    scannerFileEntry;           /* Root name of scanner file that this frame is being written to or the
-                                                        * frame that it was read from.
-                                                        */
+    ScannerFileEntryPtr    scannerFileEntry;        /* Root name of scanner file that this frame is being written to or the
+                                                     * frame that it was read from.
+                                                     */
 
-    kkint64                frameSeqNum;                /**< sequential number assigned to each frame grabbed from camera. */
+    kkint64                frameSeqNum;             /**< sequential number assigned to each frame grabbed from camera. */
   };  /* LogicalFrame */
 
   typedef  LogicalFrame*  LogicalFramePtr;

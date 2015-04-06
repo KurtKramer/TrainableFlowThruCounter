@@ -374,7 +374,7 @@ namespace LarcosCounterUnManaged
                                );
 
     /**
-     *@brief Will derive the next control number by adding one to the training seq number of the previous control number recorded.
+     *@brief Will derive the next control number by adding one to the training sequence number of the previous control number recorded.
      *@details Control number is also known as ControlNum and Short-Description
      */
     KKStr  GetNextControlNumber ();
@@ -621,7 +621,7 @@ namespace LarcosCounterUnManaged
     CounterState                  curState;
     LarcosOperatingModes          operatingMode;
     MsgQueue                      secondaryMsgs;           /**< Add messages that are to be displayed to the screen  on next call to 'Status' */
-    KKStr                         dropFolderToLarcos;      /**< Root directory where files are deposited that need to be transmitted to larcos.
+    KKStr                         dropFolderToLarcos;      /**< Root directory where files are deposited that need to be transmitted to Larcos.
                                                             * The concept is that this is going to be a drop-box or google-drive folder. 
                                                             */
 

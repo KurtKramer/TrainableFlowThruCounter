@@ -71,7 +71,7 @@ namespace LarcosCounter
     /// 
     /// </summary>
     /// <param name="_cameraManager"></param>
-    /// <param name="_scannerFile">Scann File that we are auditing;  before calling this constructor the 
+    /// <param name="_scannerFile">Scanner File that we are auditing;  before calling this constructor the 
     /// loading of Particles must have been completed.</param>
     public AuditorByClass (LarcosCounterManagerWrapper  _cameraManager,
                            UmiScannerFileBuffered       _scannerFile,
@@ -207,7 +207,7 @@ namespace LarcosCounter
         }
         catch  (Exception e)
         {
-          MessageBox.Show (this, "Adding Buttion to ClassList", e.ToString (), MessageBoxButtons.OK);
+          MessageBox.Show (this, "Adding Button to ClassList", e.ToString (), MessageBoxButtons.OK);
         }
       }
     }  /* BuildClassButtonList */
@@ -541,7 +541,7 @@ namespace LarcosCounter
 
       if  (selectedParticles.Count != 1)
       {
-        MessageBox.Show (this, "Only one particles can be coppied to clipboard.");
+        MessageBox.Show (this, "Only one particles can be copied to clipboard.");
         return;
       }
       
@@ -569,7 +569,7 @@ namespace LarcosCounter
 
       if  (selectedParticles.Count != 1)
       {
-        MessageBox.Show (this, "Only one particles can be coppied to clipboard.");
+        MessageBox.Show (this, "Only one particles can be copied to clipboard.");
         return;
       }
       
@@ -718,7 +718,7 @@ namespace LarcosCounter
       if  (WindowState == FormWindowState.Maximized)
       {
         // Looks like user has pressed the Maximized button.  We have to trap it here because
-        // the ResizeEnd envent does not trap when form is Maximized.
+        // the ResizeEnd event does not trap when form is Maximized.
         AuditorByClassFormResized ();
         formIsMaximized = true;
       }
@@ -727,7 +727,7 @@ namespace LarcosCounter
         if  (formIsMaximized)
         {
           // We normally trap the ResizeEnd event;  but when the form was already maximized and the user
-          // presses the button to unmaximize.  the ResizeEnd does not trap that.  So we check to 
+          // presses the button to un-maximize.  the ResizeEnd does not trap that.  So we check to 
           // see if the form was already maximize.  If so then we resized the form.
           AuditorByClassFormResized ();
           formIsMaximized = false;

@@ -111,7 +111,7 @@ namespace LarcosCounter
 
     private void  LarcosCounter_Load (object sender, EventArgs e)
     {
-      Text = "Larcos Counter      ver: " + cameraManager.LarcosVersionNumber ();
+      Text = "Larcos Counter      version: " + cameraManager.LarcosVersionNumber ();
       if  (cameraManager.OperatingMode () == LarcosOperatingModes.Advanced)
       {
         SampleBeforeFlatField.Visible    = true;
@@ -138,20 +138,20 @@ namespace LarcosCounter
       toolTip.SetToolTip (RecordButton,                  "Start a new recording and Counting session.");
       toolTip.SetToolTip (AuditButton,                   "Reviews previously recorded session allowing user to select sections to include or exclude as part of count; and then produce finale report.");
 
-      toolTip.SetToolTip (SampleBeforeFlatField,         "Select whather to display live video before or after Flat-Field-Correction.");
+      toolTip.SetToolTip (SampleBeforeFlatField,         "Select whether to display live video before or after Flat-Field-Correction.");
 
       // Run Time Parameters.
-      toolTip.SetToolTip (ErosionStructSize,             "Specify how vigoruisly to Clean-Up imagery before counting; In verty clean water no larger that 1; Ib very dirty water may need 3 or larger.");
-      toolTip.SetToolTip (MinSizeThreshold,              "The minimum number of pixels that a particle must consist of before beconsidered for counting.");
-      toolTip.SetToolTip (BackGroundPixelTH,             "The minimum intensity after Flat-Field-Correction that a Pixle must be to be considered forground; pixels with smaller value will be ignored.");
+      toolTip.SetToolTip (ErosionStructSize,             "Specify how vigorously to Clean-Up imagery before counting; In very clean water no larger that 1; in very dirty water may need 3 or larger.");
+      toolTip.SetToolTip (MinSizeThreshold,              "The minimum number of pixels that a particle must consist of before be considered for counting.");
+      toolTip.SetToolTip (BackGroundPixelTH,             "The minimum intensity after Flat-Field-Correction that a Pixels must be to be considered foreground; pixels with smaller value will be ignored.");
       toolTip.SetToolTip (RequestedScanRate,             "Scan Rate (Lines-Per-Second) that camera is to record at.");
-      toolTip.SetToolTip (FlowRateFactor,                "Factor that is used to compensate for vwelocity of water.");
+      toolTip.SetToolTip (FlowRateFactor,                "Factor that is used to compensate for velocity of water.");
       toolTip.SetToolTip (FileFormat,                    "Format that Scanner Data is to be recoded to disk with; this selection controls how many levels of Gray-Scale will be saved; typical selection will be '3Bit'.");
       toolTip.SetToolTip (SnapshotInterval2,             "Interval in seconds that Through-Put chart is to display.");
-      toolTip.SetToolTip (FlatFieldEnabled,              "If not turned on Scanber Imagery will be recorded to disk as recorded by camera; typicacly use in cunjunction with the 'Simple' file format.");
+      toolTip.SetToolTip (FlatFieldEnabled,              "If not turned on, imagery will be recorded to disk as recorded by camera; typically use in conjunction with the 'Simple' file format.");
       toolTip.SetToolTip (DataIsToBeRecorded,            "Typically Checked; if not set then NO Scanner Imagery will be recorded to disk; this means there would be no way to Play-Back or Audit count.");
-      toolTip.SetToolTip (DataIsToBeCounted,             "Typically Checked; indicates wheather to count Shrimp.");
-      toolTip.SetToolTip (SaveParticleImages,            "NOT Typically Checked;  When selected will write individual images for each particle encountered, where images will be aranged by sub-directory indicating classification;  you would do this during a Play-Back session.");
+      toolTip.SetToolTip (DataIsToBeCounted,             "Typically Checked; indicates whether to count Shrimp.");
+      toolTip.SetToolTip (SaveParticleImages,            "NOT Typically Checked;  When selected will write individual images for each particle encountered, where images will be arranged by sub-directory indicating classification; you would do this during a Play-Back session.");
       toolTip.SetToolTip (PlayingBackRealTime,           "NOT Typically Checked;  When selected the playback will try to match the speed of the camera during the original recoding session.");
       toolTip.SetToolTip (ThroughPutDataToDiosplay,      "Select the data that you wish to Chart.");
       toolTip.SetToolTip (SecondaryToDisplay,            "Select  'Capacity'  or  'Flow Rate'  to display on secondary axis.");
@@ -941,7 +941,7 @@ namespace LarcosCounter
           if  (dr == DialogResult.No)
           {
             e.Cancel = true;
-            runLog.WriteLn  (10, "User canceled clsoing of window/application.");
+            runLog.WriteLn  (10, "User canceled closing of window/application.");
             return;
           }
           else

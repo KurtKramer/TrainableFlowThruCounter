@@ -62,7 +62,7 @@ volatile  GoalKeeperPtr  LogicalFrameProcessor::classifierBuildBlocker = NULL;
 
 /**
  * @class  LogicalFrameProcessor::Blob
- * @details  Meant to track a single detected blob in the 'logicalFrame'.  A instance of 'LogicalFrameProcessor::BlobList' will
+ * @details  Meant to track a single detected blob in the 'logicalFrame'. A instance of 'LogicalFrameProcessor::BlobList' will
  *   keep track of all 'Blob' instances in a single logical frame.
  */
 class  LogicalFrameProcessor::Blob

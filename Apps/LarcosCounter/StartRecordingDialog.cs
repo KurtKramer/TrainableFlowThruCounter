@@ -141,8 +141,8 @@ namespace LarcosCounter
 
 
     /// <summary>
-    /// Constructor for 'StartRecordingDialog' dialog class.  This dialog box prompts the user for requyired paraneters 
-    /// neeed to perform a counting session.  It is to be used for both reco9rding and Playback sessions.
+    /// Constructor for 'StartRecordingDialog' dialog class.  This dialog box prompts the user for required parameters 
+    /// need to perform a counting session.  It is to be used for both reco9rding and Playback sessions.
     /// </summary>
     /// <param name="_cameraManager">Reference to LarcosCounterManager instance.</param>
     /// <param name="_initialSessionParametrs"></param>
@@ -231,12 +231,12 @@ namespace LarcosCounter
       toolTip.SetToolTip (subject ,              "Specify from the drop down list what you are going to count.");
       toolTip.SetToolTip (subjectSize,           "Specify from the drop down list the Size of what you are going to count.");
       toolTip.SetToolTip (waterQuality,          "Specify from the drop down list Water Quality.");
-      toolTip.SetToolTip (controlNum,            "Use the provoded control number or enter your own control number.");
+      toolTip.SetToolTip (controlNum,            "Use the provided control number or enter your own control number.");
       toolTip.SetToolTip (sessionDescription,    "Provide a short description of this session.");
-      toolTip.SetToolTip (personInCharge,        "Enter who is resposable for this session.");
+      toolTip.SetToolTip (personInCharge,        "Enter who is responsible for this session.");
       toolTip.SetToolTip (source,                "Where are you moving the animals from?");
       toolTip.SetToolTip (destination,           "Where are you moving the animals to?");
-      toolTip.SetToolTip (comments,              "Enter any other coments you have about this session.");
+      toolTip.SetToolTip (comments,              "Enter any other comments you have about this session.");
       toolTip.SetToolTip (StarButton,            "When you are ready to start moving animals press this button.");
       toolTip.SetToolTip (AdvancedOptionsButton, "To override advanced settings; be very careful when using this option!");
       toolTip.SetToolTip (CancelButton,          "Press this button if you decide not to run a session now.");
@@ -410,7 +410,7 @@ namespace LarcosCounter
       ValidateFields ();
       if  (!errorsFound)
       {
-        // If user has selected a differenmt training model we want to retrieve the paraeters specified in that training model.
+        // If user has selected a different training model we want to retrieve the parameters specified in that training model.
         ReFreshFromSelectedTrainingModel ();
 
         advParameters.ShowDialog (this);

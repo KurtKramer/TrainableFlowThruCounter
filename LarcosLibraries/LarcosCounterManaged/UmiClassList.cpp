@@ -34,8 +34,8 @@ using namespace System;
 
 UmiClassList::UmiClassList (int x, int y, int z):  
     List<UmiClass^> (),
-    directory         (nullptr),
-    rootNode          (nullptr)
+    directory       (nullptr),
+    rootNode        (nullptr)
 
 {
   // Only the creation of 'allClassesInUniverse'  will call this constructor.
@@ -47,8 +47,8 @@ UmiClassList::UmiClassList (int x, int y, int z):
 
 UmiClassList::UmiClassList ():
     List<UmiClass^> (),
-    directory         (nullptr),
-    rootNode          (nullptr)
+    directory       (nullptr),
+    rootNode        (nullptr)
 
 {
   directory = "";

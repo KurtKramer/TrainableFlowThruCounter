@@ -36,8 +36,8 @@ using namespace System::Threading;
 using namespace System::Windows::Forms;
 
 UmiPrediction::UmiPrediction  (UmiClass^ _mlClass,
-                               int         _votes,
-                               double      _probability
+                               int       _votes,
+                               double    _probability
                               ):
       mlClass  (_mlClass),
       probability (_probability),

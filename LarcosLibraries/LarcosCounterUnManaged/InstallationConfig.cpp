@@ -32,7 +32,7 @@ using namespace  LarcosBase;
 using  namespace  LarcosCounterUnManaged;
 
 
-KKStr  InstallationConfig::flowMeterMethodStrs[] = {"NULL", "Embeddded", "EndOfList"};
+KKStr  InstallationConfig::flowMeterMethodStrs[] = {"NULL", "Embedded", "EndOfList"};
 
 
 

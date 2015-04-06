@@ -80,7 +80,10 @@ namespace LarcosCounterManaged
   private:
     String^    scannerFileRootName;
     kkint32    scannerRow;
-    kkint32    scannerRowOverAll;
+    kkint32    scannerRowOverAll;  /**< A single recording session can be broken into multiple ScannerFiles. This
+                                    * data member specifies the scanner row from the beginning of the recording session
+                                    * while 'scannerRow' is relative to the scanner-file that contains this particle.
+                                    */
     kkint16    scannerCol;
     kkint16    height;
     kkint16    width;
@@ -162,7 +165,7 @@ namespace LarcosCounterManaged
 
 
     /// <summary>
-    /// Returns a sublist of particles that belong to the specified regions as driven by StartStop points.
+    /// Returns a sub list of particles that belong to the specified regions as driven by StartStop points.
     /// </summary>
     UmiParticleEntryList^  GetParticlesByStartStopRegions (UmiStartStopRegionList^  regions);
 
@@ -271,11 +274,11 @@ namespace LarcosCounterManaged
 
     bool     loaded;   /**< Indicates if loading from file has been completed. */
 
-    String^  baseScannerName;      /**< This will be the same as the Initial Scanner Files root name.
-                                    * If the scanner file had multiple parts we will need to adjust 
-                                    * Scanner File Number when plotting time based off the initial 
-                                    * scanner file.
-                                    */
+    String^  baseScannerName;   /**< This will be the same as the Initial Scanner Files root name.
+                                 * If the scanner file had multiple parts we will need to adjust 
+                                 * Scanner File Number when plotting time based off the initial 
+                                 * scanner file.
+                                 */
 
     
     bool  headerInfoLoaded;   /**< Indicates that "UmiParticleEntryList::LoadFile: method has read past all the  header fields in 

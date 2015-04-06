@@ -251,7 +251,7 @@ void  LarcosCounterManager::Initialize ()
 {
   // 1) Get Camera mac Address is order of:
   //    a. Use last one used from "LarcosCounterManager" configuration file.
-  //    b. Installation configuraion.
+  //    b. Installation configuration.
   //    c. Look for attached camera.
   //
   // 2) If camera is present start connect procedure.
@@ -797,7 +797,7 @@ void  LarcosCounterManager::ConnectToCamera (bool&  _successful)
   }
   else
   {
-    runLog->Level (10) << "ConnectToCamera   Camera not avaialble." << endl;
+    runLog->Level (10) << "ConnectToCamera   Camera not available." << endl;
     secondaryMsgs.AddMsg ("Camera not Connected!!!");
     curState = csStopped;
     _successful = false;
@@ -836,7 +836,7 @@ void  LarcosCounterManager::ConnectToCamera (bool&  _successful)
 
   allThreads->PushOnBack (acquisitionThread);
 
-  runLog->Level (10) << "ConnectToCamera   Starting Acquision Thread" << endl;
+  runLog->Level (10) << "ConnectToCamera   Starting Acquisition Thread" << endl;
   StartCameraAcquisitionThread (acquisitionThread, _successful);
   if  (_successful)
   {
@@ -1075,7 +1075,7 @@ void  LarcosCounterManager::StartRecordingAndOrCounting (bool&   _successful,
   delete  particleEntryBuffer;  particleEntryBuffer = NULL;
   goalie->EndBlock ();
 
-  BuildDestScannerFileName (false);  // false = We are NOT playng back an existing Scanner-File.
+  BuildDestScannerFileName (false);  // false = We are NOT playing back an existing Scanner-File.
 
   cameraFrameBuffer->DataIsToBeCountedAndOrRecorded (operatingParameters->DataIsToBeCounted (), 
                                                      operatingParameters->DataIsToBeRecorded ()
@@ -1385,7 +1385,7 @@ void  LarcosCounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileNa
 
   //if  ((scannerFileHeaderFields != NULL)  &&  scannerFileHeaderFields->FieldExists ("Installation:Name"))
   //{
-  //  // Since the specified Scanner-File has 'Installation' paraeters defined we will build a new instance 
+  //  // Since the specified Scanner-File has 'Installation' parameters defined we will build a new instance 
   //  // of 'installation' from these header fields.
   //  delete  installation;
   //  installation = new InstallationConfig (scannerFileHeaderFields, *runLog);
@@ -1515,7 +1515,7 @@ void  LarcosCounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileNa
   else
   {
     curState = csPlayingBack;
-    runLog->Level (40) << "PlayBackScannerFile   Successfuly started." << endl;
+    runLog->Level (40) << "PlayBackScannerFile   Successfully started." << endl;
     secondaryMsgs.AddMsg ("Play-Back Successfully Started.");
   }
 
@@ -1555,7 +1555,7 @@ void  LarcosCounterManager::PlayBackButtonPressed
 
   if  ((curState != csConnected)  &&  (curState != this->csStopped))
   {
-    _errMsg = "Can only start PlayBack when in Connected ot Stopped state!";
+    _errMsg = "Can only start PlayBack when in Connected or Stopped state!";
     runLog->Level (-1) << "PlayBackButtonPressed   ***ERROR***   " << _errMsg << endl
                        << "    Current State: " << this->CounterStateToStr (curState).QuotedStr () << endl;
     _successful = false;
@@ -1707,13 +1707,13 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
   secondaryMsgs.AddMsg ("Stopping Larcos.");
 
   // In case the StartButton thread is still running because it is building a classifier, especially 
-  // a new one with lots of examples; We need to set the cancel flag so tha the training process 
+  // a new one with lots of examples; We need to set the cancel flag so that the training process 
   // stops asap.
   trainerCancelFlag = true;
 
   if  ((curState != csRunning)  &&  (curState != csPlayingBack))
   {
-    runLog->Level (10) << "CloseOutCountingAndOrRecording   We are not Running or playimg back a recorded file." << endl;
+    runLog->Level (10) << "CloseOutCountingAndOrRecording   We are not Running or playing back a recorded file." << endl;
     goalie->EndBlock ();
     return;
   }
@@ -1751,7 +1751,7 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
       secondaryMsgs.AddMsg ("Stopped Reading Scanner File.");
   }
 
-  // Now that we stopped collecting data from the camera (Acquision Device) we need to
+  // Now that we stopped collecting data from the camera (Acquisition Device) we need to
   // wait until all the physical frames in the buffer have been processed.
   while  (!CameraFrameBufferEmpty ())
     osSleepMiliSecs (20);
@@ -1914,7 +1914,7 @@ void  LarcosCounterManager::WaitForAllButCameraThreadsToStop (kkint32  maxSecsTo
     CameraThreadPtr ct = *idx;
     if  ((ct != acquisitionThread)  &&  (ct != stopButtonThread))
     {
-      runLog->Level (50) << "WaitForAllButCameraThreadsToStop   Thread: " << ct->ThreadName () << " Stll Running." << endl;
+      runLog->Level (50) << "WaitForAllButCameraThreadsToStop   Thread: " << ct->ThreadName () << " Still Running." << endl;
       tempList->PushOnBack (ct);
     }
   }
@@ -2156,7 +2156,7 @@ void  LarcosCounterManager::DeleteStopButtonThread ()
 //  Will stay in a loop until all threads that this object controls are stopped.
 void  LarcosCounterManager::ShutDownAllThreads ()
 {
-  // We will first cancel the camera/ datasource thread.  Then wait for the other threads to
+  // We will first cancel the camera/ data-source thread.  Then wait for the other threads to
   // finish processing what is left in buffers.
 
   stoppingIsInProgress = true;
@@ -3308,7 +3308,7 @@ void  LarcosCounterManager::Status (KKStr&  statusMsg,
 
     case  CameraAcquisition::ssConnectionFailed:
       color = "Red";
-      statusMsg = "Connecteion Error";
+      statusMsg = "Connection Error";
       break;
 
     case  CameraAcquisition::ssDisconnected:

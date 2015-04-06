@@ -109,7 +109,7 @@ namespace LarcosControls
       Font  font = new Font ("Arial", 24);
       Brush  b = new SolidBrush (Color.Red);
       
-      string  msg = "NO Camera Data Avaialble";
+      string  msg = "NO Camera Data Available";
       Size  spaceNeeded = TextRenderer.MeasureText (msg, font);
       
       int  h = cameraLineWindow.Height;
@@ -215,7 +215,7 @@ namespace LarcosControls
         cropRightDisplayCol = (int)(leftCol + (float)horzCoarsness * ((float)(cropRightCol - firstCameraCol)) / (float)scallingRatio);
 
       {
-        // Draw Axises
+        // Draw Axis's
         Pen p = new Pen (Color.GreenYellow, 1);
         
         int row255 = botRow - (int)(0.5f + 255.0f * vertCoarsness);
@@ -401,7 +401,7 @@ namespace LarcosControls
       // Logic will be simple.
       // 1) Smooth camera data using medium filter with currently selected window size.
       // 2) Mind medium value.
-      // 3) Select the 1st columns cmming from left and right that ar egreater that 50% of medium value.
+      // 3) Select the 1st columns coming from left and right ends  that are greater that 50% of medium value.
 
       if  (cameraManager == null)
         return;

@@ -295,7 +295,7 @@ namespace LarcosCounterUnManaged
     kkint32               fiveSecFrameInterval;
     kkint32               tenSecFrameInterval;
     kkint32               voltTempReadInterval;   /**< Number of frames to read before reading voltage and temp again;
-                                                   *   computed so that 5 secs between readings.
+                                                   *   computed so that 5 sec's between readings.
                                                    */
 
     bool                  embeddedFlowMeter;      /**< Indicates if FlowMeter counter will be communicated through 1st 4 pixels in scan line. */

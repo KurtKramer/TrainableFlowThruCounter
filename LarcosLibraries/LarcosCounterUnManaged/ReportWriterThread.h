@@ -32,7 +32,7 @@ namespace LarcosCounterUnManaged
      *@param[in] _manager
      *@param[in] _particleEntryBuffer
      *@param[in] _initialScannerFileName The initial scanner file; there may be multiple files where 
-     *           the following only differ by an additional seq number.
+     *           the following only differ by an additional sequence number.
      *@param[in] _msgQueue
      *@param[in] _threadName
      */
