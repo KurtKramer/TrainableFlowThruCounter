@@ -191,3 +191,5 @@ FakesAssemblies/
 *.spr
 Apps/GEVPlayerSample/SampleDebug/vc90.idb
 /Apps/GEVPlayerSample/SampleDebug/*.idb
+Apps/GEVPlayerSample/SampleRelease/GEVPlayerSample.tlog/cl.command.1.tlog
+*.tlog
