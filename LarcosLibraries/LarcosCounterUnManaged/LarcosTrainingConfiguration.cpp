@@ -26,7 +26,7 @@ using namespace  KKB;
 #include "MLClass.h"
 #include "PostLarvaeFV.h"
 #include "TrainingConfiguration2.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "LarcosVariables.h"
 using namespace  LarcosBase;

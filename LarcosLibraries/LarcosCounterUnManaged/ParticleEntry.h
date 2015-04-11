@@ -16,7 +16,7 @@
 
 #include "FeatureVector.h"
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 #include "StartStopPoint.h"
 using  namespace  KKLSC;

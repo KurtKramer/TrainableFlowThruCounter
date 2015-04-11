@@ -28,7 +28,7 @@ using namespace KKB;
 #include "FactoryFVProducer.h"
 #include "FeatureVectorProducer.h"
 #include "FileDesc.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "LarcosFVProducer.h"
 
@@ -674,7 +674,7 @@ FileDescPtr  LarcosFVProducer::DefineFileDescStatic ()
   if  (!existingFileDesc)
   {
     bool  alreadyExists = false;
-    FileDescPtr  tempFileDesc = new KKMachineLearning::FileDesc ();
+    FileDescPtr  tempFileDesc = new KKMLL::FileDesc ();
     for  (kkint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
     {
       tempFileDesc->AddAAttribute (featureNames[fieldNum], NumericAttribute, alreadyExists);

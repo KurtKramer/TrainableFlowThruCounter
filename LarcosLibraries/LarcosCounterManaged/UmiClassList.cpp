@@ -20,7 +20,7 @@ using namespace KKB;
 
 
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 #include "UmiClass.h"

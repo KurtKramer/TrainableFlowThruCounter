@@ -17,7 +17,7 @@ using namespace std;
 using namespace KKB;
 
 #include "KKMLVariables.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 #include "LarcosTrainingModel.h"

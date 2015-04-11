@@ -8,7 +8,7 @@ using namespace System::Collections;
 using namespace System::Diagnostics;
 
 #include "FeatureVector.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "LarcosFeatureVector.h"
 using namespace  LarcosCounterUnManaged;

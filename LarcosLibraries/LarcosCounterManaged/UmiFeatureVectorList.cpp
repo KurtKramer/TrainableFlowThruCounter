@@ -28,7 +28,7 @@ using namespace KKB;
 #include "FeatureFileIOKK.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "PostLarvaeFVProducer.h"
 using namespace  LarcosCounterUnManaged;

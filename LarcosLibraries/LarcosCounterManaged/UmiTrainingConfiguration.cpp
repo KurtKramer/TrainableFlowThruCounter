@@ -27,7 +27,7 @@ using namespace KKB;
 #include "FeatureFileIOKK.h"
 #include "PostLarvaeFV.h"
 #include "TrainingConfiguration2.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "LarcosVariables.h"
 using namespace  LarcosBase;

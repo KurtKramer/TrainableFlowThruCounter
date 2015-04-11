@@ -38,7 +38,7 @@ using namespace  KKLSC;
 #include "TrainingProcess2.h"
 #include "LarcosFeatureVector.h"
 #include "LarcosFVProducer.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 #include "LarcosVariables.h"
 using namespace  LarcosBase;

@@ -18,7 +18,7 @@
 
 #include "MLClass.h"
 
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 namespace LarcosCounterUnManaged
 {

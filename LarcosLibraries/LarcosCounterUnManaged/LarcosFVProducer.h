@@ -9,7 +9,7 @@ using namespace  KKB;
 #include "FactoryFVProducer.h"
 #include "FeatureVector.h"
 #include "FeatureVectorProducer.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "LarcosFeatureVector.h"
 

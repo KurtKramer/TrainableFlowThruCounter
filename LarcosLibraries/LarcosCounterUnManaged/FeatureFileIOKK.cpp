@@ -31,7 +31,7 @@ using namespace KKB;
 #include "LarcosFeatureVector.h"
 #include "LarcosFVProducer.h"
 
-using namespace KKMachineLearning;
+using namespace KKMLL;
            
            
 #include "FeatureFileIOKK.h"

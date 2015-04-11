@@ -17,7 +17,7 @@
 
 #include "MLClass.h"
 
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 #include "PreClassDefinitions.h"
 

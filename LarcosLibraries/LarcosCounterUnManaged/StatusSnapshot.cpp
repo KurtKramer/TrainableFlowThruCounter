@@ -19,7 +19,7 @@ using namespace std;
 using namespace KKB;
 
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 #include "LarcosCounterStats.h"
 #include "StatusSnapshot.h"

@@ -9,7 +9,7 @@ using namespace System::Diagnostics;
 
 #include "TrainingClass.h"
 using namespace KKB;
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 #include "UmiClass.h"
 #include "UmiKKStr.h"

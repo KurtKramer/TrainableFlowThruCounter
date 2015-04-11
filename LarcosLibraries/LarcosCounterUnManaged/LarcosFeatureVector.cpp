@@ -39,7 +39,7 @@ using namespace  KKB;
 #include "LarcosFVProducer.h"
 #include "MLClass.h"
 #include "ImageDirTree.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 #include "LarcosFeatureVector.h"

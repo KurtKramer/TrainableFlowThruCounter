@@ -25,7 +25,7 @@ using namespace KKB;
 
 #include "FactoryFVProducer.h"
 #include "FeatureVectorProducer.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "PostLarvaeFVProducer.h"
 

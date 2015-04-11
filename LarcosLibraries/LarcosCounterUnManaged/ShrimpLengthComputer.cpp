@@ -20,7 +20,7 @@ using namespace std;
 using namespace KKB;
 
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 #include "ShrimpLengthComputer.h"

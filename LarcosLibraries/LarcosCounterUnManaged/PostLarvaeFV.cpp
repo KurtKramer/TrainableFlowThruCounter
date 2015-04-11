@@ -37,7 +37,7 @@ using namespace  KKB;
 #include "FeatureFileIOKK.h"
 #include "MLClass.h"
 #include "ImageDirTree.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 #include "PostLarvaeFV.h"

@@ -8,7 +8,7 @@ using namespace System::Diagnostics;
 
 //#include "PostLarvaeFV.h"
 #include "FeatureVector.h"
-using namespace  KKMachineLearning ;
+using namespace  KKMLL ;
 
 
 #include "UmiClass.h"

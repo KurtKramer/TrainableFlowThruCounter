@@ -7,7 +7,7 @@ using namespace System::Diagnostics;
 using namespace System::IO;
 
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "LarcosTrainingConfiguration.h"
 using namespace  LarcosCounterUnManaged;

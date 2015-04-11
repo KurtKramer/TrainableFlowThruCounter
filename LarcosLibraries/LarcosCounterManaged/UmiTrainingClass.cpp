@@ -25,7 +25,7 @@ using namespace  KKB;
 
 
 #include "TrainingClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 

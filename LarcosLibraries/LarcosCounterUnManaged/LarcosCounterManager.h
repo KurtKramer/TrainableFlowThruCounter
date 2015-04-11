@@ -18,7 +18,7 @@
 
 #include "Classifier2.h"
 #include "TrainingProcess2.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "FlowMeterTracker.h"
 #include "ScannerHeaderFields.h"

@@ -33,7 +33,7 @@ using namespace KKB;
 #include "Classifier2.h"
 #include "FeatureFileIOKK.h"
 #include "TrainingConfiguration2.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 #include "LarcosVariables.h"
 using namespace  LarcosBase;
@@ -1143,7 +1143,7 @@ array<LarcosCounterManaged::ProbNamePair^>^
   // Will make duplicate of feature vector Because the Classifier will normalize the data.
   FeatureVectorPtr  dupFV = new FeatureVector (*umiFeatureVector->UnManagedClass ());
 
-  vector<KKMachineLearning::ProbNamePair> worstExamples 
+  vector<KKMLL::ProbNamePair> worstExamples 
     = classifier->FindWorstSupportVectors (dupFV, 
                                            numToFind, 
                                            c1Scs, 
@@ -1179,7 +1179,7 @@ array<LarcosCounterManaged::ProbNamePair^>^
   // Will make duplicate of feature vector Because the Classifier will normalize the data.
   FeatureVectorPtr  dupFV = new FeatureVector (*umiFeatureVector->UnManagedClass ());
 
-  vector<KKMachineLearning::ProbNamePair> worstExamples 
+  vector<KKMLL::ProbNamePair> worstExamples 
     = classifier->FindWorstSupportVectors2 (dupFV, 
                                             numToFind, 
                                             c1Scs, 

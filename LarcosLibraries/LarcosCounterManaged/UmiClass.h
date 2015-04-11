@@ -13,7 +13,7 @@ using namespace System::Diagnostics;
 #include "PostLarvaeFV.h"
 #include "UmiRunLog.h"
 using namespace  KKB;
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 namespace LarcosCounterManaged 
@@ -29,7 +29,7 @@ namespace LarcosCounterManaged
    * be assigned to them.  This class is to indicate a grouping which will allow us to 
    * group like images/examples together.
    *
-   * UmiClass is the Managed Version of the unmanaged class 'KKMachineLearning::MLClass'.  
+   * UmiClass is the Managed Version of the unmanaged class 'KKMLL::MLClass'.  
    * For every instance of this class there will be a matching instance of a 'MLClass' 
    * object.  Also just like 'MLClass' there can only be one instance of a class with
    * the same name.  This helps simplify other programming because we can compare pointers 

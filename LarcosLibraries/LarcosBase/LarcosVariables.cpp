@@ -14,7 +14,7 @@ using namespace  KKLSC;
 
 
 #include "KKMLVariables.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "LarcosVariables.h"
 using namespace  LarcosBase;

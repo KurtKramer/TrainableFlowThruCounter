@@ -26,7 +26,7 @@ using namespace KKB;
 #include "FeatureVector.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "FeatureFileIOKK.h"
 #include "LarcosFVProducer.h"

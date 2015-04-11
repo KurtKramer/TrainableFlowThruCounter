@@ -3,14 +3,14 @@
 
 /**
  *@class LarcosCounterUnManaged::PostLarvaeFV
- *@brief  Specialized version of KKMachineLearning::FeatureVector that will be used 
+ *@brief  Specialized version of KKMLL::FeatureVector that will be used 
  *to represent the features of a POST Larvae image.
  *@author  Kurt Kramer
  *@details
  * Used for the representation of a Single Plankton Image. You create an instance of this object for 
- * each single image you need to keep track of. There is a specialized version of KKMachineLearning::FeatureFileIO 
- * called  KKMachineLearning::FeatureFileIOKK that is used to write and read feature Data files. What makes this 
- * class of KKMachineLearning::FeatureVector special are the additional fields that are Plankton specific such as 
+ * each single image you need to keep track of. There is a specialized version of KKMLL::FeatureFileIO 
+ * called  KKMLL::FeatureFileIOKK that is used to write and read feature Data files. What makes this 
+ * class of KKMLL::FeatureVector special are the additional fields that are Plankton specific such as 
  * centroidCol, centroidRow, latitude, longitude, numOfEdgePixels, Centroid within SIPPEER file 
  * sfCentroidCol, sfCentroidRow and version.<p>
  *
@@ -34,7 +34,7 @@ using namespace KKB;
 #include "FeatureVector.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #define   CurrentFeatureFileVersionNum  316
 

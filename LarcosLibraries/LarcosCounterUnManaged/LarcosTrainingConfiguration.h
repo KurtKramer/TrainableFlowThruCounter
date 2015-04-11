@@ -4,7 +4,7 @@
 #include "FileDesc.h"
 #include "TrainingConfiguration2.h"
 
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 namespace  LarcosCounterUnManaged 
 {
