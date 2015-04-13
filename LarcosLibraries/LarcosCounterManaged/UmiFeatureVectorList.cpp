@@ -351,8 +351,8 @@ public:
                          UmiFeatureVector^ b
                         )
   {
-    String^ sA = UmiOSservices::GetRootName (a->ImageFileName);
-    String^ sB = UmiOSservices::GetRootName (b->ImageFileName);
+    String^ sA = UmiOSservices::GetRootName (a->ExampleFileName);
+    String^ sB = UmiOSservices::GetRootName (b->ExampleFileName);
     return  sA->CompareTo (sB);
   }
 };
@@ -389,7 +389,7 @@ UmiFeatureVector^  UmiFeatureVectorList::LookUpByImageFileName (String^  imageFi
   while  (left < right)
   {
     middle = (left + right) / 2;
-    String^  middleRootName = UmiOSservices::GetRootName ((this)[middle]->ImageFileName);
+    String^  middleRootName = UmiOSservices::GetRootName ((this)[middle]->ExampleFileName);
     int  x = middleRootName->CompareTo (imageFileRootName);
 
     if  (x < 0)

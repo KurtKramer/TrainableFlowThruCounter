@@ -139,7 +139,7 @@ namespace KKManagedRoutines
 
       InitializeComponent();
 
-      ImageFileName.Text = fileName;
+      ExampleFileName.Text = fileName;
 
       SetUpToolTips ();
     }

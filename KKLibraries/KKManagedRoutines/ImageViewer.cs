@@ -51,7 +51,7 @@ namespace KKManagedRoutines
 
       InitializeComponent();
 
-      ImageFileName.Text = raster.FileName;
+      ExampleFileName.Text = raster.FileName;
     }
 
 

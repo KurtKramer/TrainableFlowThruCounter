@@ -198,11 +198,11 @@ UmiClass^   UmiFeatureVector::MLClass::get ()
 
 
 
-String^  UmiFeatureVector::ImageFileName::get ()  
+String^  UmiFeatureVector::ExampleFileName::get ()  
 {
   if  (!features)
     return "";
-  return  UmiKKStr::KKStrToSystenStr (features->ImageFileName ());
+  return  UmiKKStr::KKStrToSystenStr (features->ExampleFileName ());
 }
 
 
@@ -258,12 +258,12 @@ void  UmiFeatureVector::MLClass::set (UmiClass^  umiClass)
 
 
 
-void  UmiFeatureVector::ImageFileName::set (String^ _imageFileName)
+void  UmiFeatureVector::ExampleFileName::set (String^ _imageFileName)
 {
   if  (!features)
     return;
 
-  features->ImageFileName (UmiKKStr::SystemStringToKKStr (_imageFileName));
+  features->ExampleFileName (UmiKKStr::SystemStringToKKStr (_imageFileName));
 }
 
 

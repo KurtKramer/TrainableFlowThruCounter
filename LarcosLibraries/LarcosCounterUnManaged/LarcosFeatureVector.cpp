@@ -228,7 +228,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
         log.Level (-1) << endl << endl << endl
              << "LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList)   ***ERROR***" << endl
              << "        " << errMSsg  << endl
-             << "       FileName[" << featureVector->ImageFileName () << "]"  << endl
+             << "       FileName[" << featureVector->ExampleFileName () << "]"  << endl
              << endl;
         throw KKException (errMSsg);
       }
@@ -314,7 +314,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
              << "LarcosFeatureVectorList ::LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList)              ***ERROR***" << endl
              << endl
              << "One of the elements in 'featureVectorList' is not of 'LarcosFeatureVector'  type.  We can not  recast this element"
-             << "FileName[" << featureVector->ImageFileName () << "]"  << endl
+             << "FileName[" << featureVector->ExampleFileName () << "]"  << endl
              << endl;
         osWaitForEnter ();
         exit (-1);
@@ -516,8 +516,8 @@ void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProd
         featureVector = NULL;
       }
 
-      larcosFeatureVector->ImageFileName (*imageFileName);
-      log.Level (30) << larcosFeatureVector->ImageFileName () << "  " << larcosFeatureVector->OrigSize () << endl;
+      larcosFeatureVector->ExampleFileName (*imageFileName);
+      log.Level (30) << larcosFeatureVector->ExampleFileName () << "  " << larcosFeatureVector->OrigSize () << endl;
       PushOnBack (larcosFeatureVector);
       count++;
     }
@@ -604,16 +604,16 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
   for  (idx = begin ();   idx != end ();  idx++)
   {
     example = *idx;
-    dirPath = fileDirectory.LocateImage (example->ImageFileName ());
+    dirPath = fileDirectory.LocateImage (example->ExampleFileName ());
     if  (!dirPath)
     {
-      log.Level (10) << "RecalcFeatureValuesFromImagesInDirTree  Could not locate Image[" << example->ImageFileName () << "] in Subdirectory Tree." << endl;
+      log.Level (10) << "RecalcFeatureValuesFromImagesInDirTree  Could not locate Image[" << example->ExampleFileName () << "] in Subdirectory Tree." << endl;
       return;
     }
 
     KKStr  fullFileName (dirPath);
     osAddLastSlash (fullFileName);
-    fullFileName << example->ImageFileName ();
+    fullFileName << example->ExampleFileName ();
 
     bool   validFile;
     RasterPtr  raster = new Raster (fullFileName, validFile);

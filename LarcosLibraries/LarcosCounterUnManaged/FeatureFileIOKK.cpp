@@ -434,7 +434,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
           break;
 
         case rfImageFileName: 
-          example->ImageFileName (field);
+          example->ExampleFileName (field);
           break;
 
         case rfOrigSize: 
@@ -488,14 +488,14 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
       if  (example->OrigSize () <= 0)
         example->OrigSize (example->FeatureData (0));
 
-      if  (example->ImageFileName ().Empty ())
+      if  (example->ExampleFileName ().Empty ())
       {
         KKStr  imageFileName = _fileName + "_" + StrFormatInt (lineCount, "ZZZZZZ0");
-        example->ImageFileName (imageFileName);
+        example->ExampleFileName (imageFileName);
       }
 
-      if  (example->ImageFileName ().Empty ())
-        example->ImageFileName (osGetRootName (_fileName) + "_" + StrFormatInt (lineCount, "000000"));
+      if  (example->ExampleFileName ().Empty ())
+        example->ExampleFileName (osGetRootName (_fileName) + "_" + StrFormatInt (lineCount, "000000"));
 
 
       if  (example->PredictedClass () == NULL)
@@ -653,7 +653,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
         _out.precision (11);
         _out << example->ClassName          () << "\t" 
              << imageClassIdx                  << "\t"
-             << example->ImageFileName      () << "\t" 
+             << example->ExampleFileName      () << "\t" 
              << example->OrigSize           () << "\t"
              << example->NumOfEdgePixels    () << "\t"
              << example->Probability        () << "\t"

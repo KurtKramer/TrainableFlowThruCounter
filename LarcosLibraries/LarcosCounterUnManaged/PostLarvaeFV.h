@@ -390,7 +390,7 @@ namespace LarcosCounterUnManaged
      ***************************************************************************************************
      ** Returns: a list of 'PostLarvaeFV' objects that have duplicate root file names.  The returned   *
      ** list will not own these items.  All instances of the duplicate objects will be returned.       *
-     ** Ex:  if three instances have the same ImageFileName all three will be returned.                * 
+     ** Ex:  if three instances have the same ExampleFileName all three will be returned.                * 
      ***************************************************************************************************
      *@endcode
      */

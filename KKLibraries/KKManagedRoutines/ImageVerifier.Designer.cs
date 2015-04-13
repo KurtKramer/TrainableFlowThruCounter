@@ -49,7 +49,7 @@ namespace KKManagedRoutines
       this.Lib1Pred1Votes = new System.Windows.Forms.TextBox();
       this.DisplayGridButton = new System.Windows.Forms.Button();
       this.BreakDownTrainingLibrary1Button = new System.Windows.Forms.Button();
-      this.ImageFileName = new System.Windows.Forms.TextBox();
+      this.ExampleFileName = new System.Windows.Forms.TextBox();
       this.RebuildTrainModelButton = new System.Windows.Forms.Button();
       this.Lib1Pred1Class = new System.Windows.Forms.TextBox();
       this.Lib1Pred1Prob = new System.Windows.Forms.TextBox();
@@ -134,7 +134,7 @@ namespace KKManagedRoutines
       this.TopPanel.Controls.Add(this.Lib1Pred1Votes);
       this.TopPanel.Controls.Add(this.DisplayGridButton);
       this.TopPanel.Controls.Add(this.BreakDownTrainingLibrary1Button);
-      this.TopPanel.Controls.Add(this.ImageFileName);
+      this.TopPanel.Controls.Add(this.ExampleFileName);
       this.TopPanel.Controls.Add(this.RebuildTrainModelButton);
       this.TopPanel.Controls.Add(this.ZoomFactor);
       this.TopPanel.Controls.Add(this.ZoomLabel);
@@ -302,15 +302,15 @@ namespace KKManagedRoutines
       this.BreakDownTrainingLibrary1Button.UseVisualStyleBackColor = true;
       this.BreakDownTrainingLibrary1Button.Click += new System.EventHandler(this.BreakDownTrainingLibrary1Button_Click);
       // 
-      // ImageFileName
+      // ExampleFileName
       // 
-      this.ImageFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.ImageFileName.Location = new System.Drawing.Point(164, 6);
-      this.ImageFileName.Name = "ImageFileName";
-      this.ImageFileName.ReadOnly = true;
-      this.ImageFileName.Size = new System.Drawing.Size(335, 22);
-      this.ImageFileName.TabIndex = 26;
-      this.ImageFileName.TabStop = false;
+      this.ExampleFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.ExampleFileName.Location = new System.Drawing.Point(164, 6);
+      this.ExampleFileName.Name = "ExampleFileName";
+      this.ExampleFileName.ReadOnly = true;
+      this.ExampleFileName.Size = new System.Drawing.Size(335, 22);
+      this.ExampleFileName.TabIndex = 26;
+      this.ExampleFileName.TabStop = false;
       // 
       // RebuildTrainModelButton
       // 
@@ -397,7 +397,7 @@ namespace KKManagedRoutines
     private System.Windows.Forms.Panel TopPanel;
     private System.Windows.Forms.Panel BottomPanel;
     private System.Windows.Forms.Button RebuildTrainModelButton;
-    private System.Windows.Forms.TextBox ImageFileName;
+    private System.Windows.Forms.TextBox ExampleFileName;
     private System.Windows.Forms.Button BreakDownTrainingLibrary1Button;
     private System.Windows.Forms.Button DisplayGridButton;
     private System.Windows.Forms.TextBox Lib1Pred1Votes;

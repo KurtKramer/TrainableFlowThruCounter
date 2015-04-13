@@ -495,7 +495,7 @@ PostLarvaeFV::PostLarvaeFV (const BmpImage&   _image,
   numOfEdgePixels  (-1)
 {
   MLClass       (_mlClass);
-  ImageFileName (_image.FileName ());
+  ExampleFileName (_image.FileName ());
 
   RasterPtr raster = new Raster (_image);
   CalcFeatures (*raster, _intermediateImages);
@@ -515,7 +515,7 @@ PostLarvaeFV::PostLarvaeFV (      Raster&     _raster,
   numOfEdgePixels  (-1)
 {
   MLClass    (_mlClass);
-  ImageFileName (_raster.FileName ());
+  ExampleFileName (_raster.FileName ());
 
   CalcFeatures  (_raster, _intermediateImages);
 }
@@ -535,7 +535,7 @@ PostLarvaeFV::PostLarvaeFV (KKStr          _fileName,
 
 {
   MLClass       (_mlClass);
-  ImageFileName    (_fileName);
+  ExampleFileName    (_fileName);
 
   RasterPtr  raster = ReadImage (_fileName);
   if  (raster == NULL)
@@ -740,7 +740,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
 
   float  convexf = 0.0;
 
-  osParseFileSpec (ImageFileName (), driveLetter, path, root, extension);
+  osParseFileSpec (ExampleFileName (), driveLetter, path, root, extension);
   KKStr  baseName = "c:\\Temp\\TestImages2\\" + root + "\\" + root;
 
   if  (intermediateImages)
@@ -1142,7 +1142,7 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList,
         log.Level (-1) << endl << endl << endl
              << "PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)   ***ERROR***" << endl
              << "        " << errMSsg  << endl
-             << "       FileName[" << featureVector->ImageFileName () << "]"  << endl
+             << "       FileName[" << featureVector->ExampleFileName () << "]"  << endl
              << endl;
         throw KKException (errMSsg);
       }
@@ -1228,7 +1228,7 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)
              << "PostLarvaeFVList ::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)              ***ERROR***" << endl
              << endl
              << "One of the elements in 'featureVectorList' is not of 'PostLarvaeFV'  type.  We can not  recast this element"
-             << "FileName[" << featureVector->ImageFileName () << "]"  << endl
+             << "FileName[" << featureVector->ExampleFileName () << "]"  << endl
              << endl;
         osWaitForEnter ();
         exit (-1);
@@ -1430,8 +1430,8 @@ void   PostLarvaeFVList::FeatureExtraction (KKStr       _dirName,
 
     else
     {
-      example->ImageFileName (*imageFileName);
-      log.Level (30) << example->ImageFileName () << "  " << example->OrigSize () << endl;
+      example->ExampleFileName (*imageFileName);
+      log.Level (30) << example->ExampleFileName () << "  " << example->OrigSize () << endl;
       PushOnBack (example);
     }
 
@@ -1514,16 +1514,16 @@ void  PostLarvaeFVList::RecalcFeatureValuesFromImagesInDirTree (KKStr  rootDir,
   for  (idx = begin ();   idx != end ();  idx++)
   {
     example = *idx;
-    dirPath = fileDirectory.LocateImage (example->ImageFileName ());
+    dirPath = fileDirectory.LocateImage (example->ExampleFileName ());
     if  (!dirPath)
     {
-      log.Level (10) << "RecalcFeatureValuesFromImagesInDirTree  Could not locate Image[" << example->ImageFileName () << "] in Subdirectory Tree." << endl;
+      log.Level (10) << "RecalcFeatureValuesFromImagesInDirTree  Could not locate Image[" << example->ExampleFileName () << "] in Subdirectory Tree." << endl;
       return;
     }
 
     KKStr  fullFileName (dirPath);
     osAddLastSlash (fullFileName);
-    fullFileName << example->ImageFileName ();
+    fullFileName << example->ExampleFileName ();
 
     bool   validFile;
     RasterPtr  raster = new Raster (fullFileName, validFile);
