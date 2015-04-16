@@ -32,6 +32,7 @@ using namespace  KKMLL;
 using namespace  LarcosBase;
 
 #include "LarcosTrainingConfiguration.h"
+#include "LarcosFVProducer.h"
 #include "OperatingParameters.h"
 #include "PostLarvaeFVProducer.h"
 using namespace  LarcosCounterUnManaged;
@@ -43,7 +44,7 @@ LarcosTrainingConfiguration::LarcosTrainingConfiguration (const KKStr&          
                                                           RunLog&                _log,
                                                           bool                   _validateDirectories
                                                          ):
-  TrainingConfiguration2 (_configFileName, PostLarvaeFVProducerFactory::Factory (&_log), _validateDirectories, _log),
+  TrainingConfiguration2 (_configFileName, _validateDirectories, _log),
   operatingParms (NULL)
 
 {
@@ -62,7 +63,7 @@ LarcosTrainingConfiguration::LarcosTrainingConfiguration (MLClassListPtr        
                                                           OperatingParametersPtr  _initialOperatingParameters,
                                                           RunLog&                 _log
                                                          ):
-  TrainingConfiguration2 (_mlClasses, _parameterStr, PostLarvaeFVProducerFactory::Factory (&_log), _log),
+  TrainingConfiguration2 (_mlClasses, LarcosFVProducerFactory::Factory (&_log), _parameterStr, _log),
   operatingParms (NULL)
 {
   if  (_initialOperatingParameters)
@@ -95,6 +96,12 @@ LarcosTrainingConfiguration::~LarcosTrainingConfiguration ()
 }
 
 
+FactoryFVProducerPtr   LarcosTrainingConfiguration::DefaultFeatureVectorProducer (RunLog&  runLog)
+{
+  return LarcosFVProducerFactory::Factory (&runLog);
+}
+
+
 
 void  LarcosTrainingConfiguration::Save (const KKStr& fileName)
 {
@@ -121,7 +128,6 @@ void  LarcosTrainingConfiguration::SetOperatingParms (const OperatingParameters&
 
 LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromFeatureVectorList
                                                     (FeatureVectorList&      _examples,
-                                                     MLClassListPtr          _mlClasses,
                                                      OperatingParametersPtr  _initialOperatingParameters,
                                                      RunLog&                 _log
                                                     )

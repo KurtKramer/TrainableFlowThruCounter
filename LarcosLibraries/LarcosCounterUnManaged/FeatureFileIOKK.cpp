@@ -542,7 +542,7 @@ kkint32  GetClassIdx (const map<MLClassPtr, kkint32>&  classIdx,
 
 void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
                                   const KKStr&           _fileName,
-                                  const FeatureNumList&  _selFeatures,
+                                  FeatureNumListConst&   _selFeatures,
                                   ostream&               _out,
                                   kkuint32&              _numExamplesWritten,
                                   VolConstBool&          _cancelFlag,

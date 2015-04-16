@@ -23,7 +23,7 @@ namespace  LarcosCounterUnManaged
     LarcosTrainingConfiguration (const KKStr&           _configFileName,
                                  OperatingParametersPtr _initialOperatingParameters,
                                  RunLog&                _log,
-                                 bool                   validateDirectories = true
+                                 bool                   validateDirectories  /**<  Used to default to 'true'. */
                                 );
 
 
@@ -42,6 +42,9 @@ namespace  LarcosCounterUnManaged
     ~LarcosTrainingConfiguration ();
 
 
+    virtual
+    FactoryFVProducerPtr   DefaultFeatureVectorProducer (RunLog&  runLog);
+
     static
     LarcosTrainingConfiguration*  CreateFromDirectoryStructure 
                                             (const KKStr&            _existingConfigFileName,
@@ -54,7 +57,6 @@ namespace  LarcosCounterUnManaged
 
     static
     LarcosTrainingConfiguration*  CreateFromFeatureVectorList (FeatureVectorList&      _examples,
-                                                               MLClassListPtr          _mlClasses,
                                                                OperatingParametersPtr  _initialOperatingParameters,
                                                                RunLog&                 _log
                                                               );

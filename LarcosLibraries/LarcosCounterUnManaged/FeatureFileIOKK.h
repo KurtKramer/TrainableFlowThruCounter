@@ -1,8 +1,10 @@
 #ifndef  _FEATUREFILEIOKK_
 #define  _FEATUREFILEIOKK_
 
-#include  "FeatureFileIO.h"
-#include  "LarcosFeatureVector.h"
+#include "FeatureFileIO.h"
+#include "FeatureNumList.h"
+
+#include "LarcosFeatureVector.h"
 
 
 namespace LarcosCounterUnManaged 
@@ -60,15 +62,15 @@ namespace LarcosCounterUnManaged
                                                   );
 
 
-    virtual  void   SaveFile (FeatureVectorList&     _data,
-                              const KKStr&           _fileName,
-                              const FeatureNumList&  _selFeatures,
-                              std::ostream&          _out,
-                              kkuint32&              _numExamplesWritten,
-                              VolConstBool&          _cancelFlag,
-                              bool&                  _successful,
-                              KKStr&                 _errorMessage,
-                              RunLog&                _log
+    virtual  void   SaveFile (FeatureVectorList&    _data,
+                              const KKStr&          _fileName,
+                              FeatureNumListConst&  _selFeatures,
+                              std::ostream&         _out,
+                              kkuint32&             _numExamplesWritten,
+                              VolConstBool&         _cancelFlag,
+                              bool&                 _successful,
+                              KKStr&                _errorMessage,
+                              RunLog&               _log
                              );
 
 
