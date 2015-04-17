@@ -66,7 +66,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;libfftw3-3.lib;libfftw3f-3.lib;libfftw3l-3.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries;$(SolutionDir)\Libraries\$(Configuration);C:\Users\kurtk_000\GitHub\OutsidePackages\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\$(Configuration);C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries;$(OutsidePackages)\fftw-3.3.2;C:\Users\kurtk_000\GitHub\OutsidePackages\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
       <TargetMachine>MachineX86</TargetMachine>
@@ -86,7 +86,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;libfftw3-3.lib;libfftw3f-3.lib;libfftw3l-3.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries;$(SolutionDir)\Libraries\$(Configuration);C:\Users\kurtk_000\GitHub\OutsidePackages\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\$(Configuration);C:\Program Files (x86)\Pleora Technologies Inc\eBUS SDK\Libraries;$(OutsidePackages)\fftw-3.3.2;$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
