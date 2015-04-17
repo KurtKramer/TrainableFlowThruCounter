@@ -87,9 +87,11 @@ UmiFeatureFileIO::!UmiFeatureFileIO ()
 
 
 
-array<String^>^  UmiFeatureFileIO::RegisteredDriverNames ()
+array<String^>^  UmiFeatureFileIO::RegisteredDriverNames (bool  canRead,
+                                                          bool  canWrite
+                                                         )
 {
-  VectorKKStr  names = FeatureFileIO::RegisteredDriverNames ();
+  VectorKKStr  names = FeatureFileIO::RegisteredDriverNames (canRead, canWrite);
 
   array<String^>^  results = gcnew array<String^> (names.size ());
   

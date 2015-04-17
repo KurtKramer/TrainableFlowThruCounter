@@ -973,50 +973,64 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
 
   else
   {
-    // KKKK  Building Training Model
-    //
+    LarcosTrainingConfigurationPtr config = new LarcosTrainingConfiguration (trainingModelName,
+                                                                             operatingParameters,
+                                                                             *runLog,
+                                                                             true    /**<  true = Validate Directories */
+                                                                            );
 
-    CounterState  origState = curState;
-    curState = this->csBuildingClassifier;
-
-    if  (operatingMode == lomAdvanced)
-      secondaryMsgs.AddMsg ("Validating Training Model");
-    trainerCancelFlag = false;
-    trainer = new TrainingProcess2 (trainingModelName,
-                                    NULL,                // _excludeList,
-                                    LarcosFVProducerFactory::Factory (runLog),
-                                    *runLog,
-                                    NULL,               // _report,
-                                    false,              // _forceRebuild,
-                                    true,               // _checkForDuplicates,
-                                    trainerCancelFlag,
-                                    trainerStatusMsg
-                                   );
-
-    if  (trainer->Abort ())
+    if  (!config->FormatGood ())
     {
       runLog->Level (-1) << endl << endl
-                         << "ValidateTrainingModel   ***ERROR***   Training Model: " << trainingModelName.QuotedStr () << " is invalid." << endl
-                         << "             trainerStatusMsg: " << trainerStatusMsg << endl   
+                         << "ValidateTrainingModel   ***ERROR***   Training Model: " << trainingModelName.QuotedStr () << " Configuration file is invalid." << endl
+                         << config->FormatErrorsWithLineNumbers ()
                          << endl;
       successful = false;
-      errMsg = trainerStatusMsg;
-      delete  trainer;
-      trainer = NULL;
       secondaryMsgs.AddMsg ("Error Building Classifier");
     }
     else
     {
-      successful = true;
-      runLog->Level (40) << "ValidateTrainingModel   Valid Format." << endl;
+      CounterState  origState = curState;
+      curState = this->csBuildingClassifier;
+
+      if  (operatingMode == lomAdvanced)
+        secondaryMsgs.AddMsg ("Validating Training Model");
+      trainerCancelFlag = false;
+      trainer = new TrainingProcess2 (config,
+                                      NULL,                // _excludeList,
+                                      *runLog,
+                                      NULL,               // _report,
+                                      false,              // _forceRebuild,
+                                      true,               // _checkForDuplicates,
+                                      trainerCancelFlag,
+                                      trainerStatusMsg
+                                     );
+
+      if  (trainer->Abort ())
+      {
+        runLog->Level (-1) << endl << endl
+                           << "ValidateTrainingModel   ***ERROR***   Training Model: " << trainingModelName.QuotedStr () << " is invalid." << endl
+                           << "             trainerStatusMsg: " << trainerStatusMsg << endl   
+                           << endl;
+        successful = false;
+        errMsg = trainerStatusMsg;
+        delete  trainer;
+        trainer = NULL;
+        secondaryMsgs.AddMsg ("Error Building Classifier");
+      }
+      else
+      {
+        successful = true;
+        runLog->Level (40) << "ValidateTrainingModel   Valid Format." << endl;
+      }
+
+      delete  trainer;
+      trainer = NULL;
+      curState = origState;
     }
-
-    delete  trainer;
-    trainer = NULL;
-
-    curState = origState;
+    delete  config;
+    config = NULL;
   }
-
 }  /* ValidateTrainingModel */
 
 

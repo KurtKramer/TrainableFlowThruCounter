@@ -27,10 +27,19 @@ namespace LarcosCounterManaged {
     UmiTrainingClass (TrainingClassPtr  _trainingClass);
 
     property  float      CountFactor {float      get ();   void  set (float      _countFactor);}
-    property  String^    Directory   {String^    get ();   void  set (String^    _directory);}
     property  UmiClass^  MLClass     {UmiClass^  get ();   void  set (UmiClass^  _mlClass);}
 
-    String^   ExpandedDirectory (String^  rootDir);
+    String^  Directory (int  idx);
+
+    void  Directory (int      idx, 
+                     String^  directory
+                    );
+
+
+
+    String^   ExpandedDirectory (String^  rootDir,
+                                 int      idx
+                                );
 
 
     TrainingClassPtr  UnManagedClass ();

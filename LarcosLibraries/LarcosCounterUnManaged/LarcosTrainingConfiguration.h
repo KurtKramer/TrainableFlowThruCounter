@@ -18,6 +18,8 @@ namespace  LarcosCounterUnManaged
   {
   public:
     typedef  LarcosTrainingConfiguration*  LarcosTrainingConfigurationPtr;
+    typedef  LarcosTrainingConfiguration const  LarcosTrainingConfigurationConst;
+    typedef  LarcosTrainingConfigurationConst  *  LarcosTrainingConfigurationConstPtr;
 
 
     LarcosTrainingConfiguration (const KKStr&           _configFileName,
@@ -62,7 +64,7 @@ namespace  LarcosCounterUnManaged
                                                               );
 
     virtual
-    void  Save (const KKStr&  fileName);
+    void  Save (const KKStr&  fileName)  const;
 
     const OperatingParameters*  OperatingParms ()  const  {return operatingParms;}
 
@@ -79,8 +81,9 @@ namespace  LarcosCounterUnManaged
 
   #define  _LarcosTrainingConfigurationDefined_
 
-  typedef  LarcosTrainingConfiguration::LarcosTrainingConfigurationPtr  LarcosTrainingConfigurationPtr;
-
+  typedef  LarcosTrainingConfiguration::LarcosTrainingConfigurationPtr       LarcosTrainingConfigurationPtr;
+  typedef  LarcosTrainingConfiguration::LarcosTrainingConfigurationConst     LarcosTrainingConfigurationConst;
+  typedef  LarcosTrainingConfiguration::LarcosTrainingConfigurationConstPtr  LarcosTrainingConfigurationConstPtr;
 
 
 

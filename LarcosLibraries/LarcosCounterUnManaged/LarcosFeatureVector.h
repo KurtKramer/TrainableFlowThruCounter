@@ -38,20 +38,6 @@ using namespace  KKMLL;
 
 namespace LarcosCounterUnManaged 
 {
-
-  #ifndef  _FEATURENUMLIST_
-  class  FeatureNumList;
-  typedef  FeatureNumList*  FeatureNumListPtr;
-  #endif
- 
-  #ifndef  _MLCLASS_
-  class  MLClass;
-  typedef  MLClass*  MLClassPtr;
-  class  MLClassList;
-  typedef  MLClassList*  MLClassListPtr;
-  #endif
-
-
   class  LarcosFeatureVector:  public  FeatureVector 
   {
   public:

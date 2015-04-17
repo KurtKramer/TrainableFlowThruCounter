@@ -46,10 +46,14 @@ UmiTrainingClass::UmiTrainingClass (UmiClass^  _class,
                                     String^    _directory
                                    )
 {
-  trainingClass = new TrainingClass (UmiKKStr::SystemStringToKKStr (_directory), 
+  VectorKKStr  directories;
+  directories.push_back (UmiKKStr::SystemStringToKKStr (_directory));
+
+  trainingClass = new TrainingClass (directories, 
                                      UmiKKStr::SystemStringToKKStr (_class->Name),
                                      1.0f,
                                      1.0f,   // CountFactor
+                                     NULL,   // subClassifier
                                      *(::MLClass::GlobalClassList ())
                                     );
 }
@@ -91,28 +95,12 @@ void  UmiTrainingClass::CountFactor::set (float _countFactor)
 
 
 
-String^  UmiTrainingClass::Directory::get ()
-{
-  if (trainingClass == NULL)
-    return  gcnew String ("");
-
-  return  UmiKKStr::KKStrToSystenStr (trainingClass->Directory ());
-}
-
-
-
-
-void  UmiTrainingClass::Directory::set (String^  _directory)
-{
-  trainingClass->Directory (UmiKKStr::SystemStringToKKStr (_directory));
-}
-
-
 
 UmiClass^  UmiTrainingClass::MLClass::get ()
 {
   return   UmiClassList::GetUniqueClass (trainingClass->MLClass ());
 }
+
 
 
 void  UmiTrainingClass::MLClass::set (UmiClass^  _mlClass)
@@ -122,11 +110,33 @@ void  UmiTrainingClass::MLClass::set (UmiClass^  _mlClass)
 
 
 
-String^   UmiTrainingClass::ExpandedDirectory (String^  rootDir)
+
+String^  UmiTrainingClass::Directory (int  idx)
+{
+  const KKStr& dirName = trainingClass->Directory (idx);
+  return  UmiKKStr::KKStrToSystenStr (dirName);
+}
+
+
+
+void  UmiTrainingClass::Directory (int      idx, 
+                                   String^  directory
+                                  )
+{
+  trainingClass->Directory (idx, UmiKKStr::SystemStringToKKStr (directory));
+}
+
+
+
+
+
+String^  UmiTrainingClass::ExpandedDirectory (String^  rootDir,
+                                              int      idx
+                                             )
 {
   if  (rootDir == nullptr)
     rootDir = String::Empty;
-  return  UmiKKStr::KKStrToSystenStr (trainingClass->ExpandedDirectory (UmiKKStr::SystemStringToKKStr (rootDir)));
+  return  UmiKKStr::KKStrToSystenStr (trainingClass->ExpandedDirectory (UmiKKStr::SystemStringToKKStr (rootDir), idx));
 }  /* ExpandedDirectory */
 
 

@@ -15,7 +15,10 @@ namespace LarcosCounterManaged {
     !UmiFeatureFileIO ();
 
   public:
-    static  array<String^>^  RegisteredDriverNames ();
+    static  array<String^>^  RegisteredDriverNames (bool  canRead,
+                                                    bool  canWrite
+                                                   );
+
     static  bool             ValidDriverName (String^ _driverName);
 
     property  bool     CancelLoad         {bool     get ();   void set (bool _cancelLoad); }

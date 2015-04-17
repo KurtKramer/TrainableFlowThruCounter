@@ -105,7 +105,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^       _umiRunLog,
 
   osRunAsABackGroundProcess ();
 
-  factoryFVProducer =  LarcosFVProducerFactory::Factory (runLog);
+  //factoryFVProducer =  LarcosFVProducerFactory::Factory (runLog);
 }
 
 
@@ -152,7 +152,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^                 _umiRunLog,
   osRunAsABackGroundProcess ();
 
   config = new LarcosTrainingConfiguration (*(_config->Config ()));
-  factoryFVProducer =  LarcosFVProducerFactory::Factory (runLog);
+  factoryFVProducer =  config->FvFactoryProducer ();
 }
 
 
@@ -209,7 +209,6 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^      _umiRunLog,
   KKStr  configFileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + modelNameKKStr;
 
   FileDescPtr fd = LarcosFVProducer::DefineFileDescStatic ();
-  factoryFVProducer =  LarcosFVProducerFactory::Factory (runLog);
 
   try
   {
@@ -235,6 +234,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^      _umiRunLog,
     return;
   }
 
+  factoryFVProducer =  config->FvFactoryProducer ();
   delete  classes;  classes = NULL;
   classes = config->ExtractClassList ();
   PopulateCSharpClassList ();
@@ -382,7 +382,7 @@ System::DateTime  UmiTrainingModel2::BuildDateTime::get ()
 
 String^  UmiTrainingModel2::RootDirExpanded::get ()
 {
-  TrainingConfiguration2Ptr  configToUse = GetConfigToUse ();
+  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (configToUse)
     return UmiKKStr::KKStrToSystenStr (configToUse->RootDirExpanded ());
   else
@@ -393,7 +393,7 @@ String^  UmiTrainingModel2::RootDirExpanded::get ()
 
 void  UmiTrainingModel2::SaveConfiguration ()
 {
-  TrainingConfiguration2Ptr  configToUse = GetConfigToUse ();
+  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   KKStr  fileName = configToUse->FileName ();
   if  (fileName.Empty ())
     fileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + UmiKKStr::SystemStringToKKStr (modelName);
@@ -458,7 +458,7 @@ bool  UmiTrainingModel2::IncludesClass (UmiClass^  mlClass)
   if  (mlClass == nullptr)
     return false;
 
-  TrainingConfiguration2Ptr  configToUse = GetConfigToUse ();
+  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (!configToUse)
     return false;
 
@@ -504,10 +504,10 @@ void  UmiTrainingModel2::LoadExistingModelOtherwiseBuild ()
   if  ((!(*cancelFlag))  &&  (*valid))
   {
     delete  classes;  classes = NULL;
-    if  (trainer->ImageClasses ())
-      classes = new MLClassList (*(trainer->ImageClasses ()));
+    if  (trainer->MLClasses ())
+      classes = new MLClassList (*(trainer->MLClasses ()));
     else
-      throw gcnew Exception ("UmiTrainingModel2::LoadExistingModelOtherwiseBuild     (trainer->ImageClasses() == NULL)");
+      throw gcnew Exception ("UmiTrainingModel2::LoadExistingModelOtherwiseBuild     (trainer->MLClasses () == NULL)");
 
     PopulateCSharpClassList ();
   }
@@ -520,19 +520,15 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
 {
   GC::Collect ();
 
-  int x = 0;
-
-  FileDescPtr fd = LarcosFVProducer::DefineFileDescStatic ();
-
-  KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
+  if  (!factoryFVProducer)
+    factoryFVProducer = GetConfigToUse ()->FvFactoryProducer ();
 
   *cancelFlag = false;
 
   try
   {
-    trainer = new TrainingProcess2 (configFileName,
+    trainer = new TrainingProcess2 (GetConfigToUse (),
                                     NULL,
-                                    LarcosFVProducerFactory::Factory (runLog),
                                     *runLog,
                                     level,
                                     *cancelFlag,
@@ -558,8 +554,8 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
     *valid = true;
     delete  classes;  classes = NULL;
 
-    if  (trainer->ImageClasses ())
-      classes = new MLClassList (*(trainer->ImageClasses ()));
+    if  (trainer->MLClasses ())
+      classes = new MLClassList (*(trainer->MLClasses ()));
     else
       throw gcnew Exception ("UmiTrainingModel2::LoadTrainingModelForGivenLevel     (trainer->ImageClasses() == NULL)");
 
@@ -578,8 +574,7 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
 
   GC::Collect ();
 
-  FactoryFVProducer*  fvProducerFactory = LarcosFVProducerFactory::Factory (runLog);
-  FileDescPtr fd = fvProducerFactory->FileDesc ();
+  FactoryFVProducer*  fvProducerFactory = GetConfigToUse ()->FvFactoryProducer ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
 
@@ -587,8 +582,7 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
 
   try
   {
-    trainer = new TrainingProcess2 (configFileName, 
-                                    fvProducerFactory, 
+    trainer = new TrainingProcess2 (configFileName,
                                     *runLog,
                                     false,         // false = Features are not Already Normalized
                                     *cancelFlag, 
@@ -624,8 +618,8 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
     *valid = true;
     delete  classes;  classes = NULL;
 
-    if  (trainer->ImageClasses ())
-      classes = new MLClassList (*(trainer->ImageClasses ()));
+    if  (trainer->MLClasses ())
+      classes = new MLClassList (*(trainer->MLClasses ()));
     else
       throw gcnew Exception ("LoadExistingTrainedModel    (trainer->ImageClasses() == NULL)");
 
@@ -648,6 +642,9 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
   GC::Collect ();
 
   //FactoryFVProducer*  fvProducerFactory =   PostLarvaeFVProducerFactory::Factory (runLog);
+
+  if  (!factoryFVProducer)
+    factoryFVProducer = GetConfigToUse ()->FvFactoryProducer ();
   
   FileDescPtr fd = factoryFVProducer->FileDesc ();
 
@@ -657,9 +654,8 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
 
   try
   {
-    trainer = new TrainingProcess2 (configFileName, 
+    trainer = new TrainingProcess2 (GetConfigToUse (), 
                                     NULL,              // Exclude List
-                                    factoryFVProducer, 
                                     *runLog,
                                     NULL,              // report file stream
                                     forceRebuild,
@@ -726,8 +722,8 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
   {
     *valid = true;
     delete  classes;  classes = NULL;
-    if  (trainer->ImageClasses ())
-      classes = new MLClassList (*(trainer->ImageClasses ()));
+    if  (trainer->MLClasses ())
+      classes = new MLClassList (*(trainer->MLClasses ()));
     else
       throw gcnew Exception ("UmiTrainingModel2::LoadTrainigLibrary    (trainer->ImageClasses() == NULL)");
     classifier = new Classifier2 (trainer, *runLog);
@@ -765,10 +761,9 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
   try
   {
     trainer = new TrainingProcess2 (config, 
-                                    trainingData, 
-                                    classes, 
+                                    trainingData,
+                                    classes,            /**<  Dictates the order that the classifier will use.  */
                                     NULL, 
-                                    fvProducerFactory, 
                                     *runLog,
                                     false,              // false = Features are NOT already normalized.
                                     *cancelFlag, 
@@ -1330,7 +1325,7 @@ void  UmiTrainingModel2::CancelLoad ()   // Sets cancel flag to terminate loadin
 
 String^  UmiTrainingModel2::DirectoryPathForClass (UmiClass^  mlClass)
 {
-  TrainingConfiguration2Ptr  configToUse = GetConfigToUse ();
+  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (configToUse == NULL)
     return nullptr;
 
@@ -1379,7 +1374,7 @@ array<String^>^  UmiTrainingModel2::GetListOfTrainingModels ()
 
 kkuint32  UmiTrainingModel2::NumHierarchialLevels::get ()
 {
-  TrainingConfiguration2Ptr  configToUse = GetConfigToUse ();
+  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (configToUse)
     return  configToUse->NumHierarchialLevels ();
   else
@@ -1391,7 +1386,7 @@ kkuint32  UmiTrainingModel2::NumHierarchialLevels::get ()
 
 int  UmiTrainingModel2::ImagesPerClass::get ()
 {
-  TrainingConfiguration2Ptr tConfig = trainer->Config ();
+  TrainingConfiguration2ConstPtr tConfig = trainer->Config ();
   if  (tConfig)
     return  tConfig->ImagesPerClass ();
   else
@@ -1412,7 +1407,7 @@ String^  UmiTrainingModel2::ParameterStr::get ()
 
     else
     {
-      TrainingConfiguration2Ptr tConfig = trainer->Config ();
+      TrainingConfiguration2ConstPtr tConfig = trainer->Config ();
       if  (tConfig)
       {
         ModelParamPtr  parameters = tConfig->ModelParameters ();
@@ -1424,7 +1419,7 @@ String^  UmiTrainingModel2::ParameterStr::get ()
 
   if  (parmStr.Empty ())
   {
-    TrainingConfiguration2Ptr  configToUse = GetConfigToUse ();
+    LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
     if  ((configToUse)  &&  (configToUse->ModelParameters ()))
       parmStr = configToUse->ModelParameters ()->ToCmdLineStr ();
   }
@@ -1437,7 +1432,7 @@ String^  UmiTrainingModel2::ParameterStr::get ()
 
 String^  UmiTrainingModel2::ConfigFileName::get ()
 {
-  TrainingConfiguration2Ptr  configToUse = GetConfigToUse ();
+  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (configToUse)
     return UmiKKStr::KKStrToSystenStr (configToUse->FileName ());
   else
@@ -1448,7 +1443,7 @@ String^  UmiTrainingModel2::ConfigFileName::get ()
 
 void  UmiTrainingModel2::AddClass (UmiClass^  newClass)
 {
-  TrainingConfiguration2Ptr  configToUse = GetConfigToUse ();
+  LarcosTrainingConfigurationPtr  configToUse = GetConfigToUse ();
   if  (configToUse == NULL)
     throw gcnew Exception ("Could not retrieve the configuration file.");
 
@@ -1473,7 +1468,7 @@ void  UmiTrainingModel2::AddClass (UmiClass^  newClass)
 void  UmiTrainingModel2::AddImageToTrainingLibray (String^     imageFileName,
                                                    UmiRaster^  raster, 
                                                    UmiClass^   mlClass,
-                                                   bool        onLine       // If set to true;  will prompt user if they want to add new class if not part of Training Model.
+                                                   bool        onLine       /**< If set to true; will prompt user if they want to add new class if not part of Training Model. */
                                                   )
 {
   if  (raster == nullptr)
@@ -1482,7 +1477,7 @@ void  UmiTrainingModel2::AddImageToTrainingLibray (String^     imageFileName,
   if  (mlClass == nullptr)
     throw gcnew Exception ("No class provided;   \"mlClass == nullptr;\"  in method \"UmiTrainingModel2::AddImageToTrainingLibray\"");
 
-  TrainingConfiguration2Ptr  configToUse = GetConfigToUse ();
+  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (!configToUse)
     throw  gcnew Exception  ("No defined Configuration file available for ModelName[" + modelName + "]");
 
@@ -1546,13 +1541,11 @@ void  UmiTrainingModel2::AddImageToTrainingLibray (String^     imageFileName,
 
 
 
-TrainingConfiguration2Ptr  UmiTrainingModel2::GetConfigToUse ()
+LarcosTrainingConfigurationPtr  UmiTrainingModel2::GetConfigToUse ()
 {
-  TrainingConfiguration2Ptr  configToUse = NULL;
+  LarcosTrainingConfigurationPtr  configToUse = NULL;
   if  (config)
     configToUse = config;
-  else
-    configToUse = trainer->Config ();
 
   if  (!configToUse)
   {
@@ -1570,8 +1563,6 @@ TrainingConfiguration2Ptr  UmiTrainingModel2::GetConfigToUse ()
 
 
 
-
-
 void  UmiTrainingModel2::ErrorMsgsClear ()
 {
   if  (errorMsgs == nullptr)
@@ -1581,6 +1572,7 @@ void  UmiTrainingModel2::ErrorMsgsClear ()
 }
 
 
+
 void  UmiTrainingModel2::ErrorMsgsAdd (String^  errorMsg)
 {
   if  (errorMsgs == nullptr)
@@ -1588,6 +1580,7 @@ void  UmiTrainingModel2::ErrorMsgsAdd (String^  errorMsg)
 
   errorMsgs->Add (errorMsg);
 }
+
 
 
 void  UmiTrainingModel2::ErrorMsgsAdd (const VectorKKStr&  _errorMsgs)

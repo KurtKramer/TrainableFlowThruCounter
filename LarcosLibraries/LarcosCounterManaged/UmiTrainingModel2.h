@@ -195,7 +195,7 @@ namespace LarcosCounterManaged
     void     ErrorMsgsAdd (const VectorKKStr&  _errorMsgs);
 
 
-    TrainingConfiguration2Ptr   GetConfigToUse ();
+    LarcosTrainingConfigurationPtr   GetConfigToUse ();
 
     void  PopulateCSharpClassList ();
 

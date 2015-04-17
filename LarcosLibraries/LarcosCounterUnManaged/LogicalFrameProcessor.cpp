@@ -627,7 +627,6 @@ void  LogicalFrameProcessor::LoadClassifer ()
     // Since the 'LarcosCounterManager' has already built and saved this classifier we already know 
     // that it is good and we can go ahead and load the saved copy.
     trainer = new TrainingProcess2 (classifierName,
-                                    PostLarvaeFVProducerFactory::Factory (&log),
                                     log,
                                     false,              /**<  'false' = Features are already normalized. */
                                     TerminateFlag (),
@@ -751,7 +750,7 @@ void  LogicalFrameProcessor::ProcessFrame ()
 
     bool  noise = false;
     {
-      // Some artifact Line Line Detection 
+      // Some artifact Line Detection 
       if  (blob->Width () < 20)
         noise = true;
       else
@@ -1269,7 +1268,7 @@ RasterPtr  LogicalFrameProcessor::ExtractABlob (uchar*         rowsArea,
   }
 
   {
-    //  Make sure that curent stretcher is within 5% of latest flowRateRatio; if not create a new one.
+    //  Make sure that current stretcher is within 5% of latest flowRateRatio; if not create a new one.
     float deltaRowFactor = (float)fabs (flowRateRatio - stretcher->RowFactor ());
     if  ((deltaRowFactor / flowRateRatio) > 0.05)
     {
@@ -1350,7 +1349,7 @@ RasterPtr  LogicalFrameProcessor::ExtractABlob2 (uchar*         rowsArea,
   }
 
   {
-    //  Make sure that curent stretcher is within 5% of latest flowRateRatio; if not create a new one.
+    //  Make sure that current stretcher is within 5% of latest flowRateRatio; if not create a new one.
     float deltaRowFactor = (float)fabs (flowRateRatio - stretcher->RowFactor ());
     if  ((deltaRowFactor / flowRateRatio) > 0.05)
     {

@@ -103,7 +103,7 @@ FactoryFVProducerPtr   LarcosTrainingConfiguration::DefaultFeatureVectorProducer
 
 
 
-void  LarcosTrainingConfiguration::Save (const KKStr& fileName)
+void  LarcosTrainingConfiguration::Save (const KKStr& fileName)  const
 {
   ofstream  o (fileName.Str ());
 
