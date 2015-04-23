@@ -56,6 +56,8 @@ namespace LarcosCounterUnManaged
   public:
     typedef  ScannerFile::ScannerFileFormat  ScannerFileFormat;
 
+    typedef  KKThread::ThreadStatus  ThreadStatus;
+
     typedef  enum  {csNULL, 
                     csStopped, 
                     csStopping, 

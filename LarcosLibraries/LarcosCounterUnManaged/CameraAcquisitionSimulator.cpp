@@ -257,7 +257,7 @@ void  CameraAcquisitionSimulator::ComplementDataBlock (void*  block,
 void  CameraAcquisitionSimulator::Run ()
 {
   log.Level (10) << "CameraAcquisitionSimulator::Run" << endl;
-  Status (KKThread::tsRunning);
+  Status (ThreadStatus::tsRunning);
   StartStatus (ssConnecting, "");
 
   bool  embeddedFlowMeter = Manager ()->EmbeddedFlowMeter ();
@@ -293,7 +293,7 @@ void  CameraAcquisitionSimulator::Run ()
   }
 
 
-  Status (KKThread::tsRunning);
+  Status (ThreadStatus::tsRunning);
 
   float     pausePerFrameInSecs     = (float)((double)sf->FrameHeight () / curScanRate); 
   kkuint32  pausePerFrameInMiliSecs = (kkuint32)(pausePerFrameInSecs * 1000) - 1;
@@ -430,7 +430,7 @@ void  CameraAcquisitionSimulator::Run ()
       OpenNextScannerFile ();
   }
 
-  Status (tsStopping);
+  Status (ThreadStatus::tsStopping);
   
   delete  sf;
   sf = NULL;

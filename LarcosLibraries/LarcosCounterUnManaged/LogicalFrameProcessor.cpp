@@ -656,12 +656,12 @@ void  LogicalFrameProcessor::LoadClassifer ()
 void  LogicalFrameProcessor::Run ()
 {
   log.Level (10) << ThreadName () << "::Run" << endl;
-  Status (tsRunning);
+  Status (ThreadStatus::tsRunning);
 
   LoadClassifer ();
   if  (Crashed ())
   {
-    Status (tsStopping);
+    Status (ThreadStatus::tsStopping);
     return;
   }
 
@@ -704,7 +704,7 @@ void  LogicalFrameProcessor::Run ()
                  << "   ShutdownFlag: "   << ShutdownFlag ()
                  << endl;
 
-  Status (tsStopping);
+  Status (ThreadStatus::tsStopping);
 }  /* Run */
 
 

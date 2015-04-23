@@ -197,12 +197,12 @@ CameraFramePtr  LogicalFrameBuilder::GetNextFrame ()
 void  LogicalFrameBuilder::Run ()
 {
   log.Level (10) << "LogicalFrameBuilder::Run" << endl;
-  Status (tsRunning);
+  Status (ThreadStatus::tsRunning);
   if  (!cameraBuffer)
   {
     AddMsg ("LogicalFrameBuilder::Run     Missing Camera");
     Crashed (true);
-    Status (tsStopping);
+    Status (ThreadStatus::tsStopping);
   }
 
   CameraFramePtr  frame = NULL;
@@ -286,7 +286,7 @@ void  LogicalFrameBuilder::Run ()
 
   CleanUpMemory ();
 
-  Status (KKThread::tsStopping);
+  Status (ThreadStatus::tsStopping);
 
   log.Level (10) << "LogicalFrameBuilder::Run   Exiting:"
                  << "  No-More-Frames: " << (frame == NULL)

@@ -233,7 +233,7 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
   for  (featureNum = 0;  featureNum < numOfFeatures;  featureNum++)
   {
     KKStr&  fieldName = fields[featureNum];
-    fd->AddAAttribute (fieldName, NumericAttribute, alreadyExists);
+    fd->AddAAttribute (fieldName, AttributeType::NumericAttribute, alreadyExists);
     if  (alreadyExists)
     {
       _log.Level (-1) << endl << endl 

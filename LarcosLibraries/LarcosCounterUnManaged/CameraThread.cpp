@@ -124,8 +124,8 @@ void  CameraThreadList::SendTerminateCmdToAllThreads ()
   for  (idx = begin ();  idx != end ();  ++idx)
   {
     CameraThreadPtr  t = *idx;
-    if  ((t->Status () == CameraThread::tsRunning)  ||  
-         (t->Status () == CameraThread::tsStarting)
+    if  ((t->Status () == KKThread::ThreadStatus::tsRunning)  ||  
+         (t->Status () == KKThread::ThreadStatus::tsStarting)
         )
     {
       t->TerminateThread ();
@@ -142,8 +142,8 @@ void  CameraThreadList::SendShutdownCmdToAllThreads ()
   for  (idx = begin ();  idx != end ();  ++idx)
   {
     CameraThreadPtr  t = *idx;
-    if  ((t->Status () == CameraThread::tsRunning)  ||  
-         (t->Status () == CameraThread::tsStarting)
+    if  ((t->Status () == KKThread::ThreadStatus::tsRunning)  ||  
+         (t->Status () == KKThread::ThreadStatus::tsStarting)
         )
     {
       t->ShutdownThread ();
@@ -169,7 +169,7 @@ void  CameraThreadList::WaitForAllThreadsToStop (float  maxWaitTime,
     for  (idx = begin ();  idx != end ();  ++idx)
     {
       CameraThreadPtr  t = *idx;
-      if  (t->Status () != CameraThread::tsStopped)
+      if  (t->Status () != KKThread::ThreadStatus::tsStopped)
         allThreadsStopped = false;
     }
 
@@ -216,7 +216,7 @@ void  CameraThreadList::DeleteAllStoppedThreads ()
   for  (idx = begin ();  idx != end ();  ++idx)
   {
     CameraThreadPtr  ct = *idx;
-    if  (ct->Status () == CameraThread::tsStopped)
+    if  (ct->Status () == KKThread::ThreadStatus::tsStopped)
       threadsToDelete.PushOnBack (ct);
   }
 

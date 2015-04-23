@@ -450,7 +450,7 @@ FileDescPtr  PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
   postLarvaeFeaturesFileDesc = new FileDesc ();
   for  (kkint32 fieldNum = 0;  fieldNum < MaxNumOfFeatures ();  fieldNum++)
   {
-    postLarvaeFeaturesFileDesc->AddAAttribute (FeatureName (fieldNum), NumericAttribute, alreadyExists);
+    postLarvaeFeaturesFileDesc->AddAAttribute (FeatureName (fieldNum),  AttributeType::NumericAttribute, alreadyExists);
   }
 
   // Lets make sure that one was already created by opening up a data file.

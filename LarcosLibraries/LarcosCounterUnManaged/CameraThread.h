@@ -40,6 +40,8 @@ namespace  LarcosCounterUnManaged
     virtual
     ~CameraThread ();
 
+    //typedef  KKThread::ThreadStatus  ThreadStatus;
+
 
     LarcosCounterManagerPtr  Manager () {return   manager;}
 

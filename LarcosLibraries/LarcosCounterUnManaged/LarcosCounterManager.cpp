@@ -1629,7 +1629,7 @@ bool  LarcosCounterManager::OkToPressStop (KKStr&  errMsg)
 {
   bool  okToPressStop = false;
   errMsg = "";
-  if  ((stopButtonThread != NULL)  &&  (stopButtonThread->Status () != CameraThread::tsStopped))
+  if  ((stopButtonThread != NULL)  &&  (stopButtonThread->Status () != CameraThread::ThreadStatus::tsStopped))
   {
     errMsg = "Larcos is already Stopping.";
   }
@@ -1852,10 +1852,10 @@ void  LarcosCounterManager::DeleteAllStoppedThreads ()
 {
   runLog->Level (40) << "LarcosCounterManager::DeleteAllStoppedThreads." << endl;
 
-  if  ((acquisitionThread)  &&  (acquisitionThread->Status () == CameraThread::tsStopped))
+  if  ((acquisitionThread)  &&  (acquisitionThread->Status () == ThreadStatus::tsStopped))
     DeleteAcquisitionThread ();
 
-  if  ((logicalFrameBuilderThread)  &&  (logicalFrameBuilderThread->Status () == CameraThread::tsStopped))
+  if  ((logicalFrameBuilderThread)  &&  (logicalFrameBuilderThread->Status () == ThreadStatus::tsStopped))
     DeleteLogicalFrameBuilderThread ();
 
   if  (frameProcessors)
@@ -1866,7 +1866,7 @@ void  LarcosCounterManager::DeleteAllStoppedThreads ()
     for  (idx = frameProcessors->begin ();  idx != frameProcessors->end ();  ++idx)
     {
       LogicalFrameProcessorPtr  lfp = *idx;
-      if  (lfp->Status () == CameraThread::tsStopped)
+      if  (lfp->Status () == ThreadStatus::tsStopped)
         threadsToDelete.PushOnBack (lfp);
     }
 
@@ -1879,28 +1879,28 @@ void  LarcosCounterManager::DeleteAllStoppedThreads ()
     }
   }
 
-  if  ((cameraAutoGainThread)  &&  (cameraAutoGainThread->Status () == CameraThread::tsStopped))
+  if  ((cameraAutoGainThread)  &&  (cameraAutoGainThread->Status () == ThreadStatus::tsStopped))
     DeleteCameraAutoGainThread ();
 
-  if  ((diskWriterThread)  &&  (diskWriterThread->Status () == CameraThread::tsStopped))
+  if  ((diskWriterThread)  &&  (diskWriterThread->Status () == ThreadStatus::tsStopped))
     DeleteDiskWriterThread ();
 
-  if  ((reportWriterThread)  &&  (reportWriterThread->Status () == CameraThread::tsStopped))
+  if  ((reportWriterThread)  &&  (reportWriterThread->Status () == ThreadStatus::tsStopped))
     DeleteReportWriterThread ();
 
-  if  ((snapshotThread)  &&  (snapshotThread->Status () == CameraThread::tsStopped))
+  if  ((snapshotThread)  &&  (snapshotThread->Status () == ThreadStatus::tsStopped))
     DeleteSnapshotThread ();
 
-  if  ((connectButtonThread)  &&  (connectButtonThread->Status () == CameraThread::tsStopped))
+  if  ((connectButtonThread)  &&  (connectButtonThread->Status () == ThreadStatus::tsStopped))
     DeleteConnectButtonThread ();
 
-  if  ((startButtonThread)  &&  (startButtonThread->Status () == CameraThread::tsStopped))
+  if  ((startButtonThread)  &&  (startButtonThread->Status () == ThreadStatus::tsStopped))
     DeleteStartButtonThread ();
 
-  if  ((playBackButtonThread)  &&  (playBackButtonThread->Status () == CameraThread::tsStopped))
+  if  ((playBackButtonThread)  &&  (playBackButtonThread->Status () == ThreadStatus::tsStopped))
     DeletePlayBackButtonThread ();
 
-  if  ((stopButtonThread)  &&  (stopButtonThread->Status () == CameraThread::tsStopped))
+  if  ((stopButtonThread)  &&  (stopButtonThread->Status () == ThreadStatus::tsStopped))
     DeleteStopButtonThread ();
 
   runLog->Level (40) << "DeleteAllStoppedThreads   Exiting." << endl;
@@ -2799,7 +2799,7 @@ int  LarcosCounterManager::FrameProcessorsCount () const
 
 bool  LarcosCounterManager::LogicalFrameBuilderRunning ()
 {
-  return  ((logicalFrameBuilderThread != NULL)  &&  (logicalFrameBuilderThread->Status () == KKThread::tsRunning));
+  return  ((logicalFrameBuilderThread != NULL)  &&  (logicalFrameBuilderThread->Status () == ThreadStatus::tsRunning));
 }
 
 
@@ -2842,13 +2842,13 @@ const KKStr&  LarcosCounterManager::TrainingModelName () const
 
 bool  LarcosCounterManager::DiskWritingThreadRunning ()  const
 {
-  return  ((diskWriterThread != NULL)  &&  (diskWriterThread->Status () == KKThread::tsRunning));
+  return  ((diskWriterThread != NULL)  &&  (diskWriterThread->Status () == ThreadStatus::tsRunning));
 }
 
 
 bool  LarcosCounterManager::CameraAutoGainThreadRunning ()  const
 {
-  return  ((cameraAutoGainThread != NULL)  &&  (cameraAutoGainThread->Status () == KKThread::tsRunning));
+  return  ((cameraAutoGainThread != NULL)  &&  (cameraAutoGainThread->Status () == ThreadStatus::tsRunning));
 }
 
 
@@ -3145,7 +3145,7 @@ bool  LarcosCounterManager::WeAreRecordingToDisk ()
            (diskWriterThread  != NULL)  &&  (acquisitionThread != NULL)           &&
            (diskWriterThread->WeAreRecordingToDisk ())                            &&
            (acquisitionThread->StartStatus () == CameraAcquisition::ssConnected)  &&
-           (acquisitionThread->Status ()      == CameraThread::tsRunning)
+           (acquisitionThread->Status ()      == ThreadStatus::tsRunning)
           );
 }
 
@@ -3268,7 +3268,7 @@ void  LarcosCounterManager::Status (KKStr&  statusMsg,
 
   statusMsg = CounterStateToStr (curState);
 
-  KKThread::ThreadStatus               cameraStatus      = KKThread::tsNULL;
+  KKThread::ThreadStatus               cameraStatus      = ThreadStatus::tsNULL;
   CameraAcquisition::StartStatusType   cameraStartStatus = CameraAcquisition::ssNULL;
   DiskWriterThread::DiskWritingStatus  diskWritingStatus = DiskWriterThread::dwNULL;
   KKStr  cameraMsg = "";
@@ -3281,7 +3281,7 @@ void  LarcosCounterManager::Status (KKStr&  statusMsg,
   }
   else
   {
-    cameraStatus      = CameraAcquisition::tsNULL;
+    cameraStatus      = ThreadStatus::tsNULL;
     cameraStartStatus = CameraAcquisition::ssDisconnected;
     cameraMsg = "";
   }
@@ -3301,7 +3301,7 @@ void  LarcosCounterManager::Status (KKStr&  statusMsg,
     return;
   }
 
-  if  (cameraStatus == CameraAcquisition::tsRunning)
+  if  (cameraStatus == ThreadStatus::tsRunning)
   {
     switch  (cameraStartStatus)
     {

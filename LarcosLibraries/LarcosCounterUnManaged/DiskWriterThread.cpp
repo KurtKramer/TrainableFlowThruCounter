@@ -114,7 +114,7 @@ void  DiskWriterThread::GetStats (LarcosCounterStats&  stats)  const
 
 bool  DiskWriterThread::WeAreRecordingToDisk ()
 {
-  return ((Status () == CameraThread::tsRunning)  &&  (DiskStatus () == dwRecording));
+  return ((Status () == ThreadStatus::tsRunning)  &&  (DiskStatus () == dwRecording));
 }  /* WeAreRecordingToDisk */
 
 
@@ -191,10 +191,10 @@ void  DiskWriterThread::AddCameraLineToHeaderFields (ScannerFilePtr  scannerFile
 void  DiskWriterThread::Run ()
 {
   log.Level (10) << "DiskWriterThread::Run   Thread Started." << endl;
-  Status (KKThread::tsRunning);
+  Status (ThreadStatus::tsRunning);
   if  (!cameraBuffer)
   {
-    Status (KKThread::tsStopping);
+    Status (ThreadStatus::tsStopping);
     return;
   }
 
@@ -364,7 +364,7 @@ void  DiskWriterThread::Run ()
   delete  scannerFile;
   scannerFile = NULL;
 
-  Status (tsStopping);
+  Status (ThreadStatus::tsStopping);
 
   log.Level (10) << "DiskWriterThread::Run   Exiting:"
                  << "  No-More-Frames: " << (frame == NULL)

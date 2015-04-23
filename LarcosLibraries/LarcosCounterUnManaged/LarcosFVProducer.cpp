@@ -677,7 +677,7 @@ FileDescPtr  LarcosFVProducer::DefineFileDescStatic ()
     FileDescPtr  tempFileDesc = new KKMLL::FileDesc ();
     for  (kkint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
     {
-      tempFileDesc->AddAAttribute (featureNames[fieldNum], NumericAttribute, alreadyExists);
+      tempFileDesc->AddAAttribute (featureNames[fieldNum], AttributeType::NumericAttribute, alreadyExists);
     }
     tempFileDesc->Version (_LarcosFVProducer_VersionNum_);
 

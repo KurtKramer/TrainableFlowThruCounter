@@ -876,7 +876,7 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (UmiFeatureVector^ 
   for  (int idx = 0;  idx < numClasses;  idx++)
     predictions->Add (gcnew UmiPrediction (classList[idx], votes[idx], probabilities[idx]));
 
-  if  (classifier->SelectionMethod () == SelectByVoting)
+  if  (classifier->SelectionMethod () == SVM_SelectionMethod::SelectByVoting)
      predictions->SortByVotingHighToLow ();
   else
      predictions->SortByProbabilityHighToLow ();

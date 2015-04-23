@@ -116,11 +116,11 @@ void  ReportWriterThread::AddDataLine (const KKStr& lineName,
 
 void  ReportWriterThread::Run ()
 {
-  Status (KKThread::tsRunning);
+  Status (ThreadStatus::tsRunning);
   log.Level (10) << "ReportWriterThread::Run" << endl;
   if  (!particleEntryBuffer)
   {
-    Status (KKThread::tsStopping);
+    Status (ThreadStatus::tsStopping);
     return;
   }
 
@@ -155,7 +155,7 @@ void  ReportWriterThread::Run ()
   delete  report;
   report = NULL;
 
-  Status (tsStopping);
+  Status (ThreadStatus::tsStopping);
 
   log.Level (10) << "ReportWriterThread::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
 
