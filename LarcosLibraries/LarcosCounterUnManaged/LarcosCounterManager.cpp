@@ -713,7 +713,7 @@ void  LarcosCounterManager::AutoGainButtonPressed (bool&   _successful,
   allThreads->PushOnBack (cameraAutoGainThread);
 
   runLog->Level (40) << "AutoGainButtonPressed   Starting 'CameraAutoGainThread' Thread." << endl;
-  cameraAutoGainThread->Start (KKThread::tpNormal, _successful);
+  cameraAutoGainThread->Start (ThreadPriority::tpNormal, _successful);
 
   goalie->EndBlock ();
 }
@@ -733,7 +733,7 @@ void  LarcosCounterManager::ConnectButtonPressed ()
     allThreads->PushOnBack (connectButtonThread);
     bool  successful = false;
     runLog->Level (40) << "ConnectButtonPressed   Starting 'ConnectButtonThread' Thread." << endl;
-    connectButtonThread->Start (KKThread::tpNormal, successful);
+    connectButtonThread->Start (ThreadPriority::tpNormal, successful);
   }
   goalie->EndBlock ();
 }
@@ -1275,7 +1275,7 @@ void  LarcosCounterManager::RecordButtonPressed
                                                );
     allThreads->PushOnBack (startButtonThread);
 
-    startButtonThread->Start (KKThread::tpNormal, _successful);
+    startButtonThread->Start (ThreadPriority::tpNormal, _successful);
   }
 
   goalie->EndBlock ();
@@ -1614,7 +1614,7 @@ void  LarcosCounterManager::PlayBackButtonPressed
 
     allThreads->PushOnBack (playBackButtonThread);
 
-    playBackButtonThread->Start (KKThread::tpNormal, _successful);
+    playBackButtonThread->Start (ThreadPriority::tpNormal, _successful);
   }
 
   runLog->Level (40) << "PlayBackButtonPressed   Exiting." << endl;
@@ -1696,7 +1696,7 @@ void  LarcosCounterManager::StopButtonPressed (bool    _stopImmediately,
     stopButtonThread = new StopButtonThread (this, _stopImmediately, msgQueue, "StopButtonThread");
     allThreads->PushOnBack (stopButtonThread);
 
-    stopButtonThread->Start (KKThread::tpNormal, _successful);
+    stopButtonThread->Start (ThreadPriority::tpNormal, _successful);
     if  (!_successful)
       _errMsg = "Could not start the STOP process.";
   }
@@ -2295,7 +2295,7 @@ void  LarcosCounterManager::StartCameraAcquisitionThread (CameraAcquisitionPtr  
 
   acquisitionThread->CropSettingsChanged (cropLeft, cropRight);
 
-  acquisitionThread->Start (KKThread::tpHigh, _successful);
+  acquisitionThread->Start (ThreadPriority::tpHigh, _successful);
   if  (_successful)
   {
     while  (acquisitionThread->StartStatus() != CameraAcquisition::ssConnected)
@@ -2341,7 +2341,7 @@ void  LarcosCounterManager::StartCameraDiskWriterThread (bool&  _successful)
 
   diskWriterThread->CropSettingsChanged (cropLeft, cropRight);
 
-  diskWriterThread->Start (KKThread::tpNormal, _successful);
+  diskWriterThread->Start (ThreadPriority::tpNormal, _successful);
   allThreads->PushOnBack (diskWriterThread);
 }
 
@@ -2371,7 +2371,7 @@ void  LarcosCounterManager::StartReportWriterThread (bool&  _successful)
                                                "ReportWriterThread"
                                               );
 
-  reportWriterThread->Start (KKThread::tpNormal, _successful);
+  reportWriterThread->Start (ThreadPriority::tpNormal, _successful);
   allThreads->PushOnBack (reportWriterThread);
 }  /* StartReportWriterThread */
 
@@ -2391,7 +2391,7 @@ void  LarcosCounterManager::StartSnapshotThread (bool&  _successful)
   delete  snapshotThread;
   snapshotThread = new StatusSnapshotThread (this, snapshotBuffer, snapshotInterval, msgQueue, "StatusSnapshotThread");
 
-  snapshotThread->Start (KKThread::tpNormal, _successful);
+  snapshotThread->Start (ThreadPriority::tpNormal, _successful);
   allThreads->PushOnBack (snapshotThread);
 }
 
@@ -2457,7 +2457,7 @@ void   LarcosCounterManager::StartFrameBuilderAndProcessingThreads (bool&  _succ
                                                              );
     frameProcessors->PushOnBack (fp);
     allThreads->PushOnBack (fp);
-    fp->Start (KKThread::tpNormal, _successful);
+    fp->Start (ThreadPriority::tpNormal, _successful);
     if  (!_successful)
     {
       runLog->Level (-1) << "StartFrameBuilderAndProcessingThreads   ***ERROR***   Thread failed to start." << endl;
@@ -2482,7 +2482,7 @@ void   LarcosCounterManager::StartFrameBuilderAndProcessingThreads (bool&  _succ
     logicalFrameBuilderThread->CropSettings (cropLeft, cropRight);
 
     allThreads->PushOnBack (logicalFrameBuilderThread);
-    logicalFrameBuilderThread->Start (KKThread::tpNormal, _successful);
+    logicalFrameBuilderThread->Start (ThreadPriority::tpNormal, _successful);
 
     if  (!_successful)
     {

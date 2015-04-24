@@ -58,6 +58,8 @@ namespace LarcosCounterUnManaged
 
     typedef  KKThread::ThreadStatus  ThreadStatus;
 
+    typedef  KKThread::ThreadPriority  ThreadPriority;
+
     typedef  enum  {csNULL, 
                     csStopped, 
                     csStopping, 

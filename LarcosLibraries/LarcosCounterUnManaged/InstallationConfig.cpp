@@ -270,29 +270,32 @@ void  InstallationConfig::Load (const KKStr&  _name,
   if  (f == NULL)
     return;
 
-  char*  l = osReadNextLine (f);
+  KKStrPtr  l = osReadNextLine (f);
   while  (l != NULL)
   {
-    if  ((l[0] != '/')  ||  (l[1] == '/'))
+    if  ((!l->StartsWith ("//"))  &&  (l->Len () > 0))
     {
-      KKStrParser  parser (l);
-      KKStr  fieldName  = parser.GetNextToken ("\t\n\r=");
-      KKStr  fieldValue = parser.GetNextToken ("\t\n\r=");
-      
-      if  (fieldName.EqualIgnoreCase ("EndOfInstallationConfig"))
-        break;
- 
-      bool  fieldFound = false;
-      UpdateFromDataField (fieldName, fieldValue, fieldFound);
+      KKStrParser  parser (*l);
+      parser.TrimWhiteSpace (" \n\r");
+      KKStr  fieldName  = parser.GetNextToken ("\t=");
+      KKStr  fieldValue = parser.GetNextToken ("\t=");
 
-      if  (!fieldFound)
+      if  (!fieldName.Empty ())
       {
-        _log.Level (-1) << "InstallationConfig::Load   Unknown FieldName: " << l << endl;
+        if  (fieldName.EqualIgnoreCase ("EndOfInstallationConfig"))
+          break;
+ 
+        bool  fieldFound = false;
+        UpdateFromDataField (fieldName, fieldValue, fieldFound);
+
+        if  (!fieldFound)
+        {
+          _log.Level (-1) << "InstallationConfig::Load   Unknown FieldName: " << l << endl;
+        }
       }
     }
 
     delete  l;
-    l = NULL;
     l = osReadNextLine (f);
   }
 

@@ -159,7 +159,7 @@ LoggerThreadPtr  LoggerThread::CreateAndStartInstance (MsgQueuePtr  _msgQueue,
 {
   bool  successful = false;
   LoggerThreadPtr  logger = new LoggerThread (_msgQueue, _loggedMsgs, _threadName);
-  logger->Start (KKThread::tpLow, successful);
+  logger->Start (ThreadPriority::tpLow, successful);
   return logger;
 }
                            
