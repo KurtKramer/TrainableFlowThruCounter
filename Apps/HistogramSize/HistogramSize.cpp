@@ -36,7 +36,7 @@ using namespace   LarcosCounterUnManaged;
 HistogramSize::HistogramSize (int     argc,
                               char**  argv
                              ):
-  Application (argc, argv),
+  Application (),
   distordedDirName      (),
   occludedDirName       (),
   occlusiionLimit       (50),
@@ -58,7 +58,7 @@ HistogramSize::HistogramSize (int     argc,
 
 
 {
-  ProcessCmdLineParameters (argc, argv);
+  InitalizeApplication (argc, argv);
 
   if  (Abort ())
   {
@@ -99,7 +99,7 @@ HistogramSize::HistogramSize (int     argc,
   mmPerPixel = mmPerScanLine / pixelsPerScanLine;
 
 
-  *report << "Creating Diversified Trauining Images by Flow Rate Factor." << endl;
+  *report << "Creating Diversified Training Images by Flow Rate Factor." << endl;
 
   *report << "Report File Name"      << "\t" << reportFileName     << endl;
   *report << "Target Directory"      << "\t" << targetDir          << endl;
@@ -1490,7 +1490,7 @@ void  main (int  argc,  char** argv)
   }
 
   HistogramSize app (argc, argv);
-
+  app.InitalizeApplication (argc, argv);
   app.ProcessDirectory ();
 }
 
