@@ -227,7 +227,8 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectory
 
   config->BuildTrainingClassListFromDirectoryStructure (_subDir,
                                                         _successful, 
-                                                        _errorMessage
+                                                        _errorMessage,
+                                                        _log
                                                        );
 
   config->Save (directoryConfigFileName);

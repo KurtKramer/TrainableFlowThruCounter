@@ -69,7 +69,9 @@ namespace LarcosCounterManaged
 
     String^                   LoadLogStream ()  {return loadLogStream;}
 
-    UmiFeatureVectorList^     LoadFeatureDataFromTrainingLibraries (bool^ changesMadeToTrainingLibraries);
+    UmiFeatureVectorList^     LoadFeatureDataFromTrainingLibraries (bool^ changesMadeToTrainingLibraries,
+                                                                    UmiRunLog^ _log
+                                                                   );
 
     String^                   ModelName ();
 

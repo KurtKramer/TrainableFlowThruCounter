@@ -224,10 +224,15 @@ void  UmiTrainingConfiguration::AddATrainingClass (UmiTrainingClass^  _trainClas
 
 
 
-UmiFeatureVectorList^  UmiTrainingConfiguration::LoadFeatureDataFromTrainingLibraries (bool^ _changesMadeToTrainingLibraries)
+UmiFeatureVectorList^  UmiTrainingConfiguration::LoadFeatureDataFromTrainingLibraries (bool^      _changesMadeToTrainingLibraries,
+                                                                                       UmiRunLog^ _log
+                                                                                      )
 {
   if  (!config)
     return  nullptr;
+
+  if  (_log == nullptr)
+    _log = gcnew UmiRunLog ();
 
   *cancelFlag = false;
 
@@ -238,7 +243,8 @@ UmiFeatureVectorList^  UmiTrainingConfiguration::LoadFeatureDataFromTrainingLibr
   FeatureVectorListPtr  data = config->LoadFeatureDataFromTrainingLibraries 
          (latestImageTimeStamp,
           changesMadeToTrainingLibraries,
-          *cancelFlag
+          *cancelFlag,
+          _log->Log ()
          );
 
   if  (data == NULL)
