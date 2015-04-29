@@ -697,7 +697,7 @@ FeatureVectorListPtr  LarcosFVProducer::ManufacturFeatureVectorList (bool     ow
                                                                      RunLog&  runLog
                                                                     )
 {
-  return  new LarcosFeatureVectorList (FileDesc (), owner, runLog);
+  return  new LarcosFeatureVectorList (FileDesc (), owner);
 }
 
 
@@ -760,7 +760,7 @@ LarcosFeatureVectorListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList
                                                                                   RunLog&  runLog
                                                                                  )
 {
-  return new LarcosFeatureVectorList (LarcosFVProducer::DefineFileDescStatic (), owner, runLog);
+  return new LarcosFeatureVectorList (LarcosFVProducer::DefineFileDescStatic (), owner);
 }
 
 

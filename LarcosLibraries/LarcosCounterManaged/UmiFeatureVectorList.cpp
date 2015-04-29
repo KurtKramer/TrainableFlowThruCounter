@@ -413,10 +413,7 @@ UmiFeatureVector^  UmiFeatureVectorList::LookUpByImageFileName (String^  imageFi
 // Creates an unmanaged list of feature vectors.
 FeatureVectorListPtr  UmiFeatureVectorList::ToFeatureVectorList (UmiRunLog^  runLog)
 {
-  FeatureVectorListPtr  fvl = new FeatureVectorList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), 
-                                                     false, 
-                                                     runLog->Log ()
-                                                    );
+  FeatureVectorListPtr  fvl = new FeatureVectorList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), false);
 
   for each (UmiFeatureVector^ fv in *this)
     fvl->PushOnBack (fv->UnManagedClass ());

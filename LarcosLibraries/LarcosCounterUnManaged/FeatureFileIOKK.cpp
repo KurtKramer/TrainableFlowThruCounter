@@ -324,10 +324,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
 
   VectorInt   indirectionTable = CreateIndirectionTable (fields, numOfFeatures);
 
-  LarcosFeatureVectorListPtr  examples = new LarcosFeatureVectorList (_fileDesc, 
-                                                                      true,          // true=Owner  examples will own the LarcosFeatureVector instances it contains.
-                                                                      _log
-                                                                      );
+  LarcosFeatureVectorListPtr  examples = new LarcosFeatureVectorList (_fileDesc, true);
 
   examples->Version (version);
 

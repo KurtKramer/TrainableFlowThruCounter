@@ -231,8 +231,7 @@ namespace LarcosCounterUnManaged
     typedef  PostLarvaeFVList*  PostLarvaeFVListPtr;
 
     PostLarvaeFVList (FileDescPtr  _fileDesc,
-                      bool         _owner,
-                      RunLog&      _log
+                      bool         _owner
                      );
 
   private:
@@ -303,10 +302,10 @@ namespace LarcosCounterUnManaged
      *@param _dirName[in]  Directory to scan for examples.
      *@param _fileName     Name of file to contain the extracted feature data.
      */
-    PostLarvaeFVList (RunLog&     _log,
-                      MLClassPtr  _mlClass,
+    PostLarvaeFVList (MLClassPtr  _mlClass,
                       KKStr       _dirName,
-                      KKStr       _fileName
+                      KKStr       _fileName,
+                      RunLog&     _log
                      );
 
 
@@ -322,9 +321,8 @@ namespace LarcosCounterUnManaged
      *@param[in] _examples        Source examples that we want to scan.
      *@param[in] _log           
      */
-    PostLarvaeFVList (MLClassList&    _mlClasses,
-                      PostLarvaeFVList&  _examples,
-                      RunLog&            _log
+    PostLarvaeFVList (MLClassList&       _mlClasses,
+                      PostLarvaeFVList&  _examples
                      );
 
 
@@ -392,7 +390,8 @@ namespace LarcosCounterUnManaged
 
     void                  FeatureExtraction (KKStr       _dirName, 
                                              KKStr       _fileName, 
-                                             MLClassPtr  _mlClass
+                                             MLClassPtr  _mlClass,
+                                             RunLog&     _log
                                             );
 
     PostLarvaeFVPtr       IdxToPtr (kkint32 idx) const;
@@ -407,20 +406,26 @@ namespace LarcosCounterUnManaged
      *@brief  Using list of ImageFileNames in a file('fileName') create a new PostLarvaeFVList instance 
      * with examples in order based off contents of file. If error occurs will return NULL.
      */
-    PostLarvaeFVListPtr    OrderUsingNamesFromAFile (const KKStr&  fileName);
+    PostLarvaeFVListPtr    OrderUsingNamesFromAFile (const KKStr&  fileName,
+                                                     RunLog&       log
+                                                    );
 
     PostLarvaeFVPtr        PopFromBack ();
 
-    void                   RecalcFeatureValuesFromImagesInDirTree (KKStr  rootDir,
-                                                                   bool&  successful
+    void                   RecalcFeatureValuesFromImagesInDirTree (KKStr    rootDir,
+                                                                   bool&    successful,
+                                                                   RunLog&  log
                                                                   );
 
-    PostLarvaeFVListPtr    StratifyAmoungstClasses (kkint32  numOfFolds);
+    PostLarvaeFVListPtr    StratifyAmoungstClasses (kkint32  numOfFolds,
+                                                    RunLog&  log
+                                                   );
 
 
     PostLarvaeFVListPtr    StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                     kkint32         maxImagesPerClass,
-                                                    kkint32         numOfFolds
+                                                    kkint32         numOfFolds,
+                                                    RunLog&         log
                                                    );
 
 

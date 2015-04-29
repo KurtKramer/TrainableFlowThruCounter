@@ -750,7 +750,7 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
   *cancelFlag = false;
 
-  FeatureVectorListPtr  trainingData = new FeatureVectorList (fd, false, *runLog);
+  FeatureVectorListPtr  trainingData = new FeatureVectorList (fd, false);
   for each (UmiFeatureVector^ pfv in umiTrainingData)
     trainingData->PushOnBack (pfv->Features ());
 

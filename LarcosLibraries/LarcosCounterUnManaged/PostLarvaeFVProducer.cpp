@@ -81,7 +81,7 @@ PostLarvaeFVListPtr  PostLarvaeFVProducer::ManufacturFeatureVectorList (bool    
                                                                         RunLog&  runLog
                                                                        )
 {
-  return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner, runLog);
+  return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner);
 }
 
 
@@ -147,7 +147,7 @@ PostLarvaeFVListPtr  PostLarvaeFVProducerFactory::ManufacturFeatureVectorList (b
                                                                                RunLog&  runLog
                                                                               )
 {
-  return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner, runLog);
+  return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner);
 }
 
 

@@ -101,8 +101,7 @@ namespace LarcosCounterUnManaged
     typedef  LarcosFeatureVectorList*  LarcosFeatureVectorListPtr;
 
     LarcosFeatureVectorList (FileDescPtr  _fileDesc,
-                             bool         _owner,
-                             RunLog&      _log
+                             bool         _owner
                             );
 
   private:
@@ -192,11 +191,9 @@ namespace LarcosCounterUnManaged
      *   any the contents only point to the ones already in _examples.
      *@param[in] _mlClasses  List of classes that we are interested in.
      *@param[in] _examples        Source examples that we want to scan.
-     *@param[in] _log           
      */
     LarcosFeatureVectorList (MLClassList&              _mlClasses,
-                             LarcosFeatureVectorList&  _examples,
-                             RunLog&                   _log
+                             LarcosFeatureVectorList&  _examples
                            );
 
 
@@ -252,21 +249,26 @@ namespace LarcosCounterUnManaged
      *@brief  Using list of ImageFileNames in a file('fileName') create a new LarcosFeatureVectorList instance 
      * with examples in order based off contents of file. If error occurs will return NULL.
      */
-    LarcosFeatureVectorListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName);
+    LarcosFeatureVectorListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName,
+                                                           RunLog&       log);
 
     LarcosFeatureVectorPtr       PopFromBack ();
 
     void                         RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
                                                                          const KKStr&          rootDir,
-                                                                         bool&                 successful
+                                                                         bool&                 successful,
+                                                                         RunLog&               log
                                                                         );
 
-    LarcosFeatureVectorListPtr   StratifyAmoungstClasses (kkint32  numOfFolds);
+    LarcosFeatureVectorListPtr   StratifyAmoungstClasses (kkint32  numOfFolds,
+                                                          RunLog&  log
+                                                         );
 
 
     LarcosFeatureVectorListPtr   StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                           kkint32         maxImagesPerClass,
-                                                          kkint32         numOfFolds
+                                                          kkint32         numOfFolds,
+                                                          RunLog&         log
                                                          );
 
 
@@ -424,7 +426,8 @@ namespace LarcosCounterUnManaged
     void   FeatureExtraction (FactoryFVProducerPtr  _fvProducerFactory,
                               KKStr                 _dirName, 
                               KKStr                 _fileName, 
-                              MLClassPtr            _mlClass
+                              MLClassPtr            _mlClass,
+                              RunLog&               _log
                              );
 
 
