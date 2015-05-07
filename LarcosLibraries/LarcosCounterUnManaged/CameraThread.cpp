@@ -62,6 +62,13 @@ void   CameraThread::ScanRateChanged (float _newScanRate)
 
 
 
+void  CameraThread::TerminateFlagChanged ()
+{
+  KKThread::TerminateFlagChanged ();
+}
+
+
+
 
 kkint32 CameraThread::MemoryConsumedEstimated ()
 {

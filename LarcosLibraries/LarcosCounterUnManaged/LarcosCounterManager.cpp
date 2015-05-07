@@ -302,7 +302,7 @@ KKStr  LarcosCounterManager::LarcosVersionNumber ()
   */
 
   KKStr  verNum = "1.2.";
-  verNum << _SVNVERSION_WITH_QUOTES_;
+  //verNum << _SVNVERSION_WITH_QUOTES_;
 
   return  verNum;
 }
@@ -997,13 +997,11 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
         secondaryMsgs.AddMsg ("Validating Training Model");
       trainerCancelFlag = false;
       trainer = new TrainingProcess2 (config,
-                                      NULL,                // _excludeList,
+                                      NULL,      // _excludeList,
                                       *runLog,
-                                      NULL,               // _report,
-                                      false,              // _forceRebuild,
-                                      true,               // _checkForDuplicates,
-                                      trainerCancelFlag,
-                                      trainerStatusMsg
+                                      NULL,      // _report,
+                                      false,     // _forceRebuild,
+                                      true       // _checkForDuplicates,
                                      );
 
       if  (trainer->Abort ())
@@ -1724,6 +1722,8 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
   // a new one with lots of examples; We need to set the cancel flag so that the training process 
   // stops asap.
   trainerCancelFlag = true;
+  if  (trainer)
+    trainer->CancelFlag (trainerCancelFlag);
 
   if  ((curState != csRunning)  &&  (curState != csPlayingBack))
   {

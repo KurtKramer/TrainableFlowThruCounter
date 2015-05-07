@@ -80,6 +80,12 @@ namespace  LarcosCounterUnManaged
     virtual
     void   ScanRateChanged (float _newScanRate);
 
+    /**
+     *@brief  A 'KKTread' event method.  Will be called whenever the status of 'terminateFlag' has changed.
+     */
+    virtual
+    void  TerminateFlagChanged ();
+
 
   protected:
     RunLog  log;

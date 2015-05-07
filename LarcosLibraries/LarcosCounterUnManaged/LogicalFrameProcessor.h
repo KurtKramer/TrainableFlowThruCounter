@@ -93,6 +93,12 @@ namespace LarcosCounterUnManaged
     virtual  void   Run ();
 
 
+
+    virtual
+    void  TerminateFlagChanged ();
+
+
+
   private:
     class  Blob;
     typedef  Blob*  BlobPtr;

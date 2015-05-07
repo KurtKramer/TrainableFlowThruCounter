@@ -628,9 +628,7 @@ void  LogicalFrameProcessor::LoadClassifer ()
     // that it is good and we can go ahead and load the saved copy.
     trainer = new TrainingProcess2 (classifierName,
                                     log,
-                                    false,              /**<  'false' = Features are already normalized. */
-                                    TerminateFlag (),
-                                    statusMsg
+                                    false              /**<  'false' = Features are already normalized. */
                                    );
 
     classifierBuildBlocker->EndBlock ();
@@ -706,6 +704,16 @@ void  LogicalFrameProcessor::Run ()
 
   Status (ThreadStatus::tsStopping);
 }  /* Run */
+
+
+
+void  LogicalFrameProcessor::TerminateFlagChanged ()
+{
+  CameraThread::TerminateFlagChanged ();
+  if  (trainer)
+    trainer->CancelFlag (TerminateFlag ());
+}
+
 
 
 

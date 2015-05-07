@@ -1,1 +1,1 @@
-#define  _SVNVERSION_ \
+#define  _SVNVERSION_ 
