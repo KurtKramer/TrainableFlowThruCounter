@@ -530,9 +530,7 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
     trainer = new TrainingProcess2 (GetConfigToUse (),
                                     NULL,
                                     *runLog,
-                                    level,
-                                    *cancelFlag,
-                                    *statusMsg
+                                    level
                                    );
   }
   catch (System::AccessViolationException^ z)
@@ -584,9 +582,7 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
   {
     trainer = new TrainingProcess2 (configFileName,
                                     *runLog,
-                                    false,         // false = Features are not Already Normalized
-                                    *cancelFlag, 
-                                    *statusMsg
+                                    false         // false = Features are not Already Normalized
                                    );
   }
   catch (System::AccessViolationException^ z)
@@ -659,9 +655,7 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
                                     *runLog,
                                     NULL,              // report file stream
                                     forceRebuild,
-                                    false,             // false = don't check for duplicates.
-                                    *cancelFlag, 
-                                    *statusMsg
+                                    false             // false = don't check for duplicates.
                                    );
   }
   catch (System::AccessViolationException^ z)
@@ -765,9 +759,7 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
                                     classes,            /**<  Dictates the order that the classifier will use.  */
                                     NULL, 
                                     *runLog,
-                                    false,              // false = Features are NOT already normalized.
-                                    *cancelFlag, 
-                                    *statusMsg
+                                    false               // false = Features are NOT already normalized.
                                    ); 
   }
   catch (System::AccessViolationException^ z)
@@ -785,7 +777,7 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
   }
   else
   {
-    trainer->CreateModelsFromTrainingData ();
+    trainer->CreateModelsFromTrainingData (*runLog);
     *valid = true;
     classifier = new Classifier2 (trainer, *runLog);
   }
