@@ -996,14 +996,21 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
       if  (operatingMode == lomAdvanced)
         secondaryMsgs.AddMsg ("Validating Training Model");
       trainerCancelFlag = false;
-      trainer = new TrainingProcess2 (config,
-                                      NULL,      // _excludeList,
-                                      *runLog,
-                                      NULL,      // _report,
-                                      false,     // _forceRebuild,
-                                      true       // _checkForDuplicates,
-                                     );
 
+      /**@todo Add  a Cancel Option when 1st starting a record session if the training model has to
+       * be rebuilt. At this point the user has requested to start recording/ counting there will be
+       * no option to cancel.  If the training library is out of date and a new one needs to be trained; 
+       * it can take a while;  we should consider adding the logic to allow a cancel at this point.
+       */
+      bool  cancelFlag = false;
+
+      trainer = TrainingProcess2::CreateTrainingProcess (config,
+                                                         true,   //  CheckForDuplicates
+                                                         TrainingProcess2::WhenToRebuild::NotUpToDate,
+                                                         true,   // true = Save Trained Model if needed to berebuild.
+                                                         cancelFlag,
+                                                         *runLog
+                                                        );
       if  (trainer->Abort ())
       {
         runLog->Level (-1) << endl << endl
