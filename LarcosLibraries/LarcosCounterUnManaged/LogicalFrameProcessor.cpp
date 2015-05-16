@@ -707,8 +707,6 @@ void  LogicalFrameProcessor::Run ()
 void  LogicalFrameProcessor::TerminateFlagChanged ()
 {
   CameraThread::TerminateFlagChanged ();
-  if  (trainer)
-    trainer->CancelFlag (TerminateFlag ());
 }
 
 

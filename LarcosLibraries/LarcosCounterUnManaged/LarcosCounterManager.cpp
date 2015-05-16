@@ -1002,13 +1002,11 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
        * no option to cancel.  If the training library is out of date and a new one needs to be trained; 
        * it can take a while;  we should consider adding the logic to allow a cancel at this point.
        */
-      bool  cancelFlag = false;
-
       trainer = TrainingProcess2::CreateTrainingProcess (config,
                                                          true,   //  CheckForDuplicates
                                                          TrainingProcess2::WhenToRebuild::NotUpToDate,
-                                                         true,   // true = Save Trained Model if needed to berebuild.
-                                                         cancelFlag,
+                                                         true,   // true = Save Trained Model if needed to be rebuilt.
+                                                         trainerCancelFlag,
                                                          *runLog
                                                         );
       if  (trainer->Abort ())
@@ -1729,8 +1727,6 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
   // a new one with lots of examples; We need to set the cancel flag so that the training process 
   // stops asap.
   trainerCancelFlag = true;
-  if  (trainer)
-    trainer->CancelFlag (trainerCancelFlag);
 
   if  ((curState != csRunning)  &&  (curState != csPlayingBack))
   {
