@@ -527,11 +527,7 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
 
   try
   {
-    trainer = new TrainingProcess2 (GetConfigToUse (),
-                                    NULL,
-                                    *runLog,
-                                    level
-                                   );
+    trainer = TrainingProcess2::CreateTrainingProcessForLevel (GetConfigToUse (), level, *cancelFlag, *runLog);
   }
   catch (System::AccessViolationException^ z)
   {
@@ -545,7 +541,8 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
   if  (trainer->Abort ())
   {
     *valid = false;
-    delete  trainer;    trainer = NULL;
+    delete  trainer;
+    trainer = NULL;
   }
   else
   {
@@ -580,10 +577,8 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
 
   try
   {
-    trainer = new TrainingProcess2 (configFileName,
-                                    *runLog,
-                                    false         // false = Features are not Already Normalized
-                                   );
+    trainer = TrainingProcess2::LoadExistingTrainingProcess (configFileName, *cancelFlag, *runLog);
+    trainer->FeaturesAlreadyNormalized (false);
   }
   catch (System::AccessViolationException^ z)
   {
@@ -650,13 +645,19 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
 
   try
   {
-    trainer = new TrainingProcess2 (GetConfigToUse (), 
-                                    NULL,              // Exclude List
-                                    *runLog,
-                                    NULL,              // report file stream
-                                    forceRebuild,
-                                    false             // false = don't check for duplicates.
-                                   );
+    TrainingProcess2::WhenToRebuild   whenToRebuild = TrainingProcess2::WhenToRebuild::NotUpToDate;
+    if  (forceRebuild)
+      whenToRebuild = TrainingProcess2::WhenToRebuild::AlwaysRebuild;
+
+
+    trainer = TrainingProcess2::CreateTrainingProcess 
+                                     (GetConfigToUse (),
+                                      false,              // false = DON't check-for-duplicates
+                                      whenToRebuild,
+                                      true,               // true = save training model if it had ti be rebuilt.
+                                      *cancelFlag,
+                                      *runLog
+                                     );
   }
   catch (System::AccessViolationException^ z)
   {
@@ -748,19 +749,16 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
   for each (UmiFeatureVector^ pfv in umiTrainingData)
     trainingData->PushOnBack (pfv->Features ());
 
-  classes = trainingData->ExtractListOfClasses ();
-  classes->SortByName ();
-  PopulateCSharpClassList ();
-
   try
   {
-    trainer = new TrainingProcess2 (config, 
-                                    trainingData,
-                                    classes,            /**<  Dictates the order that the classifier will use.  */
-                                    NULL, 
-                                    *runLog,
-                                    false               // false = Features are NOT already normalized.
-                                   ); 
+    trainer = TrainingProcess2::CreateTrainingProcessFromTrainingExamples
+                   (config, 
+                    trainingData,
+                    false,         // false = DON't take ownership of 'trainingData'.
+                    false,         // false = Features are NOT already normalized.
+                    *cancelFlag,
+                    *runLog
+                   );
   }
   catch (System::AccessViolationException^ z)
   {
@@ -777,16 +775,18 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
   }
   else
   {
-    trainer->CreateModelsFromTrainingData (*runLog);
+    classes = new MLClassList (*trainer->MLClasses ());
+    PopulateCSharpClassList ();
     *valid = true;
     classifier = new Classifier2 (trainer, *runLog);
   }
 
-  ofstream o ("C:\\Temp\\DarkSpots.txt");
-  PostLarvaeFVPrintReport (o);
+  //ofstream o ("C:\\Temp\\DarkSpots.txt");
+  //PostLarvaeFVPrintReport (o);
 
   GC::Collect ();
 }  /* BuildTrainingModel */
+
 
 
 
