@@ -499,7 +499,7 @@ void  UmiTrainingModel2::LoadExistingModelOtherwiseBuild ()
 {
   LoadExistingTrainedModel ();
   if  ((!trainer)  &&  (!(*cancelFlag)))
-    LoadTrainigLibrary (false);
+    LoadTrainigLibrary (true);
 
   if  ((!(*cancelFlag))  &&  (*valid))
   {
@@ -578,7 +578,6 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
   try
   {
     trainer = TrainingProcess2::LoadExistingTrainingProcess (configFileName, *cancelFlag, *runLog);
-    trainer->FeaturesAlreadyNormalized (false);
   }
   catch (System::AccessViolationException^ z)
   {
@@ -588,7 +587,14 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
     *valid = false;
     return;
   }
+  if  (!trainer)
+  {
+    delete  classes;  classes = NULL;
+    *valid = false;
+    return;
+  }
 
+  trainer->FeaturesAlreadyNormalized (false);
   if  (CancelFlag)
   {
     delete  trainer;  trainer = NULL;
