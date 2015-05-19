@@ -1,6 +1,8 @@
 #if  !defined(_LARCOSTRAININGCONFIGURATION_)
 #define  _LARCOSTRAININGCONFIGURATION_
 
+#include "XmlStream.h"
+
 #include "FileDesc.h"
 #include "TrainingConfiguration2.h"
 
@@ -21,6 +23,8 @@ namespace  LarcosCounterUnManaged
     typedef  LarcosTrainingConfiguration const  LarcosTrainingConfigurationConst;
     typedef  LarcosTrainingConfigurationConst  *  LarcosTrainingConfigurationConstPtr;
 
+
+    LarcosTrainingConfiguration ();
 
     LarcosTrainingConfiguration (const KKStr&           _configFileName,
                                  OperatingParametersPtr _initialOperatingParameters,
@@ -68,9 +72,17 @@ namespace  LarcosCounterUnManaged
 
     const OperatingParameters*  OperatingParms ()  const  {return operatingParms;}
 
+    virtual void  ReadXML (XmlStream&      s,
+                           XmlTagConstPtr  tag,
+                           RunLog&         log
+                          );
 
     /** @brief  Update 'operatingParms' from  '_operatingParms'.  */
     void  SetOperatingParms (const OperatingParameters&  _operatingParms);
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
 
 
   private:
@@ -101,6 +113,12 @@ namespace  LarcosCounterUnManaged
 
 
   typedef  LarcosTrainingConfigurationList*  TrainingConfiguration2ListPtr;
+
+
+  typedef  XmlElementTemplate<LarcosTrainingConfiguration>  XmlElementLarcosTrainingConfiguration;
+  typedef  XmlElementLarcosTrainingConfiguration*  XmlElementLarcosTrainingConfigurationPtr;
+
+
 
 }  /* namespace LarcosCounterUnManaged */
 

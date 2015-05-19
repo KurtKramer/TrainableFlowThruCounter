@@ -1,25 +1,22 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
 #include <vector>
-
 #include "MemoryDebug.h"
 
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
 
-//#include "Variables.h"
-//using namespace  KKLSC;
 
 #include "FeatureVector.h"
 #include "FileDesc.h"
@@ -36,6 +33,15 @@ using namespace  LarcosBase;
 #include "OperatingParameters.h"
 #include "PostLarvaeFVProducer.h"
 using namespace  LarcosCounterUnManaged;
+
+
+
+LarcosTrainingConfiguration::LarcosTrainingConfiguration ():
+  TrainingConfiguration2 (),
+  operatingParms (NULL)
+{
+}
+
 
 
 
@@ -237,3 +243,54 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectory
 } /* CreateFromDirectoryTree */
 
 
+
+
+
+void  LarcosTrainingConfiguration::WriteXML (const KKStr&  varName,
+                                             ostream&      o
+                                            )  const
+{
+  XmlTag  startTag ("LarcosTrainingConfiguration", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  WriteXMLFields (o);
+
+  if  (operatingParms)
+    operatingParms->WriteXML ("OperatingParms", o);
+
+  XmlTag  endTag ("LarcosTrainingConfiguration", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+void   LarcosTrainingConfiguration::ReadXML (XmlStream&      s,
+                                             XmlTagConstPtr  tag,
+                                             RunLog&         log
+                                            )
+
+{
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLBaseToken (t, log);
+    if  (t)
+    {
+      const KKStr&  varName = t->VarName ();
+      if  (varName.EqualIgnoreCase ("OperatingParms")  &&  (typeid (*t) == typeid(XmlElementOperatingParameters)))
+        operatingParms = dynamic_cast<XmlElementOperatingParametersPtr> (t)->TakeOwnership ();
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+  ReadXMLPost (log);
+}  /* ReadXML */
+
+
+
+XmlFactoryMacro(LarcosTrainingConfiguration)

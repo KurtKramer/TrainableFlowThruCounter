@@ -128,7 +128,16 @@ namespace LarcosCounterUnManaged
      */
     void  WriteXML (ostream&  o)  const;
 
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
     void  ReadXML (istream&  i);
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
 
   private:
     KKStrConstPtr GetSettingValue (const LarcosTrainingConfiguration&  c,
@@ -167,6 +176,8 @@ namespace LarcosCounterUnManaged
 #define  _OperatingParameters_Defined_
 
 
+  typedef  XmlElementModelTemplate<OperatingParameters>  XmlElementOperatingParameters;
+  typedef  XmlElementOperatingParameters*  XmlElementOperatingParametersPtr;
 }  /* LarcosCounterUnManaged */
 
 

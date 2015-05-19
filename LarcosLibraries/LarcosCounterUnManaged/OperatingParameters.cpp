@@ -11,6 +11,7 @@
 using namespace std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "Configuration.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
@@ -419,6 +420,22 @@ void  OperatingParameters::WriteXML (ostream&  o)  const
 
 
 
+void  OperatingParameters::WriteXML (const KKStr&  varName,
+                                     ostream&      o
+                                    )  const
+{
+  XmlTag  startTag ("OperatingParameters",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+
+  WriteFieldValues (o);
+
+  XmlTag  endTag ("OperatingParameters", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
 
 
 void  OperatingParameters::ReadXML (istream&  i)
@@ -443,6 +460,41 @@ void  OperatingParameters::ReadXML (istream&  i)
     if  (!fieldName.StartsWith ("//"))
       UpdateFromDataField (fieldName, restOfLine, fieldFound);
   }
+}  /*   ReadXML  */
+
+
+
+
+void  OperatingParameters::ReadXML (XmlStream&      s,
+                                    XmlTagConstPtr  tag,
+                                    RunLog&         log
+                                   )
+{
+  KKStr  svmParametersStr;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      if  (c  &&  c->Content ())
+      {
+        KKStrParser parser (*(c->Content ()));
+        parser.TrimWhiteSpace (" ");
+
+        KKStr  fieldName  = parser.GetNextToken ("\t\n\r");
+        KKStr  fieldValue = parser.GetNextToken ("\t\n\r");
+        bool  fieldFound = false;
+
+        if  (!fieldName.StartsWith ("//"))
+          UpdateFromDataField (fieldName, fieldValue, fieldFound);
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
 }  /* ReadXML */
 
+ 
 
+XmlFactoryMacro(OperatingParameters)
