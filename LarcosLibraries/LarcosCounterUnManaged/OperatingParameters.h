@@ -176,7 +176,7 @@ namespace LarcosCounterUnManaged
 #define  _OperatingParameters_Defined_
 
 
-  typedef  XmlElementModelTemplate<OperatingParameters>  XmlElementOperatingParameters;
+  typedef  XmlElementTemplate<OperatingParameters>  XmlElementOperatingParameters;
   typedef  XmlElementOperatingParameters*  XmlElementOperatingParametersPtr;
 }  /* LarcosCounterUnManaged */
 

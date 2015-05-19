@@ -152,7 +152,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^                 _umiRunLog,
   osRunAsABackGroundProcess ();
 
   config = new LarcosTrainingConfiguration (*(_config->Config ()));
-  factoryFVProducer =  config->FvFactoryProducer ();
+  factoryFVProducer =  config->FvFactoryProducer (_umiRunLog->Log ());
 }
 
 
@@ -234,7 +234,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^      _umiRunLog,
     return;
   }
 
-  factoryFVProducer =  config->FvFactoryProducer ();
+  factoryFVProducer =  config->FvFactoryProducer (*runLog);
   delete  classes;  classes = NULL;
   classes = config->ExtractClassList ();
   PopulateCSharpClassList ();
@@ -521,7 +521,7 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
   GC::Collect ();
 
   if  (!factoryFVProducer)
-    factoryFVProducer = GetConfigToUse ()->FvFactoryProducer ();
+    factoryFVProducer = GetConfigToUse ()->FvFactoryProducer (*runLog);
 
   *cancelFlag = false;
 
@@ -569,7 +569,7 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
 
   GC::Collect ();
 
-  FactoryFVProducer*  fvProducerFactory = GetConfigToUse ()->FvFactoryProducer ();
+  FactoryFVProducer*  fvProducerFactory = GetConfigToUse ()->FvFactoryProducer (*runLog);
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
 
@@ -641,7 +641,7 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
   //FactoryFVProducer*  fvProducerFactory =   PostLarvaeFVProducerFactory::Factory (runLog);
 
   if  (!factoryFVProducer)
-    factoryFVProducer = GetConfigToUse ()->FvFactoryProducer ();
+    factoryFVProducer = GetConfigToUse ()->FvFactoryProducer (*runLog);
   
   FileDescPtr fd = factoryFVProducer->FileDesc ();
 

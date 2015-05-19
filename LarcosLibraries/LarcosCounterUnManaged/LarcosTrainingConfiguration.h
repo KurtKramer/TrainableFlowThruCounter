@@ -49,7 +49,7 @@ namespace  LarcosCounterUnManaged
 
 
     virtual
-    FactoryFVProducerPtr   DefaultFeatureVectorProducer (RunLog&  runLog);
+    FactoryFVProducerPtr   DefaultFeatureVectorProducer (RunLog&  runLog)  const;
 
     static
     LarcosTrainingConfiguration*  CreateFromDirectoryStructure 

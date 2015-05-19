@@ -102,7 +102,7 @@ LarcosTrainingConfiguration::~LarcosTrainingConfiguration ()
 }
 
 
-FactoryFVProducerPtr   LarcosTrainingConfiguration::DefaultFeatureVectorProducer (RunLog&  runLog)
+FactoryFVProducerPtr   LarcosTrainingConfiguration::DefaultFeatureVectorProducer (RunLog&  runLog)  const
 {
   return LarcosFVProducerFactory::Factory (&runLog);
 }
