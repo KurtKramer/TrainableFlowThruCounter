@@ -49,6 +49,10 @@ namespace  LarcosCounterUnManaged
 
 
     virtual
+    LarcosTrainingConfigurationPtr  Duplicate ()  const;
+
+
+    virtual
     FactoryFVProducerPtr   DefaultFeatureVectorProducer (RunLog&  runLog)  const;
 
     static
@@ -115,10 +119,19 @@ namespace  LarcosCounterUnManaged
   typedef  LarcosTrainingConfigurationList*  TrainingConfiguration2ListPtr;
 
 
-  typedef  XmlElementTemplate<LarcosTrainingConfiguration>  XmlElementLarcosTrainingConfiguration;
+  class  XmlElementLarcosTrainingConfiguration: public XmlElementTrainingConfiguration2
+  {
+  public:
+    XmlElementLarcosTrainingConfiguration (XmlTagPtr   tag,
+                                           XmlStream&  s,
+                                           RunLog&     log
+                                          ):
+          XmlElementTrainingConfiguration2 (tag, s, log)
+    {}
+
+  };
+  
   typedef  XmlElementLarcosTrainingConfiguration*  XmlElementLarcosTrainingConfigurationPtr;
-
-
 
 }  /* namespace LarcosCounterUnManaged */
 

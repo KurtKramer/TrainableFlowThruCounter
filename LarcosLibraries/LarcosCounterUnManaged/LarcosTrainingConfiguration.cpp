@@ -102,6 +102,16 @@ LarcosTrainingConfiguration::~LarcosTrainingConfiguration ()
 }
 
 
+
+LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::Duplicate ()  const
+{
+  return new LarcosTrainingConfiguration (*this);
+}
+
+
+
+
+
 FactoryFVProducerPtr   LarcosTrainingConfiguration::DefaultFeatureVectorProducer (RunLog&  runLog)  const
 {
   return LarcosFVProducerFactory::Factory (&runLog);
