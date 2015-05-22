@@ -1,0 +1,1 @@
+1) FeatureNumList::WriteXML   Should use simpler format that expresses ranges.
