@@ -1,0 +1,6 @@
+1) TrainingProcess2.cpp (797)  Should indicate which training library.
+
+
+2)  UmiTrainingModel2.cpp (659)  Why is iteh RunLog not being displayd to the TrainigStatus Window.
+
+3)  UmiTrainingModel2.cpp (659)  Did not detect that model creating had failed.

@@ -1227,7 +1227,7 @@ namespace LarcosControls
     {
       if  (e.Button != MouseButtons.Left)
         return;
-
+      
       ActiveTrainingLibraries.Model1ListOfClasses ();
       UmiParticleEntry  pe = SelectParticle (e.X, e.Y);
       if  (pe != null)

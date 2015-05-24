@@ -701,7 +701,7 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
     return;
   }
 
-  if  (*cancelFlag)
+  if  ((*cancelFlag)  ||  (!trainer))
   {
     *valid = false;
     delete  trainer;
