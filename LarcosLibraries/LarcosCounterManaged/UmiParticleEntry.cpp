@@ -430,10 +430,6 @@ kkint32  UmiParticleEntryList::ParticleEntryComparer::Compare (UmiParticleEntry^
         if  (zed == 0)
           zed = (x->ScannerCol - y->ScannerCol);
       }
-      else
-      {
-        cerr << "More than one file." << endl;
-      }
 
       result =  Math::Sign (zed);
     }

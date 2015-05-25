@@ -7,11 +7,10 @@ copy Apps\LarcosFileViewer\bin\Release\*.dll                                    
 copy OutsidePackages\MySQL\lib\opt\libmysql.dll                                  %LarcosHomeDir%\exe\
 copy OutsidePackages\MySQL\lib\opt\libmysql.dll                                  %LarcosHomeDir%\exe\
 
-
 mkdir %LarcosHomeDir%\SetUp\
 mkdir %LarcosHomeDir%\SetUp\vcredist_x86\
 copy LarcosSetup\Release\*.*                                                     %LarcosHomeDir%\SetUp\
 copy LarcosSetup\Release\vcredist_x86\*.*                                        %LarcosHomeDir%\SetUp\vcredist_x86\
-
+pause
 
 
