@@ -629,12 +629,10 @@ void  LogicalFrameProcessor::LoadClassifer ()
     trainer = TrainingProcess2::LoadExistingTrainingProcess (classifierName, CancelFlag (), log);
 
     classifierBuildBlocker->EndBlock ();
-
-    if  (trainer->Abort ())
+    if  (!trainer  ||  trainer->Abort ())
     {
       log.Level (-1) << endl
                      << ThreadName () << "::LoadClassifer   ***ERROR***  Loading Training-Model: " << classifierName << endl
-                     << "                                   Reason: " << statusMsg << endl
                      << endl;
       Crashed (true);
       return;
