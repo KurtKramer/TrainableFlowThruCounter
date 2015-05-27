@@ -34,7 +34,7 @@ namespace  LarcosBase
     static  kkint32       DebugLevel ();
 
     /** @Returns back the Root Directory where all Larcos related files are to be placed. */
-    static  const KKStr&  LarcosHomeDir ();
+    static  KKStr         LarcosHomeDir ();
 
     static  KKStr         LoggingDir ();  /**< Directory where logging files can be written to.                             */
 
@@ -74,7 +74,7 @@ namespace  LarcosBase
     static  void   SetLarcosHomeDir (const KKB::KKStr&  _larcosHomeDir);
 
   private:
-    static  KKStr  larcosHomeDir;
+    static  KKStr    larcosHomeDir;
 
     static  kkint32  debugLevel;
 

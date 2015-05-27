@@ -33,14 +33,14 @@ LarcosVariables::~LarcosVariables ()
 
 
 
-KKStr  LarcosVariables::larcosHomeDir;
+KKStr  LarcosVariables::larcosHomeDir = "";
 
 
 kkint32  LarcosVariables::debugLevel = -1;
 
 
 
-const KKStr&  LarcosVariables::LarcosHomeDir ()
+KKStr  LarcosVariables::LarcosHomeDir ()
 {
   if  (!larcosHomeDir.Empty ())
     return  larcosHomeDir;
@@ -131,9 +131,15 @@ kkint32  LarcosVariables::DebugLevel ()
   {
     KKStrPtr s = osGetEnvVariable ("LarcosDebugLevel");
     if  (s)
+    {
       debugLevel = s->ToInt32 ();
+      delete  s;
+      s = NULL;
+    }
     else
+    {
       debugLevel  = 10;
+    }
   }
   return  debugLevel;
 }
