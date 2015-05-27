@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\KKLibraries\KKManagedRoutines\KKManagedRoutines.csproj">
-      <Project>{D6AFBB16-C907-4944-AA25-BE9E00D97980}</Project>
+      <Project>{d6afbb16-c907-4944-aa25-be9e00d97980}</Project>
       <Name>KKManagedRoutines</Name>
     </ProjectReference>
     <ProjectReference Include="..\LarcosCounterManaged\LarcosCounterManaged.vcxproj">

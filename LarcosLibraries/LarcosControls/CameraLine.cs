@@ -28,14 +28,14 @@ namespace LarcosControls
 
     private  decimal             numSampleLines = 3;
 
-    private  UmiRunLog           runLog = null;
+    //private  UmiRunLog           runLog = null;
 
 
     public  CameraLine ()
     {
-      runLog = new UmiRunLog ();
+      //runLog = new UmiRunLog ();
 
-      runLog.WriteLn (10, "CameraLine");
+      //runLog.WriteLn (10, "CameraLine");
       //Load += new System.EventHandler (this.OnLoad);
       InitializeComponent ();
 
@@ -66,7 +66,7 @@ namespace LarcosControls
     public  void  SetCameraManager (LarcosCounterManagerWrapper  _cameraManager)
     {
       cameraManager = _cameraManager;
-      runLog = cameraManager.GetUmiRunLogInstance ();
+      //runLog = cameraManager.GetUmiRunLogInstance ();
       embeddedFlowMeter = cameraManager.EmbeddedFlowMeter ();
 
       decimal  rag = (Decimal)cameraManager.RequestedAnalogGain ();
@@ -524,7 +524,7 @@ namespace LarcosControls
 
     private void AutoRefreshStart ()
     {
-      runLog.WriteLn (20, "AutoRefreshStart");
+      //runLog.WriteLn (20, "AutoRefreshStart");
       autoRefreshTimer.Enabled = true;
       autoRefreshTimer.Interval = 1000;
     }
@@ -533,7 +533,7 @@ namespace LarcosControls
 
     private void  AutoRefreshStop ()
     {
-      runLog.WriteLn (20, "AutoRefreshStop");
+      //runLog.WriteLn (20, "AutoRefreshStop");
       autoRefreshTimer.Enabled = false;
     }
 
@@ -647,7 +647,7 @@ namespace LarcosControls
 
     private void AutoCropButton_Click (object sender, EventArgs e)
     {
-      runLog.WriteLn (10, "AutoCropButton_Click");
+      //runLog.WriteLn (10, "AutoCropButton_Click");
       AutoSetCropSettings ();
     }
     
@@ -685,12 +685,12 @@ namespace LarcosControls
 
     private void OnSizeChanged (object sender, EventArgs e)
     {
-      runLog.WriteLn (40, "OnSizeChanged    *** Entering ***");
+      //runLog.WriteLn (40, "OnSizeChanged    *** Entering ***");
       // Place code that is to be executed when ever this control is resized.
 
       CameraLineDisplay_SizeChanged (sender, e);
  
-      runLog.WriteLn (40, "OnSizeChanged    *** Exiting ***");
+      //runLog.WriteLn (40, "OnSizeChanged    *** Exiting ***");
     }
 
 
@@ -767,17 +767,17 @@ namespace LarcosControls
 
     private void  AutoGainButton_Click (object sender, EventArgs e)
     {
-      runLog.WriteLn (10, "AutoGainButton_Click ");
+      //runLog.WriteLn (10, "AutoGainButton_Click ");
       if  (cameraManager.CameraAutoGainThreadRunning ())
       {
-        runLog.WriteLn (10, "AutoGainButton_Click   Auto-Gain is already running.");
+        //runLog.WriteLn (10, "AutoGainButton_Click   Auto-Gain is already running.");
         MessageBox.Show (this, "Auto-Gain is already running.", "Auto-Gain", MessageBoxButtons.OK);
         return;
       }
 
       if  (!cameraManager.CameraThreadRunning ())
       {
-        runLog.WriteLn (10, "AutoGainButton_Click   Camera is not connected.");
+        //runLog.WriteLn (10, "AutoGainButton_Click   Camera is not connected.");
         MessageBox.Show (this, "Camera is not connected.", "Auto-Gain", MessageBoxButtons.OK);
         return;
       }
