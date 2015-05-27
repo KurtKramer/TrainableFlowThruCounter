@@ -30,6 +30,7 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -90,7 +94,7 @@
       <Name>KKManagedRoutines</Name>
     </ProjectReference>
     <ProjectReference Include="..\LarcosCounterManaged\LarcosCounterManaged.vcxproj">
-      <Project>{69108ADE-3BF7-4329-BFC2-9AB5FA70923D}</Project>
+      <Project>{69108ade-3bf7-4329-bfc2-9ab5fa70923d}</Project>
       <Name>LarcosCounterManaged</Name>
     </ProjectReference>
   </ItemGroup>

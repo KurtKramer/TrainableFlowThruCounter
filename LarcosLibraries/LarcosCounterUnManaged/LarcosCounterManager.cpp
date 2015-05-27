@@ -961,6 +961,8 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
 {
   runLog->Level (10) << "LarcosCounterManager::ValidateTrainingModel  Model: " + trainingModelName << endl;
 
+  secondaryMsgs.AddMsg ("Validating Training Model: " + trainingModelName);
+
   if  ((trainingModelName.EqualIgnoreCase ("PostLarvae"))  ||  (trainingModelName.EqualIgnoreCase ("Post Larvae")))
   {
     successful = true;

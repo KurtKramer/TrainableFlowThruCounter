@@ -11,6 +11,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 
 using KKManagedRoutines;
+using LarcosControls;
 using LarcosCounterManaged;
 
 

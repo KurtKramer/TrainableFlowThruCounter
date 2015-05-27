@@ -91,6 +91,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.ReportViewer.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -268,17 +271,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\LarcosLibraries\LarcosControls\LarcosControls.csproj">
-      <Project>{221BBCA9-12F3-447D-AC47-D0248B10F833}</Project>
-      <Name>LarcosControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LarcosLibraries\LarcosCounterManaged\LarcosCounterManaged.vcxproj">
-      <Project>{69108ADE-3BF7-4329-BFC2-9AB5FA70923D}</Project>
-      <Name>LarcosCounterManaged</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\KKLibraries\KKManagedRoutines\KKManagedRoutines.csproj">
       <Project>{D6AFBB16-C907-4944-AA25-BE9E00D97980}</Project>
       <Name>KKManagedRoutines</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LarcosLibraries\LarcosControls\LarcosControls.csproj">
+      <Project>{221bbca9-12f3-447d-ac47-d0248b10f833}</Project>
+      <Name>LarcosControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LarcosLibraries\LarcosCounterManaged\LarcosCounterManaged.vcxproj">
+      <Project>{69108ade-3bf7-4329-bfc2-9ab5fa70923d}</Project>
+      <Name>LarcosCounterManaged</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
