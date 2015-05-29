@@ -23,7 +23,7 @@ namespace LarcosCounterUnManaged
   class RecordButtonThread: public  CameraThread
   {
   public:
-    typedef  ScannerFile::ScannerFileFormat   ScannerFileFormat;
+    typedef  ScannerFile::Format   ScannerFileFormat;
 
 
     RecordButtonThread (LarcosCounterManagerPtr _manager,

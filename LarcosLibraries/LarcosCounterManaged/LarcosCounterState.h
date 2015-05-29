@@ -8,19 +8,22 @@ using namespace  LarcosCounterUnManaged;
 
 namespace LarcosCounterManaged
 {
+  typedef  LarcosCounterUnManaged::LarcosCounterManager::CounterState  CounterState;
+  
   public enum class  LarcosCounterState: kkint16
   {
-    _NULL              = LarcosCounterUnManaged::LarcosCounterManager::csNULL, 
-    Stopped            = LarcosCounterUnManaged::LarcosCounterManager::csStopped, 
-    Stopping           = LarcosCounterUnManaged::LarcosCounterManager::csStopping,
-    Connected          = LarcosCounterUnManaged::LarcosCounterManager::csConnected,
-    Connecting         = LarcosCounterUnManaged::LarcosCounterManager::csConnecting,
-    Starting           = LarcosCounterUnManaged::LarcosCounterManager::csStarting,
-    BuildingClassifier = LarcosCounterUnManaged::LarcosCounterManager::csBuildingClassifier,
-    Running            = LarcosCounterUnManaged::LarcosCounterManager::csRunning,
-    PlayingBack        = LarcosCounterUnManaged::LarcosCounterManager::csPlayingBack,
-    DroppedFrames      = LarcosCounterUnManaged::LarcosCounterManager::csDroppedFrames
+    _NULL              = (kkint16)CounterState::csNULL, 
+    Stopped            = (kkint16)CounterState::Stopped, 
+    Stopping           = (kkint16)CounterState::Stopping,
+    Connected          = (kkint16)CounterState::Connected,
+    Connecting         = (kkint16)CounterState::Connecting,
+    Starting           = (kkint16)CounterState::Starting,
+    BuildingClassifier = (kkint16)CounterState::BuildingClassifier,
+    Running            = (kkint16)CounterState::Running,
+    PlayingBack        = (kkint16)CounterState::PlayingBack,
+    DroppedFrames      = (kkint16)CounterState::DroppedFrames
   };
+  
 }  /* LarcosCounterManaged */
 
 

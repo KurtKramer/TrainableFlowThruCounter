@@ -51,8 +51,8 @@ namespace LarcosCounterManaged
   public  ref class LarcosCounterManagerWrapper
   {
   public:
-    typedef  UmiScannerFile::ScannerFileFormat  ScannerFileFormat;
-    typedef  StatusSnapshotManaged::DataFieldIdx   StatusSnapshotDataFieldIdx;
+    typedef  UmiScannerFile::Format  ScannerFileFormat;
+    typedef  StatusSnapshotManaged::FieldIdx   StatusSnapshotDataFieldIdx;
 
     String^  CounterStateToStr (LarcosCounterState  state);
 

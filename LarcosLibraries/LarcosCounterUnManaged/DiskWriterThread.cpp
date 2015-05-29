@@ -36,14 +36,14 @@ using  namespace  LarcosCounterUnManaged;
 
 
 
-DiskWriterThread::DiskWriterThread (LarcosCounterManagerPtr         _manager,
-                                    CameraFrameBufferPtr            _cameraBuffer,
-                                    MsgQueuePtr                     _msgQueue,
-                                    const KKStr&                    _scannerFileName,
-                                    ScannerFile::ScannerFileFormat  _format,
-                                    kkint32                         _frameHeight,
-                                    kkint32                         _frameWidth,
-                                    const KKStr&                    _threadName
+DiskWriterThread::DiskWriterThread (LarcosCounterManagerPtr  _manager,
+                                    CameraFrameBufferPtr     _cameraBuffer,
+                                    MsgQueuePtr              _msgQueue,
+                                    const KKStr&             _scannerFileName,
+                                    ScannerFile::Format      _format,
+                                    kkint32                  _frameHeight,
+                                    kkint32                  _frameWidth,
+                                    const KKStr&             _threadName
                                    ):
     CameraThread (_manager, _threadName, _msgQueue),
     bytesWritten              (0),
@@ -51,7 +51,7 @@ DiskWriterThread::DiskWriterThread (LarcosCounterManagerPtr         _manager,
     bytesWrittenCompletedSegs (0),
     cameraBuffer              (_cameraBuffer),
     curScannerFileRootName    (),
-    dwStatus                  (dwNULL),
+    dwStatus                  (DiskWritingStatus::dwNULL),
     firstFrameYet             (false),
     format                    (_format),
     frameSeqNumLast           (0),
@@ -114,7 +114,7 @@ void  DiskWriterThread::GetStats (LarcosCounterStats&  stats)  const
 
 bool  DiskWriterThread::WeAreRecordingToDisk ()
 {
-  return ((Status () == ThreadStatus::tsRunning)  &&  (DiskStatus () == dwRecording));
+  return ((Status () == ThreadStatus::tsRunning)  &&  (DiskStatus () == DiskWritingStatus::Recording));
 }  /* WeAreRecordingToDisk */
 
 
@@ -127,7 +127,7 @@ CameraFramePtr  DiskWriterThread::GetNextFrame ()
   while   ((frame == NULL)  &&  (!TerminateFlag ())  &&  (!ShutdownFlag ()))
   {
     if  (numMiliSecsWaited > 1000)
-      dwStatus = dwNotRecording;
+      dwStatus = DiskWritingStatus::NotRecording;
     osSleep (0.1f);
     numMiliSecsWaited += 100;
     frame = cameraBuffer->GetNextFrameToWriteToDisk ();
@@ -146,8 +146,8 @@ CameraFramePtr  DiskWriterThread::GetNextFrame ()
     if  (numFramesSkipped < 1)
     {
       ++numFramesSinceLastSkip;
-      if  ((dwStatus == dwDroppingFrames)  &&  (numFramesSkipped > 200))
-        dwStatus = dwRecording;
+      if  ((dwStatus == DiskWritingStatus::DroppingFrames)  &&  (numFramesSkipped > 200))
+        dwStatus = DiskWritingStatus::Recording;
     }
     else
     {
@@ -156,7 +156,7 @@ CameraFramePtr  DiskWriterThread::GetNextFrame ()
                      << "DiskWriterThread::GetNextFrame   ***ERROR**    Frames have been skipped." << endl
                      << "          LastFrameSeqNum: " << frameSeqNumLast << "] frame->SeqNum: " << frame->SeqNum () << endl
                      << endl;
-      dwStatus = dwDroppingFrames;
+      dwStatus = DiskWritingStatus::DroppingFrames;
       numSkippedFrames += (kkint32)numFramesSkipped;
       numFramesSinceLastSkip = 0;
     }
@@ -251,7 +251,7 @@ void  DiskWriterThread::Run ()
                        << endl;
         delete  scannerFile;
         scannerFile = NULL;
-        dwStatus = dwNotRecording;
+        dwStatus = DiskWritingStatus::NotRecording;
         break;
       }
       else
@@ -321,7 +321,7 @@ void  DiskWriterThread::Run ()
             }
           }
  
-          dwStatus = dwRecording;        
+          dwStatus = DiskWritingStatus::Recording;        
           scannerFileSize = scannerFile->FileSizeInBytes ();
           bytesWritten = scannerFileSize;
         }
@@ -359,7 +359,7 @@ void  DiskWriterThread::Run ()
   delete  flowMeterFile;
   flowMeterFile = NULL;
 
-  dwStatus = dwNotRecording;
+  dwStatus = DiskWritingStatus::NotRecording;
 
   delete  scannerFile;
   scannerFile = NULL;

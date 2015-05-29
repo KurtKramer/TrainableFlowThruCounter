@@ -106,49 +106,49 @@ KKB::DateTime   StatusSnapshotManaged::DateTimeSystemToKKB (System::DateTime  da
 
 
 
-float  StatusSnapshotManaged::GetDataField (DataFieldIdx  dataField)
+float  StatusSnapshotManaged::GetDataField (FieldIdx  dataField)
 {
   float  data = 0.0f;
 
   switch  (dataField)
   {
-  case  DataFieldIdx::LogicalFrameProcessorsAvailable:
+  case  FieldIdx::LogicalFrameProcessorsAvailable:
     data = logicalFrameProcessorsAvailable;
     break;
 
-  case  DataFieldIdx::LogicalFramesOnQueue:
+  case  FieldIdx::LogicalFramesOnQueue:
     data = logicalFramesOnQueue;
     break;
 
-  case  DataFieldIdx::Count:
+  case  FieldIdx::Count:
     data = (float)count;
     break;
 
-  case  DataFieldIdx::Particles:
+  case  FieldIdx::Particles:
     data = (float)particles;
     break;
 
-  case  DataFieldIdx::PhysicalFramesDropped:
+  case  FieldIdx::PhysicalFramesDropped:
     data = (float)physicalFramesDropped;
     break;
 
-  case  DataFieldIdx::LogicalFramesDropped:
+  case  FieldIdx::LogicalFramesDropped:
     data = (float)logicalFramesDropped;
     break;
 
-  case  DataFieldIdx::ScanLinesRead:
+  case  FieldIdx::ScanLinesRead:
     data = (float)scanLinesRead;
     break;
 
-  case  DataFieldIdx::ScanLinesWritten:
+  case  FieldIdx::ScanLinesWritten:
     data = (float)scanLinesWritten;
     break;
 
-  case  DataFieldIdx::ParticlesWaitingProcessing:
+  case  FieldIdx::ParticlesWaitingProcessing:
     data = (float)particlesWaitingProcessing;
     break;
 
-  case  DataFieldIdx::FlowRate:
+  case  FieldIdx::FlowRate:
     data = flowRate;
     break;
   }
@@ -158,25 +158,25 @@ float  StatusSnapshotManaged::GetDataField (DataFieldIdx  dataField)
 
 
 
-StatusSnapshotManaged::DataFieldIdx  StatusSnapshotManaged::DataFieldIdxFromStr (String^ s)
+StatusSnapshotManaged::FieldIdx  StatusSnapshotManaged::SnapShotFieldIdxFromStr (String^ s)
 {
-  return  (DataFieldIdx)StatusSnapshot::DataFieldIdxFromStr (UmiKKStr::SystemStringToKKStr (s));
+  return  (FieldIdx)StatusSnapshot::SnapShotFieldIdxFromStr (UmiKKStr::SystemStringToKKStr (s));
 }
 
 
 
-String^  StatusSnapshotManaged::DataFieldIdxToStr (StatusSnapshotManaged::DataFieldIdx idx)
+String^  StatusSnapshotManaged::SnapShotFieldIdxToStr (StatusSnapshotManaged::FieldIdx idx)
 {
-  return  UmiKKStr::KKStrToSystenStr (StatusSnapshot::DataFieldIdxToStr ((StatusSnapshot::DataFieldIdx)idx));
+  return  UmiKKStr::KKStrToSystenStr (StatusSnapshot::SnapShotFieldIdxToStr ((StatusSnapshot::FieldIdx)idx));
 }
 
 
 
 array<String^>^  StatusSnapshotManaged::DataFieldIdxNames ()
 {
-  array<String^>^  a = gcnew array<String^> (StatusSnapshot::dfiInvalid);
-  for  (int  x = 0;  x < (int)StatusSnapshot::dfiInvalid;  ++x)
-    a[x] = UmiKKStr::KKStrToSystenStr (StatusSnapshot::DataFieldIdxToStr ((StatusSnapshot::DataFieldIdx)x));
+  array<String^>^  a = gcnew array<String^> ((int)StatusSnapshot::FieldIdx::Invalid);
+  for  (int  x = 0;  x < (int)StatusSnapshot::FieldIdx::Invalid;  ++x)
+    a[x] = UmiKKStr::KKStrToSystenStr (StatusSnapshot::SnapShotFieldIdxToStr ((StatusSnapshot::FieldIdx)x));
   return  a;
 }
 

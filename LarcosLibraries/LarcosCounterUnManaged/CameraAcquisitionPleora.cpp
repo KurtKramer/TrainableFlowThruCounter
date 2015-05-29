@@ -126,7 +126,7 @@ CameraAcquisitionPleora::CameraAcquisitionPleora
 
 {
   cameraParams->MacAddress (_macAddress);
-  if  (Manager ()->Installation ()->FlowMeterMethod () == InstallationConfig::fmmEmbedded)
+  if  (Manager ()->Installation ()->FlowMeterMethod () == InstallationConfig::FlowMeterMethods::Embedded)
     embeddedFlowMeter = true;
   else
     embeddedFlowMeter = false;
@@ -186,7 +186,7 @@ CameraAcquisitionPleora::CameraAcquisitionPleora
     gainTapSel                 (-1)
 
 {
-  if  (Manager ()->Installation ()->FlowMeterMethod () == InstallationConfig::fmmEmbedded)
+  if  (Manager ()->Installation ()->FlowMeterMethod () == InstallationConfig::FlowMeterMethods::Embedded)
     embeddedFlowMeter = true;
   else
     embeddedFlowMeter = false;
@@ -1016,22 +1016,22 @@ void  CameraAcquisitionPleora::ApplyCommandNextEntry ()
   {
     switch  (cmd->CommandType ())
     {
-    case  CommandEntry::ceNULL:
+    case  CommandEntry::EntryTypes::ceNULL:
       break;
 
-    case  CommandEntry::ceAnalogGain:
+    case  CommandEntry::EntryTypes::AnalogGain:
       SetAnalogGain (cmd->AnalogGain ());
       break;
 
-    case  CommandEntry::ceDigitalGain:
+    case  CommandEntry::EntryTypes::DigitalGain:
       SetDigitalGain (cmd->DigitalGain ());
       break;
 
-    case  CommandEntry::ceScanRate:
+    case  CommandEntry::EntryTypes::ScanRate:
       SetScanRate (cmd->ScanRate ());
       break;
 
-    case  CommandEntry::ceSensitivityMode:
+    case  CommandEntry::EntryTypes::SensitivityMode:
       SetSensitivityMode (cmd->SensitivityMode ());
       break;
     }
@@ -1189,7 +1189,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
 {
   log.Level (10) << "ConnectToCamera" << endl;
   connectionSuccessful = false;
-  StartStatus (ssConnecting, "");
+  StartStatus (StartStatusType::Connecting, "");
 
   Manager ()->AddSecondaryMsg ("Connecting to Camera.");
 
@@ -1217,7 +1217,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
     status << "Unable to connect to Mac-Address: " << MacAddress ();
     log.Level (-1) << "ConnectToCamera   ***ERROR*** Trying to connect :" << PvResultToStr (pvConnectResult) << endl
                    << "   " << status << endl;
-    StartStatus (ssConnectionFailed, status);
+    StartStatus (StartStatusType::ConnectionFailed, status);
 
     PvString  pvIpAddress               = cameraParams->IpAddress  ().Str ();
     PvString  pvMacAddress              = cameraParams->MacAddress ().Str ();
@@ -1452,7 +1452,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
     }
   }
 
-  if  (Manager ()->OperatingMode () == LarcosCounterManager::lomAdvanced)
+  if  (Manager ()->OperatingMode () == LarcosCounterManager::LarcosOperatingModes::Advanced)
     Manager ()->AddSecondaryMsg ("Setting Camera Parameters.");
   ApplyCommandEntries ();
 
@@ -1598,13 +1598,13 @@ void  CameraAcquisitionPleora::Run ()
 
   KKStr  status (128);
 
-  StartStatus (this->ssConnecting, "Connecting to Camera.");
+  StartStatus (StartStatusType::Connecting, "Connecting to Camera.");
 
   bool  connectionSuccessful = false;
   ConnectToCamera (connectionSuccessful);
   if  (!connectionSuccessful)
   {
-    StartStatus (ssConnectionFailed, "Connection FAILED!!!.");
+    StartStatus (StartStatusType::ConnectionFailed, "Connection FAILED!!!.");
     Manager ()->AddSecondaryMsg ("");
     status = "";
     status << "Unable to connect to Mac-Address: " << MacAddress ();
@@ -1622,7 +1622,7 @@ void  CameraAcquisitionPleora::Run ()
 
   totalLostPackets = 0;
 
-  StartStatus (ssConnected, "Camera Connected.");
+  StartStatus (StartStatusType::Connected, "Camera Connected.");
 
   ComputeFramneIntervals ();
 
@@ -1645,7 +1645,7 @@ void  CameraAcquisitionPleora::Run ()
     if  (!lPipeline)
     {
       // We are not communicating to the camera lets try reconnecting.
-      StartStatus (ssDisconnected, "Camera Disconnected !!!  Attempting to reconnect.");
+      StartStatus (StartStatusType::Disconnected, "Camera Disconnected !!!  Attempting to reconnect.");
 
       log.Level (-1) << endl << "CameraAcquisitionPleora::Run    Will Sleep for 2 Seconds." << endl << endl;
 
@@ -1653,8 +1653,8 @@ void  CameraAcquisitionPleora::Run ()
       ConnectToCamera (connectionSuccessful);
       if  (connectionSuccessful)
       {
-        StartStatus (ssConnected, "Camera Connected.");
-        if  (Manager ()->OperatingMode () == LarcosCounterManager::lomAdvanced)
+        StartStatus (StartStatusType::Connected, "Camera Connected.");
+        if  (Manager ()->OperatingMode () == LarcosCounterManager::LarcosOperatingModes::Advanced)
           Manager ()->AddSecondaryMsg ("Re-connected to Camera.");
 
         log.Level (-1) << endl << "CameraAcquisitionPleora::Run    *** Connection Re-Established  ***" << endl << endl;
@@ -1682,8 +1682,8 @@ void  CameraAcquisitionPleora::Run ()
         KKStr  kkMsg (100);
         kkMsg << "lPipeline->RetrieveNextBuffer  ***ERROR***   Retrieving NextBuffer: " <<  PvResultToStr (lResult);
         log.Level (-1) << kkMsg << endl;
-        StartStatus (ssDisconnected, kkMsg);
-        if  (Manager ()->OperatingMode () == LarcosCounterManager::lomAdvanced)
+        StartStatus (StartStatusType::Disconnected, kkMsg);
+        if  (Manager ()->OperatingMode () == LarcosCounterManager::LarcosOperatingModes::Advanced)
           Manager ()->AddSecondaryMsg ("Error Retrieving Frame from Camera.");
         DisconnectFromCamera ();
       }
@@ -1696,7 +1696,7 @@ void  CameraAcquisitionPleora::Run ()
           KKStr  resultStr = PvResultToStr (lOperationResult);
           log.Level (-1) << "lPipeline->RetrieveNextBuffer   ***WARNING***  :" << resultStr << endl
                          << "    pvOutputQueueSize: " << pvOutputQueueSize << endl;
-          if  (Manager ()->OperatingMode () == LarcosCounterManager::lomAdvanced)
+          if  (Manager ()->OperatingMode () == LarcosCounterManager::LarcosOperatingModes::Advanced)
             Manager ()->AddSecondaryMsg ("Camera Timed Out.");
         }
         else
@@ -1827,7 +1827,7 @@ void  CameraAcquisitionPleora::Run ()
 
   Manager ()->AddSecondaryMsg ("Cameras Acquisition Stopped.");
 
-  StartStatus (ssDisconnected, "Camera Stopped.");
+  StartStatus (StartStatusType::Disconnected, "Camera Stopped.");
   Status (ThreadStatus::tsStopping);
 
   log.Level (10) << "CameraAcquisitionPleora::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;

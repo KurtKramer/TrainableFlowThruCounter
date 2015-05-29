@@ -12,10 +12,10 @@ namespace LarcosCounterManaged
 {
   public enum class  LarcosOperatingModes: kkint16
   {
-    _NULL         = LarcosCounterUnManaged::LarcosCounterManager::lomNULL,
-    User          = LarcosCounterUnManaged::LarcosCounterManager::lomUser,
-    Advanced      = LarcosCounterUnManaged::LarcosCounterManager::lomAdvanced,
-    Invalid       = LarcosCounterUnManaged::LarcosCounterManager::lomInvalid
+    _NULL         = LarcosCounterUnManaged::LarcosCounterManager::LarcosOperatingModes::lomNULL,
+    User          = LarcosCounterUnManaged::LarcosCounterManager::LarcosOperatingModes::User,
+    Advanced      = LarcosCounterUnManaged::LarcosCounterManager::LarcosOperatingModes::Advanced,
+    Invalid       = LarcosCounterUnManaged::LarcosCounterManager::LarcosOperatingModes::Invalid
   };
 }  /* LarcosCounterManaged */
 

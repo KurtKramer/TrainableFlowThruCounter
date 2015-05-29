@@ -45,29 +45,28 @@ const KKStr  StatusSnapshot::dataFieldIdxStrs[]
                    };
 
 
-
-const KKStr&  StatusSnapshot::DataFieldIdxToStr (DataFieldIdx i)
+const KKStr&  StatusSnapshot::SnapShotFieldIdxToStr (FieldIdx i)
 {
-  if  ((i < 0)  ||  (i > dfiInvalid))
-    return dataFieldIdxStrs[dfiNULL];
+  if  ((i < FieldIdx::dfiNULL)  ||  (i > FieldIdx::Invalid))
+    return dataFieldIdxStrs[(int)FieldIdx::dfiNULL];
   else
-    return dataFieldIdxStrs[i];
+    return dataFieldIdxStrs[(int)i];
 }
 
 
 
 
-StatusSnapshot::DataFieldIdx  StatusSnapshot::DataFieldIdxFromStr (const KKStr&  s)
+StatusSnapshot::FieldIdx  StatusSnapshot::SnapShotFieldIdxFromStr (const KKStr&  s)
 {
-  kkint32  x = 0;
-  while  (x <= dfiInvalid)
+  int  x = 0;
+  while  (x <= (int)FieldIdx::Invalid)
   {
     if  (s.EqualIgnoreCase (dataFieldIdxStrs[x]))
-      return  (DataFieldIdx)x;
+      return  (FieldIdx)x;
     ++x;
   }
 
-  return  dfiNULL;
+  return  FieldIdx::dfiNULL;
 }
 
 

@@ -21,7 +21,7 @@ namespace LarcosCounterUnManaged
   class  LarcosDataRec
   {
   public:
-    typedef  ScannerFile::ScannerFileFormat  ScannerFileFormat;
+    typedef  ScannerFile::Format  ScannerFileFormat;
 
     LarcosDataRec (const KKStr&   _scannerFilePrefix,
                    const KKStr&   _sectionName
@@ -102,7 +102,7 @@ namespace LarcosCounterUnManaged
 
     void  UpdateFromConfigurationFileFormat (const LarcosTrainingConfiguration&  c,
                                              const KKStr&                        fieldName,
-                                             ScannerFile::ScannerFileFormat&     fieldValue
+                                             ScannerFile::Format&                fieldValue
                                             );
 
 

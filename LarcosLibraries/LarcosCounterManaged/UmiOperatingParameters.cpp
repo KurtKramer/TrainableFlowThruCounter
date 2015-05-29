@@ -84,9 +84,9 @@ void  UmiOperatingParameters::Assign (UmiOperatingParameters^  parms)
 
 
 
-UmiScannerFile::ScannerFileFormat  UmiOperatingParameters::DestScannerFileFormat::get ()
+UmiScannerFile::Format  UmiOperatingParameters::DestScannerFileFormat::get ()
 {
-  return  (UmiScannerFile::ScannerFileFormat)operatingParameters->DestScannerFileFormat ();
+  return  (UmiScannerFile::Format)operatingParameters->DestScannerFileFormat ();
 }
 
 
@@ -98,9 +98,9 @@ String^   UmiOperatingParameters::DestScannerFileFormatStr::get ()
 
 
 
-void  UmiOperatingParameters::DestScannerFileFormat::set (UmiScannerFile::ScannerFileFormat  _destScannerFileFormat)
+void  UmiOperatingParameters::DestScannerFileFormat::set (UmiScannerFile::Format  _destScannerFileFormat)
 {
-  operatingParameters->DestScannerFileFormat ((ScannerFile::ScannerFileFormat)_destScannerFileFormat);
+  operatingParameters->DestScannerFileFormat ((ScannerFile::Format)_destScannerFileFormat);
 }
 
 

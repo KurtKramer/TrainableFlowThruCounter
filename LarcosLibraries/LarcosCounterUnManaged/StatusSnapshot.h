@@ -24,6 +24,8 @@ using namespace KKMLL;
 
 namespace LarcosCounterUnManaged
 {
+
+
   /**
    *@brief  Stores a snapshot of LarcosCounter dynamic data such as Flow-rate, Shrimp/Min, Particles/Min Logical-Frame-Processors In use, etc.
    *@details  LarcosCounterManager will maintain a historical status of each session.  This will be done by taking a snapshot
@@ -36,25 +38,25 @@ namespace LarcosCounterUnManaged
     typedef  StatusSnapshot*  StatusSnapshotPtr;
 
 
-    typedef  enum  {dfiNULL,
-                    dfiLogicalFrameProcessorsAvailable,
-                    dfiLogicalFramesOnQueue,
-                    dfiCount,
-                    dfiParticles,
-                    dfiCpuUsage,
-                    dfiAvailableCapacity,
-                    dfiPhysicalFramesDropped,
-                    dfiLogicalFramesDropped,
-                    dfiScanLinesRead,
-                    dfiScanLinesWritten,
-                    dfiParticlesWaitingProcessing,
-                    dfiFlowRate,
-                    dfiInvalid
-                   }  
-                     DataFieldIdx ;
+    enum  class FieldIdx: int 
+                   {dfiNULL,
+                    LogicalFrameProcessorsAvailable,
+                    LogicalFramesOnQueue,
+                    Count,
+                    Particles,
+                    CpuUsage,
+                    AvailableCapacity,
+                    PhysicalFramesDropped,
+                    LogicalFramesDropped,
+                    ScanLinesRead,
+                    ScanLinesWritten,
+                    ParticlesWaitingProcessing,
+                    FlowRate,
+                    Invalid
+                   };
 
-    static  const KKStr&  DataFieldIdxToStr   (DataFieldIdx i);
-    static  DataFieldIdx  DataFieldIdxFromStr (const KKStr&  i);
+    static  const KKStr&  SnapShotFieldIdxToStr   (FieldIdx i);
+    static  FieldIdx  SnapShotFieldIdxFromStr (const KKStr&  i);
 
 
     StatusSnapshot ();

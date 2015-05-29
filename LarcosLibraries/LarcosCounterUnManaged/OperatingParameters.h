@@ -30,7 +30,7 @@ namespace LarcosCounterUnManaged
   class  OperatingParameters:  public  LarcosDataRec
   {
   public:
-    typedef  ScannerFile::ScannerFileFormat  ScannerFileFormat;
+    typedef  ScannerFile::Format  ScannerFileFormat;
 
     OperatingParameters ();
 

@@ -132,14 +132,14 @@ void  LarcosDataRec::UpdateFromConfigurationKKStr (const LarcosTrainingConfigura
 
 void  LarcosDataRec::UpdateFromConfigurationFileFormat (const LarcosTrainingConfiguration&  c,
                                                         const KKStr&                        fieldName,
-                                                        ScannerFile::ScannerFileFormat&     fieldValue
+                                                        ScannerFile::Format&                fieldValue
                                                        )
 {
   KKStrConstPtr  x = GetSettingValue (c, fieldName);
   if  (x)
   {
-    ScannerFile::ScannerFileFormat t = ScannerFile::ScannerFileFormatFromStr (*x);
-    if  (t != ScannerFile::sfUnKnown)
+    ScannerFile::Format t = ScannerFile::ScannerFileFormatFromStr (*x);
+    if  (t != ScannerFile::Format::sfUnKnown)
       fieldValue = t;
   }
 }

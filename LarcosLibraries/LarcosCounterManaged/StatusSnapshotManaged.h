@@ -26,36 +26,37 @@ namespace LarcosCounterManaged
 
     ~StatusSnapshotManaged ();
 
-    enum  class  DataFieldIdx {dfiNULL                         = StatusSnapshot::dfiNULL,
-                               LogicalFrameProcessorsAvailable = StatusSnapshot::dfiLogicalFrameProcessorsAvailable,
-                               LogicalFramesOnQueue            = StatusSnapshot::dfiLogicalFramesOnQueue,
-                               Count                           = StatusSnapshot::dfiCount,
-                               Particles                       = StatusSnapshot::dfiParticles,
-                               CpuUsage                        = StatusSnapshot::dfiCpuUsage,
-                               AvailableCapacity               = StatusSnapshot::dfiAvailableCapacity,
-                               PhysicalFramesDropped           = StatusSnapshot::dfiPhysicalFramesDropped,
-                               LogicalFramesDropped            = StatusSnapshot::dfiLogicalFramesDropped,
-                               ScanLinesRead                   = StatusSnapshot::dfiScanLinesRead,
-                               ScanLinesWritten                = StatusSnapshot::dfiScanLinesWritten,
-                               ParticlesWaitingProcessing      = StatusSnapshot::dfiParticlesWaitingProcessing,
-                               FlowRate                        = StatusSnapshot::dfiFlowRate,
-                               Invalid                         = StatusSnapshot::dfiInvalid
-                              };
+    enum  class  FieldIdx: int
+          {dfiNULL                         = (int)StatusSnapshot::FieldIdx::dfiNULL,
+           LogicalFrameProcessorsAvailable = (int)StatusSnapshot::FieldIdx::LogicalFrameProcessorsAvailable,
+           LogicalFramesOnQueue            = (int)StatusSnapshot::FieldIdx::LogicalFramesOnQueue,
+           Count                           = (int)StatusSnapshot::FieldIdx::Count,
+           Particles                       = (int)StatusSnapshot::FieldIdx::Particles,
+           CpuUsage                        = (int)StatusSnapshot::FieldIdx::CpuUsage,
+           AvailableCapacity               = (int)StatusSnapshot::FieldIdx::AvailableCapacity,
+           PhysicalFramesDropped           = (int)StatusSnapshot::FieldIdx::PhysicalFramesDropped,
+           LogicalFramesDropped            = (int)StatusSnapshot::FieldIdx::LogicalFramesDropped,
+           ScanLinesRead                   = (int)StatusSnapshot::FieldIdx::ScanLinesRead,
+           ScanLinesWritten                = (int)StatusSnapshot::FieldIdx::ScanLinesWritten,
+           ParticlesWaitingProcessing      = (int)StatusSnapshot::FieldIdx::ParticlesWaitingProcessing,
+           FlowRate                        = (int)StatusSnapshot::FieldIdx::FlowRate,
+           Invalid                         = (int)StatusSnapshot::FieldIdx::Invalid
+          };
 
-    property  System::DateTime  TimeStamp            {System::DateTime  get ()  {return timeStamp;}}
-    property  kkint32  TimeOffset                    {kkint32  get ()  {return timeOffset;}}
-    property  float  LogicalFrameProcessorsAvailable {float    get ()  {return logicalFrameProcessorsAvailable;};}  /**< Number of FrameProcessors that are sleeping until available Frame to process. */
-    property  float  LogicalFramesOnQueue            {float    get ()  {return logicalFramesOnQueue;};}
-    property  kkint32  Count                         {kkint32  get ()  {return count;}}
-    property  float  FlowRate                        {float    get ()  {return flowRate;}}
-    property  kkint32  Particles                     {kkint32  get ()  {return particles;}}
-    property  float  CpuUsage                        {float    get ()  {return cpuUsage;}}
-    property  float  AvailableCapacity               {float    get ()  {return availableCapacity;}}
-    property  kkint32  ParticlesWaitingProcessing    {kkint32  get ()  {return particlesWaitingProcessing;};}
-    property  kkint32  PhysicalFramesDropped         {kkint32  get ()  {return physicalFramesDropped;};}
-    property  kkint32  LogicalFramesDropped          {kkint32  get ()  {return logicalFramesDropped;};}         
-    property  kkint32  ScanLinesRead                 {kkint32  get ()  {return scanLinesRead;};}
-    property  kkint32  ScanLinesWritten              {kkint32  get ()  {return scanLinesWritten;};}
+    property  System::DateTime  TimeStamp              {System::DateTime  get ()  {return timeStamp;}}
+    property  kkint32  TimeOffset                      {kkint32  get ()  {return timeOffset;}}
+    property  float    LogicalFrameProcessorsAvailable {float    get ()  {return logicalFrameProcessorsAvailable;};}  /**< Number of FrameProcessors that are sleeping until available Frame to process. */
+    property  float    LogicalFramesOnQueue            {float    get ()  {return logicalFramesOnQueue;};}
+    property  kkint32  Count                           {kkint32  get ()  {return count;}}
+    property  float    FlowRate                        {float    get ()  {return flowRate;}}
+    property  kkint32  Particles                       {kkint32  get ()  {return particles;}}
+    property  float    CpuUsage                        {float    get ()  {return cpuUsage;}}
+    property  float    AvailableCapacity               {float    get ()  {return availableCapacity;}}
+    property  kkint32  ParticlesWaitingProcessing      {kkint32  get ()  {return particlesWaitingProcessing;};}
+    property  kkint32  PhysicalFramesDropped           {kkint32  get ()  {return physicalFramesDropped;};}
+    property  kkint32  LogicalFramesDropped            {kkint32  get ()  {return logicalFramesDropped;};}         
+    property  kkint32  ScanLinesRead                   {kkint32  get ()  {return scanLinesRead;};}
+    property  kkint32  ScanLinesWritten                {kkint32  get ()  {return scanLinesWritten;};}
 
     static
       System::DateTime   DateTimeKKBtoSystem (const  KKB::DateTime&  date);
@@ -63,11 +64,11 @@ namespace LarcosCounterManaged
     static
       KKB::DateTime   DateTimeSystemToKKB (System::DateTime  date);
 
-    float   GetDataField (DataFieldIdx  dataField);
+    float   GetDataField (FieldIdx  dataField);
 
-    static  DataFieldIdx  DataFieldIdxFromStr (String^ s);
+    static  FieldIdx  SnapShotFieldIdxFromStr (String^ s);
 
-    static  String^  DataFieldIdxToStr (StatusSnapshotManaged::DataFieldIdx idx);
+    static  String^  SnapShotFieldIdxToStr (FieldIdx idx);
 
     static  array<String^>^  DataFieldIdxNames ();
 

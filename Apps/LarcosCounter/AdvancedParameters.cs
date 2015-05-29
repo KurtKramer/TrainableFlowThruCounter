@@ -31,7 +31,7 @@ namespace LarcosCounter
 
     public  bool   UserAcceptedScreen {get {return userAcceptedScreen;}}
 
-    public  UmiScannerFile.ScannerFileFormat FileFormat   
+    public  UmiScannerFile.Format FileFormat   
                     {
                       get {return UmiScannerFile.ScannerFileFormatFromStr (FileFormatField.Text);} 
                       set {FileFormatField.SelectedItem = UmiScannerFile.ScannerFileFormatToStr (value);}

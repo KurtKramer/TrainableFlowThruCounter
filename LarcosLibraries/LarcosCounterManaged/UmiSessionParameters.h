@@ -17,7 +17,7 @@ namespace LarcosCounterManaged
   public  ref  class  UmiSessionParameters
   {
   public:
-    typedef  UmiScannerFile::ScannerFileFormat  ScannerFileFormat;
+    typedef  UmiScannerFile::Format  ScannerFileFormat;
     typedef  System::DateTime  DateTime;
 
     UmiSessionParameters  ();

@@ -90,21 +90,21 @@ namespace LarcosCounterUnManaged
     static FeatureFileIOKKPtr  driver;
 
 
-    typedef  enum  {rfFeatureData,
-                    rfClassName,
-                    rfImageClassIDX,
-                    rfImageFileName, 
-                    rfOrigSize,
-                    rfNumOfEdgePixels,
-                    rfProbability,
-                    rfCentroidRow,
-                    rfCentroidCol,
-                    rfPredictedClass,
-                    rfPredictedClassIDX,
-                    rfBreakTie,
-                    rfUnKnown
-                   }  
-                   KK_FieldTypes;
+    enum  class FieldTypes: int
+                   {FeatureData,
+                    ClassName,
+                    ImageClassIDX,
+                    ImageFileName, 
+                    OrigSize,
+                    NumOfEdgePixels,
+                    Probability,
+                    CentroidRow,
+                    CentroidCol,
+                    PredictedClass,
+                    PredictedClassIDX,
+                    BreakTie,
+                    UnKnown
+                   };
 
 
 

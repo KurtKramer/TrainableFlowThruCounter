@@ -41,8 +41,8 @@ using  namespace  LarcosCounterUnManaged;
 
 
 
-CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
-                            float              _parameter
+CommandEntry::CommandEntry (EntryTypes  _commandType,
+                            float       _parameter
                            ):
   commandType (_commandType),
   analogGain  (0.0f),
@@ -51,22 +51,22 @@ CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
 {
   switch  (commandType)
   {
-  case  ceNULL:
+  case  EntryTypes::ceNULL:
     break;
 
-  case  ceAnalogGain:
+  case  EntryTypes::AnalogGain:
     analogGain = _parameter;
     break;
 
-  case  ceDigitalGain:
+  case  EntryTypes::DigitalGain:
     digitalGain = (kkint32)_parameter;
     break;
 
-  case  ceScanRate:  
+  case  EntryTypes::ScanRate:  
     scanRate = _parameter;
     break;
 
-  case  ceSensitivityMode:
+  case  EntryTypes::SensitivityMode:
     sensitivityMode = "Low";
     break;
   }
@@ -74,8 +74,8 @@ CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
 
 
 
-CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
-                            kkint32            _parameter
+CommandEntry::CommandEntry (EntryTypes  _commandType,
+                            kkint32     _parameter
                            ):
   commandType (_commandType),
   analogGain  (0.0f),
@@ -84,22 +84,22 @@ CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
 {
   switch  (commandType)
   {
-  case  ceNULL:
+  case  EntryTypes::ceNULL:
     break;
 
-  case  ceAnalogGain:
+  case  EntryTypes::AnalogGain:
     analogGain = (float)_parameter;
     break;
 
-  case  ceDigitalGain:
+  case  EntryTypes::DigitalGain:
     digitalGain = _parameter;
     break;
 
-  case  ceScanRate:  
+  case  EntryTypes::ScanRate:  
     scanRate = (float)_parameter;
     break;
 
-  case  ceSensitivityMode:
+  case  EntryTypes::SensitivityMode:
     sensitivityMode = "Low";
     break;
   }
@@ -107,8 +107,8 @@ CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
 
 
 
-CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
-                            const KKStr&       _parameter
+CommandEntry::CommandEntry (EntryTypes    _commandType,
+                            const KKStr&  _parameter
                            ):
   commandType (_commandType),
   analogGain  (0.0f),
@@ -118,22 +118,22 @@ CommandEntry::CommandEntry (CommandEntryTypes  _commandType,
 {
   switch  (commandType)
   {
-  case  ceNULL:
+  case  EntryTypes::ceNULL:
     break;
 
-  case  ceAnalogGain:
+  case  EntryTypes::AnalogGain:
     analogGain = _parameter.ToFloat ();
     break;
 
-  case  ceDigitalGain:
+  case  EntryTypes::DigitalGain:
     digitalGain = _parameter.ToInt32 ();
     break;
 
-  case  ceScanRate:  
+  case  EntryTypes::ScanRate:
     scanRate = (float)_parameter.ToFloat ();
     break;
 
-  case  ceSensitivityMode:
+  case  EntryTypes::SensitivityMode:
     sensitivityMode = _parameter;
     break;
   }
@@ -159,26 +159,26 @@ CommandEntryQueue::~CommandEntryQueue ()
 
 void  CommandEntryQueue::AddScanRateCommand (float _scanRate)
 {
-  PushOnBack (new CommandEntry (CommandEntry::ceScanRate, _scanRate));
+  PushOnBack (new CommandEntry (CommandEntry::EntryTypes::ScanRate, _scanRate));
 }
 
 
 void  CommandEntryQueue::AddAnalogGainCommand (float _analogGain)
 {
-  PushOnBack (new CommandEntry (CommandEntry::ceAnalogGain, _analogGain));
+  PushOnBack (new CommandEntry (CommandEntry::EntryTypes::AnalogGain, _analogGain));
 }
 
 
 void  CommandEntryQueue::AddDigitalGainCommand (kkint32 _digitalGain)
 {
-  PushOnBack (new CommandEntry (CommandEntry::ceDigitalGain, _digitalGain));
+  PushOnBack (new CommandEntry (CommandEntry::EntryTypes::DigitalGain, _digitalGain));
 }
 
 
 
 void  CommandEntryQueue::AddSensitivityMode (const KKStr&  _sensitivityMode)
 {
-  PushOnBack (new CommandEntry (CommandEntry::ceSensitivityMode, _sensitivityMode));
+  PushOnBack (new CommandEntry (CommandEntry::EntryTypes::SensitivityMode, _sensitivityMode));
 }
 
 
@@ -247,7 +247,7 @@ CameraAcquisition::CameraAcquisition (LarcosCounterManagerPtr _manager,
     requestedDigitalGain     (0),
     requestedScanRate        (0.0f),
     scanLinesRead            (0),
-    startStatus              (ssNULL),
+    startStatus              (StartStatusType::ssNULL),
     statusMsg                (),
     totalLostPackets         (0)
 {
@@ -287,7 +287,7 @@ CameraAcquisition::CameraAcquisition (LarcosCounterManagerPtr _manager,
     requestedDigitalGain     (0),
     requestedScanRate        (0.0f),
     scanLinesRead            (0),
-    startStatus              (ssNULL),
+    startStatus              (StartStatusType::ssNULL),
     statusMsg                (),
     totalLostPackets         (0)
 {
@@ -559,7 +559,7 @@ void  CameraAcquisition::RequestedCameraParameters (OperatingParametersPtr  opPa
 
 void  CameraAcquisition::RequestedAnalogGain (float _requestedAnalogGain)
 {
-  if  ((StartStatus () == ssConnected)  ||  (StartStatus () == ssConnecting))
+  if  ((StartStatus () == StartStatusType::Connected)  ||  (StartStatus () == StartStatusType::Connecting))
     AddAnalogGainCommand (_requestedAnalogGain);
   requestedAnalogGain = _requestedAnalogGain;
 }
@@ -568,7 +568,7 @@ void  CameraAcquisition::RequestedAnalogGain (float _requestedAnalogGain)
 
 void  CameraAcquisition::RequestedDigitalGain (kkint32 _requestedDigitalGain)
 {
-  if  ((StartStatus () == ssConnected)  ||  (StartStatus () == ssConnecting))
+  if  ((StartStatus () == StartStatusType::Connected)  ||  (StartStatus () == StartStatusType::Connecting))
     AddDigitalGainCommand (_requestedDigitalGain);
   requestedDigitalGain = _requestedDigitalGain;
 }
@@ -577,7 +577,7 @@ void  CameraAcquisition::RequestedDigitalGain (kkint32 _requestedDigitalGain)
 
 void  CameraAcquisition::RequestedScanRate (float _requestedScanRate)
 {
-  if  ((StartStatus () == ssConnected)  ||  (StartStatus () == ssConnecting))
+  if  ((StartStatus () == StartStatusType::Connected)  ||  (StartStatus () == StartStatusType::Connecting))
     AddScanRateCommand (_requestedScanRate);
   requestedScanRate = _requestedScanRate;
 }  /* RequestedScanRate */
@@ -586,7 +586,7 @@ void  CameraAcquisition::RequestedScanRate (float _requestedScanRate)
 
 void  CameraAcquisition::RequestedSensitivityMode (const KKStr& _requestedSensitivityMode)
 {
-  if  ((StartStatus () == ssConnected)  ||  (StartStatus () == ssConnecting))
+  if  ((StartStatus () == StartStatusType::Connected)  ||  (StartStatus () == StartStatusType::Connecting))
     AddSensitivityModeCommand (_requestedSensitivityMode);
     
   requestedSensitivityMode = _requestedSensitivityMode;

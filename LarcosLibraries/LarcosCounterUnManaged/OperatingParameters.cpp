@@ -33,7 +33,7 @@ OperatingParameters::OperatingParameters ():
      connectedComponentDist   (1),
      dataIsToBeCounted        (true),
      dataIsToBeRecorded       (true),
-     destScannerFileFormat    (ScannerFile::sf4BitEncoded),
+     destScannerFileFormat    (ScannerFile::Format::sf4BitEncoded),
      erosionStructSize        (1),
      flatFieldEnabled         (true),
      flowRateFactor           (1.0f),
@@ -399,7 +399,7 @@ void  OperatingParameters::ValidateParameters (KKStr&  _errMsg)
   if  ((this->erosionStructSize < 0)  ||  (erosionStructSize > 8))
     _errMsg << "\n" << "Erosion Structure Size[" << erosionStructSize << "] is out of range (0 thru 8).";
       
-  if  (destScannerFileFormat == ScannerFile::sfUnKnown)
+  if  (destScannerFileFormat == ScannerFile::Format::sfUnKnown)
     _errMsg << "\n" << "Invalid File Format specified.";
 
   if  ((!flatFieldEnabled)  &&  (saveParticleImages || dataIsToBeCounted))

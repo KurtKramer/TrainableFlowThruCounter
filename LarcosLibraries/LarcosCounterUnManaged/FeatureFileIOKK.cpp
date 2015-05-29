@@ -109,49 +109,49 @@ VectorInt  FeatureFileIOKK::CreateIndirectionTable (const VectorKKStr&  fields,
   kkint32  fieldNum = 0;
 
   for  (fieldNum = 0;  fieldNum < numOfFeatures;  fieldNum++)
-    indirectionTable.push_back (rfFeatureData);
+    indirectionTable.push_back ((int)FieldTypes::FeatureData);
 
   for  (fieldNum = numOfFeatures;  fieldNum < (kkint32)fields.size ();  fieldNum++)
   {
     KKStr  fieldName = fields[fieldNum].ToLower ();
     if  (fieldName == "classname")
-      indirectionTable.push_back (rfClassName);
+      indirectionTable.push_back ((int)FieldTypes::ClassName);
 
     else if  (fieldName == "classnameidx")
-      indirectionTable.push_back (rfImageClassIDX);
+      indirectionTable.push_back ((int)FieldTypes::ImageClassIDX);
 
     else if  (fieldName == "filename") 
-      indirectionTable.push_back (rfImageFileName);
+      indirectionTable.push_back ((int)FieldTypes::ImageFileName);
 
     else if  (fieldName == "origsize") 
-      indirectionTable.push_back (rfOrigSize);
+      indirectionTable.push_back ((int)FieldTypes::OrigSize);
 
     else if  (fieldName == "edgepixels") 
-      indirectionTable.push_back (rfNumOfEdgePixels);
+      indirectionTable.push_back ((int)FieldTypes::NumOfEdgePixels);
 
     else if  (fieldName == "probability") 
-      indirectionTable.push_back (rfProbability);
+      indirectionTable.push_back ((int)FieldTypes::Probability);
 
     else if  (fieldName == "disttoborder") 
-      indirectionTable.push_back (rfUnKnown);
+      indirectionTable.push_back ((int)FieldTypes::UnKnown);
 
     else if  (fieldName == "centroidrow")
-      indirectionTable.push_back (rfCentroidRow);
+      indirectionTable.push_back ((int)FieldTypes::CentroidRow);
 
     else if  (fieldName == "centroidcol")
-      indirectionTable.push_back (rfCentroidCol);
+      indirectionTable.push_back ((int)FieldTypes::CentroidCol);
 
     else if  (fieldName == "predictedclass")
-      indirectionTable.push_back (rfPredictedClass);
+      indirectionTable.push_back ((int)FieldTypes::PredictedClass);
 
     else if  (fieldName == "predictedclassidx")
-      indirectionTable.push_back (rfPredictedClassIDX);
+      indirectionTable.push_back ((int)FieldTypes::PredictedClassIDX);
 
     else if  (fieldName == "breaktie")
-      indirectionTable.push_back (rfBreakTie);
+      indirectionTable.push_back ((int)FieldTypes::BreakTie);
 
     else
-      indirectionTable.push_back (rfUnKnown);
+      indirectionTable.push_back ((int)FieldTypes::UnKnown);
 
   }
 
@@ -387,7 +387,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
       
         switch  (indirectionTable[fieldNum])
         {
-        case rfFeatureData:
+        case FieldTypes::FeatureData:
           firstChar = field.FirstChar ();
           if  (((firstChar < '0')  ||  (firstChar > '9'))  &&  (firstChar != '-'))
           {
@@ -419,55 +419,55 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
           break;
 
 
-        case rfClassName: 
+        case FieldTypes::ClassName: 
           className = field;
           if  (className.Empty ())
              className = "UnKnown";
           example->MLClass (_classes.GetMLClassPtr (className));
           break;
 
-        case rfImageClassIDX:
+        case FieldTypes::ImageClassIDX:
           // Ignore this field.
           break;
 
-        case rfImageFileName: 
+        case FieldTypes::ImageFileName: 
           example->ExampleFileName (field);
           break;
 
-        case rfOrigSize: 
+        case FieldTypes::OrigSize: 
           example->OrigSize ((float)atof (field.Str ()));
           break;
 
-        case rfNumOfEdgePixels: 
+        case FieldTypes::NumOfEdgePixels: 
           example->NumOfEdgePixels (atoi (field.Str ()));
           break;
 
-        case rfProbability: 
+        case FieldTypes::Probability: 
           example->Probability ((float)atof (field.Str ()));
           break;
 
-        case rfCentroidRow: 
+        case FieldTypes::CentroidRow: 
           example->CentroidRow((float)atof (field.Str ()));
           break;
 
-        case rfCentroidCol: 
+        case FieldTypes::CentroidCol: 
           example->CentroidCol ((float)atof (field.Str ()));
           break;
 
-        case rfPredictedClass: 
+        case FieldTypes::PredictedClass: 
           if  (!field.Empty ())
           example->PredictedClass (_classes.GetMLClassPtr (field));
           break;
   
-        case rfPredictedClassIDX:
+        case FieldTypes::PredictedClassIDX:
           // We ignore this field
           break;
 
-        case rfBreakTie: 
+        case FieldTypes::BreakTie: 
           example->BreakTie  ((float)atof (field.Str ()));
           break;
 
-        case rfUnKnown:
+        case FieldTypes::UnKnown:
           // ignore this field.
           break;
                   

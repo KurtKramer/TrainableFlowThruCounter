@@ -384,7 +384,7 @@ LogicalFrameProcessor::LogicalFrameProcessor
     classifier                 (NULL),
     classifierName             (_classifierName),
     connectedComponentDist     (_operatingParameters->ConnectedComponentDist ()),
-    countingMethod             (cmStraightCount),
+    countingMethod             (CountingMethods::cmStraightCount),
     countParticles             (true),
     cropLeft                   (_cropLeft),
     cropRight                  (_cropRight),
@@ -604,13 +604,13 @@ void  LogicalFrameProcessor::LoadClassifer ()
 
   if  ((classifierName.EqualIgnoreCase ("PostLarvae"))  ||  (classifierName.EqualIgnoreCase ("Post Larvae")))
   {
-    countingMethod = cmPostLarvae;
+    countingMethod = CountingMethods::cmPostLarvae;
     log.Level (20) << "LoadClassifer   Utilizing PostLarvae Counting Method." << endl;
   }
 
   else if  (classifierName.EqualIgnoreCase ("None")  ||  classifierName.Empty ())
   {
-    countingMethod = cmStraightCount;
+    countingMethod = CountingMethods::cmStraightCount;
     log.Level (20) << "LoadClassifer   Utilizing Straight-Count Counting Method." << endl;
   }
   else
@@ -622,7 +622,7 @@ void  LogicalFrameProcessor::LoadClassifer ()
     KKStr  statusMsg = " Loading Training Library[" + classifierName + "]";
     log.Level (10) << "LoadClassifer   " << statusMsg << endl;
 
-    countingMethod = cmClassier;
+    countingMethod = CountingMethods::cmClassier;
 
     // Since the 'LarcosCounterManager' has already built and saved this classifier we already know 
     // that it is good and we can go ahead and load the saved copy.
@@ -822,16 +822,16 @@ void  LogicalFrameProcessor::ProcessFrame ()
 
       switch  (countingMethod)
       {
-      case  cmStraightCount:
-      case  cmNULL:
+      case  CountingMethods::cmStraightCount:
+      case  CountingMethods::cmNULL:
         AnalyseParticleStraightCount (i, scanRow, scanCol, blob);
         break;
 
-      case  cmPostLarvae:
+      case  CountingMethods::cmPostLarvae:
         AnalyseParticlePostLarvae (i, scanRow, scanCol, blob);
         break;
 
-      case  cmClassier:
+      case  CountingMethods::cmClassier:
         AnalyseParticleUsingClassifier (i, scanRow, scanCol, blob);
         break;
       }

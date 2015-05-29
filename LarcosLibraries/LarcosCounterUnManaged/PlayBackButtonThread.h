@@ -21,7 +21,7 @@ namespace LarcosCounterUnManaged
   class PlayBackButtonThread: public  CameraThread
   {
   public:
-    typedef  ScannerFile::ScannerFileFormat  ScannerFileFormat;
+    typedef  ScannerFile::Format  ScannerFileFormat;
 
     PlayBackButtonThread (LarcosCounterManagerPtr _manager,
                           const KKStr&            _srcScannerFileName,

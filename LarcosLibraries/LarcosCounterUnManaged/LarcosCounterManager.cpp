@@ -91,16 +91,16 @@ KKStr  LarcosCounterManager::CounterStateToStr (CounterState  state)
 {
   switch  (state)
   {
-  case  csNULL:               return "NULL";
-  case  csStopped:            return "Stopped";
-  case  csStopping:           return "Stopping";
-  case  csConnected:          return "Connected";
-  case  csConnecting:         return "Connecting";
-  case  csStarting:           return "Starting";
-  case  csBuildingClassifier: return "BuildingClassifier";
-  case  csRunning:            return "Running";
-  case  csPlayingBack:        return "PlayingBack";
-  case  csDroppedFrames:      return "DroppedFrames";
+  case  CounterState::csNULL:             return "NULL";
+  case  CounterState::Stopped:            return "Stopped";
+  case  CounterState::Stopping:           return "Stopping";
+  case  CounterState::Connected:          return "Connected";
+  case  CounterState::Connecting:         return "Connecting";
+  case  CounterState::Starting:           return "Starting";
+  case  CounterState::BuildingClassifier: return "BuildingClassifier";
+  case  CounterState::Running:            return "Running";
+  case  CounterState::PlayingBack:        return "PlayingBack";
+  case  CounterState::DroppedFrames:      return "DroppedFrames";
   }
   return  "NULL";
 }
@@ -111,23 +111,23 @@ const  KKStr  LarcosCounterManager::larcosOperatingModeStrs[] = {"NULL", "User",
 
 const KKStr&  LarcosCounterManager::LarcosOperatingModeToStr (LarcosOperatingModes om)
 {
-  if  (((int)om < 0)  ||  (om >= (int)lomInvalid))
-    return  larcosOperatingModeStrs[lomInvalid];
+  if  (((int)om < 0)  ||  ((int)om >= (int)LarcosOperatingModes::Invalid))
+    return  larcosOperatingModeStrs[(int)LarcosOperatingModes::Invalid];
   else
-    return  larcosOperatingModeStrs[om];
+    return  larcosOperatingModeStrs[(int)om];
 }
 
 
 
 LarcosCounterManager::LarcosOperatingModes  LarcosCounterManager::LarcosOperatingModeFromStr (const KKStr&  s)
 {
-  for  (kkint32  x = 0;  x < (kkint32)lomInvalid;  ++x)
+  for  (kkint32  x = 0;  x < (int)LarcosOperatingModes::Invalid;  ++x)
   {
     if  (s.EqualIgnoreCase (larcosOperatingModeStrs[x]))
       return  (LarcosOperatingModes)x;
   }
 
-  return  lomNULL;
+  return  LarcosOperatingModes::lomNULL;
 }
 
 
@@ -139,9 +139,9 @@ LarcosCounterManager::LarcosCounterManager (MsgQueuePtr  _msgQueue,
                                             int          _maxNumOfThreads
                                            ):
     configurationFileName          (),
-    curState                       (csStopped),
-    operatingMode                  (lomUser),
-    throughPutField                (StatusSnapshot::dfiCount),
+    curState                       (CounterState::Stopped),
+    operatingMode                  (LarcosOperatingModes::User),
+    throughPutField                (StatusSnapshot::FieldIdx::Count),
     secondaryMsgs                  ("SecondaryMsgs"),
 
     installation                   (NULL),
@@ -200,7 +200,7 @@ LarcosCounterManager::LarcosCounterManager (MsgQueuePtr  _msgQueue,
     destScannerFileRootName        (),
     lastControlNumber              (),
     srcScannerFileName             (),
-    srcScannerFileFormat           (ScannerFile::sfUnKnown),
+    srcScannerFileFormat           (ScannerFile::Format::sfUnKnown),
     particlesDirName               (),
     sessionParameters              (NULL),
     operatingParameters            (NULL),
@@ -656,7 +656,7 @@ bool  LarcosCounterManager::IsRecording () const
   goalie->StartBlock ();
 
   if  (diskWriterThread)
-    isRecording = diskWriterThread->DiskStatus () == DiskWriterThread::dwRecording;
+    isRecording = diskWriterThread->DiskStatus () == DiskWriterThread::DiskWritingStatus::Recording;
   
   goalie->EndBlock ();
   return  isRecording;
@@ -669,9 +669,9 @@ bool  LarcosCounterManager::IsRunning () const
   bool  isRunning = false;
   goalie->StartBlock ();
 
-  isRunning = ((curState == LarcosCounterManager::csDroppedFrames)  ||
-               (curState == LarcosCounterManager::csRunning)        ||
-               (curState == LarcosCounterManager::csPlayingBack)
+  isRunning = ((curState == CounterState::DroppedFrames)  ||
+               (curState == CounterState::Running)        ||
+               (curState == CounterState::PlayingBack)
               );
 
   goalie->EndBlock ();
@@ -726,7 +726,7 @@ void  LarcosCounterManager::ConnectButtonPressed ()
 
   goalie->StartBlock ();
 
-  if  (curState == LarcosCounterManager::csStopped)
+  if  (curState == LarcosCounterManager::CounterState::Stopped)
   {
     DeleteConnectButtonThread ();
     connectButtonThread = new ConnectButtonThread (this, msgQueue,  "ConnectButtonThread");
@@ -747,7 +747,7 @@ void  LarcosCounterManager::ConnectToCamera (bool&  _successful)
 
   runLog->Level (10) << "LarcosCounterManager::ConnectToCamera   CameraMacAddress: " << cameraMacAddress << endl;
 
-  if  (curState != csStopped)
+  if  (curState != CounterState::Stopped)
   {
     _successful = false;
     runLog->Level (10) << "LarcosCounterManager::ConnectToCamera   We need to be in the Stooped-State before we can connect to camera." << endl;
@@ -755,7 +755,7 @@ void  LarcosCounterManager::ConnectToCamera (bool&  _successful)
   }
 
   goalie->StartBlock ();
-  curState = csConnecting;
+  curState = CounterState::Connecting;
   
   TerminateAndDeleteAllButConnectButtonThread ();
 
@@ -776,7 +776,7 @@ void  LarcosCounterManager::ConnectToCamera (bool&  _successful)
     if  (cameraMacAddress.Empty ())
     {
       runLog->Level (10) << "ConnectToCamera   No camera selected." << endl;
-      curState = csStopped;
+      curState = CounterState::Stopped;
       _successful = false;
       //goalie->EndBlock ();
       return;
@@ -799,7 +799,7 @@ void  LarcosCounterManager::ConnectToCamera (bool&  _successful)
   {
     runLog->Level (10) << "ConnectToCamera   Camera not available." << endl;
     secondaryMsgs.AddMsg ("Camera not Connected!!!");
-    curState = csStopped;
+    curState = CounterState::Stopped;
     _successful = false;
     return;
   }
@@ -849,11 +849,11 @@ void  LarcosCounterManager::ConnectToCamera (bool&  _successful)
 
     osSleepMiliSecs (100);
     acquisitionThread->RequestedCameraParameters (operatingParameters);
-    curState = csConnected;
+    curState = CounterState::Connected;
   }
   else
   {
-    curState = csStopped;
+    curState = CounterState::Stopped;
     runLog->Level (-1) << "ConnectToCamera   Could not connect to camera." << endl;
   }
 
@@ -993,9 +993,9 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
     else
     {
       CounterState  origState = curState;
-      curState = this->csBuildingClassifier;
+      curState = CounterState::BuildingClassifier;
 
-      if  (operatingMode == lomAdvanced)
+      if  (operatingMode == LarcosOperatingModes::Advanced)
         secondaryMsgs.AddMsg ("Validating Training Model");
       trainerCancelFlag = false;
 
@@ -1059,7 +1059,7 @@ void  LarcosCounterManager::StartRecordingAndOrCounting (bool&   _successful,
 
   operatingParameters->PlayingBack (false);
 
-  if  (curState != csConnected)
+  if  (curState != CounterState::Connected)
   {
     _errMsg = "We are not connected to the camera!!!";
     runLog->Level (-1) << "StartRecordingAndOrCounting   ***ERROR***   " << _errMsg << endl;
@@ -1077,7 +1077,7 @@ void  LarcosCounterManager::StartRecordingAndOrCounting (bool&   _successful,
     return;
   }
 
-  curState = csStarting;
+  curState = CounterState::Starting;
   SaveConfiguration ();
 
   DeleteAllStoppedThreads ();
@@ -1178,7 +1178,7 @@ void  LarcosCounterManager::StartRecordingAndOrCounting (bool&   _successful,
     if  (operatingParameters->DataIsToBeRecorded ())
       lastControlNumber = sessionParameters->ControlNum ();
     nameLastRecordedFile = destScannerFileName;
-    curState = csRunning;
+    curState = CounterState::Running;
     secondaryMsgs.AddMsg ("Larcos Started Successfully.");
   }
   else
@@ -1188,13 +1188,13 @@ void  LarcosCounterManager::StartRecordingAndOrCounting (bool&   _successful,
 
     TerminateAndDeleteAllButCameraAndStartButtonThreads ();
     if  (WeAreConnectedToCamera ())
-      curState = csConnected;
+      curState = CounterState::Connected;
 
     else if  (WeAreConnectingToCamera ())
-      curState = csConnecting;
+      curState = CounterState::Connecting;
 
     else
-      curState = csStopped;
+      curState = CounterState::Stopped;
   }
 
   SaveConfiguration ();
@@ -1230,7 +1230,7 @@ void  LarcosCounterManager::RecordButtonPressed
 
   _errMsg = "";
 
-  if  (curState != csConnected)
+  if  (curState != CounterState::Connected)
   {
     _errMsg = "We are not connected to the camera!!!";
     runLog->Level (-1) << "RecordButtonPressed   ***ERROR***   " << _errMsg << endl;
@@ -1315,7 +1315,7 @@ void  LarcosCounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileNa
 
   DeleteAllStoppedThreads ();
 
-  if  ((curState == csStopped)  ||  (curState == csConnected))
+  if  ((curState == CounterState::Stopped)  ||  (curState == CounterState::Connected))
   {
     runLog->Level (10) << "PlayBackScannerFile  File: " << _srcScannerFileName << endl;
   }
@@ -1330,20 +1330,20 @@ void  LarcosCounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileNa
     return;
   }
 
-  curState = csStarting;
+  curState = CounterState::Starting;
 
   TerminateAndDeleteAllButPlayBackButtonThread ();
 
   ResetCounts ();
 
   srcScannerFileName     = _srcScannerFileName;
-  srcScannerFileFormat   = ScannerFile::sfUnKnown;
+  srcScannerFileFormat   = ScannerFile::Format::sfUnKnown;
 
   BuildDestScannerFileName (true);
 
   if  (operatingParameters->DataIsToBeRecorded ())
   {
-    if  (operatingParameters->DestScannerFileFormat () == ScannerFile::sfUnKnown)
+    if  (operatingParameters->DestScannerFileFormat () == ScannerFile::Format::sfUnKnown)
     {
       _errMsg = "Invalid destination File-Format selected.";
       secondaryMsgs.AddMsg (_errMsg);
@@ -1458,7 +1458,7 @@ void  LarcosCounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileNa
   ComputeLastFramesMinScanLines ();
 
   // At this point we have deleted all data structures that we are going to.  The 'curState' flag
-  // is set to csStarting so we should not be able to have any conflicts during rest of this method 
+  // is set to Starting so we should not be able to have any conflicts during rest of this method 
   // call.
   goalie->EndBlock ();
 
@@ -1529,11 +1529,11 @@ void  LarcosCounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileNa
     runLog->Level (-1) << "PlayBackScannerFile   ***ERROR***  Playback failed to Start! Terminating all threads." << endl;
     secondaryMsgs.AddMsg ("Play-Back Failed to Start!!!");
     TerminateAndDeleteAllButPlayBackButtonThread ();
-    curState = csStopped;
+    curState = CounterState::Stopped;
   }
   else
   {
-    curState = csPlayingBack;
+    curState = CounterState::PlayingBack;
     runLog->Level (40) << "PlayBackScannerFile   Successfully started." << endl;
     secondaryMsgs.AddMsg ("Play-Back Successfully Started.");
   }
@@ -1572,7 +1572,7 @@ void  LarcosCounterManager::PlayBackButtonPressed
 
   _errMsg = "";
 
-  if  ((curState != csConnected)  &&  (curState != this->csStopped))
+  if  ((curState != CounterState::Connected)  &&  (curState != CounterState::Stopped))
   {
     _errMsg = "Can only start PlayBack when in Connected or Stopped state!";
     runLog->Level (-1) << "PlayBackButtonPressed   ***ERROR***   " << _errMsg << endl
@@ -1648,28 +1648,28 @@ bool  LarcosCounterManager::OkToPressStop (KKStr&  errMsg)
   {
     switch  (curState)
     {
-      case csStarting:
-      case csBuildingClassifier:
+      case  CounterState::Starting:
+      case  CounterState::BuildingClassifier:
         errMsg = "Larcos is still starting up;  wait for it to stop before pressing 'Stop'";
         break;
 
-      case csStopping:
+      case  CounterState::Stopping:
         errMsg = "Larcos is already 'Stopping'.";
         break;
 
-      case  csDroppedFrames:
+      case  CounterState::DroppedFrames:
         errMsg = "Larcos is processing dropped frames.";
         break;
 
-      case csConnected:
-      case csConnecting:
+      case  CounterState::Connected:
+      case  CounterState::Connecting:
       {
         errMsg = "Larcos is Not Running.";
         break;
       }
 
-      case csRunning:
-      case csPlayingBack:
+      case  CounterState::Running:
+      case  CounterState::PlayingBack:
       {
         okToPressStop = true;
         break;
@@ -1730,7 +1730,7 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
   // stops asap.
   trainerCancelFlag = true;
 
-  if  ((curState != csRunning)  &&  (curState != csPlayingBack))
+  if  ((curState != CounterState::Running)  &&  (curState != CounterState::PlayingBack)  &&  (curState != CounterState::Starting))
   {
     runLog->Level (10) << "CloseOutCountingAndOrRecording   We are not Running or playing back a recorded file." << endl;
     goalie->EndBlock ();
@@ -1740,7 +1740,7 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
   // We will first let the 'CameraAcquision' thread know that it does not need to
   // save data to disk anymore.  Then we will shutdown the other threads after they are finished
   // processing what is in the buffers.
-  curState = csStopping;
+  curState = CounterState::Stopping;
   stoppingIsInProgress = true;
 
   goalie->EndBlock ();
@@ -1766,7 +1766,7 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
   {
     acquisitionThread->TerminateThread ();
     acquisitionThread->WaitForThreadToStop (10);
-    if  (operatingMode == lomAdvanced)
+    if  (operatingMode == LarcosOperatingModes::Advanced)
       secondaryMsgs.AddMsg ("Stopped Reading Scanner File.");
   }
 
@@ -1774,7 +1774,7 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
   // wait until all the physical frames in the buffer have been processed.
   while  (!CameraFrameBufferEmpty ())
     osSleepMiliSecs (20);
-  if  (operatingMode == lomAdvanced)
+  if  (operatingMode == LarcosOperatingModes::Advanced)
     secondaryMsgs.AddMsg ("Camera Frame Buffers Empty.");
 
 
@@ -1796,7 +1796,7 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
   {
     if  (droppedFrames->QueueSize () > 0)
     {
-      curState = csDroppedFrames;
+      curState = CounterState::DroppedFrames;
       logicalFrameBuilderThread->ShutdownThread ();
       while  (!LogicalFrameBuffersAreEmpty ()  &&  (!terminateFlag))
         osSleepMiliSecs (50);
@@ -1808,7 +1808,7 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
   ShutDownSnapshotThread ();
   ShutDownReportWriterThread ();
 
-  if  (operatingMode == lomAdvanced)
+  if  (operatingMode == LarcosOperatingModes::Advanced)
     secondaryMsgs.AddMsg ("Processing Last Frames.");
   // Will now wait until all threads have stopped.
   bool  allThreadsStopped = false;
@@ -1821,10 +1821,10 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
 
   operatingParameters->PlayingBack (false);
 
-  if  ((acquisitionThread != NULL)  &&  (acquisitionThread->StartStatus () == CameraAcquisition::ssConnected))
-    curState = csConnected;
+  if  ((acquisitionThread != NULL)  &&  (acquisitionThread->StartStatus () == CameraAcquisition::StartStatusType::Connected))
+    curState = CounterState::Connected;
   else
-    curState = csStopped;
+    curState = CounterState::Stopped;
 
   goalie->StartBlock ();
 
@@ -2303,7 +2303,7 @@ void  LarcosCounterManager::StartCameraAcquisitionThread (CameraAcquisitionPtr  
   acquisitionThread->Start (ThreadPriority::tpHigh, _successful);
   if  (_successful)
   {
-    while  (acquisitionThread->StartStatus() != CameraAcquisition::ssConnected)
+    while  (acquisitionThread->StartStatus() != CameraAcquisition::StartStatusType::Connected)
     {
       osSleep (0.1f);
       if  (acquisitionThread->Crashed ())
@@ -2409,7 +2409,7 @@ void   LarcosCounterManager::StartFrameBuilderAndProcessingThreads (bool&  _succ
 
   cameraFrameBuffer->SetCompensationTable (ScannerFile::ConpensationTable (operatingParameters->DestScannerFileFormat ()));
 
-  if  (operatingMode == lomAdvanced)
+  if  (operatingMode == LarcosOperatingModes::Advanced)
     secondaryMsgs.AddMsg ("Starting up Frame Processors.");
 
   delete  frameProcessors;
@@ -2496,7 +2496,7 @@ void   LarcosCounterManager::StartFrameBuilderAndProcessingThreads (bool&  _succ
     }
     else
     {
-      if  (operatingMode == lomAdvanced)
+      if  (operatingMode == LarcosOperatingModes::Advanced)
         secondaryMsgs.AddMsg ("Frame Processors Started.");
     }
   }
@@ -2830,7 +2830,7 @@ const KKStr&  LarcosCounterManager::Description () const
 bool  LarcosCounterManager::EmbeddedFlowMeter () const
 {
   if  (installation)
-    return  (installation->FlowMeterMethod () == InstallationConfig::fmmEmbedded);
+    return  (installation->FlowMeterMethod () == InstallationConfig::FlowMeterMethods::Embedded);
   else
     return false;
 }
@@ -3146,10 +3146,10 @@ void  LarcosCounterManager::MinSizeThreshold (kkint32 _minSizeThreshold)
 
 bool  LarcosCounterManager::WeAreRecordingToDisk ()
 {
-  return  (((curState == csRunning)  ||  (curState == csPlayingBack))             &&
+  return  (((curState == CounterState::Running)  ||  (curState == CounterState::PlayingBack))             &&
            (diskWriterThread  != NULL)  &&  (acquisitionThread != NULL)           &&
            (diskWriterThread->WeAreRecordingToDisk ())                            &&
-           (acquisitionThread->StartStatus () == CameraAcquisition::ssConnected)  &&
+           (acquisitionThread->StartStatus () == CameraAcquisition::StartStatusType::Connected)  &&
            (acquisitionThread->Status ()      == ThreadStatus::tsRunning)
           );
 }
@@ -3241,7 +3241,7 @@ void  LarcosCounterManager::Status (KKStr&  statusMsg,
     secondaryMsg = "";
   }
 
-  if  (curState == csPlayingBack)
+  if  (curState == CounterState::PlayingBack)
   {
     statusMsg = "Playing Back";
     color = "White";
@@ -3249,9 +3249,9 @@ void  LarcosCounterManager::Status (KKStr&  statusMsg,
     return;
   }
 
-  else if  (curState == csDroppedFrames)
+  else if  (curState == CounterState::DroppedFrames)
   {
-    if  (this->operatingMode == lomUser)
+    if  (this->operatingMode == LarcosOperatingModes::User)
       statusMsg = "Finishing Up Counting";
     else
       statusMsg = "Processing Dropped Frames";
@@ -3274,8 +3274,8 @@ void  LarcosCounterManager::Status (KKStr&  statusMsg,
   statusMsg = CounterStateToStr (curState);
 
   KKThread::ThreadStatus               cameraStatus      = ThreadStatus::tsNULL;
-  CameraAcquisition::StartStatusType   cameraStartStatus = CameraAcquisition::ssNULL;
-  DiskWriterThread::DiskWritingStatus  diskWritingStatus = DiskWriterThread::dwNULL;
+  CameraAcquisition::StartStatusType   cameraStartStatus = CameraAcquisition::StartStatusType::ssNULL;
+  DiskWriterThread::DiskWritingStatus  diskWritingStatus = DiskWriterThread::DiskWritingStatus::dwNULL;
   KKStr  cameraMsg = "";
 
   if  (acquisitionThread)
@@ -3287,14 +3287,14 @@ void  LarcosCounterManager::Status (KKStr&  statusMsg,
   else
   {
     cameraStatus      = ThreadStatus::tsNULL;
-    cameraStartStatus = CameraAcquisition::ssDisconnected;
+    cameraStartStatus = CameraAcquisition::StartStatusType::Disconnected;
     cameraMsg = "";
   }
 
   if  (diskWriterThread)
     diskWritingStatus = diskWriterThread->DiskStatus ();
   else
-    diskWritingStatus = DiskWriterThread::dwNULL;
+    diskWritingStatus = DiskWriterThread::DiskWritingStatus::dwNULL;
 
   color = "White";
 
@@ -3310,32 +3310,32 @@ void  LarcosCounterManager::Status (KKStr&  statusMsg,
   {
     switch  (cameraStartStatus)
     {
-    case  CameraAcquisition::ssConnecting:
+    case  CameraAcquisition::StartStatusType::Connecting:
       color = "Orange";
       statusMsg = "Connecting";
       break;
 
-    case  CameraAcquisition::ssConnected:
+    case  CameraAcquisition::StartStatusType::Connected:
       color = "White";
       statusMsg = "Connected";
-      if  (curState == csStarting)
+      if  (curState == CounterState::Starting)
         statusMsg = "Starting";
 
-      else if  (curState == csBuildingClassifier)
+      else if  (curState == CounterState::BuildingClassifier)
         statusMsg = "Building Classifier";
       break;
 
-    case  CameraAcquisition::ssConnectionFailed:
+    case  CameraAcquisition::StartStatusType::ConnectionFailed:
       color = "Red";
       statusMsg = "Connection Error";
       break;
 
-    case  CameraAcquisition::ssDisconnected:
+    case  CameraAcquisition::StartStatusType::Disconnected:
       color = "Orange";
       statusMsg = "Disconnected";
       break;
 
-    case  CameraAcquisition::ssStoped:
+    case  CameraAcquisition::StartStatusType::Stoped:
       color = "White";
       statusMsg = "Stopped";
       break;
@@ -3352,7 +3352,7 @@ bool   LarcosCounterManager::WeAreConnectedToCamera ()  const
   if  (!acquisitionThread)
     return false;
   else
-    return  (acquisitionThread->StartStatus () == CameraAcquisition::ssConnected);
+    return  (acquisitionThread->StartStatus () == CameraAcquisition::StartStatusType::Connected);
 }
 
 
@@ -3362,7 +3362,7 @@ bool   LarcosCounterManager::WeAreConnectingToCamera ()  const
   if  (!acquisitionThread)
     return false;
   else
-    return  (acquisitionThread->StartStatus () == CameraAcquisition::ssConnecting);
+    return  (acquisitionThread->StartStatus () == CameraAcquisition::StartStatusType::Connecting);
 }
 
 
@@ -3480,7 +3480,7 @@ void  LarcosCounterManager::SaveConfiguration ()
   o << "NameLastRecordedFile"           << "\t" << nameLastRecordedFile                                << endl;
   o << "DropFolderToLarcos"             << "\t" << dropFolderToLarcos                                  << endl;
   o << "OperatingMode"                  << "\t" << LarcosOperatingModeToStr (operatingMode)            << endl;
-  o << "ThroughPutField"                << "\t" << StatusSnapshot::DataFieldIdxToStr (throughPutField) << endl;
+  o << "ThroughPutField"                << "\t" << StatusSnapshot::SnapShotFieldIdxToStr (throughPutField) << endl;
   o << "LastScannerFileCounted"         << "\t" << lastScannerFileCounted                              << endl;
   o << "LastControlNumber"              << "\t" << lastControlNumber                                   << endl;
   o << "CropLeft"                       << "\t" << cropLeft                                            << endl;
@@ -3552,12 +3552,12 @@ void  LarcosCounterManager::ReadConfiguration ()
       else if  (fieldName.EqualIgnoreCase ("OperatingMode"))
       {
         operatingMode = LarcosOperatingModeFromStr (restOfLine);
-        if  ((operatingMode == lomNULL)  ||  (operatingMode == lomInvalid))
-          operatingMode = lomUser;
+        if  ((operatingMode == LarcosOperatingModes::lomNULL)  ||  (operatingMode == LarcosOperatingModes::Invalid))
+          operatingMode = LarcosOperatingModes::User;
       }
 
       else if  (fieldName.EqualIgnoreCase ("ThroughPutField"))
-        throughPutField = StatusSnapshot::DataFieldIdxFromStr (restOfLine);
+        throughPutField = StatusSnapshot::SnapShotFieldIdxFromStr (restOfLine);
 
       else if  (fieldName.EqualIgnoreCase ("SrcScannerFileName"))
         srcScannerFileName = restOfLine;
@@ -3614,8 +3614,11 @@ void  LarcosCounterManager::ReadConfiguration ()
     config = NULL;
   }
 
-  if  ((operatingMode != lomAdvanced)  ||  (throughPutField < 0)  ||  (throughPutField >= StatusSnapshot::dfiInvalid))
-    throughPutField = StatusSnapshot::dfiCount;
+  if  ((operatingMode != LarcosOperatingModes::Advanced)  ||  
+       ((int)throughPutField < 0)  ||  
+       (throughPutField >= StatusSnapshot::FieldIdx::Invalid)
+      )
+    throughPutField = StatusSnapshot::FieldIdx::Count;
 
   if  (snapshotInterval < 1)
     snapshotInterval = 5;

@@ -38,25 +38,25 @@ KKStr  InstallationConfig::flowMeterMethodStrs[] = {"NULL", "Embedded", "EndOfLi
 
 const KKStr&  InstallationConfig::FlowMeterMethodToStr (FlowMeterMethods  method)
 {
-  if  ((method < 0)  ||  (method >= fmmEndOfList ))
+  if  ((method < FlowMeterMethods::fmmNULL)  ||  (method >= FlowMeterMethods::EndOfList ))
     return KKStr::EmptyStr();
   else
-    return flowMeterMethodStrs[method];
+    return flowMeterMethodStrs[(int)method];
 }
 
 
 
 InstallationConfig::FlowMeterMethods  InstallationConfig::FlowMeterMethodFromStr (const KKStr&  s)
 {
-  FlowMeterMethods  method = fmmNULL;
-  while  (method < fmmEndOfList)
+  FlowMeterMethods  method = FlowMeterMethods::fmmNULL;
+  while  (method < FlowMeterMethods::EndOfList)
   {
-    if  (s.EqualIgnoreCase (flowMeterMethodStrs[method]))
+    if  (s.EqualIgnoreCase (flowMeterMethodStrs[(int)method]))
       break;
     method = (FlowMeterMethods)((int)method + 1);
   }
-  if  (method >= fmmEndOfList)
-    return fmmNULL;
+  if  (method >= FlowMeterMethods::EndOfList)
+    return FlowMeterMethods::fmmNULL;
   else
     return method;
 }
@@ -66,7 +66,7 @@ InstallationConfig::FlowMeterMethods  InstallationConfig::FlowMeterMethodFromStr
 InstallationConfig::InstallationConfig (RunLog&  runLog):
     LarcosDataRec ("Installation", "LarcosInstallation"),
     description               (),
-    flowMeterMethod           (fmmNULL),
+    flowMeterMethod           (FlowMeterMethods::fmmNULL),
     flowMeterTicsPerMeter     (0.0f),
     imagingChamberWidth       (0.0f),
     imagingChamberWidthPixels (),
@@ -101,7 +101,7 @@ InstallationConfig::InstallationConfig (const KKB::KKStr&  _name,
                                        ):
     LarcosDataRec ("Installation", "LarcosInstallation"),
     description               (),
-    flowMeterMethod           (fmmNULL),
+    flowMeterMethod           (FlowMeterMethods::fmmNULL),
     flowMeterTicsPerMeter     (0.0f),
     imagingChamberWidth       (0.0f),
     imagingChamberWidthPixels (2048),
@@ -167,7 +167,7 @@ void  InstallationConfig::UpdateFromScannerFile (ScannerFilePtr  sf)
 
 bool  InstallationConfig::FlowMeterPresent () const
 {
-  return  ((flowMeterMethod == fmmEmbedded));
+  return  ((flowMeterMethod == FlowMeterMethods::Embedded));
 }
 
 

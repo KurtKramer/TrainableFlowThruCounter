@@ -32,11 +32,12 @@ namespace LarcosCounterUnManaged
     typedef  kkint16  BlobIdType;
     typedef  vector<BlobIdType>  BlobIdVectorType;
 
-    typedef  enum  {cmNULL,
+    enum  class  CountingMethods  
+                   {cmNULL,
                     cmStraightCount,
                     cmPostLarvae,
                     cmClassier
-                   }  CountingMethods;
+                   };
      
 
     LogicalFrameProcessor (LarcosCounterManagerPtr _manager,

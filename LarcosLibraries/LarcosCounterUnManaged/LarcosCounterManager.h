@@ -54,35 +54,35 @@ namespace LarcosCounterUnManaged
   class  LarcosCounterManager: public  KKObservable
   {
   public:
-    typedef  ScannerFile::ScannerFileFormat  ScannerFileFormat;
+    typedef  ScannerFile::Format  ScannerFileFormat;
 
     typedef  KKThread::ThreadStatus  ThreadStatus;
 
     typedef  KKThread::ThreadPriority  ThreadPriority;
 
-    typedef  enum  {csNULL, 
-                    csStopped, 
-                    csStopping, 
-                    csConnected, 
-                    csConnecting, 
-                    csStarting,
-                    csBuildingClassifier,  // This step is done when ever we Start a new session or replay a previous one.
-                    csRunning,
-                    csPlayingBack,
-                    csDroppedFrames
-                   }
-                    CounterState;
+    enum class CounterState: kkint16 
+                 {csNULL, 
+                  Stopped, 
+                  Stopping, 
+                  Connected, 
+                  Connecting, 
+                  Starting,
+                  BuildingClassifier,  // This step is done when ever we Start a new session or replay a previous one.
+                  Running,
+                  PlayingBack,
+                  DroppedFrames
+                 };
 
     static
     KKStr  CounterStateToStr (CounterState  state);
 
 
-    typedef  enum  {lomNULL,
-                    lomUser,
-                    lomAdvanced,
-                    lomInvalid
-                   }
-                    LarcosOperatingModes;
+    enum  class LarcosOperatingModes
+                  {lomNULL,
+                   User,
+                   Advanced,
+                   Invalid
+                  };
 
     static 
     const KKStr&  LarcosOperatingModeToStr (LarcosOperatingModes om);
@@ -121,7 +121,7 @@ namespace LarcosCounterUnManaged
     LarcosOperatingModes  OperatingMode ()  {return   operatingMode;}
 
     
-    StatusSnapshot::DataFieldIdx  ThroughPutField () const  {return throughPutField;}
+    StatusSnapshot::FieldIdx  ThroughPutField () const  {return throughPutField;}
 
 
     /** Returns the current Installation Configuration. */
@@ -293,7 +293,7 @@ namespace LarcosCounterUnManaged
 
     void   SnapshotInterval           (kkint32 _snapshotInterval);
     
-    void   ThroughPutField            (StatusSnapshot::DataFieldIdx  _throughPutField)  {throughPutField = _throughPutField;}
+    void   ThroughPutField            (StatusSnapshot::FieldIdx  _throughPutField)  {throughPutField = _throughPutField;}
 
     void   TotalBytesRead             (kkint64 _totalBytesRead)   {totalBytesRead   = _totalBytesRead;}
 
@@ -332,7 +332,7 @@ namespace LarcosCounterUnManaged
     kkint32       ImagingChamberWidthPixels      () const;
     float         ImagingChamberPixelsPerMM      () const;
     bool          IsRecording                    () const;                                 /**< Indicates if we are currently recording data.                                                 */
-    bool          IsRunning                      () const;                                 /**< 'curState' indicates that we are running;  ex "csDroppedFrames", "csRunning", "csPlayingBack" */
+    bool          IsRunning                      () const;                                 /**< 'curState' indicates that we are running;  ex "DroppedFrames", "Running", "PlayingBack" */
     KKStr         LastScannerFileCounted         () const {return lastScannerFileCounted;}
     bool          LogicalFrameBuilderRunning     ();
     kkint32       LogicalFrameQueueSizeMax       () const {return logicalFrameQueueSizeMax;}
@@ -629,7 +629,7 @@ namespace LarcosCounterUnManaged
                                                             * The concept is that this is going to be a drop-box or google-drive folder. 
                                                             */
 
-    StatusSnapshot::DataFieldIdx  throughPutField;
+    StatusSnapshot::FieldIdx      throughPutField;
 
     InstallationConfigPtr         installation;            /**< Represents the physical parameters of the installation that we are recording on or
                                                             * playing back from.   It will initially be created when 'LarcosCounterManager' is 

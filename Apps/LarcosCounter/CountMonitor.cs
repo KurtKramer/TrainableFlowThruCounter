@@ -43,8 +43,8 @@ namespace LarcosCounter
     private  bool  runLogTimerCallCountingStop = false;
     private  bool  runLogTimerExitApplication  = false;
 
-    private  StatusSnapshotManaged.DataFieldIdx  throughPutField = StatusSnapshotManaged.DataFieldIdx.Count;
-    private  String                              secondaryToDisplay = "Capacity";
+    private  StatusSnapshotManaged.FieldIdx  throughPutField = StatusSnapshotManaged.FieldIdx.Count;
+    private  String                          secondaryToDisplay = "Capacity";
 
     private  TabPage         statsTabPage  = null;   ///< Points to the Tab page that contains Statistics; this way will be able to add and remove page as needed */
     private  TabPage         dialogTabPage = null;
@@ -372,7 +372,7 @@ namespace LarcosCounter
 
       UpdateDefaultOperatingParametersTab ();
 
-      ThroughPutDataToDiosplay.Text = StatusSnapshotManaged.DataFieldIdxToStr (throughPutField);
+      ThroughPutDataToDiosplay.Text = StatusSnapshotManaged.SnapShotFieldIdxToStr (throughPutField);
       SecondaryToDisplay.Text = secondaryToDisplay;
 
       CropLeft.Text               = cameraManager.CropLeft ().ToString ();
@@ -786,7 +786,7 @@ namespace LarcosCounter
 
       frameProcessorsCount = Math.Max (1, cameraManager.FrameProcessorsCount ());
 
-      ThroughputChart.Series[0].LegendText = StatusSnapshotManaged.DataFieldIdxToStr (throughPutField);
+      ThroughputChart.Series[0].LegendText = StatusSnapshotManaged.SnapShotFieldIdxToStr (throughPutField);
       ThroughputChart.Series[0].Points.Clear ();
       ThroughputChart.Series[1].LegendText = secondaryToDisplay;
       ThroughputChart.Series[1].Points.Clear ();
@@ -1092,8 +1092,8 @@ namespace LarcosCounter
       playBackOperatingParms.SaveParticleImages = false;
       playBackOperatingParms.DataIsToBeRecorded = false;
       playBackOperatingParms.FlatFieldEnabled   = true;
-      if  (playBackOperatingParms.DestScannerFileFormat == UmiScannerFile.ScannerFileFormat.sfSimple)
-        playBackOperatingParms.DestScannerFileFormat = UmiScannerFile.ScannerFileFormat.sf4BitEncoded;
+      if  (playBackOperatingParms.DestScannerFileFormat == UmiScannerFile.Format.sfSimple)
+        playBackOperatingParms.DestScannerFileFormat = UmiScannerFile.Format.sf4BitEncoded;
 
       StartRecordingDialog  srd = new StartRecordingDialog (cameraManager, playBackSessionParms, playBackOperatingParms, true, runLog);
       srd.ShowDialog (this);
@@ -1270,12 +1270,12 @@ namespace LarcosCounter
     {
       if  (cameraManager.OperatingMode () != LarcosOperatingModes.Advanced)
       {
-        throughPutField = StatusSnapshotManaged.DataFieldIdx.Count;
+        throughPutField = StatusSnapshotManaged.FieldIdx.Count;
       }
       else
       {
-        StatusSnapshotManaged.DataFieldIdx  newThroughPutField = StatusSnapshotManaged.DataFieldIdxFromStr ((String)ThroughPutDataToDiosplay.SelectedItem);
-        if  (newThroughPutField != StatusSnapshotManaged.DataFieldIdx.dfiNULL)
+        StatusSnapshotManaged.FieldIdx  newThroughPutField = StatusSnapshotManaged.SnapShotFieldIdxFromStr ((String)ThroughPutDataToDiosplay.SelectedItem);
+        if  (newThroughPutField != StatusSnapshotManaged.FieldIdx.dfiNULL)
         {
           runLog.WriteLn  (10, "ThroughPutDataToDisplay_SelectedIndexChanged   Changed to " + newThroughPutField + ".");
           

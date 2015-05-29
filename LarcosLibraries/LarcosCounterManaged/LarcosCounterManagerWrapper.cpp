@@ -202,7 +202,7 @@ LarcosCounterManagerWrapper::StatusSnapshotDataFieldIdx   LarcosCounterManagerWr
 
 void  LarcosCounterManagerWrapper::ThroughPutField (StatusSnapshotDataFieldIdx _throughPutField)
 {
-  larcosCounterManager->ThroughPutField ((StatusSnapshot::DataFieldIdx)_throughPutField);
+  larcosCounterManager->ThroughPutField ((StatusSnapshot::FieldIdx)_throughPutField);
 }
 
 

@@ -25,20 +25,20 @@ namespace LarcosCounterManaged
     typedef  array<array<byte>^ >  FrameArray;
     typedef  osFilePos             FilePos;
 
-    enum  class  ScannerFileFormat: int  
+    enum  class  Format: int  
     {
-      sfSimple          = ScannerFile::sfSimple,
-      sf3BitEncoded     = ScannerFile::sf3BitEncoded,
-      sf4BitEncoded     = ScannerFile::sf4BitEncoded,
-      sfZlib3BitEncoded = ScannerFile::sfZlib3BitEncoded,
-      sfUnKnown         = ScannerFile::sfUnKnown
+      sfSimple          = ScannerFile::Format::sfSimple,
+      sf3BitEncoded     = ScannerFile::Format::sf3BitEncoded,
+      sf4BitEncoded     = ScannerFile::Format::sf4BitEncoded,
+      sfZlib3BitEncoded = ScannerFile::Format::sfZlib3BitEncoded,
+      sfUnKnown         = ScannerFile::Format::sfUnKnown
     };
 
     static
-    ScannerFileFormat  ScannerFileFormatFromStr (String^ s);
+    Format  ScannerFileFormatFromStr (String^ s);
 
     static
-    String^  ScannerFileFormatToStr (ScannerFileFormat  f);
+    String^  ScannerFileFormatToStr (Format  f);
 
 
     ref class  HeaderField

@@ -258,7 +258,7 @@ void  CameraAcquisitionSimulator::Run ()
 {
   log.Level (10) << "CameraAcquisitionSimulator::Run" << endl;
   Status (ThreadStatus::tsRunning);
-  StartStatus (ssConnecting, "");
+  StartStatus (StartStatusType::Connecting, "");
 
   bool  embeddedFlowMeter = Manager ()->EmbeddedFlowMeter ();
 
@@ -283,7 +283,7 @@ void  CameraAcquisitionSimulator::Run ()
   log.Level (10) << "CameraAcquisitionSimulator::Run   Acquisition Loop" << endl;
 
   bool  embeddedFlowMeterDataPresent = false;
-  if  (sf->FileFormat ()  == ScannerFile::sfSimple)
+  if  (sf->FileFormat ()  == ScannerFile::Format::sfSimple)
   {
     if  (!sf->FlatFieldEnabled ())
     {
@@ -307,7 +307,7 @@ void  CameraAcquisitionSimulator::Run ()
       AllocateDynamicMemory ();
     }
 
-    StartStatus (ssConnected, "Connected to Scanner File[" + sf->FileName () + "]");
+    StartStatus (StartStatusType::Connected, "Connected to Scanner File[" + sf->FileName () + "]");
 
     Manager ()->StartingToReadNewScannerFile (ScannerFileEntry::GetOrCreateScannerFileEntry (sf));
 
@@ -435,9 +435,9 @@ void  CameraAcquisitionSimulator::Run ()
   delete  sf;
   sf = NULL;
 
-  StartStatus (ssDisconnected, "Simulated Camera Stopped.");
+  StartStatus (StartStatusType::Disconnected, "Simulated Camera Stopped.");
 
-  if  ((!TerminateFlag ())  &&  (!ShutdownFlag ()) &&  (Manager ()->CurState () == LarcosCounterManager::csPlayingBack))
+  if  ((!TerminateFlag ())  &&  (!ShutdownFlag ()) &&  (Manager ()->CurState () == LarcosCounterManager::CounterState::PlayingBack))
   {
     bool  successful = false;
     KKStr  errMsg = "";

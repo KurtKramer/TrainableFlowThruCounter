@@ -34,13 +34,14 @@ namespace LarcosCounterUnManaged
   class  CameraAcquisition:  public  CameraThread
   {
   public:
-    typedef  enum  {ssNULL,
-                    ssConnecting,
-                    ssConnectionFailed,
-                    ssConnected,
-                    ssDisconnected,
-                    ssStoped
-                   }  StartStatusType;
+    enum  class  StartStatusType
+                 {ssNULL,
+                  Connecting,
+                  ConnectionFailed,
+                  Connected,
+                  Disconnected,
+                  Stoped
+                 };
 
 
     CameraAcquisition (LarcosCounterManagerPtr _manager,
@@ -219,8 +220,6 @@ namespace LarcosCounterUnManaged
 
 
 
-
-
   /**
    *@class CameraAcquisition::CommandEntry
    *@brief  Used to queue updates to the Camera that need to be done, such as request to update ScanRate.
@@ -228,32 +227,32 @@ namespace LarcosCounterUnManaged
   class  CommandEntry
   {
   public:
-    typedef  enum  {ceNULL, ceScanRate, ceAnalogGain, ceDigitalGain, ceSensitivityMode}  CommandEntryTypes;
+    enum  class  EntryTypes {ceNULL, ScanRate, AnalogGain, DigitalGain, SensitivityMode};
 
-    CommandEntry (CommandEntryTypes  _commandType,
-                  float              _parameter
+    CommandEntry (EntryTypes  _commandType,
+                  float       _parameter
                  );
 
-    CommandEntry (CommandEntryTypes  _commandType,
-                  kkint32            _parameter
+    CommandEntry (EntryTypes  _commandType,
+                  kkint32     _parameter
                  );
 
-    CommandEntry (CommandEntryTypes  _commandType,
-                  const KKStr&       _parameter
+    CommandEntry (EntryTypes    _commandType,
+                  const KKStr&  _parameter
                  );
 
-    float              AnalogGain      () const {return analogGain;}
-    kkint32            DigitalGain     () const {return digitalGain;}
-    CommandEntryTypes  CommandType     () const {return commandType;}
-    float              ScanRate        () const {return scanRate;}
-    const KKStr&       SensitivityMode () const {return sensitivityMode;}
+    float          AnalogGain      () const {return analogGain;}
+    kkint32        DigitalGain     () const {return digitalGain;}
+    EntryTypes     CommandType     () const {return commandType;}
+    float          ScanRate        () const {return scanRate;}
+    const KKStr&   SensitivityMode () const {return sensitivityMode;}
 
   private:
-    CommandEntryTypes  commandType;
-    float              analogGain;
-    kkint32            digitalGain;
-    float              scanRate;
-    KKStr              sensitivityMode;
+    EntryTypes  commandType;
+    float       analogGain;
+    kkint32     digitalGain;
+    float       scanRate;
+    KKStr       sensitivityMode;
   };  /* CommandEntry */
 
 

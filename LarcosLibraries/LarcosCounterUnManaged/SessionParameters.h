@@ -27,7 +27,7 @@ namespace LarcosCounterUnManaged
   class SessionParameters: public LarcosDataRec
   {
   public:
-    typedef  ScannerFile::ScannerFileFormat  ScannerFileFormat;
+    typedef  ScannerFile::Format  ScannerFileFormat;
 
     SessionParameters ();
 

@@ -55,7 +55,7 @@ namespace LarcosCounter
     public  bool    SaveParticleImages {get {return advParameters.SaveParticleImages;}  set {advParameters.SaveParticleImages = value;}}
     public  float   ScanRate           {get {return advParameters.ScanRate;}            set {advParameters.ScanRate           = value;}}
 
-    public  UmiScannerFile.ScannerFileFormat FileFormat
+    public  UmiScannerFile.Format FileFormat
                                        {get {return advParameters.FileFormat;}          set {advParameters.FileFormat         = value;}}
 
     public  bool    StartRecording     {get {return startRecording;}}

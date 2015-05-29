@@ -37,20 +37,20 @@ using namespace System::Runtime::InteropServices;
 
 
 
-UmiScannerFile::ScannerFileFormat  UmiScannerFile::ScannerFileFormatFromStr (String^ s)
+UmiScannerFile::Format  UmiScannerFile::ScannerFileFormatFromStr (String^ s)
 {
   KKStr  kkS = UmiKKStr::SystemStringToKKStr (s);
-  ScannerFile::ScannerFileFormat  
+  ScannerFile::Format  
     sf = ScannerFile::ScannerFileFormatFromStr (kkS);
 
-  return  (ScannerFileFormat)sf;
+  return  (Format)sf;
 }
 
 
 
-String^  UmiScannerFile::ScannerFileFormatToStr (ScannerFileFormat  f)
+String^  UmiScannerFile::ScannerFileFormatToStr (Format  f)
 {
-  ScannerFile::ScannerFileFormat  sff = (ScannerFile::ScannerFileFormat)f;
+  ScannerFile::Format  sff = (ScannerFile::Format)f;
   KKStr  s = ScannerFile::ScannerFileFormatToStr (sff);
   return UmiKKStr::KKStrToSystenStr (s);
 }
@@ -305,11 +305,11 @@ float  UmiScannerFile::ScanRate::get ()
 
 array<String^>^  UmiScannerFile::FileFormatOptions ()
 {
-  int  numOfOptions = ScannerFile::sfUnKnown;
+  int  numOfOptions = (int)ScannerFile::Format::sfUnKnown;
   array<String^>^ optionsArray = gcnew array<String^> (numOfOptions);
   kkint32 x = 0;
   for  (x = 0;  x < numOfOptions;  ++x)
-    optionsArray[x] = UmiKKStr::KKStrToSystenStr (ScannerFile::ScannerFileFormatToStr ((ScannerFile::ScannerFileFormat)x));
+    optionsArray[x] = UmiKKStr::KKStrToSystenStr (ScannerFile::ScannerFileFormatToStr ((ScannerFile::Format)x));
 
   return  optionsArray;
 }  /* FileFormatOptions */
@@ -318,8 +318,8 @@ array<String^>^  UmiScannerFile::FileFormatOptions ()
 
 bool  UmiScannerFile::FileFormatStrValid (String^  _formatStr)
 {
-  ScannerFile::ScannerFileFormat  format = ScannerFile::ScannerFileFormatFromStr (UmiKKStr::SystemStringToKKStr (_formatStr));
-  return  (format != ScannerFile::sfUnKnown);
+  ScannerFile::Format  format = ScannerFile::ScannerFileFormatFromStr (UmiKKStr::SystemStringToKKStr (_formatStr));
+  return  (format != ScannerFile::Format::sfUnKnown);
 }  /* FileFormatStrValid */
 
 

@@ -44,22 +44,23 @@ namespace LarcosCounterUnManaged
   class DiskWriterThread: public  CameraThread
   {
   public:
-    typedef  KKLSC::ScannerFile::ScannerFileFormat  ScannerFileFormat;
+    typedef  KKLSC::ScannerFile::Format  ScannerFileFormat;
 
-    typedef  enum  {dwNULL,
-                    dwRecording,
-                    dwNotRecording,
-                    dwDroppingFrames
-                   }  DiskWritingStatus;
+    enum  class  DiskWritingStatus  
+                   {dwNULL,
+                    Recording,
+                    NotRecording,
+                    DroppingFrames
+                   };
 
-    DiskWriterThread (LarcosCounterManagerPtr         _manager,
-                      CameraFrameBufferPtr            _cameraBuffer,
-                      MsgQueuePtr                     _msgQueue,
-                      const KKStr&                    _scannerFileName,
-                      ScannerFile::ScannerFileFormat  _format,
-                      kkint32                         _frameWidth,
-                      kkint32                         _frameHeight,
-                      const KKStr&                    _threadName
+    DiskWriterThread (LarcosCounterManagerPtr  _manager,
+                      CameraFrameBufferPtr     _cameraBuffer,
+                      MsgQueuePtr              _msgQueue,
+                      const KKStr&             _scannerFileName,
+                      ScannerFile::Format      _format,
+                      kkint32                  _frameWidth,
+                      kkint32                  _frameHeight,
+                      const KKStr&             _threadName
                      );
 
     virtual

@@ -17,7 +17,7 @@ namespace LarcosCounterManaged
   public  ref  class  UmiOperatingParameters
   {
   public:
-    typedef  UmiScannerFile::ScannerFileFormat  ScannerFileFormat;
+    typedef  UmiScannerFile::Format  ScannerFileFormat;
 
     UmiOperatingParameters  ();
 
