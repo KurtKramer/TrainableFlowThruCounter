@@ -55,6 +55,7 @@ PostLarvaeFVProducer::~PostLarvaeFVProducer ()
 PostLarvaeFVPtr  PostLarvaeFVProducer::ComputeFeatureVector (const Raster&     image,
                                                              const MLClassPtr  knownClass,
                                                              RasterListPtr     intermediateImages,
+                                                             float             priorReductionFactor,
                                                              RunLog&           runLog
                                                             )
 {

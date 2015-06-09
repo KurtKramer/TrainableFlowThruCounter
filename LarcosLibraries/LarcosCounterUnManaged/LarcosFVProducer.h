@@ -30,6 +30,7 @@ namespace LarcosCounterUnManaged
     virtual  LarcosFeatureVectorPtr  ComputeFeatureVector (const Raster&     srcImage,
                                                            const MLClassPtr  knownClass,
                                                            RasterListPtr     intermediateImages,
+                                                           float             priorReductionFactor,
                                                            RunLog&           runLog
                                                           );
 

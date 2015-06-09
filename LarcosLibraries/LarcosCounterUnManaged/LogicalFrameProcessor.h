@@ -12,6 +12,8 @@
 #include "GoalKeeper.h"
 
 #include "Classifier2.h"
+#include "FeatureVectorProducer.h"
+#include "FactoryFVProducer.h"
 
 #include "LogicalFrame.h"
 #include "CameraThread.h"
@@ -109,13 +111,14 @@ namespace LarcosCounterUnManaged
     void  AllocateMemmory ();
     void  CleanUpMemory();
 
-    void  AddParticleEntry (kkint32     scanRow,
-                            kkint32     scanCol,
-                            RasterPtr   particle,
-                            MLClassPtr  ic,
-                            BlobPtr     blob,
-                            float       probability,
-                            float       breakTie
+    void  AddParticleEntry (kkint32          scanRow,
+                            kkint32          scanCol,
+                            RasterPtr        particle,
+                            MLClassPtr       ic,
+                            BlobPtr          blob,
+                            float            probability,
+                            float            breakTie,
+                            FeatureVectorPtr fv            // Taking ownership of '_fv'.
                            );
 
     void  LoadClassifer ();
@@ -174,6 +177,7 @@ namespace LarcosCounterUnManaged
                                     );
 
     void  AnalyseParticleUsingClassifier (RasterPtr  particle,
+                                          float      priorReductionFactor,
                                           kkint32    scanRow,
                                           kkint32    scanCol,
                                           BlobPtr    blob
@@ -194,49 +198,51 @@ namespace LarcosCounterUnManaged
                        );
 
 
-    volatile bool           available;                 /**< Indicates that currently not processing a logical frame and is available. */
-    uchar                   backGroundPixelTH;
-    Classifier2Ptr          classifier;
-    KKStr                   classifierName;
-    kkint32                 connectedComponentDist;
-    CountingMethods         countingMethod;
-    bool                    countParticles;
-    kkint32                 cropLeft;
-    kkint32                 cropRight;
-    kkint32                 erosionStructSize;
-    ParticleEntryListPtr    extractedParticles;        /**< List of particles extracted while processing a frame. */
-    float                   flowRate;                  /**< From LogicalFrame::FlowRate      which is from CameraFrame::FlowRate.      */
-    float                   flowRateRatio;             /**< From LogicalFrame::FlowRateRatio which is from CameraFrame::FlowRateRatio. */
-    RasterBufferPtr         lastParticlesProcessed;
-    ShrimpLengthComputerPtr lenComputer;
-    LogicalFrameListPtr     logicalFrames;
-    kkint32                 logicalFramesProcessed;    /**< Number of logical frames processed by this instance. */
-    kkint32                 minSizeThreshold;
-    ParticleEntryBufferPtr  particleEntryBuffer;
-    kkuint32                particleEntryProcCount;
-    kkint32                 particlesExtracted;
-    kkint32                 particlesCounted;
-    KKStr                   particlesDirName;          /**<  Sub-directory where images that get filtered out need to be written to when SaveImages is true. */
-    kkint32                 particlesWaitingProcessing;
-    bool                    playingBack;               /**< Indicates that we are playing back a previously recorded file.                                   */
-    bool                    playingBackRealTime;       /**< When playing back simulate the ScanRate of the camera; aids in testing application; that means   *
-                                                        * buffers can be overflowed and frames dropped. */
-    bool                    saveParticleImages;        /**<  Indicates that individual particle images are to be saved.  Images are typically saved in
-                                                        *    Images that are not added to the 'detectedROIs' will be written to 'particlesDirName' by this object.
-                                                        */
-    KKStr                   scannerFileRootName;       /**< Name of scanner file where the Logical frame comes from or is being written to. */
-    kkint32                 sizingSamplingInterval;
+    volatile bool             available;                 /**< Indicates that currently not processing a logical frame and is available. */
+    uchar                     backGroundPixelTH;
+    Classifier2Ptr            classifier;
+    KKStr                     classifierName;
+    kkint32                   connectedComponentDist;
+    CountingMethods           countingMethod;
+    bool                      countParticles;
+    kkint32                   cropLeft;
+    kkint32                   cropRight;
+    kkint32                   erosionStructSize;
+    ParticleEntryListPtr      extractedParticles;        /**< List of particles extracted while processing a frame. */
+    FactoryFVProducerPtr      factoryFvProducer; 
+    FeatureVectorProducerPtr  fvProducer;
+    float                     flowRate;                  /**< From LogicalFrame::FlowRate      which is from CameraFrame::FlowRate.      */
+    float                     flowRateRatio;             /**< From LogicalFrame::FlowRateRatio which is from CameraFrame::FlowRateRatio. */
+    RasterBufferPtr           lastParticlesProcessed;
+    ShrimpLengthComputerPtr   lenComputer;
+    LogicalFrameListPtr       logicalFrames;
+    kkint32                   logicalFramesProcessed;    /**< Number of logical frames processed by this instance. */
+    kkint32                   minSizeThreshold;
+    ParticleEntryBufferPtr    particleEntryBuffer;
+    kkuint32                  particleEntryProcCount;
+    kkint32                   particlesExtracted;
+    kkint32                   particlesCounted;
+    KKStr                     particlesDirName;          /**<  Sub-directory where images that get filtered out need to be written to when SaveImages is true. */
+    kkint32                   particlesWaitingProcessing;
+    bool                      playingBack;               /**< Indicates that we are playing back a previously recorded file.                                   */
+    bool                      playingBackRealTime;       /**< When playing back simulate the ScanRate of the camera; aids in testing application; that means   *
+                                                          * buffers can be overflowed and frames dropped. */
+    bool                      saveParticleImages;        /**<  Indicates that individual particle images are to be saved.  Images are typically saved in
+                                                          *    Images that are not added to the 'detectedROIs' will be written to 'particlesDirName' by this object.
+                                                          */
+    KKStr                     scannerFileRootName;       /**< Name of scanner file where the Logical frame comes from or is being written to. */
+    kkint32                   sizingSamplingInterval;
 
-    MorphOpStretcherPtr     stretcher;        /**< Used to adjust images by flowRate;  when there is a FlowMeter flowRateRatio will
-                                               * vary; but we do not want to create a new "MorphOpStretcher" instance unless the change
-                                               * is significant.  The logic is that computing the adjustment factors is expensive
-                                               * and do not want to for every single example.  A compromise is to only build a
-                                               * new "MorphOpStretcher" instance when the FlowRateRatio changes by more than 5%.
-                                               */
+    MorphOpStretcherPtr       stretcher;        /**< Used to adjust images by flowRate;  when there is a FlowMeter flowRateRatio will
+                                                 * vary; but we do not want to create a new "MorphOpStretcher" instance unless the change
+                                                 * is significant.  The logic is that computing the adjustment factors is expensive
+                                                 * and do not want to for every single example.  A compromise is to only build a
+                                                 * new "MorphOpStretcher" instance when the FlowRateRatio changes by more than 5%.
+                                                 */
 
-    set<KKStr>              subDirsCreated;
-    TrainingProcess2Ptr     trainer;
-    MLClassPtr              unknownClass;
+    set<KKStr>                subDirsCreated;
+    TrainingProcess2Ptr       trainer;
+    MLClassPtr                unknownClass;
 
     // Structures needed for processing a single frame.
     BlobListPtr   blobs;

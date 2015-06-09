@@ -1002,7 +1002,7 @@ void  UmiTrainingModel2::PredictClass (System::String^   imageFileName,
   UmiRaster^  r = gcnew UmiRaster (raster);
   r->FileName = imageFileName;
   MLClassPtr  unknownClass = classes->GetUnKnownClass ();
-  FeatureVectorPtr  fvp = fvProducer->ComputeFeatureVector (*(r->UnmanagedClass ()), unknownClass, NULL, *runLog);
+  FeatureVectorPtr  fvp = fvProducer->ComputeFeatureVector (*(r->UnmanagedClass ()), unknownClass, NULL, 1.0f, *runLog);
   UmiFeatureVector^  fv = gcnew UmiFeatureVector (fvp);
   PredictClass (fv, prediction1, prediction2);
   return;

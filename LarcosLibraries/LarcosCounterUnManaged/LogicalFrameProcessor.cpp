@@ -40,6 +40,7 @@ using  namespace KKMLL;
 #include "CameraFrameBuffer.h"
 #include "LarcosCounterManager.h"
 #include "LarcosCounterStats.h"
+#include "LarcosFVProducer.h"
 #include "OperatingParameters.h"
 #include "ParticleEntry.h"
 #include "PostLarvaeFVProducer.h"
@@ -390,6 +391,8 @@ LogicalFrameProcessor::LogicalFrameProcessor
     cropRight                  (_cropRight),
     erosionStructSize          (_operatingParameters->ErosionStructSize ()),
     extractedParticles         (NULL),
+    factoryFvProducer          (NULL),
+    fvProducer                 (NULL),
     flowRate                   (1.0f),
     flowRateRatio              (_operatingParameters->FlowRateFactor ()),
     lastParticlesProcessed     (_lastParticlesProcessed),
@@ -455,6 +458,7 @@ LogicalFrameProcessor::~LogicalFrameProcessor ()
 
   delete  lenComputer;        lenComputer        = NULL;
   delete  extractedParticles; extractedParticles = NULL;
+  delete  fvProducer;         fvProducer         = NULL;
   delete  stretcher;          stretcher          = NULL;
   delete  classifier;         classifier         = NULL;
   delete  trainer;            trainer            = NULL;
@@ -506,13 +510,13 @@ void  LogicalFrameProcessor::AllocateMemmory ()
 
 void  LogicalFrameProcessor::CleanUpMemory()
 {
-  delete   blobs;              blobs              = NULL;
-  delete   blobIdsArea;        blobIdsArea        = NULL;
-  delete   blobIds;            blobIds            = NULL;
-  delete   workLinesArea;      workLinesArea      = NULL;
-  delete   workLines;          workLines          = NULL;
-  delete   blobIdsMinusOnes;   blobIdsMinusOnes   = NULL;
-  delete   extractedParticles; extractedParticles = NULL;
+  delete  blobs;              blobs              = NULL;
+  delete  blobIdsArea;        blobIdsArea        = NULL;
+  delete  blobIds;            blobIds            = NULL;
+  delete  workLinesArea;      workLinesArea      = NULL;
+  delete  workLines;          workLines          = NULL;
+  delete  blobIdsMinusOnes;   blobIdsMinusOnes   = NULL;
+  delete  extractedParticles; extractedParticles = NULL;
 
   // We will not delete the 'frameLinesArea' and 'frameLines';  they will be owned by the instances of 'LogicalFrame';
   frameLinesArea   = NULL;
@@ -639,6 +643,11 @@ void  LogicalFrameProcessor::LoadClassifer ()
     }
 
     classifier = new Classifier2 (trainer, log);
+
+    factoryFvProducer = trainer->FvFactoryProducer ();
+    if  (!factoryFvProducer)
+      factoryFvProducer = LarcosFVProducerFactory::Factory (&log);
+    fvProducer = factoryFvProducer->ManufactureInstance (log);
   }
 }  /* LoadClassifer */
 
@@ -832,7 +841,7 @@ void  LogicalFrameProcessor::ProcessFrame ()
         break;
 
       case  CountingMethods::cmClassier:
-        AnalyseParticleUsingClassifier (i, scanRow, scanCol, blob);
+        AnalyseParticleUsingClassifier (i, (float)divisor, scanRow, scanCol, blob);
         break;
       }
 
@@ -867,7 +876,7 @@ void  LogicalFrameProcessor::AnalyseParticleStraightCount (RasterPtr  particle,
   if  (saveParticleImages)
     SaveParticle (particle, 1, unknownClass, scanRow, scanCol);
 
-  AddParticleEntry (scanRow, scanCol, particle, unknownClass, blob, 1.0f, 0.0f);
+  AddParticleEntry (scanRow, scanCol, particle, unknownClass, blob, 1.0f, 0.0f, NULL);
 
   kkint32 particleSize = particle->ForegroundPixelCount ();
   if  (particleSize <= 0)
@@ -916,7 +925,7 @@ void  LogicalFrameProcessor::AnalyseParticlePostLarvae (RasterPtr  particle,
 
   if  (saveParticleImages)
     SaveParticle (particle, countThisParticle, ic, scanRow, scanCol);
-  AddParticleEntry (scanRow, scanCol, particle, ic, blob, 1.0f, 0.0f);
+  AddParticleEntry (scanRow, scanCol, particle, ic, blob, 1.0f, 0.0f, NULL);
 
   kkint32 particleSize = particle->ForegroundPixelCount ();
   if  (particleSize <= 0)
@@ -930,12 +939,14 @@ void  LogicalFrameProcessor::AnalyseParticlePostLarvae (RasterPtr  particle,
 
 
 void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle,
+                                                             float      priorReductionFactor,
                                                              kkint32    scanRow,
                                                              kkint32    scanCol,
                                                              BlobPtr    blob
                                                             )
 {
-  PostLarvaeFVPtr  fv = new PostLarvaeFV (*particle, unknownClass, NULL);
+  FeatureVectorPtr  fv = fvProducer->ComputeFeatureVector (*particle, unknownClass, NULL, priorReductionFactor, log);
+  //new PostLarvaeFV (*particle, unknownClass, NULL);
 
   double  probability  = 0.0;
   double  breakTie     = 0.0;
@@ -946,21 +957,33 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
   if  (predictedClass)
     particle->Title (predictedClass->Name ());
   UpdateCounts ((kkint32)fv->OrigSize (),  predictedClass->CountFactor ());
-  delete  fv;   fv = NULL;
+
+
+  // Want to save FeatureVector to text file.
+  // KKKK
+
+  FeatureVectorPtr  fvForParticle = NULL;
   if  (saveParticleImages)
+  {
+    fvForParticle = new FeatureVector (*fv);
     SaveParticle (particle, (kkint32)(predictedClass->CountFactor ()), predictedClass, scanRow, scanCol);
-  AddParticleEntry (scanRow, scanCol, particle, predictedClass, blob, (float)probability, (float)breakTie);
+  }
+  AddParticleEntry (scanRow, scanCol, particle, predictedClass, blob, (float)probability, (float)breakTie, fvForParticle);
+  fvForParticle = NULL;
+
+  delete  fv;   fv = NULL;
 }  /* AnalyseParticleUsingClassifier */
 
 
 
-void  LogicalFrameProcessor::AddParticleEntry (kkint32     scanRow,
-                                               kkint32     scanCol,
-                                               RasterPtr   particle,
-                                               MLClassPtr  ic,
-                                               BlobPtr     blob,
-                                               float       probability,
-                                               float       breakTie
+void  LogicalFrameProcessor::AddParticleEntry (kkint32          scanRow,
+                                               kkint32          scanCol,
+                                               RasterPtr        particle,
+                                               MLClassPtr       ic,
+                                               BlobPtr          blob,
+                                               float            probability,
+                                               float            breakTie,
+                                               FeatureVectorPtr fv
                                               )
 {
   // because the images were adjusted by a FlowRate factor I need to reverse it to get the 
@@ -985,20 +1008,23 @@ void  LogicalFrameProcessor::AddParticleEntry (kkint32     scanRow,
     }
   }
 
-  extractedParticles->PushOnBack (new ParticleEntry (scannerFileRootName, 
-                                                     scanRow,
-                                                     scanCol,
-                                                     blob->Height (),
-                                                     blob->Width (),
-                                                     ic,
-                                                     orientation,
-                                                     length,
-                                                     flowRateRatio,
-                                                     flowRate,
-                                                     probability,
-                                                     breakTie
-                                                    )
-                                 );
+  ParticleEntryPtr  pe = new ParticleEntry (scannerFileRootName, 
+                                            scanRow,
+                                            scanCol,
+                                            blob->Height (),
+                                            blob->Width (),
+                                            ic,
+                                            orientation,
+                                            length,
+                                            flowRateRatio,
+                                            flowRate,
+                                            probability,
+                                            breakTie
+                                           );
+  if  (fv)
+    pe->GivingOwnershipOfFeatureVector (fv);
+
+  extractedParticles->PushOnBack (pe);
 }
 
 

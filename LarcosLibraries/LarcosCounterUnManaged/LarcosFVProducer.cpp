@@ -321,6 +321,7 @@ void  LarcosFVProducer::BinarizeImageByThreshold (uchar          lower,
 LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&     srcImage,
                                                                 const MLClassPtr  knownClass,
                                                                 RasterListPtr     intermediateImages,
+                                                                float             priorReductionFactor,
                                                                 RunLog&           runLog
                                                                )
 {
@@ -361,6 +362,8 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
   }
 
   kkint32  reductionMultipleSquared = reductionMultiple * reductionMultiple;
+  float    totalReductionMultiple = priorReductionFactor * (float)reductionMultiple;
+  float    totalReductionMultipleSquared = totalReductionMultiple * totalReductionMultiple;
 
   delete  workRaster1Rows;  workRaster1Rows = new uchar*[reducedHeight];
   delete  workRaster2Rows;  workRaster2Rows = new uchar*[reducedHeight];
@@ -510,7 +513,7 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
     SaveIntermediateImage (*wr2, "Close7_" + StrFormatInt ((kkint32)areaClose7, "ZZZZZZ0"), intermediateImages);
 
   {
-    featureData[SizeIndex]    = float (areaBeforeReduction);
+    featureData[SizeIndex]    = float (areaBeforeReduction * priorReductionFactor);
     featureData[Moment1Index] = float (centralMoments[1]);
     featureData[Moment2Index] = float (centralMoments[2]);
     featureData[Moment3Index] = float (centralMoments[3]);
@@ -520,7 +523,7 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
     featureData[Moment7Index] = float (centralMoments[7]);
     featureData[Moment8Index] = float (centralMoments[8]);
 
-    featureData[WeighedMoment0Index] = centralMomentsWeighted[0];
+    featureData[WeighedMoment0Index] = centralMomentsWeighted[0] * totalReductionMultiple;
     featureData[WeighedMoment1Index] = centralMomentsWeighted[1];
     featureData[WeighedMoment2Index] = centralMomentsWeighted[2];
     featureData[WeighedMoment3Index] = centralMomentsWeighted[3];
@@ -530,7 +533,7 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
     featureData[WeighedMoment7Index] = centralMomentsWeighted[7];
     featureData[WeighedMoment8Index] = centralMomentsWeighted[8];
 
-    featureData[EdgeSizeIndex]    = (float)edgeMomentf[0];
+    featureData[EdgeSizeIndex]    = (float)edgeMomentf[0]  * totalReductionMultiple;
     featureData[EdgeMoment1Index] = (float)edgeMomentf[1];
     featureData[EdgeMoment2Index] = (float)edgeMomentf[2];
     featureData[EdgeMoment3Index] = (float)edgeMomentf[3];
@@ -541,9 +544,7 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
     featureData[EdgeMoment8Index] = (float)edgeMomentf[8];
 
     // Need to adjust for any reduction in Image Size
-    featureData[SizeIndex]           = float (areaBeforeReduction);
-    featureData[EdgeSizeIndex]       = float (edgeMomentf[0] * (float)(reductionMultipleSquared));
-    featureData[WeighedMoment0Index] = weighedSizeBeforeReduction;
+    featureData[WeighedMoment0Index] = weighedSizeBeforeReduction  * priorReductionFactor;
   }
 
 
@@ -563,11 +564,11 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
  
   {
     // This part has to be done after 'CalcOrientationAndEigerRatio' is called.  That is where the example centroid is calculated.
-    fv->CentroidCol (initRaster->CentroidCol () * reductionMultiple);
-    fv->CentroidRow (initRaster->CentroidRow () * reductionMultiple);
+    fv->CentroidCol (initRaster->CentroidCol () * totalReductionMultiple);
+    fv->CentroidRow (initRaster->CentroidRow () * totalReductionMultiple);
   }
 
-  featureData[ConvexAreaIndex]       = convexf * reductionMultipleSquared;
+  featureData[ConvexAreaIndex]       = convexf * totalReductionMultipleSquared;
   featureData[TransparancySizeIndex] = (float)(centralMoments[0] / convexf);
   featureData[TransparancyWtdIndex]  = (float)(centralMomentsWeighted[0] / convexf);
 
@@ -580,7 +581,6 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
   featureData[IntensityHist5Index] = ((float)intensityHistBuckets[5] / areaD);
   featureData[IntensityHist6Index] = ((float)intensityHistBuckets[6] / areaD);
   featureData[IntensityHist7Index] = ((float)intensityHistBuckets[7] / areaD);
-
 
   {
     RasterPtr  darkSpots = NULL;

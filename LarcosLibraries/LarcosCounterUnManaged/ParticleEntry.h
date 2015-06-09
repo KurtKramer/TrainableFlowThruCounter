@@ -95,7 +95,9 @@ namespace LarcosCounterUnManaged
                       kkint16  _width
                      );
 
-    void  FeatureVector (FeatureVectorPtr  _featureVector) {featureVector = _featureVector;}
+    void  GivingOwnershipOfFeatureVector (FeatureVectorPtr  _featureVector) {featureVector = _featureVector;}
+
+    FeatureVectorPtr  TakeOwnershipOfFeatureVector ();
 
   private:
     KKStr             scannerFileRootName;

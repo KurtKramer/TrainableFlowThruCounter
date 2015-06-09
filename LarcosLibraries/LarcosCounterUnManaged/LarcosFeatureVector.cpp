@@ -602,7 +602,7 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
     }
     else
     {
-      FeatureVectorPtr fv = fvProducer->ComputeFeatureVector (*raster, example->MLClass (), NULL, log);
+      FeatureVectorPtr fv = fvProducer->ComputeFeatureVector (*raster, example->MLClass (), NULL, 1.0, log);
       if  (fv)
       {
         kkint32  x;

@@ -81,7 +81,7 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
   if  (intermediateImages != nullptr)
     tempIntermediateImages = new RasterList (true);
   LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
-  features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), tempIntermediateImages, log->Log ());
+  features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), tempIntermediateImages, 1.0, log->Log ());
   UmiRasterList::CopyOverIntermediateImages (tempIntermediateImages, intermediateImages);
   delete  fvp;
   fvp = NULL;
@@ -106,7 +106,7 @@ UmiFeatureVector::UmiFeatureVector (System::Array^   raster,
   if  (imageFileName != nullptr)
     r->FileName (UmiKKStr::SystemStringToKKStr (imageFileName));
   LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
-  features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), NULL, log->Log ());
+  features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), NULL, 1.0f, log->Log ());
   delete  fvp;  fvp = NULL;
   delete  r;    r   = NULL;
   GC::AddMemoryPressure (MemPreasPerFV);

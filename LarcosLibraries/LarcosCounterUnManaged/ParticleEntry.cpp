@@ -98,6 +98,8 @@ ParticleEntry::ParticleEntry (const KKStr&  _scannerFileRootName,
 
 ParticleEntry::~ParticleEntry ()
 {
+  delete  featureVector;
+  featureVector = NULL;
 }
 
 
@@ -152,6 +154,14 @@ bool  ParticleEntry::ExactMatch (kkint32  _scannerRow,
 }
 
 
+
+
+FeatureVectorPtr  ParticleEntry::TakeOwnershipOfFeatureVector ()
+{
+  FeatureVectorPtr  tempFV = featureVector;
+  featureVector = NULL;
+  return  tempFV;
+}
 
 
 
@@ -1065,6 +1075,15 @@ void  ParticleEntryBuffer::AddToReport (ostream& o)
               << "\t" << e->Probability   ()
               << "\t" << e->BreakTie      ()
               << endl;
+    
+    FeatureVectorPtr  fv = e->TakeOwnershipOfFeatureVector ();
+    if  (fv)
+    {
+      o << "FV" << "\t" << fv->ExampleFileName ();
+      for  (kkint32 idx = 0;  idx < fv->NumOfFeatures ();  ++idx)
+        o << "\t" << fv->FeatureData (idx);
+      o << endl;
+    }
     delete  e;
     e = NULL;
   }
