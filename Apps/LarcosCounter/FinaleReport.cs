@@ -119,6 +119,17 @@ namespace LarcosCounter
                                                 false,               /**< false = go ahead and load the whole report file. */
                                                 runLog
                                                );
+
+          foreach  (UmiParticleEntry pe in particles)
+          {
+            if  (pe.Length > 0.0f)
+            {
+              pe.Length = pe.Length * 0.0635f / 0.0889f;
+            }
+          }
+
+
+
         }
       }
       catch (Exception)  {particles = null;}

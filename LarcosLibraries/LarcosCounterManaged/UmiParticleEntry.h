@@ -59,7 +59,7 @@ namespace LarcosCounterManaged
     property  float      FlowRate            {float      get ();}
     property  float      FlowRateRatio       {float      get ();}
     property  kkint16    Height              {kkint16    get ();}
-    property  float      Length              {float      get ();}
+    property  float      Length              {float      get ();  void  set  (float _length)         {length    = _length;}}
     property  float      Orientation         {float      get ();}
     property  UmiClass^  PredClass           {UmiClass^  get ();  void  set  (UmiClass^ _predClass)  {predClass = _predClass;}}
     property  String^    PredClassName       {String^    get ();}
