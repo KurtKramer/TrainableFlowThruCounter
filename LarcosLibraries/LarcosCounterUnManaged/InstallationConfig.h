@@ -112,6 +112,10 @@ namespace LarcosCounterUnManaged
     virtual
     void  WriteFieldValues (ostream&   o)  const;
 
+    void  WriteXML (ostream&  o)  const;
+
+    void  ReadXML (istream&  i);
+
 
     void  Load (const KKStr&  _name,
                 bool&         _successful,

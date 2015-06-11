@@ -22,6 +22,7 @@ using namespace  KKB;
 #include "ScannerFile.h"
 using namespace  KKLSC;
 
+#include "InstallationConfig.h"
 #include "SessionParameters.h"
 #include "OperatingParameters.h"
 
@@ -659,6 +660,13 @@ void  UmiParticleEntryList::LoadFile (bool        _loadHeaderOnly,
 
     else if  (name.EqualIgnoreCase ("<OperatingParameters>"))
       operatingParameters->ReadXML (i);
+
+    else if  (name.EqualIgnoreCase ("<InstallationConfig>"))
+    {
+      InstallationConfigPtr  installConfig = new InstallationConfig (_runLog->Log ());
+      installConfig->ReadXML (i);      
+      delete  installConfig;
+    }
 
     else if  (name.EqualIgnoreCase ("BackGroundPixelTH"))
       operatingParameters->BackGroundPixelTH ((uchar)value.ToInt32 ());

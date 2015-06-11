@@ -120,16 +120,15 @@ namespace LarcosCounter
                                                 runLog
                                                );
 
-          foreach  (UmiParticleEntry pe in particles)
-          {
-            if  (pe.Length > 0.0f)
-            {
-              pe.Length = pe.Length * 0.0635f / 0.0889f;
-            }
-          }
-
-
-
+          //foreach  (UmiParticleEntry pe in particles)
+          //{
+          //  if  (pe.Length > 0.0f)
+          //  {
+          //    //pe.Length = pe.Length * 0.0635f / 0.0889f;
+          //    //pe.Length = pe.Length * 0.055947137f / 0.068595602f;  // AM1
+          //    //pe.Length = pe.Length * 0.055947137f / 0.048696319f;    // AM2
+          //  }
+          //}
         }
       }
       catch (Exception)  {particles = null;}

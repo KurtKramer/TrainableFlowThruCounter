@@ -257,6 +257,47 @@ void  InstallationConfig::WriteFieldValues (ostream&   o)  const
 
 
 
+void  InstallationConfig::WriteXML (ostream&  o)  const
+{
+  o << "<InstallationConfig>"  << endl;
+  WriteFieldValues (o);
+  o << "</InstallationConfig>"  << endl;
+}  /* WriteXML */
+
+
+
+
+void  InstallationConfig::ReadXML (istream&  i)
+{
+  bool  eol = false;
+  bool  eof = false;
+  bool  fieldFound = false;
+
+  while (!eof)
+  {
+    KKStr  fieldName = osReadNextToken (i, "\t", eof, eol);
+    if  (eof)
+      break;
+
+    KKStr  restOfLine = "";
+    if  (!eol)
+      restOfLine = osReadRestOfLine (i, eof);
+    
+    if  (fieldName.EqualIgnoreCase ("</InstallationConfig>"))
+      break;
+
+    if  (!fieldName.StartsWith ("//"))
+      UpdateFromDataField (fieldName, restOfLine, fieldFound);
+  }
+}  /*   ReadXML  */
+
+
+
+
+
+
+
+
 void  InstallationConfig::Load (const KKStr&  _name,
                                 bool&         _successful,
                                 RunLog        _log

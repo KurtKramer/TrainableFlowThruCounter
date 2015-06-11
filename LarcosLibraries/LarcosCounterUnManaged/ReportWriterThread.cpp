@@ -25,6 +25,7 @@ using namespace  KKLSC;
 
 #include "ReportWriterThread.h"
 #include "CameraThread.h"
+#include "InstallationConfig.h"
 #include "LarcosCounterManager.h"
 #include "SessionParameters.h"
 #include "OperatingParameters.h"
@@ -101,6 +102,9 @@ void  ReportWriterThread::WriteHeader ()
 
   sessionParameters->WriteXML (*report);
   operatingParameters->WriteXML (*report);
+  InstallationConfigPtr  instalation = Manager ()->Installation ();
+  if  (instalation)
+    instalation->WriteXML (*report);
 }
 
 
