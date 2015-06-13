@@ -149,12 +149,10 @@ void  ReportWriterThread::Run ()
 
   kkuint64  elaspedTimeInSecs = dateTimeCompleted.Seconds () - dateTimeStarted.Seconds ();
  
-
   *report << "SystemTimeUsedStarted"    << "\t" << systemTimeUsedStarted   << endl;
   *report << "SystemTimeUsedCompleted"  << "\t" << systemTimeUsedCompleted << endl;
   *report << "ElaspedTimeInSecs"        << "\t" << elaspedTimeInSecs       << endl;
   *report << "SystemTimeUsedTotal"      << "\t" << (systemTimeUsedCompleted - systemTimeUsedStarted) << endl;
-
 
   delete  report;
   report = NULL;
