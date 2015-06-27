@@ -365,6 +365,10 @@ namespace LarcosCounterUnManaged
                                                        RunLog&      log
                                                       );
 
+    /***@brief  Creates a duplicate of list using the same container. */
+    virtual
+    PostLarvaeFVListPtr    Duplicate (bool _owner)  const;
+
     PostLarvaeFVListPtr    DuplicateListAndContents ()  const;
 
 
@@ -400,6 +404,9 @@ namespace LarcosCounterUnManaged
 
     PostLarvaeFVPtr       LookUpByRootName (const KKStr&  _rootName);
 
+    /**@brief Creates an instance of a Empty FeatureVectorList. */
+    virtual
+    PostLarvaeFVListPtr   ManufactureEmptyList (bool _owner)  const;
 
     
     /**

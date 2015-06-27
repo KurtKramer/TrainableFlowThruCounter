@@ -1320,6 +1320,10 @@ PostLarvaeFVPtr  PostLarvaeFVList::LookUpByRootName (const KKStr&  _rootName)
 
 
 
+PostLarvaeFVListPtr   PostLarvaeFVList::ManufactureEmptyList (bool _owner)  const
+{
+  return new PostLarvaeFVList (FileDesc (), _owner);
+}
 
 
 
@@ -1327,8 +1331,6 @@ PostLarvaeFVPtr  PostLarvaeFVList::LookUpByImageFileName (const KKStr&  _imageFi
 {
   return  (PostLarvaeFVPtr)FeatureVectorList::LookUpByImageFileName (_imageFileName);
 }  /* LookUpByImageFileName */
-
-
 
 
 
@@ -1444,6 +1446,12 @@ void   PostLarvaeFVList::FeatureExtraction (KKStr       _dirName,
 }  /* FeatureExtraction */
 
 
+
+
+PostLarvaeFVListPtr  PostLarvaeFVList::Duplicate (bool _owner)  const
+{
+  return new PostLarvaeFVList (*this, _owner);
+}
 
 
 

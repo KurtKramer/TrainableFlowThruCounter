@@ -26,12 +26,6 @@ namespace  LarcosCounterUnManaged
 
     LarcosTrainingConfiguration ();
 
-    LarcosTrainingConfiguration (const KKStr&           _configFileName,
-                                 OperatingParametersPtr _initialOperatingParameters,
-                                 RunLog&                _log,
-                                 bool                   validateDirectories  /**<  Used to default to 'true'. */
-                                );
-
 
     LarcosTrainingConfiguration (const LarcosTrainingConfiguration&  tc);
 
@@ -46,6 +40,14 @@ namespace  LarcosCounterUnManaged
                                 );
 
     ~LarcosTrainingConfiguration ();
+
+
+    virtual
+    void  Load (const KKStr&           _configFileName,
+                OperatingParametersPtr _initialOperatingParameters,
+                bool                   _validateDirectories,  /**<  Used to default to 'true'. */
+                RunLog&                _log
+               );
 
 
     virtual

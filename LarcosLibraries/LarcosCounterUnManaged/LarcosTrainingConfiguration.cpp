@@ -44,26 +44,6 @@ LarcosTrainingConfiguration::LarcosTrainingConfiguration ():
 
 
 
-
-LarcosTrainingConfiguration::LarcosTrainingConfiguration (const KKStr&           _configFileName, 
-                                                          OperatingParametersPtr _initialOperatingParameters,
-                                                          RunLog&                _log,
-                                                          bool                   _validateDirectories
-                                                         ):
-  TrainingConfiguration2 (_configFileName, _validateDirectories, _log),
-  operatingParms (NULL)
-
-{
-  if  (_initialOperatingParameters)
-    operatingParms = new OperatingParameters (*_initialOperatingParameters);
-  else
-    operatingParms = new OperatingParameters ();
-  operatingParms->UpdateFromConfiguration (*this);
-}
-
-
-
-
 LarcosTrainingConfiguration::LarcosTrainingConfiguration (MLClassListPtr          _mlClasses,
                                                           KKStr                   _parameterStr,
                                                           OperatingParametersPtr  _initialOperatingParameters,
@@ -100,6 +80,23 @@ LarcosTrainingConfiguration::~LarcosTrainingConfiguration ()
   delete  operatingParms;
   operatingParms = NULL;
 }
+
+
+
+void  LarcosTrainingConfiguration::Load (const KKStr&           _configFileName,
+                                         OperatingParametersPtr _initialOperatingParameters,
+                                         bool                   _validateDirectories,  /**<  Used to default to 'true'. */
+                                         RunLog&                _log
+                                        )
+{
+  TrainingConfiguration2::Load (_configFileName, _validateDirectories, _log);
+  if  (_initialOperatingParameters)
+    operatingParms = new OperatingParameters (*_initialOperatingParameters);
+  else
+    operatingParms = new OperatingParameters ();
+  operatingParms->UpdateFromConfiguration (*this);
+}
+
 
 
 
@@ -199,11 +196,12 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectory
   {
     if  (osFileExists (_existingConfigFileName))
     {
-      config = new LarcosTrainingConfiguration (_existingConfigFileName,
-                                                _initialOperatingParameters,
-                                                _log, 
-                                                false
-                                               );
+      config = new LarcosTrainingConfiguration ();
+      config->Load (_existingConfigFileName, 
+                    _initialOperatingParameters, 
+                    false,   // false = Don't validate directories.
+                    _log
+                   );
       config->RootDir (_subDir);
       if  (!(config->FormatGood ()))
       {
@@ -217,11 +215,12 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectory
   {
     if  (osFileExists (directoryConfigFileName))
     {
-      config = new LarcosTrainingConfiguration (directoryConfigFileName,
-                                                _initialOperatingParameters,
-                                                _log,
-                                                false
-                                               );
+      config = new LarcosTrainingConfiguration ();
+      config->Load (directoryConfigFileName,
+                    _initialOperatingParameters,
+                    false,  // false = Dont validate directories.
+                    _log
+                   );
       config->RootDir (_subDir);
       if  (!(config->FormatGood ()))
       {

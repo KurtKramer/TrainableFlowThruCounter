@@ -76,7 +76,8 @@ UmiTrainingConfiguration::UmiTrainingConfiguration (String^                  _co
 
   strstream  logStr;
   KKStr  configFileName = UmiKKStr::SystemStringToKKStr (_configFileName);
-  config = new LarcosTrainingConfiguration (configFileName, op, log->Log (), true);
+  config = new LarcosTrainingConfiguration ();
+  config->Load (configFileName, op, true, log->Log ());
   valid = gcnew System::Boolean (config->FormatGood ());
   if  (!config->FormatGood ())
      loadLogStream = gcnew String (logStr.str ());

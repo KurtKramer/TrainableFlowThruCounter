@@ -975,12 +975,13 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
 
   else
   {
-    LarcosTrainingConfigurationPtr config = new LarcosTrainingConfiguration (trainingModelName,
-                                                                             operatingParameters,
-                                                                             *runLog,
-                                                                             true    /**<  true = Validate Directories */
-                                                                            );
-
+    LarcosTrainingConfigurationPtr config = new LarcosTrainingConfiguration ();
+    config->Load (trainingModelName,
+                  operatingParameters,
+                  true,  // true = Validate Directories.
+                  *runLog
+                 );
+                                                                             
     if  (!config->FormatGood ())
     {
       runLog->Level (-1) << endl << endl
@@ -3410,7 +3411,9 @@ void  LarcosCounterManager::SetTrainingModel (const KKStr&            _trainingM
   }
   else
   {
-    config = new LarcosTrainingConfiguration (_trainingModelName, operatingParameters, *runLog, false);
+    config = new LarcosTrainingConfiguration ();
+    config->Load (_trainingModelName, operatingParameters, false, *runLog);
+
     if  (!config->FormatGood ())
     {
       runLog->Level (-1) << "SetTrainingModel   ***ERROR***  Model: " << _trainingModelName << "  Invalid Format." << endl;
@@ -3601,7 +3604,8 @@ void  LarcosCounterManager::ReadConfiguration ()
   {
     // retrieve any parameters specified in the default training model.
     FileDescPtr  fileDesc = LarcosFVProducer::DefineFileDescStatic ();
-    LarcosTrainingConfigurationPtr  config = new LarcosTrainingConfiguration (trainModelName, operatingParameters, *runLog, false);
+    LarcosTrainingConfigurationPtr  config = new LarcosTrainingConfiguration ();
+    config->Load (trainModelName, operatingParameters, false, *runLog);
     if  (!config->FormatGood ())
     {
       runLog->Level (-1) << "ReadConfiguration   ***ERROR***  Default Training Model: " << trainModelName << "  is Invalid." << endl;

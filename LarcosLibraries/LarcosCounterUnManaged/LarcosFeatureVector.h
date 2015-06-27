@@ -227,6 +227,10 @@ namespace LarcosCounterUnManaged
 
     LarcosFeatureVectorPtr       BinarySearchByName (const KKStr&  _imageFileName)  const;
 
+    /***@brief  Creates a duplicate of list using the same container. */
+    virtual
+    LarcosFeatureVectorListPtr   Duplicate (bool _owner)  const;
+
     LarcosFeatureVectorListPtr   DuplicateListAndContents ()  const;
 
     LarcosFeatureVectorListPtr   ExtractDuplicatesByRootImageFileName ();
@@ -244,7 +248,11 @@ namespace LarcosCounterUnManaged
     LarcosFeatureVectorPtr       LookUpByRootName (const KKStr&  _rootName);
 
 
-    
+    /**@brief Creates an instance of a Empty FeatureVectorList. */
+    virtual
+    LarcosFeatureVectorListPtr   ManufactureEmptyList (bool _owner)  const;
+
+
     /**
      *@brief  Using list of ImageFileNames in a file('fileName') create a new LarcosFeatureVectorList instance 
      * with examples in order based off contents of file. If error occurs will return NULL.

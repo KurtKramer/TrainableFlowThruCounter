@@ -361,14 +361,10 @@ LarcosFeatureVectorPtr  LarcosFeatureVectorList::PopFromBack ()
 
 
 
-
-
 void  LarcosFeatureVectorList::AddQueue (LarcosFeatureVectorList&  imagesToAdd)
 {
   FeatureVectorList::AddQueue (imagesToAdd);
 }  /* AddQueue */
-
-
 
 
 
@@ -379,6 +375,12 @@ LarcosFeatureVectorPtr  LarcosFeatureVectorList::BinarySearchByName (const KKStr
 }  /* BinarySearchByName */
 
 
+
+
+LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ManufactureEmptyList (bool _owner)  const
+{
+  return new LarcosFeatureVectorList (FileDesc (), _owner);
+}
 
 
 
@@ -520,6 +522,12 @@ void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProd
 }  /* FeatureExtraction */
 
 
+
+
+LarcosFeatureVectorListPtr   LarcosFeatureVectorList::Duplicate (bool _owner)  const
+{
+  return new LarcosFeatureVectorList (*this, _owner);
+}  /* Duplicate */
 
 
 

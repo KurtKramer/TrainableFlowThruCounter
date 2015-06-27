@@ -1547,11 +1547,12 @@ LarcosTrainingConfigurationPtr  UmiTrainingModel2::GetConfigToUse ()
 
   if  (!configToUse)
   {
-    config  = new LarcosTrainingConfiguration (UmiKKStr::SystemStringToKKStr (modelName), 
-                                               NULL,   // initialOperatingParameters
-                                               *runLog, 
-                                               false
-                                              );
+    config  = new LarcosTrainingConfiguration ();
+    config->Load (UmiKKStr::SystemStringToKKStr (modelName), 
+                  NULL,   // initialOperatingParameters
+                  false,  // false = Do Not Validate Directories.
+                  *runLog
+                 );
     // Don't need to delete 'fd'  'FileDesc' instances are kept in memory and shared when identical.
     configToUse = config;
   }
