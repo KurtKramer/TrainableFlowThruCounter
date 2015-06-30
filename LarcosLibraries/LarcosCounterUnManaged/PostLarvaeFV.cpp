@@ -62,10 +62,9 @@ public:
   void  AddDarkSpotsList (KKB::BlobListPtr  blobs)
   {
     ++count;
-    KKB::BlobList::iterator  idx;
-    for  (idx = blobs->begin ();  idx != blobs->end ();  ++idx)
+    for  (auto idx: *blobs)
     {
-      KKB::BlobPtr  b = idx->second;
+      KKB::BlobPtr  b = idx.second;
       uint  sizeIdx = b->PixelCount () / bucketSize;
       if  (sizeIdx < sizeHist.size ())
         sizeHist[sizeIdx] += 1;
@@ -192,10 +191,9 @@ public:
     o << "BucketSize" << "\t" << bucketSize << endl << endl;
     PrintHeaderLine (o);
 
-    vector<SortKey>::iterator  idx2;
-    for  (idx2 = sortKeys.begin ();  idx2 != sortKeys.end ();  ++idx2)
+    for  (auto idx2: sortKeys)
     {
-      idx2->ds->PrintStatsLine (o);
+      idx2.ds->PrintStatsLine (o);
     }
     o << endl << endl;
   }  /* PrintReport */
@@ -969,10 +967,9 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
     for  (x = 0;  x < 10;  ++x)
       darkSpotFreq[x] = 0;
 
-    KKB::BlobList::iterator  idx;
-    for  (idx = blobs->begin ();  idx != blobs->end ();  ++idx)
+    for  (auto idx: *blobs)
     {
-      KKB::BlobPtr  b = idx->second;
+      KKB::BlobPtr  b = idx.second;
 
       double l =  ::log ((double)(b->PixelCount ()));
 
