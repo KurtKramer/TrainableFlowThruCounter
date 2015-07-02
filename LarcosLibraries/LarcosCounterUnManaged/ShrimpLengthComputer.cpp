@@ -276,7 +276,7 @@ int  ShrimpLengthComputer::ErodeBySize (Raster& i)
     numOfErosionsToDo = 6;
 
   for (int x = 0;  x < numOfErosionsToDo;  ++x)
-    i.Erosion (MorphOp::SQUARE3);
+    i.Erosion (MorphOp::MaskTypes::SQUARE3);
 
   return  numOfErosionsToDo;
 }  /* ErodeBySize */
@@ -286,7 +286,7 @@ int  ShrimpLengthComputer::ErodeBySize (Raster& i)
 void  ShrimpLengthComputer::ErodeImageByStructSize (Raster& i)
 {
   for (int x = 0;  x < erosionStructSize;  ++x)
-    i.Erosion (MorphOp::SQUARE3);
+    i.Erosion (MorphOp::MaskTypes::SQUARE3);
 }
 
 

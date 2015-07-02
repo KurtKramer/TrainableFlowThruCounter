@@ -38,7 +38,7 @@ namespace LarcosCounterUnManaged
   public:
     typedef  InstallationConfig*  InstallationConfigPtr;
 
-    enum  class  FlowMeterMethods {fmmNULL, Embedded, EndOfList};
+    enum  class  FlowMeterMethods: int {Null, Embedded, EndOfList};
 
     static const KKStr&      FlowMeterMethodToStr   (FlowMeterMethods  method);
     static FlowMeterMethods  FlowMeterMethodFromStr (const KKStr&  s);

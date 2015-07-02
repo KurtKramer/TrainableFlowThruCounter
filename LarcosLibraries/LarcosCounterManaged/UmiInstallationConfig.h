@@ -19,7 +19,7 @@ namespace LarcosCounterManaged
   public:
     enum  class  FlowMeterMethods: int  
     {
-      fmmNULL      = InstallationConfig::FlowMeterMethods::fmmNULL,
+      Null      = InstallationConfig::FlowMeterMethods::Null,
       Embedded  = InstallationConfig::FlowMeterMethods::Embedded,
       EndOfList = InstallationConfig::FlowMeterMethods::EndOfList,
     };

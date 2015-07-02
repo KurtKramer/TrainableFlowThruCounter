@@ -47,8 +47,8 @@ const KKStr  StatusSnapshot::dataFieldIdxStrs[]
 
 const KKStr&  StatusSnapshot::SnapShotFieldIdxToStr (FieldIdx i)
 {
-  if  ((i < FieldIdx::dfiNULL)  ||  (i > FieldIdx::Invalid))
-    return dataFieldIdxStrs[(int)FieldIdx::dfiNULL];
+  if  ((i < FieldIdx::Null)  ||  (i > FieldIdx::Invalid))
+    return dataFieldIdxStrs[(int)FieldIdx::Null];
   else
     return dataFieldIdxStrs[(int)i];
 }
@@ -66,7 +66,7 @@ StatusSnapshot::FieldIdx  StatusSnapshot::SnapShotFieldIdxFromStr (const KKStr& 
     ++x;
   }
 
-  return  FieldIdx::dfiNULL;
+  return  FieldIdx::Null;
 }
 
 

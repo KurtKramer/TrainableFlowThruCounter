@@ -19,11 +19,12 @@ using namespace std;
 #include "OSservices.h"
 using namespace KKB;
 
+
 #include "LarcosVariables.h"
 using namespace  LarcosBase ;
 
-#include "CameraThread.h"
 
+#include "CameraThread.h"
 using  namespace  LarcosCounterUnManaged;
 
 
@@ -131,8 +132,8 @@ void  CameraThreadList::SendTerminateCmdToAllThreads ()
   for  (idx = begin ();  idx != end ();  ++idx)
   {
     CameraThreadPtr  t = *idx;
-    if  ((t->Status () == KKThread::ThreadStatus::tsRunning)  ||  
-         (t->Status () == KKThread::ThreadStatus::tsStarting)
+    if  ((t->Status () == KKThread::ThreadStatus::Running)  ||  
+         (t->Status () == KKThread::ThreadStatus::Starting)
         )
     {
       t->TerminateThread ();
@@ -149,8 +150,8 @@ void  CameraThreadList::SendShutdownCmdToAllThreads ()
   for  (idx = begin ();  idx != end ();  ++idx)
   {
     CameraThreadPtr  t = *idx;
-    if  ((t->Status () == KKThread::ThreadStatus::tsRunning)  ||  
-         (t->Status () == KKThread::ThreadStatus::tsStarting)
+    if  ((t->Status () == KKThread::ThreadStatus::Running)  ||  
+         (t->Status () == KKThread::ThreadStatus::Starting)
         )
     {
       t->ShutdownThread ();
@@ -176,7 +177,7 @@ void  CameraThreadList::WaitForAllThreadsToStop (float  maxWaitTime,
     for  (idx = begin ();  idx != end ();  ++idx)
     {
       CameraThreadPtr  t = *idx;
-      if  (t->Status () != KKThread::ThreadStatus::tsStopped)
+      if  (t->Status () != KKThread::ThreadStatus::Stopped)
         allThreadsStopped = false;
     }
 
@@ -223,7 +224,7 @@ void  CameraThreadList::DeleteAllStoppedThreads ()
   for  (idx = begin ();  idx != end ();  ++idx)
   {
     CameraThreadPtr  ct = *idx;
-    if  (ct->Status () == KKThread::ThreadStatus::tsStopped)
+    if  (ct->Status () == KKThread::ThreadStatus::Stopped)
       threadsToDelete.PushOnBack (ct);
   }
 

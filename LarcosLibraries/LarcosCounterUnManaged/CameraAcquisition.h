@@ -35,7 +35,7 @@ namespace LarcosCounterUnManaged
   {
   public:
     enum  class  StartStatusType
-                 {ssNULL,
+                 {Null,
                   Connecting,
                   ConnectionFailed,
                   Connected,
@@ -227,7 +227,7 @@ namespace LarcosCounterUnManaged
   class  CommandEntry
   {
   public:
-    enum  class  EntryTypes {ceNULL, ScanRate, AnalogGain, DigitalGain, SensitivityMode};
+    enum  class  EntryTypes {Null, ScanRate, AnalogGain, DigitalGain, SensitivityMode};
 
     CommandEntry (EntryTypes  _commandType,
                   float       _parameter

@@ -27,7 +27,7 @@ namespace LarcosCounterManaged
     ~StatusSnapshotManaged ();
 
     enum  class  FieldIdx: int
-          {dfiNULL                         = (int)StatusSnapshot::FieldIdx::dfiNULL,
+          {Null                            = (int)StatusSnapshot::FieldIdx::Null,
            LogicalFrameProcessorsAvailable = (int)StatusSnapshot::FieldIdx::LogicalFrameProcessorsAvailable,
            LogicalFramesOnQueue            = (int)StatusSnapshot::FieldIdx::LogicalFramesOnQueue,
            Count                           = (int)StatusSnapshot::FieldIdx::Count,

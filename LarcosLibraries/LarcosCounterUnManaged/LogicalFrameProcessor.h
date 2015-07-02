@@ -35,10 +35,10 @@ namespace LarcosCounterUnManaged
     typedef  vector<BlobIdType>  BlobIdVectorType;
 
     enum  class  CountingMethods  
-                   {cmNULL,
-                    cmStraightCount,
-                    cmPostLarvae,
-                    cmClassier
+                   {Null,
+                    StraightCount,
+                    PostLarvae,
+                    Classier
                    };
      
 

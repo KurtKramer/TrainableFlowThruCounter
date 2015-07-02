@@ -39,7 +39,7 @@ namespace LarcosCounterUnManaged
 
 
     enum  class FieldIdx: int 
-                   {dfiNULL,
+                   {Null,
                     LogicalFrameProcessorsAvailable,
                     LogicalFramesOnQueue,
                     Count,

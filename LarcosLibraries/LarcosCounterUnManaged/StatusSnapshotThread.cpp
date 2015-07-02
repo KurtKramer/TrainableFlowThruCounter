@@ -68,7 +68,7 @@ kkint32  StatusSnapshotThread::MemoryConsumedEstimated ()
 
 void  StatusSnapshotThread::Run ()
 {
-  Status (ThreadStatus::tsRunning);
+  Status (ThreadStatus::Running);
   log.Level (10) << "StatusSnapshotThread::Run" << endl;
 
   if  (!snapshotBuffer)
@@ -76,7 +76,7 @@ void  StatusSnapshotThread::Run ()
     log.Level (-1) << endl
                    << "StatusSnapshotThread::Run   ***ERROR***   Snapshot Buffer is not defined." << endl
                    << endl;
-    Status (ThreadStatus::tsStopping);
+    Status (ThreadStatus::Stopping);
     return;
   }
 
@@ -138,7 +138,7 @@ void  StatusSnapshotThread::Run ()
 
   log.Level (10) << "StatusSnapshotThread::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
 
-  Status (ThreadStatus::tsStopping);
+  Status (ThreadStatus::Stopping);
   return;
 }  /* Run */
 

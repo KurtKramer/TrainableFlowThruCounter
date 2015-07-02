@@ -1293,7 +1293,7 @@ int  UmiParticleEntryList::SubjectCount (UmiScannerFileBuffered^  scannerFile)
 {
   const StartStopPointList&  startStopPoints = scannerFile->StartStopPointsUnManaged ();
 
-  StartStopPoint::StartStopType curType = StartStopPoint::sspStartPoint;
+  StartStopPoint::StartStopType curType = StartStopPoint::StartStopType::StartPoint;
   kkint32  curTypeStartLineNum = 0;
 
   if  ((startStopPoints.size () > 0)  &&  (startStopPoints[0]->ScanLineNum () == 0))
@@ -1307,7 +1307,7 @@ int  UmiParticleEntryList::SubjectCount (UmiScannerFileBuffered^  scannerFile)
   int  x = 0;
   while  (x < Count)
   {
-    StartStopPoint::StartStopType nextType = StartStopPoint::sspStartPoint;
+    StartStopPoint::StartStopType nextType = StartStopPoint::StartStopType::StartPoint;
     kkint32                       nextTypeStartScanLineNum = 999999999;
 
     StartStopPointPtr  next = startStopPoints.SuccEntry (curTypeStartLineNum + 1);
@@ -1320,7 +1320,7 @@ int  UmiParticleEntryList::SubjectCount (UmiScannerFileBuffered^  scannerFile)
     UmiParticleEntry^  pe = (*this)[x];
     while  ((x < Count)  &&  (pe->ScannerRow < nextTypeStartScanLineNum))
     {
-      if  (curType == StartStopPoint::sspStartPoint)
+      if  (curType == StartStopPoint::StartStopType::StartPoint)
         subjectCount += pe->PredClass->CountFactor;
       ++x;
       if  (x < Count)

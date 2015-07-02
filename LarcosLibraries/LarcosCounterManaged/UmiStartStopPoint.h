@@ -16,10 +16,10 @@ namespace LarcosCounterManaged
   public:
     enum  class  StartStopType: int  
     {
-      sspNULL       = StartStopPoint::sspNULL,
-      sspStartPoint = StartStopPoint::sspStartPoint,
-      sspStopPoint  = StartStopPoint::sspStopPoint,
-      sspInvalid    = StartStopPoint::sspInvalid,
+      Null       = StartStopPoint::StartStopType::Null,
+      StartPoint = StartStopPoint::StartStopType::StartPoint,
+      StopPoint  = StartStopPoint::StartStopType::StopPoint,
+      Invalid    = StartStopPoint::StartStopType::Invalid
     };
 
 

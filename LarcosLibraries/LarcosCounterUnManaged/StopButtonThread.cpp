@@ -57,13 +57,13 @@ kkint32  StopButtonThread::MemoryConsumedEstimated ()
 
 void  StopButtonThread::Run ()
 {
-  Status (ThreadStatus::tsRunning);
+  Status (ThreadStatus::Running);
   log.Level (10) << "StopButtonThread::Run" << endl;
   Manager ()->CloseOutCountingAndOrRecording (TerminateFlag (), stopImmediately);
   
   log.Level (10) << "StopButtonThread::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
 
-  Status (ThreadStatus::tsStopping);
+  Status (ThreadStatus::Stopping);
   return;
 }  /* Run */
 

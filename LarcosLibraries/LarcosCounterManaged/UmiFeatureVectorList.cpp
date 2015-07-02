@@ -275,7 +275,7 @@ void  UmiFeatureVectorList::RandomizeOrder ()
 
 
 
-UmiFeatureVectorList^  UmiFeatureVectorList::ExtractImagesForAGivenClass (UmiClass^  mlClass)
+UmiFeatureVectorList^  UmiFeatureVectorList::ExtractExamplesForAGivenClass (UmiClass^  mlClass)
 {
   UmiFeatureVectorList^  extractedExamples = gcnew UmiFeatureVectorList ();
 
@@ -286,7 +286,7 @@ UmiFeatureVectorList^  UmiFeatureVectorList::ExtractImagesForAGivenClass (UmiCla
   }
 
   return  extractedExamples;
-}  /* ExtractImagesForAGivenClass */
+}  /* ExtractExamplesForAGivenClass */
 
 
 
@@ -313,7 +313,7 @@ UmiFeatureVectorList^  UmiFeatureVectorList::StratifyAmoungstClasses (int numOfF
 
   for each (UmiClass^  pc in classes)
   {
-    UmiFeatureVectorList^  examplesThisClass = ExtractImagesForAGivenClass (pc);
+    UmiFeatureVectorList^  examplesThisClass = ExtractExamplesForAGivenClass (pc);
     examplesThisClass->RandomizeOrder ();
     foldNum = 0;
     for each (UmiFeatureVector^  pfv in examplesThisClass)

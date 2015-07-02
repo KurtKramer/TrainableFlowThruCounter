@@ -59,7 +59,7 @@ kkint32  PlayBackButtonThread::MemoryConsumedEstimated ()
 void  PlayBackButtonThread::Run ()
 {
   log.Level (10) << "PlayBackButtonThread::Run" << endl;
-  Status (ThreadStatus::tsRunning);
+  Status (ThreadStatus::Running);
   Manager ()->PlayBackScannerFile (srcScannerFileName,
                                    successful,
                                    errMsg
@@ -67,7 +67,7 @@ void  PlayBackButtonThread::Run ()
 
   log.Level (10) << "PlayBackButtonThread::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
 
-  Status (ThreadStatus::tsStopping);
+  Status (ThreadStatus::Stopping);
   return;
 }  /* Run */
 

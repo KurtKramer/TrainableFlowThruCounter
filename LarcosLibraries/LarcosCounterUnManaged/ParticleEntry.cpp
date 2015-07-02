@@ -915,7 +915,7 @@ VectorFloatPtr  ParticleEntryList::ParticleFrequencyByTimeIntervals (int    inte
 
 int  ParticleEntryList::SubjectCount (const StartStopPointList&   startStopPoints)
 {
-  StartStopPoint::StartStopType curType = StartStopPoint::sspStartPoint;
+  StartStopPoint::StartStopType curType = StartStopPoint::StartStopType::StartPoint;
   kkint32  curTypeStartLineNum = 0;
 
   if  ((startStopPoints.size () > 0)  &&  (startStopPoints[0]->ScanLineNum () == 0))
@@ -929,7 +929,7 @@ int  ParticleEntryList::SubjectCount (const StartStopPointList&   startStopPoint
   kkuint32  x = 0;
   while  (x < size ())
   {
-    StartStopPoint::StartStopType nextType = StartStopPoint::sspStartPoint;
+    StartStopPoint::StartStopType nextType = StartStopPoint::StartStopType::StartPoint;
     kkint32                       nextTypeStartScanLineNum = 999999999;
 
     StartStopPointPtr  next = startStopPoints.SuccEntry (curTypeStartLineNum + 1);
@@ -942,7 +942,7 @@ int  ParticleEntryList::SubjectCount (const StartStopPointList&   startStopPoint
     ParticleEntryPtr  pe = at (x);
     while  ((x < size ())  &&  (pe->ScannerRow () < nextTypeStartScanLineNum))
     {
-      if  (curType == StartStopPoint::sspStartPoint)
+      if  (curType == StartStopPoint::StartStopType::StartPoint)
         subjectCount += pe->PredClass ()->CountFactor ();
       ++x;
       if  (x < size ())

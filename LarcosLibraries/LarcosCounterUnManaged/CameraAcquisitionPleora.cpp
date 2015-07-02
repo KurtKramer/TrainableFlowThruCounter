@@ -1016,7 +1016,7 @@ void  CameraAcquisitionPleora::ApplyCommandNextEntry ()
   {
     switch  (cmd->CommandType ())
     {
-    case  CommandEntry::EntryTypes::ceNULL:
+    case  CommandEntry::EntryTypes::Null:
       break;
 
     case  CommandEntry::EntryTypes::AnalogGain:
@@ -1592,7 +1592,7 @@ void  CameraAcquisitionPleora::ComputeFramneIntervals ()
 
 void  CameraAcquisitionPleora::Run ()
 {
-  Status (ThreadStatus::tsRunning);
+  Status (ThreadStatus::Running);
 
   log.Level (10) << "CameraAcquisitionPleora::Run" << endl;
 
@@ -1610,7 +1610,7 @@ void  CameraAcquisitionPleora::Run ()
     status << "Unable to connect to Mac-Address: " << MacAddress ();
     log.Level (10) << status << endl;
     DisconnectFromCamera ();
-    Status (ThreadStatus::tsStopping);
+    Status (ThreadStatus::Stopping);
     Crashed (true);
     return;
   }
@@ -1828,7 +1828,7 @@ void  CameraAcquisitionPleora::Run ()
   Manager ()->AddSecondaryMsg ("Cameras Acquisition Stopped.");
 
   StartStatus (StartStatusType::Disconnected, "Camera Stopped.");
-  Status (ThreadStatus::tsStopping);
+  Status (ThreadStatus::Stopping);
 
   log.Level (10) << "CameraAcquisitionPleora::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
 

@@ -100,6 +100,7 @@ namespace LarcosCounterUnManaged
 
     virtual  ~PostLarvaeFV ();
 
+    virtual  PostLarvaeFVPtr  Duplicate ()  const;
 
     // Access Methods.
     void  CentroidCol      (float    _centroidCol)      {centroidCol      = _centroidCol;}
@@ -385,11 +386,10 @@ namespace LarcosCounterUnManaged
      */
     PostLarvaeFVListPtr   ExtractDuplicatesByRootImageFileName ();
 
-
-    PostLarvaeFVListPtr   ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                       kkint32     _maxToExtract = -1,
-                                                       float       _minSize      = -1.0f
-                                                      )  const;
+    PostLarvaeFVListPtr   ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
+                                                         kkint32     _maxToExtract,
+                                                         float       _minSize
+                                                        )  const;
 
 
     void                  FeatureExtraction (KKStr       _dirName, 

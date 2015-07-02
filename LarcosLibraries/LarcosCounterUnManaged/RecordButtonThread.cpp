@@ -58,14 +58,14 @@ kkint32  RecordButtonThread::MemoryConsumedEstimated ()
 void  RecordButtonThread::Run ()
 {
   log.Level (10) << "RecordButtonThread::Run" << endl;
-  Status (ThreadStatus::tsRunning);
+  Status (ThreadStatus::Running);
   Manager ()->StartRecordingAndOrCounting (successful,
                                            errMsg
                                           );
 
   log.Level (10) << "RecordButtonThread::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
 
-  Status (ThreadStatus::tsStopping);
+  Status (ThreadStatus::Stopping);
   return;
 }  /* Run */
 

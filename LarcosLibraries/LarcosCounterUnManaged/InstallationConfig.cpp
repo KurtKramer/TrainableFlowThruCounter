@@ -38,7 +38,7 @@ KKStr  InstallationConfig::flowMeterMethodStrs[] = {"NULL", "Embedded", "EndOfLi
 
 const KKStr&  InstallationConfig::FlowMeterMethodToStr (FlowMeterMethods  method)
 {
-  if  ((method < FlowMeterMethods::fmmNULL)  ||  (method >= FlowMeterMethods::EndOfList ))
+  if  ((method < FlowMeterMethods::Null)  ||  (method >= FlowMeterMethods::EndOfList ))
     return KKStr::EmptyStr();
   else
     return flowMeterMethodStrs[(int)method];
@@ -48,7 +48,7 @@ const KKStr&  InstallationConfig::FlowMeterMethodToStr (FlowMeterMethods  method
 
 InstallationConfig::FlowMeterMethods  InstallationConfig::FlowMeterMethodFromStr (const KKStr&  s)
 {
-  FlowMeterMethods  method = FlowMeterMethods::fmmNULL;
+  FlowMeterMethods  method = FlowMeterMethods::Null;
   while  (method < FlowMeterMethods::EndOfList)
   {
     if  (s.EqualIgnoreCase (flowMeterMethodStrs[(int)method]))
@@ -56,7 +56,7 @@ InstallationConfig::FlowMeterMethods  InstallationConfig::FlowMeterMethodFromStr
     method = (FlowMeterMethods)((int)method + 1);
   }
   if  (method >= FlowMeterMethods::EndOfList)
-    return FlowMeterMethods::fmmNULL;
+    return FlowMeterMethods::Null;
   else
     return method;
 }
@@ -66,7 +66,7 @@ InstallationConfig::FlowMeterMethods  InstallationConfig::FlowMeterMethodFromStr
 InstallationConfig::InstallationConfig (RunLog&  runLog):
     LarcosDataRec ("Installation", "LarcosInstallation"),
     description               (),
-    flowMeterMethod           (FlowMeterMethods::fmmNULL),
+    flowMeterMethod           (FlowMeterMethods::Null),
     flowMeterTicsPerMeter     (0.0f),
     imagingChamberWidth       (0.0f),
     imagingChamberWidthPixels (),
@@ -101,7 +101,7 @@ InstallationConfig::InstallationConfig (const KKB::KKStr&  _name,
                                        ):
     LarcosDataRec ("Installation", "LarcosInstallation"),
     description               (),
-    flowMeterMethod           (FlowMeterMethods::fmmNULL),
+    flowMeterMethod           (FlowMeterMethods::Null),
     flowMeterTicsPerMeter     (0.0f),
     imagingChamberWidth       (0.0f),
     imagingChamberWidthPixels (2048),

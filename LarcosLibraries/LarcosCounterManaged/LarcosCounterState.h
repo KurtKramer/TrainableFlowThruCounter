@@ -12,7 +12,7 @@ namespace LarcosCounterManaged
   
   public enum class  LarcosCounterState: kkint16
   {
-    _NULL              = (kkint16)CounterState::csNULL, 
+    _NULL              = (kkint16)CounterState::Null, 
     Stopped            = (kkint16)CounterState::Stopped, 
     Stopping           = (kkint16)CounterState::Stopping,
     Connected          = (kkint16)CounterState::Connected,

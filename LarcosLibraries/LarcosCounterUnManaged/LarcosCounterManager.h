@@ -61,7 +61,7 @@ namespace LarcosCounterUnManaged
     typedef  KKThread::ThreadPriority  ThreadPriority;
 
     enum class CounterState: kkint16 
-                 {csNULL, 
+                 {Null, 
                   Stopped, 
                   Stopping, 
                   Connected, 
@@ -78,7 +78,7 @@ namespace LarcosCounterUnManaged
 
 
     enum  class LarcosOperatingModes
-                  {lomNULL,
+                  {Null,
                    User,
                    Advanced,
                    Invalid

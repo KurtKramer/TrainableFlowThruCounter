@@ -69,7 +69,7 @@ namespace LarcosCounterManaged
                                                         UmiRunLog^  runLog
                                                        );
 
-    UmiFeatureVectorList^  ExtractImagesForAGivenClass (UmiClass^  mlClass);
+    UmiFeatureVectorList^  ExtractExamplesForAGivenClass (UmiClass^  mlClass);
 
     UmiClassList^  ExtractListOfClasses ();
 

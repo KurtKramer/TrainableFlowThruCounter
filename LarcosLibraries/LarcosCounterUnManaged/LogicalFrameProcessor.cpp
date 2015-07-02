@@ -385,7 +385,7 @@ LogicalFrameProcessor::LogicalFrameProcessor
     classifier                 (NULL),
     classifierName             (_classifierName),
     connectedComponentDist     (_operatingParameters->ConnectedComponentDist ()),
-    countingMethod             (CountingMethods::cmStraightCount),
+    countingMethod             (CountingMethods::StraightCount),
     countParticles             (true),
     cropLeft                   (_cropLeft),
     cropRight                  (_cropRight),
@@ -608,13 +608,13 @@ void  LogicalFrameProcessor::LoadClassifer ()
 
   if  ((classifierName.EqualIgnoreCase ("PostLarvae"))  ||  (classifierName.EqualIgnoreCase ("Post Larvae")))
   {
-    countingMethod = CountingMethods::cmPostLarvae;
+    countingMethod = CountingMethods::PostLarvae;
     log.Level (20) << "LoadClassifer   Utilizing PostLarvae Counting Method." << endl;
   }
 
   else if  (classifierName.EqualIgnoreCase ("None")  ||  classifierName.Empty ())
   {
-    countingMethod = CountingMethods::cmStraightCount;
+    countingMethod = CountingMethods::StraightCount;
     log.Level (20) << "LoadClassifer   Utilizing Straight-Count Counting Method." << endl;
   }
   else
@@ -626,7 +626,7 @@ void  LogicalFrameProcessor::LoadClassifer ()
     KKStr  statusMsg = " Loading Training Library[" + classifierName + "]";
     log.Level (10) << "LoadClassifer   " << statusMsg << endl;
 
-    countingMethod = CountingMethods::cmClassier;
+    countingMethod = CountingMethods::Classier;
 
     // Since the 'LarcosCounterManager' has already built and saved this classifier we already know 
     // that it is good and we can go ahead and load the saved copy.
@@ -658,12 +658,12 @@ void  LogicalFrameProcessor::LoadClassifer ()
 void  LogicalFrameProcessor::Run ()
 {
   log.Level (10) << ThreadName () << "::Run" << endl;
-  Status (ThreadStatus::tsRunning);
+  Status (ThreadStatus::Running);
 
   LoadClassifer ();
   if  (Crashed ())
   {
-    Status (ThreadStatus::tsStopping);
+    Status (ThreadStatus::Stopping);
     return;
   }
 
@@ -706,7 +706,7 @@ void  LogicalFrameProcessor::Run ()
                  << "   ShutdownFlag: "   << ShutdownFlag ()
                  << endl;
 
-  Status (ThreadStatus::tsStopping);
+  Status (ThreadStatus::Stopping);
 }  /* Run */
 
 
@@ -831,16 +831,16 @@ void  LogicalFrameProcessor::ProcessFrame ()
 
       switch  (countingMethod)
       {
-      case  CountingMethods::cmStraightCount:
-      case  CountingMethods::cmNULL:
+      case  CountingMethods::StraightCount:
+      case  CountingMethods::Null:
         AnalyseParticleStraightCount (i, scanRow, scanCol, blob);
         break;
 
-      case  CountingMethods::cmPostLarvae:
+      case  CountingMethods::PostLarvae:
         AnalyseParticlePostLarvae (i, scanRow, scanCol, blob);
         break;
 
-      case  CountingMethods::cmClassier:
+      case  CountingMethods::Classier:
         AnalyseParticleUsingClassifier (i, (float)divisor, scanRow, scanCol, blob);
         break;
       }
@@ -894,8 +894,8 @@ void  LogicalFrameProcessor::AnalyseParticlePostLarvae (RasterPtr  particle,
                                                        )
 {
   RasterPtr  darkSpots = particle->BinarizeByThreshold (200, 255);
-  darkSpots->Erosion (MorphOp::SQUARE3);
-  darkSpots->Erosion (MorphOp::SQUARE3);
+  darkSpots->Erosion (MorphOp::MaskTypes::SQUARE3);
+  darkSpots->Erosion (MorphOp::MaskTypes::SQUARE3);
 
   KKB::BlobListPtr  blobs = darkSpots->ExtractBlobs (1);
   kkint32 countThisParticle = 0;

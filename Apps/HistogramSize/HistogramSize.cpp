@@ -974,7 +974,7 @@ vector<Region>  BuildRegionList  (const  StartStopPointList&  list)
   }
 
   kkint32  prevLineNum = 0;
-  StartStopPoint::StartStopType  prevType = StartStopPoint::sspStartPoint;
+  StartStopPoint::StartStopType  prevType = StartStopPoint::StartPoint;
 
   StartStopPointList::const_iterator  idx = list.begin ();
   while  (idx != list.end ())
@@ -982,9 +982,9 @@ vector<Region>  BuildRegionList  (const  StartStopPointList&  list)
     kkint32  nextLineNum = (*idx)->ScanLineNum ();
     StartStopPoint::StartStopType  nextType = (*idx)->Type ();
 
-    if  (prevType == StartStopPoint::sspStartPoint)
+    if  (prevType == StartStopPoint::StartPoint)
     {
-      if  (nextType == StartStopPoint::sspStopPoint)
+      if  (nextType == StartStopPoint::StopPoint)
       {
         regions.push_back (Region (prevLineNum, nextLineNum));
         cout << nextLineNum << "\t"  << "New region: " << prevLineNum << " - " << nextLineNum << endl;
@@ -1001,7 +1001,7 @@ vector<Region>  BuildRegionList  (const  StartStopPointList&  list)
     else
     {
       // previous point was StopPoint.
-      if  (nextType == StartStopPoint::sspStopPoint)
+      if  (nextType == StartStopPoint::StopPoint)
       {
         // We have two stop points in a row;  will ignore
         cout << nextLineNum << "\t"  << "Two Stop points in row." << endl;
@@ -1018,7 +1018,7 @@ vector<Region>  BuildRegionList  (const  StartStopPointList&  list)
     ++idx;
   }
 
-  if  (prevType == StartStopPoint::sspStartPoint)
+  if  (prevType == StartStopPoint::StartPoint)
   {
     regions.push_back (Region (prevLineNum, int32_max));
   }

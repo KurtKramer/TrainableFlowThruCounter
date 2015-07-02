@@ -589,6 +589,10 @@ PostLarvaeFV::~PostLarvaeFV ()
 
 
 
+PostLarvaeFVPtr  PostLarvaeFV::Duplicate ()  const
+{
+  return new PostLarvaeFV (*this);
+}
 
 
 
@@ -830,20 +834,20 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
     SaveIntermediateImage (*wr2, "Opening3_" + StrFormatInt ((kkint32)areaOpen3, "ZZZZZZ0"), intermediateImages);
 
 
-  raster->Erosion (wr1, MorphOp::SQUARE5);
-  wr1->Dilation (wr2, MorphOp::SQUARE5);
+  raster->Erosion (wr1, MorphOp::MaskTypes::SQUARE5);
+  wr1->Dilation (wr2, MorphOp::MaskTypes::SQUARE5);
   float  areaOpen5 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening5_" + StrFormatInt ((kkint32)areaOpen5, "ZZZZZZ0"), intermediateImages);
 
-  raster->Erosion (wr1, MorphOp::SQUARE7);
-  wr1->Dilation (wr2, MorphOp::SQUARE7);
+  raster->Erosion (wr1, MorphOp::MaskTypes::SQUARE7);
+  wr1->Dilation (wr2, MorphOp::MaskTypes::SQUARE7);
   float  areaOpen7 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening7_" + StrFormatInt ((kkint32)areaOpen7, "ZZZZZZ0"), intermediateImages);
   
-  wr2->Erosion (wr1, MorphOp::SQUARE9);
-  wr1->Dilation (wr2, MorphOp::SQUARE9);
+  wr2->Erosion (wr1, MorphOp::MaskTypes::SQUARE9);
+  wr1->Dilation (wr2, MorphOp::MaskTypes::SQUARE9);
   float  areaOpen9 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening9_" + StrFormatInt ((kkint32)areaOpen9, "ZZZZZZ0"), intermediateImages);
@@ -859,14 +863,14 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "FillHole_" + StrFormatInt ((kkint32)tranf, "ZZZZZZ0"), intermediateImages);
 
-  raster->Dilation (wr1, MorphOp::SQUARE5);
-  wr1->Erosion (wr2, MorphOp::SQUARE5);
+  raster->Dilation (wr1, MorphOp::MaskTypes::SQUARE5);
+  wr1->Erosion (wr2, MorphOp::MaskTypes::SQUARE5);
   float  areaClose5 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Close5_" + StrFormatInt ((kkint32)areaClose5, "ZZZZZZ0"), intermediateImages);
   
-  raster->Dilation (wr1, MorphOp::SQUARE7);
-  wr1->Erosion   (wr2, MorphOp::SQUARE7);
+  raster->Dilation (wr1, MorphOp::MaskTypes::SQUARE7);
+  wr1->Erosion   (wr2, MorphOp::MaskTypes::SQUARE7);
   float  areaClose7 = float (wr2->ForegroundPixelCount ());
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Close7_" + StrFormatInt ((kkint32)areaClose7, "ZZZZZZ0"), intermediateImages);
@@ -957,8 +961,8 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
       darkSpots = origSizeImage->BinarizeByThreshold (200, 255);
     }
 
-    darkSpots->Erosion (MorphOp::SQUARE3);
-    darkSpots->Erosion (MorphOp::SQUARE3);
+    darkSpots->Erosion (MorphOp::MaskTypes::SQUARE3);
+    darkSpots->Erosion (MorphOp::MaskTypes::SQUARE3);
 
     KKB::BlobListPtr  blobs = darkSpots->ExtractBlobs (3);
 
@@ -1549,17 +1553,17 @@ PostLarvaeFVListPtr  PostLarvaeFVList::ExtractDuplicatesByRootImageFileName ()
 
 
 
-PostLarvaeFVListPtr   PostLarvaeFVList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                                     kkint32        _maxToExtract,
-                                                                     float          _minSize
-                                                                    )  const
+PostLarvaeFVListPtr   PostLarvaeFVList::ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
+                                                                        kkint32     _maxToExtract,
+                                                                        float       _minSize
+                                                                       )  const
 {
-  FeatureVectorListPtr  featureVectorList = FeatureVectorList::ExtractImagesForAGivenClass (_mlClass, _maxToExtract, _minSize);
+  FeatureVectorListPtr  featureVectorList = FeatureVectorList::ExtractExamplesForAGivenClass (_mlClass, _maxToExtract, _minSize);
   PostLarvaeFVListPtr  imageFeaturesList = new PostLarvaeFVList (*featureVectorList);
   featureVectorList->Owner (false);
   delete  featureVectorList;  featureVectorList = NULL;
   return  imageFeaturesList;
-}  /*  ExtractImagesForAGivenClass  */
+}  /*  ExtractExamplesForAGivenClass  */
 
 
 

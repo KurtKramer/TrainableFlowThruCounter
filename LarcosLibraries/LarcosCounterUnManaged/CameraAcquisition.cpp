@@ -51,7 +51,7 @@ CommandEntry::CommandEntry (EntryTypes  _commandType,
 {
   switch  (commandType)
   {
-  case  EntryTypes::ceNULL:
+  case  EntryTypes::Null:
     break;
 
   case  EntryTypes::AnalogGain:
@@ -84,7 +84,7 @@ CommandEntry::CommandEntry (EntryTypes  _commandType,
 {
   switch  (commandType)
   {
-  case  EntryTypes::ceNULL:
+  case  EntryTypes::Null:
     break;
 
   case  EntryTypes::AnalogGain:
@@ -118,7 +118,7 @@ CommandEntry::CommandEntry (EntryTypes    _commandType,
 {
   switch  (commandType)
   {
-  case  EntryTypes::ceNULL:
+  case  EntryTypes::Null:
     break;
 
   case  EntryTypes::AnalogGain:
@@ -247,7 +247,7 @@ CameraAcquisition::CameraAcquisition (LarcosCounterManagerPtr _manager,
     requestedDigitalGain     (0),
     requestedScanRate        (0.0f),
     scanLinesRead            (0),
-    startStatus              (StartStatusType::ssNULL),
+    startStatus              (StartStatusType::Null),
     statusMsg                (),
     totalLostPackets         (0)
 {
@@ -287,7 +287,7 @@ CameraAcquisition::CameraAcquisition (LarcosCounterManagerPtr _manager,
     requestedDigitalGain     (0),
     requestedScanRate        (0.0f),
     scanLinesRead            (0),
-    startStatus              (StartStatusType::ssNULL),
+    startStatus              (StartStatusType::Null),
     statusMsg                (),
     totalLostPackets         (0)
 {

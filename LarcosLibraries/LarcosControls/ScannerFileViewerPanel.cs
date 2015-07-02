@@ -476,19 +476,19 @@ namespace LarcosControls
       UmiStartStopPoint prevPoint = scannerFile.StartStopPointPrevEntry (leftScanRow);
       UmiStartStopPoint nextPoint = scannerFile.StartStopPointSuccEntry (leftScanRow + 1);
 
-      UmiStartStopPoint.StartStopType  curType = UmiStartStopPoint.StartStopType.sspNULL;
+      UmiStartStopPoint.StartStopType  curType = UmiStartStopPoint.StartStopType.Null;
 
       Int32  nextDisplayRow = displayScanRowLeft;
 
       while  (nextDisplayRow < displayScanRowRight)
       {
         if  (prevPoint == null)
-          curType = UmiStartStopPoint.StartStopType.sspStartPoint;
+          curType = UmiStartStopPoint.StartStopType.StartPoint;
         else
           curType = prevPoint.Type;
 
         Brush b = null;
-        if  (curType == UmiStartStopPoint.StartStopType.sspStartPoint)
+        if  (curType == UmiStartStopPoint.StartStopType.StartPoint)
           b = new SolidBrush (Color.Green);
         else
           b = new SolidBrush (Color.Red);
@@ -1017,7 +1017,7 @@ namespace LarcosControls
 
       Int32 curScanRow = DisplayRowToScanLineRow (displayScanRowLeft + rightMouseCol);
       UmiStartStopPoint p = scannerFile.StartStopPointPrevEntry (curScanRow);
-      if  ((p == null)  ||  (p.Type == UmiStartStopPoint.StartStopType.sspStartPoint))
+      if  ((p == null)  ||  (p.Type == UmiStartStopPoint.StartStopType.StartPoint))
       {
         cm.MenuItems.Add ("Stop Counting", new EventHandler (SetStopCountingPoint));
       }

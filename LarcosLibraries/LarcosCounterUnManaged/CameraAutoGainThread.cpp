@@ -60,7 +60,7 @@ kkint32  CameraAutoGainThread::MemoryConsumedEstimated ()
 
 void  CameraAutoGainThread::Run ()
 {
-  Status (ThreadStatus::tsRunning);
+  Status (ThreadStatus::Running);
   log.Level (10) << "CameraAutoGainThread::Run    Thread started." << endl;
 
   if  (camera == NULL)
@@ -82,7 +82,7 @@ void  CameraAutoGainThread::Run ()
     camera->PerformAutoGainProcedure ();
   }
 
-  Status (ThreadStatus::tsStopping);
+  Status (ThreadStatus::Stopping);
 
   log.Level (10) << "CameraAutoGainThread::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
 

@@ -63,7 +63,7 @@ LoggerThread::~LoggerThread ()
 {
   ProcessMsgQueue ();
 
-  if  ((Status () == ThreadStatus::tsStarting)  ||  (Status () == ThreadStatus::tsRunning))
+  if  ((Status () == ThreadStatus::Starting)  ||  (Status () == ThreadStatus::Running))
   {
     TerminateThread ();
     osSleepMiliSecs (500);
@@ -131,7 +131,7 @@ void  LoggerThread::ProcessMsgQueue ()
 
 void  LoggerThread::Run ()
 {
-  Status (ThreadStatus::tsRunning);
+  Status (ThreadStatus::Running);
 
   *logFile << "LoggerThread::Run" << endl;
 
@@ -145,7 +145,7 @@ void  LoggerThread::Run ()
   }
 
   *logFile << "LoggerThread::Run   Exiting" << endl;
-  Status (ThreadStatus::tsStopping);
+  Status (ThreadStatus::Stopping);
   return;
 }  /* Run */
 
@@ -159,7 +159,7 @@ LoggerThreadPtr  LoggerThread::CreateAndStartInstance (MsgQueuePtr  _msgQueue,
 {
   bool  successful = false;
   LoggerThreadPtr  logger = new LoggerThread (_msgQueue, _loggedMsgs, _threadName);
-  logger->Start (ThreadPriority::tpLow, successful);
+  logger->Start (ThreadPriority::Low, successful);
   return logger;
 }
                            

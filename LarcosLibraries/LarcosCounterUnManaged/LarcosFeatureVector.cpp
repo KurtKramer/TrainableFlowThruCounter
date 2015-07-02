@@ -101,7 +101,10 @@ LarcosFeatureVector::~LarcosFeatureVector ()
 
 
 
-
+LarcosFeatureVectorPtr  LarcosFeatureVector::Duplicate ()  const
+{
+  return new LarcosFeatureVector (*this);
+}
 
 
 
@@ -658,17 +661,17 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::ExtractDuplicatesByRootImag
 
 
 
-LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
+LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
                                                                                    kkint32     _maxToExtract,
                                                                                    float       _minSize
                                                                                   )  const
 {
-  FeatureVectorListPtr  featureVectorList = FeatureVectorList::ExtractImagesForAGivenClass (_mlClass, _maxToExtract, _minSize);
+  FeatureVectorListPtr  featureVectorList = FeatureVectorList::ExtractExamplesForAGivenClass (_mlClass, _maxToExtract, _minSize);
   LarcosFeatureVectorListPtr  imageFeaturesList = new LarcosFeatureVectorList (*featureVectorList);
   featureVectorList->Owner (false);
   delete  featureVectorList;  featureVectorList = NULL;
   return  imageFeaturesList;
-}  /*  ExtractImagesForAGivenClass  */
+}  /*  ExtractExamplesForAGivenClass  */
 
 
 

@@ -323,7 +323,7 @@ namespace LarcosCounter
       foreach  (UmiStartStopPoint  p  in  startStopPoints)
       {
         StripLine  sl = new StripLine ();
-        if  (p.Type == UmiStartStopPoint.StartStopType.sspStartPoint)
+        if  (p.Type == UmiStartStopPoint.StartStopType.StartPoint)
           sl.BorderColor = Color.Green;
         else
           sl.BorderColor = Color.Red;

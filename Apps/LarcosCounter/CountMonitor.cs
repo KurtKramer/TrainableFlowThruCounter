@@ -1275,7 +1275,7 @@ namespace LarcosCounter
       else
       {
         StatusSnapshotManaged.FieldIdx  newThroughPutField = StatusSnapshotManaged.SnapShotFieldIdxFromStr ((String)ThroughPutDataToDiosplay.SelectedItem);
-        if  (newThroughPutField != StatusSnapshotManaged.FieldIdx.dfiNULL)
+        if  (newThroughPutField != StatusSnapshotManaged.FieldIdx.Null)
         {
           runLog.WriteLn  (10, "ThroughPutDataToDisplay_SelectedIndexChanged   Changed to " + newThroughPutField + ".");
           

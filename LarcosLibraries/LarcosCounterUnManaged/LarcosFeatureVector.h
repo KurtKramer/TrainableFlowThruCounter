@@ -67,6 +67,8 @@ namespace LarcosCounterUnManaged
 
     virtual  ~LarcosFeatureVector ();
 
+    virtual  LarcosFeatureVectorPtr  Duplicate ()  const;
+
 
     // Access Methods.
     void  CentroidCol      (float    _centroidCol)      {centroidCol      = _centroidCol;}
@@ -235,7 +237,7 @@ namespace LarcosCounterUnManaged
 
     LarcosFeatureVectorListPtr   ExtractDuplicatesByRootImageFileName ();
 
-    LarcosFeatureVectorListPtr   ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
+    LarcosFeatureVectorListPtr   ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
                                                               kkint32     _maxToExtract = -1,
                                                               float       _minSize      = -1.0f
                                                              )  const;

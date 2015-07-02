@@ -53,10 +53,10 @@ kkint32  ConnectButtonThread::MemoryConsumedEstimated ()
 void  ConnectButtonThread::Run ()
 {
   log.Level (40) << "ConnectButtonThread::Run" << endl;
-  Status (ThreadStatus::tsRunning);
+  Status (ThreadStatus::Running);
   bool  successful = false;
   Manager ()->ConnectToCamera (successful);
-  Status (ThreadStatus::tsStopping);
+  Status (ThreadStatus::Stopping);
   log.Level (10) << "ConnectButtonThread::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
   return;
 }  /* Run */

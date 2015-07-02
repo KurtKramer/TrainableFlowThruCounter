@@ -47,7 +47,7 @@ namespace LarcosCounterUnManaged
     typedef  KKLSC::ScannerFile::Format  ScannerFileFormat;
 
     enum  class  DiskWritingStatus  
-                   {dwNULL,
+                   {Null,
                     Recording,
                     NotRecording,
                     DroppingFrames
