@@ -49,7 +49,8 @@ namespace LarcosCounterUnManaged
      */
     virtual  PostLarvaeFVListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                RunLog&  runLog
-                                                              );
+                                                              )
+                                                              const;
 
   protected:
     virtual  FileDescPtr  DefineFileDesc () const;
@@ -102,7 +103,8 @@ namespace LarcosCounterUnManaged
      */
     virtual  PostLarvaeFVListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                RunLog&  runLog
-                                                              );
+                                                              )
+                                                              const;
 
     /**
      *@brief  Returns instance of "PostLarvaeFVProducerFactory"  that is registered with "FactoryFVProducer::RegisterFactory".

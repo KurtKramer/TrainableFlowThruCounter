@@ -18,7 +18,6 @@ using namespace  KKMLL;
 
 namespace LarcosCounterUnManaged
 {
-
   class LarcosFVProducer:  public FeatureVectorProducer
   {
   public:
@@ -47,7 +46,8 @@ namespace LarcosCounterUnManaged
 
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                 RunLog&  runLog
-                                                               );
+                                                               )
+                                                               const;
 
     virtual  kkint16  Version ()  const {return _LarcosFVProducer_VersionNum_;}
 
@@ -198,7 +198,15 @@ namespace LarcosCounterUnManaged
      */
     virtual  LarcosFeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                       RunLog&  runLog
-                                                                     );
+                                                                     )
+                                                                     const;
+
+
+    /**
+     *@brief  Returns a 'LarcosTrainingConfiguration'  derived instance.
+     */
+    virtual  TrainingConfiguration2Ptr  ManufacturTrainingConfiguration ()  const;
+
 
     /**
      *@brief  Returns instance of "LarcosFVProducerFactory"  that is registered with "FactoryFVProducer::RegisterFactory".

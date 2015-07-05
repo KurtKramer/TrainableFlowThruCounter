@@ -34,6 +34,7 @@ using namespace  KKMLL;
 
 #include "FeatureFileIOKK.h"
 #include "LarcosFeatureVector.h"
+#include "LarcosTrainingConfiguration.h"
 using  namespace  LarcosCounterUnManaged;
 
 
@@ -696,6 +697,7 @@ FileDescPtr  LarcosFVProducer::DefineFileDescStatic ()
 FeatureVectorListPtr  LarcosFVProducer::ManufacturFeatureVectorList (bool     owner,
                                                                      RunLog&  runLog
                                                                     )
+                                                                    const
 {
   return  new LarcosFeatureVectorList (FileDesc (), owner);
 }
@@ -752,6 +754,11 @@ LarcosFVProducerPtr  LarcosFVProducerFactory::ManufactureInstance (RunLog&  runL
 
 
 
+TrainingConfiguration2Ptr  LarcosFVProducerFactory::ManufacturTrainingConfiguration ()  const
+{
+  return  new LarcosTrainingConfiguration ();
+}
+
 
 
 
@@ -759,6 +766,7 @@ LarcosFVProducerPtr  LarcosFVProducerFactory::ManufactureInstance (RunLog&  runL
 LarcosFeatureVectorListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
                                                                                   RunLog&  runLog
                                                                                  )
+                                                                                 const
 {
   return new LarcosFeatureVectorList (LarcosFVProducer::DefineFileDescStatic (), owner);
 }

@@ -81,6 +81,7 @@ const type_info*   PostLarvaeFVProducer::FeatureVectorListTypeId () const
 PostLarvaeFVListPtr  PostLarvaeFVProducer::ManufacturFeatureVectorList (bool     owner,
                                                                         RunLog&  runLog
                                                                        )
+                                                                       const
 {
   return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner);
 }
@@ -147,6 +148,7 @@ PostLarvaeFVProducerPtr  PostLarvaeFVProducerFactory::ManufactureInstance (RunLo
 PostLarvaeFVListPtr  PostLarvaeFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
                                                                                RunLog&  runLog
                                                                               )
+                                                                              const
 {
   return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner);
 }
