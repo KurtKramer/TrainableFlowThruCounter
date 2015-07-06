@@ -177,10 +177,10 @@ const  KKStr  LarcosFVProducer::featureNames[] =
 
 
 LarcosFVProducer::LarcosFVProducer (FactoryFVProducerPtr  factory):
-    FeatureVectorProducer ("PostLarvaeFV",
+    FeatureVectorProducer ("LarcosFVProducer",
                            factory
                           ),
-    totPixsForMorphOps (4000000),
+    totPixsForMorphOps (250000),
     workRaster1Area (NULL),
     workRaster2Area (NULL),
     workRaster3Area (NULL),

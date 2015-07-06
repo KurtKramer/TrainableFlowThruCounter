@@ -14,7 +14,7 @@ using namespace  KKMLL;
 #include "LarcosFeatureVector.h"
 
 
-#define _LarcosFVProducer_VersionNum_  336
+#define _LarcosFVProducer_VersionNum_  340
 
 namespace LarcosCounterUnManaged
 {
