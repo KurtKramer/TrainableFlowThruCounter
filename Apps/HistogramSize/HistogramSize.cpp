@@ -437,7 +437,7 @@ void  HistogramSize::ErodeBySize (Raster& i)
     numOfErosionsToDo = 6;
 
   for (int x = 0;  x < numOfErosionsToDo;  ++x)
-    i.Erosion (SQUARE3);
+    i.Erosion (MorphOp::MaskTypes::SQUARE3);
 
   return;
 }  /* ErodeBySize */
@@ -819,10 +819,9 @@ void  ScannerFileCharacteristics_ProcessOneDir (const KKStr&  dir,
 
       switch  (sf->FileFormat ())
       {
-      case  ScannerFile::sfSimple:          bitDepth = 8;   break;
-      case  ScannerFile::sf3BitEncoded:     bitDepth = 3;   break;
-      case  ScannerFile::sf4BitEncoded:     bitDepth = 4;   break;
-      case  ScannerFile::sfZlib3BitEncoded: bitDepth = 8;   break;
+      case  ScannerFile::Format::sf2BitEncoded:     bitDepth = 3;   break;
+      case  ScannerFile::Format::sf4BitEncoded:     bitDepth = 4;   break;
+      case  ScannerFile::Format::sfZlib3BitEncoded: bitDepth = 8;   break;
       }
 
       KKStr  dateTimeRecordedStr = "";
@@ -974,7 +973,7 @@ vector<Region>  BuildRegionList  (const  StartStopPointList&  list)
   }
 
   kkint32  prevLineNum = 0;
-  StartStopPoint::StartStopType  prevType = StartStopPoint::StartPoint;
+  StartStopPoint::StartStopType  prevType = StartStopPoint::StartStopType::StartPoint;
 
   StartStopPointList::const_iterator  idx = list.begin ();
   while  (idx != list.end ())
@@ -982,9 +981,9 @@ vector<Region>  BuildRegionList  (const  StartStopPointList&  list)
     kkint32  nextLineNum = (*idx)->ScanLineNum ();
     StartStopPoint::StartStopType  nextType = (*idx)->Type ();
 
-    if  (prevType == StartStopPoint::StartPoint)
+    if  (prevType == StartStopPoint::StartStopType::StartPoint)
     {
-      if  (nextType == StartStopPoint::StopPoint)
+      if  (nextType == StartStopPoint::StartStopType::StopPoint)
       {
         regions.push_back (Region (prevLineNum, nextLineNum));
         cout << nextLineNum << "\t"  << "New region: " << prevLineNum << " - " << nextLineNum << endl;
@@ -1001,7 +1000,7 @@ vector<Region>  BuildRegionList  (const  StartStopPointList&  list)
     else
     {
       // previous point was StopPoint.
-      if  (nextType == StartStopPoint::StopPoint)
+      if  (nextType == StartStopPoint::StartStopType::StopPoint)
       {
         // We have two stop points in a row;  will ignore
         cout << nextLineNum << "\t"  << "Two Stop points in row." << endl;
@@ -1018,7 +1017,7 @@ vector<Region>  BuildRegionList  (const  StartStopPointList&  list)
     ++idx;
   }
 
-  if  (prevType == StartStopPoint::StartPoint)
+  if  (prevType == StartStopPoint::StartStopType::StartPoint)
   {
     regions.push_back (Region (prevLineNum, int32_max));
   }
@@ -1139,7 +1138,7 @@ void  CombineScannerFiles ()
 
 
 
-  ScannerFilePtr  out = ScannerFile::CreateScannerFileForOutput (outFileName, ScannerFile::sf4BitEncoded, 2048, 480, runLog);
+  ScannerFilePtr  out = ScannerFile::CreateScannerFileForOutput (outFileName, ScannerFile::Format::sf4BitEncoded, 2048, 480, runLog);
   out->AddHeaderField ("DestScannerFileFormat","4BitEncoded");
   if  (!out)
   {
@@ -1330,7 +1329,7 @@ void  MergeInFlowRateData (const KKStr&  scannerFileName)
 
   ScannerFilePtr  out 
      = ScannerFile::CreateScannerFileForOutput (outFileName, 
-                                                ScannerFile::sfSimple,
+                                                ScannerFile::Format::sfSimple,
                                                 pixelsPerScanLine,
                                                 in->FrameHeight (),
                                                 runLog
