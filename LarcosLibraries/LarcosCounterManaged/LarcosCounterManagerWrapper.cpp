@@ -17,7 +17,7 @@
 #include <string>
 #include <vector>
 #include "MemoryDebug.h"
-using namespace std;
+
 
 #include "KKException.h"
 #include "KKStr.h"

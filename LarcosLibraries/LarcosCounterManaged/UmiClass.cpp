@@ -12,7 +12,6 @@
 #include <string>
 #include <vector>
 #include "MemoryDebug.h"
-using namespace std;
 
 #include "MemoryDebug.h"
 #include "KKBaseTypes.h"

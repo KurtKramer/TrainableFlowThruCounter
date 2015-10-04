@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 #include "MemoryDebug.h"
-using namespace std;
+
 
 #include "KKStr.h"
 using namespace  KKB;

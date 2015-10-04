@@ -1,13 +1,9 @@
 #include "StdAfx.h"
-#include  "FirstIncludes.h"
-
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <math.h>
-
-
 #include <ctype.h>
 #include <time.h>
-
 #include <fstream>
 #include <iostream>
 #include <ostream>
@@ -15,7 +11,7 @@
 #include <strstream>
 #include <vector>
 #include "MemoryDebug.h"
-using namespace std;
+
 
 #include "KKBaseTypes.h"
 #include "..\\KKBase\\GoalKeeper.h"
@@ -74,7 +70,7 @@ UmiTrainingConfiguration::UmiTrainingConfiguration (String^                  _co
   if  (_initialOperatingParameters != nullptr)
     op = _initialOperatingParameters->UnManagedClass ();
 
-  strstream  logStr;
+  std::strstream  logStr;
   KKStr  configFileName = UmiKKStr::SystemStringToKKStr (_configFileName);
   config = new LarcosTrainingConfiguration ();
   config->Load (configFileName, op, true, log->Log ());

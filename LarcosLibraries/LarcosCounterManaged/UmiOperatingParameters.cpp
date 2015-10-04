@@ -6,7 +6,7 @@
 #include <sstream>
 #include <vector>
 #include "MemoryDebug.h"
-using namespace std;
+
 
 #include "KKBaseTypes.h"
 using namespace KKB;
@@ -147,7 +147,7 @@ void  UmiOperatingParameters::UpdateFromScannerFile (UmiScannerFile^ sf)
 
 void  UmiOperatingParameters::WriteFieldValues (System::IO::StreamWriter^  sr)
 {
-  ostringstream o;
+  std::ostringstream o;
   operatingParameters->WriteFieldValues (o);
   String^ s = msclr::interop::marshal_as<String^> (o.str ());
   sr->WriteLine (s);

@@ -176,12 +176,12 @@ namespace LarcosCounterUnManaged
    *@details The "StatusSnapshotThread" thread will awake at intervals and take a snapshot of Counter activity and add to end of this buffer.
    * These snapshots will reflect the change in same variables such as dropped frames.
    */
-  class  StatusSnapshotBuffer:  public  vector<StatusSnapshotPtr>
+  class  StatusSnapshotBuffer:  public  std::vector<StatusSnapshotPtr>
   {
   public:
     typedef  StatusSnapshotBuffer*  StatusSnapshotBufferPtr;
 
-    typedef  pair<KKB::DateTime, StatusSnapshotPtr>  KeyRecPair;
+    typedef  std::pair<KKB::DateTime, StatusSnapshotPtr>  KeyRecPair;
 
     StatusSnapshotBuffer ();
 

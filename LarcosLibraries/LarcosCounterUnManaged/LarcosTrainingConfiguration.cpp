@@ -280,14 +280,15 @@ void  LarcosTrainingConfiguration::WriteXML (const KKStr&  varName,
 
 void   LarcosTrainingConfiguration::ReadXML (XmlStream&      s,
                                              XmlTagConstPtr  tag,
+                                             VolConstBool&   cancelFlag,
                                              RunLog&         log
                                             )
 
 {
-  XmlTokenPtr t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
-    t = ReadXMLBaseToken (t, log);
+    t = ReadXMLBaseToken (t, cancelFlag, log);
     if  (t)
     {
       const KKStr&  varName = t->VarName ();
@@ -295,9 +296,12 @@ void   LarcosTrainingConfiguration::ReadXML (XmlStream&      s,
         operatingParms = dynamic_cast<XmlElementOperatingParametersPtr> (t)->TakeOwnership ();
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
-  ReadXMLPost (log);
+  delete  t;
+  t = NULL;
+  if (!cancelFlag)
+    ReadXMLPost (cancelFlag, log);
 }  /* ReadXML */
 
 

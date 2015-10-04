@@ -5,11 +5,11 @@
 #if  !defined(_CAMERAACQUISITIONPLEORA_)
 #define  _CAMERAACQUISITIONPLEORA_
 
-#include <PvDeviceInfo.h>
-#include <PvDevice.h>
+#include <PvDeviceInfoGEV.h>
+#include <PvDeviceGEV.h>
 #include <PvPipeline.h>
 #include <PvBuffer.h>
-#include <PvStream.h>
+#include <PvStreamGEV.h>
 
 #include "MsgQueue.h"
 
@@ -24,13 +24,13 @@ namespace LarcosCounterUnManaged
 //  #endif
   typedef  PvDeviceInfo*  PvDeviceInfoPtr;
   
-  //#ifndef __PV_DEVICE_H__
-  //class  PvDevice;
+  //#ifndef __PV_DEVICE_GEV_H__
+  //class  PvDeviceGEV;
   //#endif
 
-  typedef  PvDevice*    PvDevicePtr;
-  typedef  PvStream*    PvStreamPtr;
-  typedef  PvPipeline*  PvPipelinePtr;
+  typedef  PvDeviceGEV*  PvDeviceGEVPtr;
+  typedef  PvStreamGEV*  PvStreamGEVPtr;
+  typedef  PvPipeline*   PvPipelinePtr;
   
 
   /**
@@ -183,7 +183,7 @@ namespace LarcosCounterUnManaged
                              );
 
     static
-    KKStr  Int64ToIpAddress (PvInt64 i);
+    KKStr  Int64ToIpAddress (int64_t i);
 
     void  ConnectToCamera (bool&  connectionSuccessful);
     void  DisconnectFromCamera ();
@@ -265,10 +265,10 @@ namespace LarcosCounterUnManaged
     void  RaiseDigitalGainUntilAtLeastHighValue (int  minHighValue);
 
 
-    PvDevice*             lDevice;
+    PvDeviceGEV*          lDevice;
     PvGenParameterArray*  lDeviceParams;   /**< Parameters of currently selected camera.  */
     PvPipeline*           lPipeline;
-    PvStreamPtr           lStream;
+    PvStreamGEVPtr        lStream;
     PvGenParameterArray*  lStreamParams;
 
     PvGenInteger*         lAcquisitionLinePeriod;

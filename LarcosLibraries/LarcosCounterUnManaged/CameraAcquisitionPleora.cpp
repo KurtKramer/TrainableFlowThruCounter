@@ -19,11 +19,11 @@ using namespace std;
 
 
 #include <PvDeviceFinderWnd.h>
-#include <PvDevice.h>
+#include <PvDeviceGEV.h>
 #include <PvPipeline.h>
 #include <PvBuffer.h>
-#include <PvStream.h>
-#include <PvStreamRaw.h>
+#include <PvStreamGEV.h>
+//#include <PvStreamRaw.h>
 #include <PvSystem.h>
 
 #include "KKBaseTypes.h"
@@ -202,7 +202,7 @@ CameraAcquisitionPleora::~CameraAcquisitionPleora ()
 
 void  CameraAcquisitionPleora::InitializeDeviceParameterAccessVariables ()
 {
-  lDeviceParams = lDevice->GetGenParameters();
+  lDeviceParams = lDevice->GetParameters();
   lIPAddressParam            = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("IPAddressParam"));
   lTLLocked                  = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("TLParamsLocked"));
   lPayloadSize               = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("PayloadSize"));
@@ -316,7 +316,7 @@ kkint64  CameraAcquisitionPleora::GetPvParameterInteger (PvGenParameterArray*  p
       if  (pvGenType == PvGenTypeInteger)
       {
         PvGenInteger*  pvGenInteger = dynamic_cast<PvGenInteger *> (param);
-        PvInt64  pvInt;
+        int64_t  pvInt;
         if  (pvGenInteger->GetValue (pvInt).IsOK ())
           result = pvInt;
       }
@@ -356,7 +356,7 @@ kkint32  CameraAcquisitionPleora::GetPvParameterEnum (PvGenParameterArray*  para
       if  (pvGenType == PvGenTypeEnum)
       {
         PvGenEnum*  pvGenEnum = dynamic_cast<PvGenEnum *> (param);
-        PvInt64  pvInt;
+        int64_t  pvInt;
         if  (pvGenEnum->GetValue (pvInt).IsOK ())
           result = pvInt;
       }
@@ -531,7 +531,7 @@ void  CameraAcquisitionPleora::SetPvParameterBool (const KKStr&  paramName,
 
 
 
-KKStr  CameraAcquisitionPleora::Int64ToIpAddress (PvInt64 i)
+KKStr  CameraAcquisitionPleora::Int64ToIpAddress (int64_t i)
 {
   kkint32 p1 = i % 256;  i /= 256;
   kkint32 p2 = i % 256;  i /= 256;
@@ -576,7 +576,7 @@ void  CameraAcquisitionPleora::AddToHeaderField (PvGenParameter*  p)
   case  PvGenTypeInteger:
     {
       PvGenInteger *lGenInteger = dynamic_cast<PvGenInteger *>(p);
-      PvInt64 i;
+      int64_t i;
       if  (lGenInteger->GetValue (i).IsOK ())
         value = StrFromInt64 (i);
       else
@@ -665,7 +665,7 @@ void   CameraAcquisitionPleora::AddPleoraVariableToHeaderField (const KKStr&  va
   }
 
   if  (!lDeviceParams)
-    lDeviceParams = lDevice->GetGenParameters ();
+    lDeviceParams = lDevice->GetParameters ();
 
   PvString  pvVarName = varName.Str ();
 
@@ -749,7 +749,7 @@ void  CameraAcquisitionPleora::SetGainTap (kkint64 gainTap)
       log.Level (-1) << msg << endl;
     }
 
-    PvInt64  tempGainTap = 0;
+    int64_t  tempGainTap = 0;
     if  (lGainSelector->GetValue (tempGainTap).IsOK ())
       gainTapSel = (kkint32)tempGainTap;
     else
@@ -821,7 +821,7 @@ void  CameraAcquisitionPleora::SetSensitivityMode (const KKStr& requestedSensiti
   }
 
   {  
-    PvInt64  tempSensitivityMode = 0;
+    int64_t  tempSensitivityMode = 0;
     if  (lSensitivityMode->GetValue (tempSensitivityMode).IsOK ())
     {
       switch  (tempSensitivityMode)
@@ -865,7 +865,7 @@ void  CameraAcquisitionPleora::SetScanRate  (float requestedScanRate)
 
   if  (cameraParams->DeviceModelName ().EqualIgnoreCase ("DiviinaLM1GE"))
   {
-    PvInt64  acquisitionLinePeriod = (int)(0.5f + 1000000.0f / requestedScanRate);
+    int64_t  acquisitionLinePeriod = (int)(0.5f + 1000000.0f / requestedScanRate);
 
     if  (acquisitionLinePeriod < 55)
     {
@@ -878,7 +878,7 @@ void  CameraAcquisitionPleora::SetScanRate  (float requestedScanRate)
       acquisitionLinePeriod = 55;
     }
 
-    PvInt64  exposureTime = acquisitionLinePeriod - 5;
+    int64_t  exposureTime = acquisitionLinePeriod - 5;
 
     if  (lExposureTime)
     {
@@ -931,7 +931,7 @@ void  CameraAcquisitionPleora::SetAnalogGain  (float requestedAnalogGain)
   {
     //analogGain = (float)GetPvParameterInteger (params, "Gain", -1);
 
-    PvInt64  adjGain = (int)(800.0f * ((requestedAnalogGain + 10.0f) / 20.0f));
+    int64_t  adjGain = (int)(800.0f * ((requestedAnalogGain + 10.0f) / 20.0f));
 
     PvResult  pvr = lGain->SetValue (adjGain);
     if  (!pvr.IsOK ())
@@ -985,7 +985,7 @@ void  CameraAcquisitionPleora::SetDigitalGain  (kkint32 requestedDigitalGain)
       log.Level (-1) << msg << endl;
     }
 
-    PvInt64  digitalGainD = 0;
+    int64_t  digitalGainD = 0;
     if  (lDigitalGainRaw->GetValue (digitalGainD).IsOK ())
     {
       curDigitalGain = (kkint32)digitalGainD;
@@ -1201,7 +1201,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
   }
 
   // Connect to the GEV Device
-  lDevice = new PvDevice ();
+  lDevice = new PvDeviceGEV ();
 
   KKStr  status;
   status << "Connecting to Mac Address: " << MacAddress ();
@@ -1226,11 +1226,11 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
 
     log.Level (40) << "ConnectToCamera  Attempting to configure IP address of Mac :" << cameraParams->MacAddress () << "  to IP :" << cameraParams->IpAddress () << endl;
 
-    PvResult pvr = PvDevice::SetIPConfiguration (pvMacAddress, 
-                                                 pvIpAddress, 
-                                                 pvInterfaceSubnetMask, 
-                                                 pvInterfaceDefaultGateway
-                                                );
+    PvResult pvr = PvDeviceGEV::SetIPConfiguration (pvMacAddress, 
+                                                    pvIpAddress, 
+                                                    pvInterfaceSubnetMask, 
+                                                    pvInterfaceDefaultGateway
+                                                   );
     if  (!pvr.IsOK ())
     {
       log.Level (-1) << "ConnectToCamera  ***ERROR***  Setting IP Address  " << PvResultToStr (pvr) << endl;
@@ -1321,14 +1321,14 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
 
   // Negotiate streaming packet size
   log.Level (20) << "ConnectToCamera   Negotiating Streaming Packet Size." << endl;
-  PvResult  negotiateResult = lDevice->NegotiatePacketSize ();
+  PvResult  negotiateResult = lDevice-> NegotiatePacketSize ();
   if  (!negotiateResult.IsOK ())
     log.Level (-1) << "ConnectToCamera  ***ERROR***   NegotiatePacketSize failed :" << PvResultToStr (negotiateResult) << endl;
   else
     log.Level (40) << "ConnectToCamera  NegotiatePacketSize Successful :" << PvResultToStr (negotiateResult) << endl;
 
   log.Level (20) << "ConnectToCamera   Opening stream to device." << endl;
-  lStream = new PvStream ();
+  lStream = new PvStreamGEV ();
   PvResult  streamOpenResult = lStream->Open (IpAddress ().Str ());
   if  (!streamOpenResult.IsOK ())
   { 
@@ -1345,7 +1345,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
 
   lPipeline = new PvPipeline (lStream);
 
-  PvInt64 payloadSize = 0;
+  int64_t payloadSize = 0;
   
   PvResult getPayloadSizeResult = lPayloadSize->GetValue (payloadSize);
   if  (!getPayloadSizeResult.IsOK ())
@@ -1354,7 +1354,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
     log.Level (40) << "ConnectToCamera   PayLoadSize Retrieved :" << (kkint64)payloadSize << " :" << PvResultToStr (getPayloadSizeResult) << endl;
 
 
-  lPipeline->SetBufferSize (static_cast<PvUInt32> (payloadSize));
+  lPipeline->SetBufferSize (static_cast<uint32_t> (payloadSize));
 
   PvResult  bufferCountResult = lPipeline->SetBufferCount (64); // Increase for high frame rate without missing block IDs
   if  (bufferCountResult.IsOK ())
@@ -1365,7 +1365,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
   // Have to set the Device IP destination to the Stream
 
   PvString localIPAddress = lStream->GetLocalIPAddress ();
-  PvUInt16 localPort      = lStream->GetLocalPort ();
+  uint16_t localPort      = lStream->GetLocalPort ();
 
   PvResult streamDestResult = lDevice->SetStreamDestination (localIPAddress, localPort);
   if  (streamDestResult.IsOK ())
@@ -1423,7 +1423,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
     {
       PvResult maxResendGroupSizeResult;
 
-      PvInt64  curValue = 0;
+      int64_t  curValue = 0;
       maxResendGroupSizeResult = maxResendGroupSize->GetValue (curValue);
       if  (!maxResendGroupSizeResult.IsOK ())
       {
@@ -1701,7 +1701,7 @@ void  CameraAcquisitionPleora::Run ()
         }
         else
         {
-          const PvUInt8*  rawData = lBuffer->GetDataPointer ();
+          const uint8_t*  rawData = lBuffer->GetDataPointer ();
 
           kkint32 lostPacketCount = lBuffer->GetLostPacketCount ();
           PvImage* i = lBuffer->GetImage ();
@@ -1745,7 +1745,7 @@ void  CameraAcquisitionPleora::Run ()
                   PvResult tempReadResult = lReadVoltageAndTemperature->Execute ();
                   if  (tempReadResult.IsOK ())
                   {
-                    PvInt64  pvInt = -1;
+                    int64_t  pvInt = -1;
                     lCameraTemparature->GetValue (pvInt);
                     cameraTemparature = (kkint32)pvInt;
                     log.Level (50) << "CameraAcquisitionPleora::Run   lCameraTemparature :" << cameraTemparature << endl;
@@ -1781,7 +1781,7 @@ void  CameraAcquisitionPleora::Run ()
             {
               // This code was added to help get diagnostic info on the 1ast 4 columns of imagery which
               // are being used to communicate FlowRate meter pulse count.
-              const PvUInt8* sld = rawData;
+              const uint8_t* sld = rawData;
               for (int rrr = 0;  rrr < FrameHeight ();  ++rrr)
               {
                 kkint32 flowRateCount = sld[0] + sld[1] * 256 + (sld[2] * 256 * 256) + (sld[3] * 256 * 256 * 256);
@@ -1839,7 +1839,7 @@ void  CameraAcquisitionPleora::Run ()
 
 CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _msgQueue)
 {
-  PvDeviceInfo*  pvDeviceInfo = NULL;
+  const PvDeviceInfoGEV*  pvDeviceInfoGEV = NULL;
 
   RunLog  runLog (_msgQueue);
   runLog.SetLevel (LarcosVariables::DebugLevel ());
@@ -1855,39 +1855,47 @@ CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _m
 
   CameraParametersListPtr  cameras = new CameraParametersList (true);
 
-  PvUInt32  interfaceCount = pvSystem.GetInterfaceCount ();
+  uint32_t  interfaceCount = pvSystem.GetInterfaceCount ();
 
-  PvUInt32 interfaceIdx = 0;
+  uint32_t interfaceIdx = 0;
 
   while (interfaceIdx < interfaceCount)
   {
-    PvInterface*   pvInterface = pvSystem.GetInterface (interfaceIdx);
+    const PvInterface*   pvInterface = pvSystem.GetInterface (interfaceIdx);
     if  (pvInterface == NULL)
       continue;
 
-    KKStr            interfaceDescription =  pvInterface->GetDescription ().GetAscii ();
-    KKStr            interfaceId          =  pvInterface->GetID ().GetAscii ();
-    KKStr            interfaceIpAddress   =  pvInterface->GetIPAddress ().GetAscii ();
-    KKStr            interfaceMacAddress  =  pvInterface->GetMACAddress ().GetAscii ();
-    KKStr            interfaceSubnetMask  =  pvInterface->GetSubnetMask ().GetAscii ();
+    PvInterfaceType type = pvInterface->GetType ();
+    if  (type != PvInterfaceTypeNetworkAdapter)
+      continue;
 
-    PvUInt32  deviceCount = pvInterface->GetDeviceCount ();
+    const PvNetworkAdapter* pvNetAdapter = dynamic_cast<const PvNetworkAdapter *>(pvInterface);
+
+    KKStr  interfaceDescription =  pvNetAdapter->GetDescription ().GetAscii ();
+    KKStr  interfaceId          =  pvNetAdapter->GetUniqueID    ().GetAscii ();
+    KKStr  interfaceIpAddress   =  pvNetAdapter->GetIPAddress   ().GetAscii ();
+    KKStr  interfaceMacAddress  =  pvNetAdapter->GetMACAddress  ().GetAscii ();
+    KKStr  interfaceSubnetMask  =  pvNetAdapter->GetSubnetMask  ().GetAscii ();
+
+    uint32_t  deviceCount = pvInterface->GetDeviceCount ();
 
     runLog.Level (20) << "GetCameraList  InterfaceDescription :" << interfaceDescription << endl;
     runLog.Level (20) << "GetCameraList  DeviceCount :" << deviceCount << endl;
 
-    PvUInt32  deviceIdx = 0;
+    uint32_t  deviceIdx = 0;
     while  (deviceIdx < deviceCount)
     {
-      pvDeviceInfo = pvInterface->GetDeviceInfo (deviceIdx);
+      const PvDeviceInfo*  pvDeviceInfo = pvNetAdapter->GetDeviceInfo (deviceIdx);
+      pvDeviceInfoGEV = dynamic_cast<const PvDeviceInfoGEV*>(pvDeviceInfo);
+      if  (pvDeviceInfoGEV == NULL)
+        continue;
 
-      KKStr  deviceId = pvDeviceInfo->GetID ().GetAscii ();
-
-      KKStr  macAddress           = pvDeviceInfo->GetMACAddress       ().GetAscii ();
-      KKStr  serialNum            = pvDeviceInfo->GetSerialNumber     ().GetAscii ();
-      KKStr  model                = pvDeviceInfo->GetModel            ().GetAscii ();
-      KKStr  manufacturerInfo     = pvDeviceInfo->GetManufacturerInfo ().GetAscii ();
-      KKStr  deviceIpAddress      = pvDeviceInfo->GetIPAddress        ().GetAscii ();
+      KKStr  deviceId         = pvDeviceInfoGEV->GetUniqueID         ().GetAscii ();
+      KKStr  macAddress       = pvDeviceInfoGEV->GetMACAddress       ().GetAscii ();
+      KKStr  serialNum        = pvDeviceInfoGEV->GetSerialNumber     ().GetAscii ();
+      KKStr  model            = pvDeviceInfoGEV->GetModelName        ().GetAscii ();
+      KKStr  manufacturerInfo = pvDeviceInfoGEV->GetManufacturerInfo ().GetAscii ();
+      KKStr  deviceIpAddress  = pvDeviceInfoGEV->GetIPAddress        ().GetAscii ();
 
       runLog.Level (20) << "GetCameraList   DeviceID :" << deviceId << "  macAddress :" << macAddress << endl;
 
@@ -1898,10 +1906,10 @@ CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _m
         {
           delete  cp;  cp = NULL;
           cp = GetCameraParameters (macAddress, _msgQueue, runLog);
-          if  ((cp == NULL)                   ||
-               (cp->FrameHeight   () <= 0)    ||
-               (cp->FrameWidth    () <= 0)    ||
-               (cp->ScanRate      () <= 0)
+          if  ((cp == NULL)                    ||
+               (cp->FrameHeight () <= 0)    ||
+               (cp->FrameWidth  () <= 0)    ||
+               (cp->ScanRate    () <= 0)
               )
           {
             runLog.Level (-1) << "GetCameraList   ***ERROR***   Failed to retrieve camera parameters." << endl;
@@ -1932,8 +1940,6 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
                                                              RunLog&      _runLog
                                                             )
 {
-  PvDeviceInfo*  pvDeviceInfo = NULL;
-
   _runLog.Level (30) << "CameraAcquisitionPleora::GetDeviceInfo  KeyValue[" << _keyValue << "]." << endl;
 
   PvSystem  pvSystem;
@@ -1948,41 +1954,51 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
 
   CameraParametersPtr  cp = NULL;
 
-  PvUInt32  interfaceCount = pvSystem.GetInterfaceCount ();
+  uint32_t  interfaceCount = pvSystem.GetInterfaceCount ();
 
-  PvUInt32 interfaceIdx = 0;
+  uint32_t interfaceIdx = 0;
 
   while ((interfaceIdx < interfaceCount)  &&  (cp == NULL))
   {
-    PvInterface*   pvInterface   = pvSystem.GetInterface (interfaceIdx);
+    const PvInterface*   pvInterface = pvSystem.GetInterface (interfaceIdx);
     if  (pvInterface == NULL)
       continue;
 
-    PvString  interfaceDescription = pvInterface->GetDescription ();
+    const PvNetworkAdapter* pvNetAdapter = dynamic_cast<const PvNetworkAdapter*>(pvInterface);
+    if  (!pvNetAdapter)
+      continue;
 
-    _runLog.Level (40) << "GetDeviceInfo   Checking Interface[" << pvInterface->GetDescription ().GetAscii () << "]" << endl;
+    PvString  interfaceDescription = pvNetAdapter->GetDescription ();
 
-    PvString         interfaceId             = pvInterface->GetID ();
-    KKStr            interfaceIpAddress      = pvInterface->GetIPAddress ().GetAscii ();
-    KKStr            interfaceMacAddress     = pvInterface->GetMACAddress ().GetAscii ();
-    PvString         interfaceSubnetMask     = pvInterface->GetSubnetMask ();
-    PvString         interfaceDefaultGateway = pvInterface->GetDefaultGateway ();
+    _runLog.Level (40) << "GetDeviceInfo   Checking Interface[" << interfaceDescription.GetAscii () << "]" << endl;
 
-    PvUInt32  deviceCount = pvInterface->GetDeviceCount ();
+    PvString         interfaceId             = pvNetAdapter->GetUniqueID ();
+    KKStr            interfaceIpAddress      = pvNetAdapter->GetIPAddress ().GetAscii ();
+    KKStr            interfaceMacAddress     = pvNetAdapter->GetMACAddress ().GetAscii ();
+    PvString         interfaceSubnetMask     = pvNetAdapter->GetSubnetMask ();
+    PvString         interfaceDefaultGateway = pvNetAdapter->GetDefaultGateway ();
+
+    uint32_t  deviceCount = pvInterface->GetDeviceCount ();
 
     _runLog.Level (40) << "GetDeviceInfo   InterfaceDescription :" << interfaceDescription.GetAscii () << endl;
     _runLog.Level (40) << "GetDeviceInfo   Device Count :" << deviceCount << endl;
 
-    PvUInt32  deviceIdx = 0;
+    uint32_t  deviceIdx = 0;
     while  ((deviceIdx < deviceCount)  &&  (cp == NULL))
     {
+      const PvDeviceInfo* pvDeviceInfo = pvInterface->GetDeviceInfo (deviceIdx);
+
       pvDeviceInfo = pvInterface->GetDeviceInfo (deviceIdx);
       if  (pvDeviceInfo == NULL)
         continue;
 
-      PvString  deviceId         = pvDeviceInfo->GetID ();
-      KKStr     deviceIpAddress  = pvDeviceInfo->GetIPAddress ().GetAscii ();
-      KKStr     deviceMacAddress = pvDeviceInfo->GetMACAddress ().GetAscii ();
+      const PvDeviceInfoGEV*  pvDeviceInfoGEV = dynamic_cast<const PvDeviceInfoGEV*> (pvDeviceInfo);
+      if  (!pvDeviceInfoGEV)
+        continue;
+
+      PvString  deviceId         = pvDeviceInfoGEV->GetUniqueID ();
+      KKStr     deviceIpAddress  = pvDeviceInfoGEV->GetIPAddress ().GetAscii ();
+      KKStr     deviceMacAddress = pvDeviceInfoGEV->GetMACAddress ().GetAscii ();
 
       _runLog.Level (40) << "GetDeviceInfo   deviceMacAddress :" << deviceMacAddress << "  deviceIpAddress :" << deviceIpAddress << endl;
       _runLog.Level (40) << "GetDeviceInfo   DeviceID: " << + deviceId.GetAscii () << endl;
@@ -1991,13 +2007,13 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
       if  (_keyType == 'M')
         keyValue = deviceMacAddress;
       else
-        keyValue = pvDeviceInfo->GetSerialNumber ().GetAscii ();
+        keyValue = pvDeviceInfoGEV->GetSerialNumber ().GetAscii ();
 
       if  (_keyValue.EqualIgnoreCase (keyValue))
       {
         _runLog.Level (40) << "GetDeviceInfo   Device Found  deviceId :" << deviceId.GetAscii () << endl;
 
-        PvDevice* pvDevice = new PvDevice ();
+        PvDeviceGEV* pvDevice = new PvDeviceGEV ();
         PvString  pvMacAddress = deviceMacAddress.Str ();
         PvResult  pvDeviveConnectResult = pvDevice->Connect (pvMacAddress);
 
@@ -2013,7 +2029,7 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
 
             _runLog.Level (20) << "GetDeviceInfo   Attempting to set IP Address :" << newIpAddress << endl;
 
-            PvResult  pvr = PvDevice::SetIPConfiguration (pvMacAddress, pvNewIpAddress, interfaceSubnetMask, interfaceDefaultGateway);
+            PvResult  pvr = PvDeviceGEV::SetIPConfiguration (pvMacAddress, pvNewIpAddress, interfaceSubnetMask, interfaceDefaultGateway);
             if  (!pvr.IsOK ())
             {
               _runLog.Level (10) << "GetDeviceInfo   Error Setting IP Address :" << PvResultToStr (pvr) << endl;
@@ -2033,12 +2049,12 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
 
           if  (false)
           {
-            PvGenParameterArray *lLinkParams = pvDevice->GetGenLink ();
-            PrintDeviceParameters ("Link", lLinkParams);
+            PvGenParameterArray *lLinkParams = pvDevice->GetCommunicationParameters ();
+            PrintDeviceParameters ("CommunicationParameters", lLinkParams);
             lLinkParams   = NULL;
           }
 
-          PvGenParameterArray *lDeviceParams = pvDevice->GetGenParameters();
+          PvGenParameterArray *lDeviceParams = pvDevice->GetParameters();
           if  (false)
           {
             PrintDeviceParameters ("ParmsGen", lDeviceParams);
@@ -2089,7 +2105,7 @@ CameraParametersPtr  CameraAcquisitionPleora::GetCameraParameters (const KKStr& 
   CameraParametersPtr  result = NULL;
   PvString macAddress (_macAddress.Str ());
 
-  PvDevicePtr  lDevice = new PvDevice ();
+  PvDeviceGEVPtr  lDevice = new PvDeviceGEV ();
 
   PvResult  pvResult = lDevice->Connect (macAddress);
   if  (!pvResult.IsOK ())
@@ -2104,11 +2120,11 @@ CameraParametersPtr  CameraAcquisitionPleora::GetCameraParameters (const KKStr& 
 
     if  (false)
     {
-      PvGenParameterArray *lLinkParams = lDevice->GetGenLink ();
-      PrintDeviceParameters ("Link", lLinkParams);
+      PvGenParameterArray *lLinkParams = lDevice->GetCommunicationParameters ();
+      PrintDeviceParameters ("CommunicationParameters", lLinkParams);
     }
 
-    PvGenParameterArray *lDeviceParams = lDevice->GetGenParameters();
+    PvGenParameterArray *lDeviceParams = lDevice->GetParameters();
     //PrintDeviceParameters ("ParmsGen", lDeviceParams);
 
     result = new CameraParameters ();
@@ -2218,8 +2234,6 @@ CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromCameraParameters
 
 
 
-
-
 KKStr  CameraAcquisitionPleora::PromptForCameraMacAddress ()
 {
   // Create a GEV Device finder dialog
@@ -2229,15 +2243,22 @@ KKStr  CameraAcquisitionPleora::PromptForCameraMacAddress ()
   lDeviceFinderWnd.ShowModal();
 
   // Get the connectivity information for the selected GEV Device
-  PvDeviceInfo* deviceInfo = lDeviceFinderWnd.GetSelected();
+  const PvDeviceInfo* deviceInfo = lDeviceFinderWnd.GetSelected();
 
   // If no device is selected, abort
   if  (deviceInfo == NULL)
     return "";
 
-  KKStr  macAdress = deviceInfo->GetMACAddress ().GetAscii ();
+  PvDeviceInfoType   type = deviceInfo->GetType ();
+  if  (type != PvDeviceInfoTypeGEV)
+  {
+    // We curently only handle GEV devices.
+    return "";
+  }
 
-  return  macAdress;
+  const PvDeviceInfoGEV* deviceInfoGEV = dynamic_cast<const PvDeviceInfoGEV*>(deviceInfo);
+  KKStr  macAddress = deviceInfoGEV->GetMACAddress ().GetAscii ();
+  return  macAddress;
 }  /* PromptForCameraMacAddress */
 
 
@@ -2286,7 +2307,7 @@ KKStr  CameraAcquisitionPleora::GetPvGenParameterDesc (PvGenParameter*  p,
   case  PvGenTypeInteger:
     {
       PvGenInteger *pvGenInt = dynamic_cast<PvGenInteger *>(p);
-      PvInt64 i;
+      int64_t i;
       if  (pvGenInt->GetValue (i).IsOK ())
         s = (kkint32)i;
       else
@@ -2296,14 +2317,14 @@ KKStr  CameraAcquisitionPleora::GetPvGenParameterDesc (PvGenParameter*  p,
 
   case  PvGenTypeEnum:       
     {
-      PvInt64  enumValue = 0;
+      int64_t  enumValue = 0;
       PvGenEnum*  pvEnum = dynamic_cast<PvGenEnum *>(p);
       if  (pvEnum->GetValue (enumValue).IsOK ())
         s = (kkint32)enumValue;
       else
         s = "***ERROR***";
 
-      PvInt64  numEntries = 0;
+      int64_t  numEntries = 0;
       if  (pvEnum->GetEntriesCount (numEntries).IsOK ())
       {
         KKStr  entryNames = "";
@@ -2511,7 +2532,7 @@ bool  CameraAcquisitionPleora::CameraSomePixelsSaturated (float percentThreshold
   // caused by the Flow-Meter count being put into the first 4 pixels in the column. This would cause the 
   // Auto Gain to fail thinking all settings were saturated. Decided to offset by 30 firm both ends.
   kkuint16  firstCol = 30;
-  kkuint16  lastCol = scanLine->size () - 30;
+  kkuint16  lastCol = (kkuint16)scanLine->size () - 30;
 
   for  (x = firstCol;  x < lastCol;  ++x)
   {

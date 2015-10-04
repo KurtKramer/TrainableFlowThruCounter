@@ -4,20 +4,17 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <ctype.h>
+#include <time.h>
 
-#include  <ctype.h>
-#include  <time.h>
-
-#include "StdAfx.h"
 #include "FirstIncludes.h"
-
 #include <fstream>
 #include <iostream>
 #include <ostream>
 #include <string>
 #include <vector>
 #include "MemoryDebug.h"
-using namespace std;
+
 
 #include  "KKBaseTypes.h"
 

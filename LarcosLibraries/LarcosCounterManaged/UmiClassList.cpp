@@ -11,7 +11,6 @@
 #include <map>
 #include <vector>
 #include "MemoryDebug.h"
-using namespace std;
 
 
 #include "..\KKBase\GoalKeeper.h"

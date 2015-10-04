@@ -8,7 +8,6 @@
 #include <time.h>
 #include <string>
 #include "MemoryDebug.h"
-using namespace std;
 
 #include "KKStr.h"
 using namespace  KKB;

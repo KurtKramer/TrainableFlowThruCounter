@@ -60,7 +60,7 @@ namespace LarcosCounterUnManaged
 
 
     virtual
-    void  WriteFieldValues (ostream&   o)  const = 0;
+    void  WriteFieldValues (std::ostream&   o)  const = 0;
 
 
 

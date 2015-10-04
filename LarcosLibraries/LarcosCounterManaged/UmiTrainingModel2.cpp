@@ -1,12 +1,9 @@
 #include "StdAfx.h"
-#include  "FirstIncludes.h"
-
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <math.h>
-
 #include <ctype.h>
 #include <time.h>
-
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -14,7 +11,7 @@
 #include <string>
 #include <vector>
 #include "MemoryDebug.h"
-using namespace std;
+
 
 #include "Application.h"
 #include "KKBaseTypes.h"
@@ -266,28 +263,28 @@ void  UmiTrainingModel2::CleanUpUnmanagedResources ()
     delete  trainer;         
     trainer = NULL;
   }
-  catch  (const exception&  e1)
+  catch  (const std::exception&  e1)
   {
-    runLog->Level (-1) << endl
-      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Object." << endl
-      << "                Exception[" << e1.what () << "]" << endl
-      << endl;
+    runLog->Level (-1) << std::endl
+      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Object." << std::endl
+      << "                Exception[" << e1.what () << "]" << std::endl
+      << std::endl;
 
   }
 
   catch  (const char* e2)
   {
-    runLog->Level (-1) << endl
-      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Object." << endl
-      << "                Exception[" << e2 << "]" << endl
-      << endl;
+    runLog->Level (-1) << std::endl
+      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Object." << std::endl
+      << "                Exception[" << e2 << "]" << std::endl
+      << std::endl;
   }
 
   catch  (...)
   {
-    runLog->Level (-1) << endl
-      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Object." << endl
-      << endl;
+    runLog->Level (-1) << std::endl
+      << "UmiTrainingModel2::CleanUpUnmanagedResources  ***ERROR***     Exception destroying the 'Trainer Object." << std::endl
+      << std::endl;
 
   }
   trainer = NULL;
@@ -312,7 +309,7 @@ void  UmiTrainingModel2::CleanUpUnmanagedResources ()
 
   if  (runLog)
   {
-    (*runLog).Level (10) << "UmiTrainingModel2::CleanUpUnmanagedResources  Done Cleaning Up." << endl;
+    (*runLog).Level (10) << "UmiTrainingModel2::CleanUpUnmanagedResources  Done Cleaning Up." << std::endl;
     delete  runLog;
     runLog = NULL;
   }
@@ -531,7 +528,7 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
   }
   catch (System::AccessViolationException^ z)
   {
-    (*runLog).Level (-1) << UmiKKStr::SystemStringToKKStr (z->ToString ()) << endl;
+    (*runLog).Level (-1) << UmiKKStr::SystemStringToKKStr (z->ToString ()) << std::endl;
     delete  trainer;  trainer = NULL;
     delete  classes;  classes = NULL;
     *valid = false;
@@ -581,7 +578,7 @@ void  UmiTrainingModel2::LoadExistingTrainedModel ()
   }
   catch (System::AccessViolationException^ z)
   {
-    (*runLog).Level (-1) << UmiKKStr::SystemStringToKKStr (z->ToString ()) << endl;
+    (*runLog).Level (-1) << UmiKKStr::SystemStringToKKStr (z->ToString ()) << std::endl;
     delete  trainer;  trainer = NULL;
     delete  classes;  classes = NULL;
     *valid = false;
@@ -667,7 +664,7 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
   }
   catch (System::AccessViolationException^ z)
   {
-    (*runLog) << UmiKKStr::SystemStringToKKStr (z->ToString ()) << endl;
+    (*runLog) << UmiKKStr::SystemStringToKKStr (z->ToString ()) << std::endl;
 
     if  (trainer)
     {
@@ -677,7 +674,7 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
       }
       catch  (Exception^)  
       {
-        (*runLog) << "UmiTrainingModel2::LoadTrainigLibrary   ***ERROR***  Exception calling 'ErrorMsgsAdd'." << endl;
+        (*runLog) << "UmiTrainingModel2::LoadTrainigLibrary   ***ERROR***  Exception calling 'ErrorMsgsAdd'." << std::endl;
       }
     }
 
@@ -687,13 +684,13 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
   }
   catch  (System::Exception^  z2)
   {
-    (*runLog) << UmiKKStr::SystemStringToKKStr (z2->ToString ()) << endl;
+    (*runLog) << UmiKKStr::SystemStringToKKStr (z2->ToString ()) << std::endl;
     if  (trainer)
     {
       try{ErrorMsgsAdd (trainer->ConfigFileFormatErrors ());}
       catch  (Exception^)  
       {
-      (*runLog) << "UmiTrainingModel2::LoadTrainigLibrary   ***ERROR***  Exception calling 'ErrorMsgsAdd'." << endl;
+      (*runLog) << "UmiTrainingModel2::LoadTrainigLibrary   ***ERROR***  Exception calling 'ErrorMsgsAdd'." << std::endl;
       }
     }
     delete  trainer;  trainer = NULL;
@@ -713,7 +710,7 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
     try  {ErrorMsgsAdd (trainer->ConfigFileFormatErrors ());}  
     catch  (Exception^)  
     {
-      (*runLog) << "UmiTrainingModel2::LoadTrainigLibrary   ***ERROR***  Exception calling 'ErrorMsgsAdd'." << endl;
+      (*runLog) << "UmiTrainingModel2::LoadTrainigLibrary   ***ERROR***  Exception calling 'ErrorMsgsAdd'." << std::endl;
     }
     *valid = false;
     delete  trainer;
@@ -768,7 +765,7 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
   }
   catch (System::AccessViolationException^ z)
   {
-    (*runLog) << UmiKKStr::SystemStringToKKStr (z->ToString ()) << endl;
+    (*runLog) << UmiKKStr::SystemStringToKKStr (z->ToString ()) << std::endl;
     delete  trainer;  trainer = NULL;
     *valid = false;
     return;
@@ -810,7 +807,7 @@ UmiPredictionList^   UmiTrainingModel2::BinaryProbailitiesForClass (UmiClass^  l
     (*runLog).Level (-1) << "\n"
                          <<  "UmiTrainingModel2::BinaryProbailitiesForClass   ***ERROR***" << "\n" 
                          <<  "                   idx[" << idx << "] >= crossProbTableNumClasses[" << crossProbTableNumClasses << "]" << "\n"
-                         << endl;
+                         << std::endl;
     return  nullptr;
   }
 
@@ -838,7 +835,7 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (UmiFeatureVector^ 
   {
     classifier->ProbabilitiesByClass (*classes, unKnownExample, votes, probabilities);
   }
-  catch  (exception e)
+  catch  (std::exception e)
   {
     KKStr  errMsg = "Exception occurred calling 'ProbabilitiesByClass'.\n\n";
     errMsg << e.what ();
@@ -902,17 +899,17 @@ UmiPrediction^  UmiTrainingModel2::PredictClass (UmiFeatureVector^  example)
   double      breakTie       = -1.0f;
   try
   {
-    classifier->ClassifyAImage (testExample, 
-                                class1Pred, 
-                                class2Pred,
-                                class1Votes,
-                                class2Votes,
-                                knownClassProb,
-                                class1Prob,
-                                class2Prob, 
-                                numOfWinners,
-                                breakTie
-                               );
+    classifier->ClassifyAExample (testExample, 
+                                  class1Pred, 
+                                  class2Pred,
+                                  class1Votes,
+                                  class2Votes,
+                                  knownClassProb,
+                                  class1Prob,
+                                  class2Prob, 
+                                  numOfWinners,
+                                  breakTie
+                                 );
   }
   catch  (Exception^ e)
   {
@@ -950,17 +947,17 @@ void  UmiTrainingModel2::PredictClass (UmiFeatureVector^  featureVector,
   double      breakTie       = -1.0f;
   try
   {
-    classifier->ClassifyAImage (*(featureVector->UnManagedClass ()),
-                                class1Pred, 
-                                class2Pred,
-                                class1Votes,
-                                class2Votes,
-                                knownClassProb,
-                                class1Prob,
-                                class2Prob, 
-                                numOfWinners,
-                                breakTie
-                               );
+    classifier->ClassifyAExample (*(featureVector->UnManagedClass ()),
+                                  class1Pred, 
+                                  class2Pred,
+                                  class1Votes,
+                                  class2Votes,
+                                  knownClassProb,
+                                  class1Prob,
+                                  class2Prob, 
+                                  numOfWinners,
+                                  breakTie
+                                 );
   }
   catch  (Exception^ e)
   {
@@ -1109,7 +1106,7 @@ array<String^>^  UmiTrainingModel2::SupportVectorNames (UmiClass^ c1,
   MLClassPtr  c1Scs = c1->UnmanagedImageClass ();
   MLClassPtr  c2Scs = c2->UnmanagedImageClass ();
 
-  vector<KKStr> fvNames = classifier->SupportVectorNames (c1Scs, c2Scs);
+  std::vector<KKStr> fvNames = classifier->SupportVectorNames (c1Scs, c2Scs);
 
   array<String^>^  results = gcnew array<String^> (fvNames.size ());
   for  (kkuint32 zed = 0;  zed < fvNames.size ();  zed++)
@@ -1136,7 +1133,7 @@ array<LarcosCounterManaged::ProbNamePair^>^
   // Will make duplicate of feature vector Because the Classifier will normalize the data.
   FeatureVectorPtr  dupFV = new FeatureVector (*umiFeatureVector->UnManagedClass ());
 
-  vector<KKMLL::ProbNamePair> worstExamples 
+  std::vector<KKMLL::ProbNamePair> worstExamples 
     = classifier->FindWorstSupportVectors (dupFV, 
                                            numToFind, 
                                            c1Scs, 
@@ -1172,7 +1169,7 @@ array<LarcosCounterManaged::ProbNamePair^>^
   // Will make duplicate of feature vector Because the Classifier will normalize the data.
   FeatureVectorPtr  dupFV = new FeatureVector (*umiFeatureVector->UnManagedClass ());
 
-  vector<KKMLL::ProbNamePair> worstExamples 
+  std::vector<KKMLL::ProbNamePair> worstExamples 
     = classifier->FindWorstSupportVectors2 (dupFV, 
                                             numToFind, 
                                             c1Scs, 

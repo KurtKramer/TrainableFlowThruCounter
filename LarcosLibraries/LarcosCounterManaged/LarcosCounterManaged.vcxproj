@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -18,14 +18,14 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
   </PropertyGroup>
@@ -66,7 +66,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;zlib.lib;libfftw3-3.lib;libfftw3f-3.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)\Libraries;$(SolutionDir)\Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)Libraries;$(SolutionDir)Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
       <TargetMachine>MachineX86</TargetMachine>
@@ -86,7 +86,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;zlib.lib;libfftw3-3.lib;libfftw3f-3.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)\Libraries;$(SolutionDir)\Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)Libraries;$(SolutionDir)Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>

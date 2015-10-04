@@ -43,7 +43,7 @@ namespace LarcosCounterUnManaged
 {
   void  PostLarvaeFVResetDarkSpotCounts ();
 
-  void  PostLarvaeFVPrintReport (ostream& o);
+  void  PostLarvaeFVPrintReport (std::ostream& o);
 
   void  PostLarvaeFVAddBlobList (MLClassPtr        c,
                                  KKB::BlobListPtr  blobs 

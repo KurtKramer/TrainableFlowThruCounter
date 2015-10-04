@@ -98,14 +98,14 @@ namespace LarcosCounterUnManaged
      * per data field with Field-Name and its respective value separated by tab(\t) characters.
      */
     virtual
-    void  WriteFieldValues (ostream&   o)  const;
+    void  WriteFieldValues (std::ostream&   o)  const;
 
 
     /**
      *@brief  Writes a very simple xml record with the 1st and last lines consisting of <SessionParameters>
      * and </SessionParameters> with the data fields in-between  written by a call to 'WriteFieldValues'.
      */
-    void  WriteXML (ostream&  o)  const;
+    void  WriteXML (std::ostream&  o)  const;
 
     /**
      *@brief  Will update the data fields in this instance by reading lines from provided input stream until
@@ -114,7 +114,7 @@ namespace LarcosCounterUnManaged
      * tab('\t') character encounter will separate the two fields.  Field-Value may contain multiple instances of
      * tab characters.
      */
-    void  ReadXML (istream&  i);
+    void  ReadXML (std::istream&  i);
 
 
   private:

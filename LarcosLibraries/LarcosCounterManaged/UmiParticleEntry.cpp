@@ -11,7 +11,6 @@
 #include <string>
 #include <vector>
 #include "MemoryDebug.h"
-using namespace std;
 
 
 #include "KKBaseTypes.h"
@@ -635,7 +634,7 @@ void  UmiParticleEntryList::LoadFile (bool        _loadHeaderOnly,
 
   KKStr  fn = UmiKKStr::SystemStringToKKStr (reportFileName);
 
-  ifstream i (fn.Str ());
+  std::ifstream i (fn.Str ());
   if  (!i.is_open ())
     return;
 

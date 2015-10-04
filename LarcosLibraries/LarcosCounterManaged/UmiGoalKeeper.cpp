@@ -4,8 +4,6 @@
 
 #include  <msclr\lock.h>
 
-
-
 using namespace System;
 using namespace msclr;
 

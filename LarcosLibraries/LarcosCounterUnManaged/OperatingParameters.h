@@ -109,13 +109,13 @@ namespace LarcosCounterUnManaged
 
 
     virtual
-    void  WriteFieldValues (ostream&   o)  const;
+    void  WriteFieldValues (std::ostream&   o)  const;
 
 
     /**
      *@brief  Will write the 'OperatingParameters' section of the Training Model Config section.
      */
-    void  WriteConfigSection (ostream&   o)  const;
+    void  WriteConfigSection (std::ostream&   o)  const;
 
 
 
@@ -126,16 +126,17 @@ namespace LarcosCounterUnManaged
     /**
      *@brief  Will write the contents of this instance in the specified output stream such that the ReadXML method will be able to read.
      */
-    void  WriteXML (ostream&  o)  const;
+    void  WriteXML (std::ostream&  o)  const;
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
-    void  ReadXML (istream&  i);
+    void  ReadXML (std::istream&  i);
 
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
+                   VolConstBool&   cancelFlag,
                    RunLog&         log
                   );
 

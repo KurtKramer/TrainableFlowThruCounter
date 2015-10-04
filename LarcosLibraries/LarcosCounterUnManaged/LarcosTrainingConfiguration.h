@@ -80,14 +80,15 @@ namespace  LarcosCounterUnManaged
 
     virtual void  ReadXML (XmlStream&      s,
                            XmlTagConstPtr  tag,
+                           VolConstBool&   cancelFlag,
                            RunLog&         log
                           );
 
     /** @brief  Update 'operatingParms' from  '_operatingParms'.  */
     void  SetOperatingParms (const OperatingParameters&  _operatingParms);
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
 
@@ -124,11 +125,12 @@ namespace  LarcosCounterUnManaged
   class  XmlElementLarcosTrainingConfiguration: public XmlElementTrainingConfiguration2
   {
   public:
-    XmlElementLarcosTrainingConfiguration (XmlTagPtr   tag,
-                                           XmlStream&  s,
-                                           RunLog&     log
+    XmlElementLarcosTrainingConfiguration (XmlTagPtr      tag,
+                                           XmlStream&     s,
+                                           VolConstBool&  cancelFlag,
+                                           RunLog&        log
                                           ):
-          XmlElementTrainingConfiguration2 (tag, s, log)
+          XmlElementTrainingConfiguration2 (tag, s, cancelFlag, log)
     {}
 
   };

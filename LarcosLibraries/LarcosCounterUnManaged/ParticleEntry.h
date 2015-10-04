@@ -249,16 +249,16 @@ namespace LarcosCounterUnManaged
     /**
      *@brief Writes the definition of one ParticleEntry to the specified output stream.
      */
-    void  PrintImageEntryDefinition (ostream& o);
+    void  PrintImageEntryDefinition (std::ostream& o);
 
     void  StartBlock ();
 
-    void  AddToReport (ostream& o);
+    void  AddToReport (std::ostream& o);
 
   private:
-    queue<ParticleEntryPtr>   buff;
-    volatile bool             dataAvailable;
-    GoalKeeperSimplePtr       goalie;
+    std::queue<ParticleEntryPtr>   buff;
+    volatile bool                  dataAvailable;
+    GoalKeeperSimplePtr            goalie;
   };  /* ParticleEntryBuffer */
 
 

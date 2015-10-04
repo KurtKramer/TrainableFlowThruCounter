@@ -3541,7 +3541,8 @@ void  LarcosCounterManager::ReadConfiguration ()
 
     else
     {
-      KKStr  restOfLine = osReadRestOfLine (i, eof).TrimRight ("\n\r");
+      KKStrPtr  restOfLine = osReadRestOfLine (i, eof);
+      restOfLine->TrimRight ("\r\n\t ");
 
       if  (fieldName.EqualIgnoreCase ("<SessionParameters>"))
         sessionParameters->ReadXML (i);
@@ -3550,47 +3551,47 @@ void  LarcosCounterManager::ReadConfiguration ()
         defaultOperatingParameters->ReadXML (i);
 
       else if  (fieldName.EqualIgnoreCase ("DropFolderToLarcos"))
-        dropFolderToLarcos = restOfLine.TrimRight ();
+        dropFolderToLarcos = *restOfLine;
 
       else if  (fieldName.EqualIgnoreCase ("OperatingMode"))
       {
-        operatingMode = LarcosOperatingModeFromStr (restOfLine);
+        operatingMode = LarcosOperatingModeFromStr (*restOfLine);
         if  ((operatingMode == LarcosOperatingModes::Null)  ||  (operatingMode == LarcosOperatingModes::Invalid))
           operatingMode = LarcosOperatingModes::User;
       }
 
       else if  (fieldName.EqualIgnoreCase ("ThroughPutField"))
-        throughPutField = StatusSnapshot::SnapShotFieldIdxFromStr (restOfLine);
+        throughPutField = StatusSnapshot::SnapShotFieldIdxFromStr (*restOfLine);
 
       else if  (fieldName.EqualIgnoreCase ("SrcScannerFileName"))
-        srcScannerFileName = restOfLine;
+        srcScannerFileName = *restOfLine;
 
       else if  (fieldName.EqualIgnoreCase ("NameLastRecordedFile"))
-        nameLastRecordedFile = restOfLine;
+        nameLastRecordedFile = *restOfLine;
 
       else if  (fieldName.EqualIgnoreCase ("LastControlNumber"))
-        lastControlNumber = restOfLine;
+        lastControlNumber = *restOfLine;
 
       else if  (fieldName.EqualIgnoreCase ("LastScannerFileCounted"))
-        lastScannerFileCounted = restOfLine;
+        lastScannerFileCounted = *restOfLine;
 
       else if  (fieldName.EqualIgnoreCase ("CropLeft"))
-        cropLeft = restOfLine.ToInt32 ();
+        cropLeft = restOfLine->ToInt32 ();
 
       else if  (fieldName.EqualIgnoreCase ("CropRight"))
-        cropRight = restOfLine.ToInt32 ();
+        cropRight = restOfLine->ToInt32 ();
 
       else if  (fieldName.EqualIgnoreCase ("CameraMacAddress"))
-        cameraMacAddress = restOfLine;
+        cameraMacAddress = *restOfLine;
 
       else if  (fieldName.EqualIgnoreCase ("SampleLastFrameBeforeFlatField"))
-        sampleLastFrameBeforeFlatField = restOfLine.ToBool ();
+        sampleLastFrameBeforeFlatField = restOfLine->ToBool ();
 
       else if  (fieldName.EqualIgnoreCase ("SnapshotInterval"))
-        snapshotInterval = restOfLine.ToInt32 ();
+        snapshotInterval = restOfLine->ToInt32 ();
 
       else if  (fieldName.EqualIgnoreCase ("PlayingBackRealTime"))
-        playingBackRealTime = restOfLine.ToBool ();
+        playingBackRealTime = restOfLine->ToBool ();
     }
   }
 

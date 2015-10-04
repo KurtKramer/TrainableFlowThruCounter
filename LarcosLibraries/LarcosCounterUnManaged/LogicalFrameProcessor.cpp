@@ -953,7 +953,7 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
   int     numOfWinners = 0;
   bool    knownClassOnOfWinners = false;
 
-  MLClassPtr  predictedClass = classifier->ClassifyAImage (*fv, probability, numOfWinners, knownClassOnOfWinners, breakTie);
+  MLClassPtr  predictedClass = classifier->ClassifyAExample (*fv, probability, numOfWinners, knownClassOnOfWinners, breakTie);
   if  (predictedClass)
     particle->Title (predictedClass->Name ());
   UpdateCounts ((kkint32)fv->OrigSize (),  predictedClass->CountFactor ());
