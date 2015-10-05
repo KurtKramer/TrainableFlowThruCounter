@@ -821,7 +821,7 @@ void  UmiParticleEntryList::ProcessFieldDefinitions (const KKStr&  value)
   if  (!fields[0].EqualIgnoreCase ("PE"))
     return;
 
-  numFields = fields.size () - 1;
+  numFields = (kkint32)fields.size () - 1;
 
   kkint32  idx = 1;
   kkint32  defIDX = 0;
