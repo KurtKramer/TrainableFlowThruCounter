@@ -299,7 +299,7 @@ namespace LarcosCounterManaged
     String^  scannerFileRootName;
     bool     sortedByScanLine;     /**< Indicates that the contents of list have been sorted by 'SortByScanLine' */
 
-    kkint16  numFields;
+    kkint32  numFields;
     kkint16  scannerFileRootNameIDX;
     kkint16  scannerRowIDX;
     kkint16  scannerColIDX;

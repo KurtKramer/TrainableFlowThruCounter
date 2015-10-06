@@ -202,7 +202,7 @@ namespace LarcosCounterUnManaged
     bool     sortedByScanLine;     /**< Indicates if the current contents of this list are sorted by ScanLine */
     KKStr    trainingModelName;
 
-    kkint16  numFields;
+    kkint32  numFields;
     kkint16  scannerFileRootNameIDX;
     kkint16  scannerRowIDX;
     kkint16  scannerColIDX;
