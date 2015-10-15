@@ -668,8 +668,7 @@ namespace LarcosCounter
         String encoding = String.Empty;
         String fileExt  = String.Empty;
         String[] streams = null;
-        Warning[] warnings = null;
-
+        Microsoft.Reporting.WinForms.Warning[] warnings = null;
         renderedReport = reportViewer1.LocalReport.Render ("PDF", null, out mimeType, out encoding, out fileExt, out streams, out warnings);
       }
       catch  (Exception e1)
