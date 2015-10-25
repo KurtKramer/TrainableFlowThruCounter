@@ -1519,7 +1519,7 @@ void  PostLarvaeFVList::RecalcFeatureValuesFromImagesInDirTree (KKStr    rootDir
       return;
     }
 
-    KKStr  fullFileName (dirPath);
+    KKStr  fullFileName (*dirPath);
     osAddLastSlash (fullFileName);
     fullFileName << example->ExampleFileName ();
 

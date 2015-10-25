@@ -3536,7 +3536,9 @@ void  LarcosCounterManager::ReadConfiguration ()
 
     if  (fieldName.StartsWith ("//"))
     {
-      osReadRestOfLine (i, eof);
+      KKStrPtr restOfLine = osReadRestOfLine (i, eof);
+      delete  restOfLine;
+      restOfLine = NULL;
     }
 
     else
@@ -3592,6 +3594,9 @@ void  LarcosCounterManager::ReadConfiguration ()
 
       else if  (fieldName.EqualIgnoreCase ("PlayingBackRealTime"))
         playingBackRealTime = restOfLine->ToBool ();
+
+      delete restOfLine;
+      restOfLine = NULL;
     }
   }
 

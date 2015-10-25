@@ -118,7 +118,7 @@ void  CameraAcquisitionSimulator::BuildListOfScannerFilesToProcess ()
     KKStrList::const_iterator  idx;
     for  (idx = scannerFilesToProcess.begin ();  idx != scannerFilesToProcess.end ();  ++idx)
     {
-      KKStr  fn = *idx;
+      KKStr  fn = **idx;
       totalBytesToRead += osGetFileSize (fn);
     }
   }

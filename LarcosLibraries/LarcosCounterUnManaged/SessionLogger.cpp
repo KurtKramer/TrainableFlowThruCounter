@@ -67,7 +67,7 @@ kkint32  SessionLogger::GetLastSessionId ()
   {
     bool eof = false;
 
-    KKStr  l =  osReadRestOfLine (i, eof);
+    KKStr  l =  osReadRestOfLine2 (i, eof);
     while  (!eof)
     {
       if  (l.StartsWith ("//"))
@@ -81,7 +81,7 @@ kkint32  SessionLogger::GetLastSessionId ()
           lastSessionId = l.ExtractTokenInt ("\n\r\t");
       }
 
-      l =  osReadRestOfLine (i, eof);
+      l =  osReadRestOfLine2 (i, eof);
     }
 
     i.close ();

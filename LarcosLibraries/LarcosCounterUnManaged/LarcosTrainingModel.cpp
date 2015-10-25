@@ -117,7 +117,7 @@ LarcosTrainingModelListPtr  LarcosTrainingModelList::BuildFromTrainigModelDir ()
     KKStr  size         = fileRootName.ExtractToken2 ("_");
     KKStr  waterQuality = fileRootName.ExtractToken2 ("_");
 
-    modelList->PushOnBack (new LarcosTrainingModel (subject, size, waterQuality, name));
+    modelList->PushOnBack (new LarcosTrainingModel (subject, size, waterQuality, *name));
   }
 
   delete  modelFileNames;

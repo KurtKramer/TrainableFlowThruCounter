@@ -763,7 +763,12 @@ namespace LarcosCounter
       if  (!liveVideoFrame.Visible)
         return;
 
-      Bitmap bm = cameraManager.SnapShotLatestFrame (liveVideoFrame.Height, liveVideoFrame.Width);
+      int  liveVideoFrameHeight = liveVideoFrame.Height;
+      int  liveVideoFrameWidth  = liveVideoFrame.Width;
+      if  ((liveVideoFrameHeight < 1)  ||  (liveVideoFrameWidth < 1))
+        return;
+
+      Bitmap bm = cameraManager.SnapShotLatestFrame (liveVideoFrameHeight, liveVideoFrameWidth);
       if  (bm != null)
       {
         //bm.RotateFlip (RotateFlipType.Rotate180FlipX);

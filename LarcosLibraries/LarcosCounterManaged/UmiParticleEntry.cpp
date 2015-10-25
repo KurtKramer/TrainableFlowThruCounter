@@ -640,6 +640,7 @@ void  UmiParticleEntryList::LoadFile (bool        _loadHeaderOnly,
 
   bool  eof = false;
   bool  eol = false;
+  KKStrPtr  value = NULL;
 
   while  (!eof)
   {
@@ -650,7 +651,8 @@ void  UmiParticleEntryList::LoadFile (bool        _loadHeaderOnly,
     if  (eol  || (name.StartsWith ("//")))
       continue;
 
-    KKStr  value = "";
+    delete  value;
+    value = NULL;
     if  (!eol)
       value = osReadRestOfLine (i, eof);
 
@@ -668,56 +670,56 @@ void  UmiParticleEntryList::LoadFile (bool        _loadHeaderOnly,
     }
 
     else if  (name.EqualIgnoreCase ("BackGroundPixelTH"))
-      operatingParameters->BackGroundPixelTH ((uchar)value.ToInt32 ());
+      operatingParameters->BackGroundPixelTH ((uchar)value->ToInt32 ());
 
     else if  ((name.EqualIgnoreCase ("ControlNum"))  ||  (name.EqualIgnoreCase ("RootName")))
-      sessionParameters->ControlNum (value);
+      sessionParameters->ControlNum (*value);
 
     else if  (name.EqualIgnoreCase ("ConnectedComponentDist"))
-      operatingParameters->ConnectedComponentDist (value.ToInt32 ());
+      operatingParameters->ConnectedComponentDist (value->ToInt32 ());
 
     else if  (name.EqualIgnoreCase ("CropLeft"))
-      cropLeft = value.ToInt32 ();
+      cropLeft = value->ToInt32 ();
 
     else if  (name.EqualIgnoreCase ("CropRight"))
-      cropRight = value.ToInt32 ();
+      cropRight = value->ToInt32 ();
 
     else if  (name.EqualIgnoreCase ("DataIsToBeRecorded"))
-      operatingParameters->DataIsToBeRecorded (value.ToBool ());
+      operatingParameters->DataIsToBeRecorded (value->ToBool ());
 
     else if  (name.EqualIgnoreCase ("DataIsToBeCounted"))
-      operatingParameters->DataIsToBeCounted (value.ToBool ());
+      operatingParameters->DataIsToBeCounted (value->ToBool ());
 
     else if  (name.EqualIgnoreCase ("Define"))
-      ProcessFieldDefinitions (value);
+      ProcessFieldDefinitions (*value);
 
     else if  ((name.EqualIgnoreCase ("Description"))  ||  (name.EqualIgnoreCase ("SessionDescription")))
-      sessionParameters->SessionDescription (value);
+      sessionParameters->SessionDescription (*value);
 
     else if  (name.EqualIgnoreCase ("ErosionStructSize"))
-      operatingParameters->ErosionStructSize (value.ToInt32 ());
+      operatingParameters->ErosionStructSize (value->ToInt32 ());
 
     else if  (name.EqualIgnoreCase ("FlowRateFactor"))
-      operatingParameters->FlowRateFactor (value.ToFloat ());
+      operatingParameters->FlowRateFactor (value->ToFloat ());
 
     else if  (name.EqualIgnoreCase ("MinSizeThreshold"))
-      operatingParameters->MinSizeThreshold (value.ToInt32 ());
+      operatingParameters->MinSizeThreshold (value->ToInt32 ());
 
     else if  (name.EqualIgnoreCase ("PlayingBack"))
-      operatingParameters->PlayingBack (value.ToBool ());
+      operatingParameters->PlayingBack (value->ToBool ());
 
     else if  (name.EqualIgnoreCase ("SaveParticleImages"))
-      operatingParameters->SaveParticleImages (value.ToBool ());
+      operatingParameters->SaveParticleImages (value->ToBool ());
 
     else if  (name.EqualIgnoreCase ("ScanRate"))
-      operatingParameters->RequestedScanRate (value.ToFloat ());
+      operatingParameters->RequestedScanRate (value->ToFloat ());
 
     else if  (name.EqualIgnoreCase ("TrainingModelName"))
-      sessionParameters->TrainingModelName (value);
+      sessionParameters->TrainingModelName (*value);
 
     else if  (name.EqualIgnoreCase ("pe"))
     {
-      UmiParticleEntry^  pe = ParseParticleImageLine (value);
+      UmiParticleEntry^  pe = ParseParticleImageLine (*value);
       if  (pe != nullptr)
       {
         Add (pe);
@@ -737,7 +739,7 @@ void  UmiParticleEntryList::LoadFile (bool        _loadHeaderOnly,
       if  (!sortedByScanLine)
         SortByScanLine ();
 
-      UmiParticleEntry^  newPE = ParseParticleImageLine (value);
+      UmiParticleEntry^  newPE = ParseParticleImageLine (*value);
       if  (newPE != nullptr)
       {
         UmiParticleEntry^  existingPE = LocateParticle (newPE);
@@ -748,6 +750,9 @@ void  UmiParticleEntryList::LoadFile (bool        _loadHeaderOnly,
       }
     }
   }
+  delete  value;
+  value = NULL;
+
 
   i.close ();
 

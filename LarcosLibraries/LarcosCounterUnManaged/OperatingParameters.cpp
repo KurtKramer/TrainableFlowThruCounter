@@ -444,22 +444,27 @@ void  OperatingParameters::ReadXML (istream&  i)
   bool  eof = false;
   bool  fieldFound = false;
 
+  KKStrPtr  restOfLine = NULL;
   while (!eof)
   {
     KKStr  fieldName = osReadNextToken (i, "\t", eof, eol);
     if  (eof)
       break;
 
-    KKStr  restOfLine = "";
+    delete  restOfLine;
+    restOfLine = NULL;
     if  (!eol)
       restOfLine = osReadRestOfLine (i, eof);
     
     if  (fieldName.EqualIgnoreCase ("</OperatingParameters>"))
       break;
 
-    if  (!fieldName.StartsWith ("//"))
-      UpdateFromDataField (fieldName, restOfLine, fieldFound);
+    if  ((!fieldName.StartsWith ("//"))  &&  (restOfLine != NULL))
+      UpdateFromDataField (fieldName, *restOfLine, fieldFound);
   }
+
+  delete  restOfLine;
+  restOfLine = NULL;
 }  /*   ReadXML  */
 
 

@@ -42,7 +42,7 @@ String^  UmiInstallationConfig::FlowMeterMethodToStr (FlowMeterMethods  method)
 
 UmiInstallationConfig::FlowMeterMethods   UmiInstallationConfig::FlowMeterMethodFromStr (String^  s)
 {
-  return  (UmiInstallationConfig::FlowMeterMethods)InstallationConfig::FlowMeterMethodFromStr (UmiKKStr::SystemStringToKKStrPtr (s));
+  return  (UmiInstallationConfig::FlowMeterMethods)InstallationConfig::FlowMeterMethodFromStr (UmiKKStr::SystemStringToKKStr (s));
 }
 
 

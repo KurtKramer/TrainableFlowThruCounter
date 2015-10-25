@@ -279,9 +279,9 @@ void  InstallationConfig::ReadXML (istream&  i)
     if  (eof)
       break;
 
-    KKStr  restOfLine = "";
+    KKStr restOfLine = "";
     if  (!eol)
-      restOfLine = osReadRestOfLine (i, eof);
+      restOfLine = osReadRestOfLine2 (i, eof);
     
     if  (fieldName.EqualIgnoreCase ("</InstallationConfig>"))
       break;
