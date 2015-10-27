@@ -955,21 +955,20 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
 
   MLClassPtr  predictedClass = classifier->ClassifyAExample (*fv, probability, numOfWinners, knownClassOnOfWinners, breakTie);
   if  (predictedClass)
-    particle->Title (predictedClass->Name ());
-  UpdateCounts ((kkint32)fv->OrigSize (),  predictedClass->CountFactor ());
-
-
-  // Want to save FeatureVector to text file.
-  // KKKK
-
-  FeatureVectorPtr  fvForParticle = NULL;
-  if  (saveParticleImages)
   {
-    fvForParticle = new FeatureVector (*fv);
-    SaveParticle (particle, (kkint32)(predictedClass->CountFactor ()), predictedClass, scanRow, scanCol);
+    particle->Title (predictedClass->Name ());
+    UpdateCounts ((kkint32)fv->OrigSize (),  predictedClass->CountFactor ());
+
+    // Want to save FeatureVector to text file.
+    FeatureVectorPtr  fvForParticle = NULL;
+    if  (saveParticleImages)
+    {
+      fvForParticle = new FeatureVector (*fv);
+      SaveParticle (particle, (kkint32)(predictedClass->CountFactor ()), predictedClass, scanRow, scanCol);
+    }
+    AddParticleEntry (scanRow, scanCol, particle, predictedClass, blob, (float)probability, (float)breakTie, fvForParticle);
+    fvForParticle = NULL;
   }
-  AddParticleEntry (scanRow, scanCol, particle, predictedClass, blob, (float)probability, (float)breakTie, fvForParticle);
-  fvForParticle = NULL;
 
   delete  fv;   fv = NULL;
 }  /* AnalyseParticleUsingClassifier */

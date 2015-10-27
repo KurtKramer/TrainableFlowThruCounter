@@ -171,15 +171,13 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
                                            RunLog&         _log
                                           )
 {
-  char  buff[102400];
-
   _errorMessage = "";
   
-  _in.getline (buff, sizeof (buff) - 1, '\n');
-  KKStr  firstLine (buff);
+  bool  eof = false;
+  KKStr  firstLine = osReadRestOfLine2 (_in, eof);
   firstLine.Upper ();
 
-  if  (firstLine.SubStrPart (0, 16) != "FEATURE_DATA_FILE")
+  if  (!firstLine.StartsWith ("FEATURE_DATA_FILE"))
   {
     // We are looking at a very old RAW file,  need to scan for number of fields.
     // Lets count the number of fields in each lime,  
@@ -198,18 +196,12 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
   Parse_FEATURE_DATA_FILE_Line (firstLine, version, numOfFeatures, numOfExamples);
    if  (version < 39)
   {
-    _log.Level (-1) << endl << endl 
-                    << "FeatureFileIOKK::GetFileDesc    ***ERROR***"  << endl
-                    << endl
-                    << "                     Version Number[" << version << "]" << endl
-                    << "                     Can not load versions prior to 39." << endl
-                    << endl;
+    _log.Level (-1) << endl << "FeatureFileIOKK::GetFileDesc   ***ERROR***   Version Number[" << version << "]  Can not load versions prior to 39." << endl << endl;
     _errorMessage << "Version[" << version << "]  is prior to '39'.";
     return NULL;
   }
 
-  _in.getline (buff, sizeof (buff) - 1);
-  KKStr  fieldDescLn (buff);
+  KKStr  fieldDescLn = osReadRestOfLine2 (_in, eof);
   VectorKKStr  fields = fieldDescLn.Split ("\n\r\t");
   if  (fields.size () < (kkuint32)numOfFeatures)
   {
@@ -222,11 +214,9 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
     _errorMessage << "Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl;
     return NULL;
   }
-  
    
   FileDescPtr  fd = new FileDesc ();
   fd->Version (version);
-
 
   bool  alreadyExists;
   kkint32  featureNum = 0;
@@ -273,18 +263,12 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
 
   VectorInt  featureFieldIndexTable;
 
-  char buff[20480];
-
-  _in.getline (buff, sizeof (buff) - 1);
-  KKStr  firstLine (buff);
-
+  bool eof = false;
+  KKStr  firstLine = osReadRestOfLine2 (_in, eof);
   firstLine.Upper ();
-
-  if  (firstLine.SubStrPart (0, 16) != "FEATURE_DATA_FILE")
+  if  (!firstLine.StartsWith ("FEATURE_DATA_FILE"))
   {
-    _log.Level (-1) << endl << endl << endl 
-                    << "FeatureFileIOKK::LoadFile     **** Error missing 'FEATURE_DATA_FILE' line ****    can not load" << endl
-                    << endl;
+    _log.Level (-1) << endl << "FeatureFileIOKK::LoadFile   ***ERROR***    missing 'FEATURE_DATA_FILE' line ****" << endl << endl;
     _errorMessage = "Error missing 'FEATURE_DATA_FILE' line";
     return  NULL;
   }
@@ -306,21 +290,14 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
 
   // The second line will have a list of fields;  we will use this line to build
   // an indirection table.
-  _in.getline (buff, sizeof (buff) - 1);
-  KKStr  fieldDescLine (buff);
+  KKStr  fieldDescLine = osReadRestOfLine2 (_in, eof);
   VectorKKStr  fields = fieldDescLine.Parse ("\n\r\t");
   if  ((kkint32)fields.size () < numOfFeatures)
   {
-    _log.Level (-1) << endl << endl << endl
-                   << "FeatureFileIOKK::LoadFile     **** Error ***"  << endl
-                   << endl
-                   << "               Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl
-                   << endl
-                   << endl;
-    _errorMessage << "Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl;
+    _log.Level (-1) << endl << "FeatureFileIOKK::LoadFile   ***ERROR***   Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl << endl;
+    _errorMessage << "Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified.";
     return  NULL;
   }
-
 
   VectorInt   indirectionTable = CreateIndirectionTable (fields, numOfFeatures);
 
@@ -373,12 +350,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
 
         if  (fieldNum >= (kkint32)indirectionTable.size ())
         {
-          _log.Level (-1) << endl << endl << endl
-                          << "FeatureFileIOKK::LoadFile     **** Error ***"  << endl
-                          << endl
-                          << "               LineNum[" << lineNum << "]  has to many fields defined." << endl
-                          << endl
-                          << endl;
+          _log.Level (-1) << endl << "FeatureFileIOKK::LoadFile   ***ERROR***   LineNum[" << lineNum << "]  has to many fields defined." << endl << endl;
           _errorMessage << "LineNum[" << lineNum << "]  has to many fields defined.";
           delete  examples;
           delete  example;

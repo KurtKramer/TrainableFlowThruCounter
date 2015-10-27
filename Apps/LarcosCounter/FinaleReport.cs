@@ -111,9 +111,6 @@ namespace LarcosCounter
       }
 
       try  {
-        if  (false)
-          particles = LoadParticlesFromSky8Trip ();
-        else
         {
           particles = new UmiParticleEntryList (scannerFileName, 
                                                 false,               /**< false = go ahead and load the whole report file. */

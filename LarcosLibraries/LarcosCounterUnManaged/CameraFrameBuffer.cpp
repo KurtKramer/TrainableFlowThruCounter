@@ -439,7 +439,7 @@ VectorUcharPtr CameraFrameBuffer::LastFrameAverageScanLine()  const
   for  (col = 0;  col < frameWidth;  ++col)
     (*result)[col] = (int)(0.5f + (float)(colTotals[col]) / (float)frameHeight);
 
-  delete  colTotals;
+  delete[]  colTotals;
   colTotals = NULL;
 
   return result;
@@ -485,7 +485,7 @@ VectorUcharPtr CameraFrameBuffer::LastFrameHighValuesScanLine()  const
   for  (col = 0;  col < frameWidth;  ++col)
     (*result)[col] = colValues[col];
 
-  delete  colValues;
+  delete[]  colValues;
   colValues = NULL;
 
   return result;

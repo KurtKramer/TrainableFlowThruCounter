@@ -423,8 +423,8 @@ void  CameraAcquisitionSimulator::Run ()
 
     totalBytesPrevScannerFiles += sf->FileSizeInBytes ();
 
-    delete  buffer;  buffer = NULL;
-    delete  sf;      sf = NULL;
+    delete[]  buffer;  buffer = NULL;
+    delete    sf;      sf = NULL;
 
     if  ((!TerminateFlag ())  &&  (!ShutdownFlag ()))
       OpenNextScannerFile ();
