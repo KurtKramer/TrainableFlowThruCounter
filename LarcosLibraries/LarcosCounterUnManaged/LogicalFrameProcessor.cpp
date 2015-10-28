@@ -1206,6 +1206,11 @@ void   LogicalFrameProcessor::ExtractBlobs (uchar*  rowsArea,
           if  (nearBlobId >= 0)
           {
             curBlob   = blobs->LookUpByBlobId (nearBlobId);
+            if  (!curBlob)  {
+              KKStr  errMsg = "LogicalFrameProcessor::ExtractBlobs   ***ERROR***   nearBlobId: " + StrFromInt16(nearBlobId) + " Not Found";
+              cerr << endl << errMsg << endl << endl;
+              throw KKException (errMsg);
+            }
             curBlobId = curBlob->id;
           }
           else

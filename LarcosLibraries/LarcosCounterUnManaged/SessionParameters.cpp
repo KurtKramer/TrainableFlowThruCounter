@@ -259,24 +259,22 @@ void  SessionParameters::ReadXML (istream&  i)
   bool  eof = false;
   bool  fieldFound = false;
 
-  KKStrPtr  restOfLine = NULL;
+  KKStr  restOfLine = "";
   KKStr  fieldName = osReadNextToken (i, "\t", eof, eol);
   while (!eof)
   {
     if  (!eol)
-      restOfLine = osReadRestOfLine (i, eof);
+      restOfLine = osReadRestOfLine2 (i, eof);
     
     if  (fieldName.EqualIgnoreCase ("</SessionParameters>"))
       break;
 
     if  (!fieldName.StartsWith ("//"))
-      UpdateFromDataField (fieldName, *restOfLine, fieldFound);
+      UpdateFromDataField (fieldName, restOfLine, fieldFound);
 
-    delete  restOfLine;
-    restOfLine = NULL;
+    restOfLine = "";
+
     fieldName = osReadNextToken (i, "\t", eof, eol);
   }
-  delete  restOfLine;
-  restOfLine = NULL;
 }  /* ReadXML */
 

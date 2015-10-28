@@ -264,6 +264,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
   VectorInt  featureFieldIndexTable;
 
   bool eof = false;
+  bool  eol = false;
   KKStr  firstLine = osReadRestOfLine2 (_in, eof);
   firstLine.Upper ();
   if  (!firstLine.StartsWith ("FEATURE_DATA_FILE"))
@@ -306,9 +307,6 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
   examples->Version (version);
 
   kkint32  fieldNum = 0;
-
-  bool  eof = false;
-  bool  eol = false;
 
   KKStr  className;
   char   firstChar;
