@@ -1205,19 +1205,23 @@ void   LogicalFrameProcessor::ExtractBlobs (uchar*  rowsArea,
           // No Current Blob
           if  (nearBlobId >= 0)
           {
-            curBlob   = blobs->LookUpByBlobId (nearBlobId);
+            curBlob = blobs->LookUpByBlobId (nearBlobId);
             if  (!curBlob)  {
               KKStr  errMsg = "LogicalFrameProcessor::ExtractBlobs   ***ERROR***   nearBlobId: " + StrFromInt16(nearBlobId) + " Not Found";
               cerr << endl << errMsg << endl << endl;
               throw KKException (errMsg);
             }
-            curBlobId = curBlob->id;
           }
           else
           {
             curBlob = blobs->NewBlob (row, col, blobIds);
-            curBlobId = curBlob->id;
+            if  (!curBlob)  {
+              KKStr  errMsg = "LogicalFrameProcessor::ExtractBlobs   ***ERROR***   Failed to create a new Blob.";
+              cerr << endl << errMsg << endl << endl;
+              throw KKException (errMsg);
+            }
           }
+          curBlobId = curBlob->id;
 
           curRowBlobIds[col] = curBlobId;
           curBlob->colLeft   = Min (curBlob->colLeft,  col);
