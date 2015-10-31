@@ -59,6 +59,7 @@ String^  UmiScannerFile::ScannerFileFormatToStr (Format  f)
 UmiScannerFile::UmiScannerFile (ScannerFilePtr  _scannerFile,
                                 UmiRunLog^      _log
                                ):
+    isDisposed                       (false),
     frameNumLastRead                 (-1),
     frameNumNextRead                 (0),
     log                              (_log),
@@ -90,7 +91,10 @@ UmiScannerFile::UmiScannerFile (ScannerFilePtr  _scannerFile,
 
 UmiScannerFile::~UmiScannerFile ()
 {
+  if  (isDisposed)
+    return;
   this->!UmiScannerFile ();
+  isDisposed = true;
 }
 
 

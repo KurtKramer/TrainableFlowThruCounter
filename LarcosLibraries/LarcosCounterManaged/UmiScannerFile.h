@@ -182,6 +182,8 @@ namespace LarcosCounterManaged
   private:
     void  UpdateFrameByteOffsets ();
 
+    bool              isDisposed;
+
     kkint32           memoryPreasureAdded;
 
     bool              frameIndexBuilt;                   /**<  Indicates if 'frameByteOffsets' has been completely built. */
@@ -200,7 +202,7 @@ namespace LarcosCounterManaged
     kkuint32          pixelsPerScanLine;
     uchar*            lineBuff;
     kkuint32          lineSize;
-    kkuint32*          colCount;
+    kkuint32*         colCount;
     kkuint32          pixesInRow;;
   };  /* UmiScannerFile */
 }  /* LarcosCounterManaged */

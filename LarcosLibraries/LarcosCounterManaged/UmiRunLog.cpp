@@ -80,6 +80,11 @@ UmiRunLog::!UmiRunLog ()
 
 UmiRunLog::~UmiRunLog ()
 {
+  if  (msgQueue != nullptr)
+  {
+    delete msgQueue; 
+    msgQueue = nullptr;
+  }
   this->!UmiRunLog ();
 }
 
