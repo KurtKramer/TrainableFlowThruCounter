@@ -85,7 +85,7 @@ UmiScannerFileBuffered::UmiScannerFileBuffered (String^     _fileName,
   }
   catch  (IOException^  ioException)
   {
-    throw ioException;
+    throw;
   }
       
   if  (scannerFile == nullptr)

@@ -27,11 +27,11 @@ namespace LarcosCounterManaged
 
     enum  class  Format: int  
     {
-      sfSimple          = ScannerFile::Format::sfSimple,
-      sf3BitEncoded     = ScannerFile::Format::sf3BitEncoded,
-      sf4BitEncoded     = ScannerFile::Format::sf4BitEncoded,
-      sfZlib3BitEncoded = ScannerFile::Format::sfZlib3BitEncoded,
-      sfUnKnown         = ScannerFile::Format::sfUnKnown
+      sfSimple          = (int)ScannerFile::Format::sfSimple,
+      sf3BitEncoded     = (int)ScannerFile::Format::sf3BitEncoded,
+      sf4BitEncoded     = (int)ScannerFile::Format::sf4BitEncoded,
+      sfZlib3BitEncoded = (int)ScannerFile::Format::sfZlib3BitEncoded,
+      sfUnKnown         = (int)ScannerFile::Format::sfUnKnown
     };
 
     static

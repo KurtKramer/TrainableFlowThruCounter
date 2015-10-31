@@ -134,7 +134,8 @@ namespace LarcosCounterUnManaged
     ParticleEntryList (const KKStr&  _scannerFileName,
                        RunLog&       _log
                       );
-
+    
+    virtual
     ~ParticleEntryList ();
 
     MLClassListPtr  ExtractListOfClasses ()  const;
