@@ -963,7 +963,7 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
     FeatureVectorPtr  fvForParticle = NULL;
     if  (saveParticleImages)
     {
-      fvForParticle = new FeatureVector (*fv);
+      fvForParticle = fv->Duplicate ();
       SaveParticle (particle, (kkint32)(predictedClass->CountFactor ()), predictedClass, scanRow, scanCol);
     }
     AddParticleEntry (scanRow, scanCol, particle, predictedClass, blob, (float)probability, (float)breakTie, fvForParticle);
@@ -994,7 +994,7 @@ void  LogicalFrameProcessor::AddParticleEntry (kkint32          scanRow,
 
   if  (lenComputer  &&  (ic->CountFactor () == 1))
   {
-    if  ((particle->Height () < 1000)  && (particle->Width () < 1000))
+    if  ((particle->Height () < 2000)  && (particle->Width () < 2000))
     {
       if  ((particleEntryProcCount % sizingSamplingInterval) == 0)
       {

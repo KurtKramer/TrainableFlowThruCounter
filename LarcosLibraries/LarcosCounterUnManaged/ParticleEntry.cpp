@@ -135,7 +135,10 @@ void  ParticleEntry::Assign (const ParticleEntry&   _entry)
   flowRate            = _entry.flowRate;
   probability         = _entry.probability;
   breakTie            = _entry.breakTie;
-  featureVector       = _entry.featureVector;
+  delete  featureVector;
+  featureVector = NULL;
+  if  (_entry.featureVector)
+    featureVector = _entry.featureVector->Duplicate ();
 }
 
 
@@ -823,8 +826,6 @@ VectorFloatPtr  ParticleEntryList::FlowRateRatioByTimeIntervals (int    interval
 
 
 
-
-
 VectorFloatPtr  ParticleEntryList::FlowRateByTimeIntervals (int    interval,
                                                             float  scanRate
                                                            )
@@ -873,10 +874,6 @@ VectorFloatPtr  ParticleEntryList::FlowRateByTimeIntervals (int    interval,
 
 
 
-
-
-
-
 VectorFloatPtr  ParticleEntryList::ParticleFrequencyByTimeIntervals (int    interval,
                                                                      float  scanRate
                                                                     )
@@ -908,8 +905,6 @@ VectorFloatPtr  ParticleEntryList::ParticleFrequencyByTimeIntervals (int    inte
 
   return  freqHistogram;
 }  /* ParticleFrequencyByTimeIntervals  */
-
-
 
 
 
@@ -958,11 +953,6 @@ int  ParticleEntryList::SubjectCount (const StartStopPointList&   startStopPoint
 
 
 
-
-
-
-
-
 ParticleEntryBuffer::ParticleEntryBuffer ():
       buff          (),
       dataAvailable (false),
@@ -970,8 +960,6 @@ ParticleEntryBuffer::ParticleEntryBuffer ():
 {
   GoalKeeperSimple::Create ("ParticleEntryBuffer", goalie);
 }
-
-
 
 
 
@@ -1014,22 +1002,21 @@ void  ParticleEntryBuffer::Add (ParticleEntryList&   list)
   goalie->StartBlock ();
 
   bool  origListOwner = list.Owner ();
-  list.Owner (false);
+  list.Owner (false); // We set owner to false so that we do not delete the contents below when we clear the list.  
 
-  ParticleEntryList::iterator  idx;
-  for  (idx = list.begin ();  idx != list.end ();  ++idx)
-    buff.push (*idx);
-
+  for  (auto idx: list)
+  {
+    if  (origListOwner)
+      buff.push (idx);
+    else
+      buff.push (new ParticleEntry (*idx));
+  }
   list.DeleteContents ();
-
   dataAvailable = true;
 
   list.Owner (origListOwner);
   goalie->EndBlock ();
 }
-
-
-
 
 
 
@@ -1083,6 +1070,8 @@ void  ParticleEntryBuffer::AddToReport (ostream& o)
       for  (kkint32 idx = 0;  idx < fv->NumOfFeatures ();  ++idx)
         o << "\t" << fv->FeatureData (idx);
       o << endl;
+      delete  fv;
+      fv = NULL;
     }
     delete  e;
     e = NULL;
