@@ -968,7 +968,7 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
       KKStr  fdFN = rootDir + rootName + ".txt";
       ofstream o (fdFN.Str ());
       o << "rootName" << "\t" << "priorReductionFactor" << "\t" << "predictedClass"        << "\t" << "probability";
-      for  (int zed = 0;  zed < fd->NumOfFields ();  ++zed)
+      for  (uint zed = 0;  zed < fd->NumOfFields ();  ++zed)
         o << "\t" << fd->FieldName (zed);
       o << endl;
       o <<  rootName  << "\t" <<  priorReductionFactor  << "\t" << predictedClass->Name () << "\t" << probability;
