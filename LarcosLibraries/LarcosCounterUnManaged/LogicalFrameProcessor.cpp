@@ -956,6 +956,27 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
   MLClassPtr  predictedClass = classifier->ClassifyAExample (*fv, probability, numOfWinners, knownClassOnOfWinners, breakTie);
   if  (predictedClass)
   {
+    // Special one time debi=uging issue
+    {
+      FileDescPtr  fd = fvProducer->FileDesc ();
+      KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";
+      KKStr  rootName = osGetRootName (particle->FileName ());
+      KKStr  fullFN = rootDir + rootName + ".bmp";
+      KKB::SaveImageGrayscaleInverted8Bit (*particle, fullFN);
+
+      KKStr  fdFN = rootDir + rootName + ".txt";
+      ofstream o (fdFN.Str ());
+      o << "rootName" << "\t" << "priorReductionFactor" << "\t" << "predictedClass"        << "\t" << "probability";
+      for  (int zed = 0;  zed < fd->NumOfFields ();  ++zed)
+        o << "\t" << fd->FieldName (zed);
+      o << endl;
+      o <<  rootName  << "\t" <<  priorReductionFactor  << "\t" << predictedClass->Name () << "\t" << probability;
+      for  (int zed2 = 0;  zed2 < fv->NumOfFeatures ();  ++zed2)
+        o << "\t" << fv->FeatureData (zed2);
+      o << endl;
+      o.close();
+    }
+
     particle->Title (predictedClass->Name ());
     UpdateCounts ((kkint32)fv->OrigSize (),  predictedClass->CountFactor ());
 

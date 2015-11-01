@@ -1857,9 +1857,7 @@ CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _m
 
   uint32_t  interfaceCount = pvSystem.GetInterfaceCount ();
 
-  uint32_t interfaceIdx = 0;
-
-  while (interfaceIdx < interfaceCount)
+  for (uint32_t interfaceIdx = 0; interfaceIdx < interfaceCount;  ++interfaceIdx)
   {
     const PvInterface*   pvInterface = pvSystem.GetInterface (interfaceIdx);
     if  (pvInterface == NULL)
@@ -1882,8 +1880,7 @@ CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _m
     runLog.Level (20) << "GetCameraList  InterfaceDescription :" << interfaceDescription << endl;
     runLog.Level (20) << "GetCameraList  DeviceCount :" << deviceCount << endl;
 
-    uint32_t  deviceIdx = 0;
-    while  (deviceIdx < deviceCount)
+    for  (uint32_t  deviceIdx = 0;  deviceIdx < deviceCount; ++deviceIdx)
     {
       const PvDeviceInfo*  pvDeviceInfo = pvNetAdapter->GetDeviceInfo (deviceIdx);
       pvDeviceInfoGEV = dynamic_cast<const PvDeviceInfoGEV*>(pvDeviceInfo);
@@ -1922,12 +1919,8 @@ CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _m
 
         if  (cp)
           cameras->PushOnBack (cp);
-
       }
-      ++deviceIdx;
     }
-
-    ++interfaceIdx;
   }
 
   return cameras;
