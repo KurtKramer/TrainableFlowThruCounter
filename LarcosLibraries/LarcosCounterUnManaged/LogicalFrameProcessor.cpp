@@ -956,7 +956,8 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
   MLClassPtr  predictedClass = classifier->ClassifyAExample (*fv, probability, numOfWinners, knownClassOnOfWinners, breakTie);
   if  (predictedClass)
   {
-    // Special one time debi=uging issue
+    // Special one time debugging issue
+    if  (false)
     {
       FileDescPtr  fd = fvProducer->FileDesc ();
       KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";

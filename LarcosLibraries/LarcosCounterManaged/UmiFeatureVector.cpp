@@ -1,13 +1,9 @@
 #include "StdAfx.h"
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <math.h>
-
-
 #include <ctype.h>
 #include <time.h>
-
 #include <fstream>
 #include <iostream>
 #include <ostream>
@@ -18,6 +14,7 @@
 
 #include "KKBaseTypes.h"
 #include "GoalKeeper.h"
+#include "ImageIO.h"
 #include "OSservices.h"
 #include "Raster.h"
 using namespace KKB;
@@ -82,6 +79,28 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
     tempIntermediateImages = new RasterList (true);
   LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
   features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), tempIntermediateImages, 1.0, log->Log ());
+
+  if  (false)
+  {
+    FileDescPtr  fd = fvp->FileDesc ();
+    KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";
+    KKStr  rootName = osGetRootName (UmiKKStr::SystemStringToKKStr (imageFileName)) + "_ScannerFile";
+    KKStr  fullFN = rootDir + rootName + ".bmp";
+    KKB::SaveImageGrayscaleInverted8Bit (*r, fullFN);
+
+    KKStr  fdFN = rootDir + rootName + ".txt";
+    std::ofstream o (fdFN.Str ());
+    o << "rootName" << "\t" << "priorReductionFactor" << "\t" << "predictedClass"        << "\t" << "probability";
+    for  (int zed = 0;  zed < fd->NumOfFields ();  ++zed)
+      o << "\t" << fd->FieldName (zed);
+    o << std::endl;
+    o <<  rootName  << "\t" <<  ""  << "\t" << "" << "\t" << "0.0";
+    for  (int zed2 = 0;  zed2 < features->NumOfFeatures ();  ++zed2)
+      o << "\t" << features->FeatureData (zed2);
+    o << std::endl;
+    o.close();
+  }
+
   UmiRasterList::CopyOverIntermediateImages (tempIntermediateImages, intermediateImages);
   delete  fvp;
   fvp = NULL;

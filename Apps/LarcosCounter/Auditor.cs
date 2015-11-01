@@ -201,9 +201,10 @@ namespace LarcosCounter
       UmiTrainingModel2  tm = ActiveTrainingLibraries.Model1 ();
       if  (tm != null)
       {
-        UmiOperatingParameters  opParms = tm.GetOperatingParameters ();
-        if  (opParms != null)
-          opParametersToExtractParticles = opParms;
+        // Used to reload Operating Parameters at this point;  but decide to best use the ones that were selected when last counted.
+        // UmiOperatingParameters  opParms = tm.GetOperatingParameters ();
+        // if  (opParms != null)
+        //   opParametersToExtractParticles = opParms;
       }
     }
 
