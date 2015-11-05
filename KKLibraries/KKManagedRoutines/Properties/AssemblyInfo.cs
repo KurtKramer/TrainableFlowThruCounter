@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany ("Larcos Aquaculture")]
 [assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright("Copyright © Larcos Aquaculture 2012")]
+[assembly: AssemblyCopyright("Copyright © Larcos Aquaculture 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -91,7 +91,7 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
     KKStr  fdFN = rootDir + rootName + ".txt";
     std::ofstream o (fdFN.Str ());
     o << "rootName" << "\t" << "priorReductionFactor" << "\t" << "predictedClass"        << "\t" << "probability";
-    for  (int zed = 0;  zed < fd->NumOfFields ();  ++zed)
+    for  (uint zed = 0;  zed < fd->NumOfFields ();  ++zed)
       o << "\t" << fd->FieldName (zed);
     o << std::endl;
     o <<  rootName  << "\t" <<  ""  << "\t" << "" << "\t" << "0.0";
