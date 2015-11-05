@@ -58,6 +58,7 @@ KKStr  LarcosVariables::LarcosHomeDir ()
   {
     #if  defined(OS_WINDOWS)
        larcosHomeDir = "C:\\Larcos";
+       cout << endl << "larcosHomeDir" << "\t" << larcosHomeDir << endl << endl;
     #else
        larcosHomeDir = "/Larcos";
     #endif
