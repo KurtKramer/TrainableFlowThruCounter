@@ -706,13 +706,12 @@ namespace LarcosCounter
         return;
       }
 
-      AuditorByClass  abc = new AuditorByClass (cameraManager, scannerFile, runLog);
+      AuditorByClass  abc = new AuditorByClass (cameraManager, scannerFile, opParametersToExtractParticles, runLog);
       abc.ShowDialog (this);
       scannerFile.ParticleEntries ().SortByScanLine ();
       PopulateCount ();
       ScannerFilePanel.PaintWholePanel ();
     }
-
   }
 }
 

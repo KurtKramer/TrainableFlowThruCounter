@@ -14,28 +14,28 @@ namespace LarcosCounter
 {
   public partial class AuditorByClass : Form
   {
-    private  int                          backgroundPixelTH      = 31;    
-    private  LarcosCounterManagerWrapper  cameraManager          = null;
-    private  UmiClassList                 classesInParticleList  = null;
-    private  UmiClassList                 classesInTrainingModel = null;
-    private  UmiClassList                 classesAvailableForSelection = null;
-    private  int                          erosionStructSize      = 0;
-    private  bool                         formIsMaximized        = false;
-    private  UmiShrimpLengthComputer      lengthComputer         = null;
-    private  UmiInstallationConfig        installationConfig     = null;
-    private  List<UmiClass>               lastClassesValidated   = new List<UmiClass> ();
-    private  int                          lastWidth              = 0;
-    private  int                          lastHeight             = 0;
-    private  UmiOperatingParameters       operatingParameters    = null;
-    private  UmiParticleEntryList         particles              = null;
-    private  UmiParticleEntryList         particlesInSelectedClass = null;
-    private  float                        pixelsPerMM            = 23.6f;
-    private  UmiRunLog                    runLog                 = null;
-    private  UmiScannerFileBuffered       scannerFile            = null;
-    private  float                        scanRate               = 20000.0f;
-    private  UmiClass                     selectedClass          = null;
-    private  UmiTrainingConfiguration     trainingConfiguration  = null;
-    private  string                       trainingModelName      = "";
+    private  int                          backgroundPixelTH              = 31;    
+    private  LarcosCounterManagerWrapper  cameraManager                  = null;
+    private  UmiClassList                 classesInParticleList          = null;
+    private  UmiClassList                 classesInTrainingModel         = null;
+    private  UmiClassList                 classesAvailableForSelection   = null;
+    private  int                          erosionStructSize              = 0;
+    private  bool                         formIsMaximized                = false;
+    private  UmiShrimpLengthComputer      lengthComputer                 = null;
+    private  UmiInstallationConfig        installationConfig             = null;
+    private  List<UmiClass>               lastClassesValidated           = new List<UmiClass> ();
+    private  int                          lastWidth                      = 0;
+    private  int                          lastHeight                     = 0;
+    private  UmiOperatingParameters       opParametersToExtractParticles = null;
+    private  UmiParticleEntryList         particles                      = null;
+    private  UmiParticleEntryList         particlesInSelectedClass       = null;
+    private  float                        pixelsPerMM                    = 23.6f;
+    private  UmiRunLog                    runLog                         = null;
+    private  UmiScannerFileBuffered       scannerFile                    = null;
+    private  float                        scanRate                       = 20000.0f;
+    private  UmiClass                     selectedClass                  = null;
+    private  UmiTrainingConfiguration     trainingConfiguration          = null;
+    private  string                       trainingModelName              = "";
 
 
     private  int   thumbNailHeight = 150;
@@ -75,13 +75,15 @@ namespace LarcosCounter
     /// loading of Particles must have been completed.</param>
     public AuditorByClass (LarcosCounterManagerWrapper  _cameraManager,
                            UmiScannerFileBuffered       _scannerFile,
+                           UmiOperatingParameters       _opParametersToExtractParticles,
                            UmiRunLog                    _runLog
                           )
     {
-      cameraManager = _cameraManager;
-      scannerFile   = _scannerFile;
-      scanRate      = scannerFile.ScanRate;
-      runLog        = _runLog;
+      cameraManager                  = _cameraManager;
+      scannerFile                    = _scannerFile;
+      scanRate                       = scannerFile.ScanRate;
+      opParametersToExtractParticles = _opParametersToExtractParticles;
+      runLog                         = _runLog;
 
       if  (runLog == null)
         runLog = new UmiRunLog ();
@@ -132,9 +134,10 @@ namespace LarcosCounter
       pixelsPerMM = (float)pixelsPerScanLine /  (1000.0f  * widthInMeters);
       lengthComputer = new UmiShrimpLengthComputer (pixelsPerScanLine, cameraManager.ImagingChamberWidth (),  erosionStructSize, backgroundPixelTH);
 
-      operatingParameters = cameraManager.GetOperatingParameters ();
-      if  (operatingParameters != null)
-        erosionStructSize = operatingParameters.ErosionStructSize;
+      if  (opParametersToExtractParticles == null)
+        opParametersToExtractParticles = cameraManager.GetOperatingParameters ();
+      if  (opParametersToExtractParticles != null)
+        erosionStructSize = opParametersToExtractParticles.ErosionStructSize;
 
       particles = scannerFile.ParticleEntries ();
       if  (particles != null)
@@ -142,7 +145,7 @@ namespace LarcosCounter
         erosionStructSize = particles.ErosionStructSize;
         trainingModelName = particles.TrainingModelName;
         classesInParticleList = particles.ExtractListOfClasses ();
-        operatingParameters = particles.GetOperatingParameters ();
+        opParametersToExtractParticles = particles.GetOperatingParameters ();
       }
 
       if  (String.IsNullOrEmpty (trainingModelName))
@@ -160,7 +163,7 @@ namespace LarcosCounter
         }
       }
 
-      trainingConfiguration = new UmiTrainingConfiguration (trainingModelName, operatingParameters, runLog);
+      trainingConfiguration = new UmiTrainingConfiguration (trainingModelName, opParametersToExtractParticles, runLog);
       
       classesInTrainingModel = trainingConfiguration.GetClassList ();
 
@@ -175,10 +178,10 @@ namespace LarcosCounter
       }
 
       UmiOperatingParameters  trainModelOpParms = trainingConfiguration.GetOperatingParameters ();
-      if  (trainModelOpParms != null)
-        operatingParameters = trainModelOpParms;
+      if  (opParametersToExtractParticles == null)
+        opParametersToExtractParticles = trainModelOpParms;
 
-      ThumbNailImageCell.SetOperatingParameters (operatingParameters);
+      ThumbNailImageCell.SetOperatingParameters (opParametersToExtractParticles);
     }  /* InitializeDataStructures */
 
 
@@ -429,7 +432,7 @@ namespace LarcosCounter
         if  (pe == null)
           continue;
 
-        UmiRaster  particle = scannerFile.GetRasterForParticleAsCounted (pe, operatingParameters);
+        UmiRaster  particle = scannerFile.GetRasterForParticleAsCounted (pe, opParametersToExtractParticles);
         if  (particle == null)
         {
           MessageBox.Show (this, "Was unable to get Particle from Scanner File[" + pe.FileName + "]" );
@@ -600,7 +603,7 @@ namespace LarcosCounter
     { 
       String  fileName = pe.FileName;
 
-      UmiRaster  r = scannerFile.GetRasterForParticleAsCounted (pe, operatingParameters);
+      UmiRaster  r = scannerFile.GetRasterForParticleAsCounted (pe, opParametersToExtractParticles);
       if  (r != null)
       {
         ImageVerifier iv = new ImageVerifier (cameraManager, pe, r, fileName, pixelsPerMM, runLog);
@@ -637,10 +640,10 @@ namespace LarcosCounter
       if  (loadedModel != null)
       {
         UmiOperatingParameters  opParms = loadedModel.GetOperatingParameters ();
-        if  (opParms != null)
+        if  ((opParms != null)  &&  (opParametersToExtractParticles == null))
         {
-          operatingParameters = opParms;
-          ThumbNailImageCell.SetOperatingParameters (operatingParameters);
+          opParametersToExtractParticles = opParms;
+          ThumbNailImageCell.SetOperatingParameters (opParametersToExtractParticles);
         }
       }
     }

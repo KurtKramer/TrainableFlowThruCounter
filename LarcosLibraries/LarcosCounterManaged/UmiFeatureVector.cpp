@@ -80,7 +80,7 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
   LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
   features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), tempIntermediateImages, 1.0, log->Log ());
 
-  if  (false)
+  if  (true)
   {
     FileDescPtr  fd = fvp->FileDesc ();
     KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";

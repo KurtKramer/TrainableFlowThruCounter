@@ -957,7 +957,7 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
   if  (predictedClass)
   {
     // Special one time debugging issue
-    if  (false)
+    if  (true)
     {
       FileDescPtr  fd = fvProducer->FileDesc ();
       KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";
