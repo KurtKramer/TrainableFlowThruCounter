@@ -472,6 +472,17 @@ array<array<byte>^ >^  UmiScannerFileBuffered::GetScanLines  (kkint32  scanLineS
   
   if  (scanLinesNextRow == 0)
     scanLines = nullptr;
+
+  else if (scanLinesNextRow < scanLines->Length)  {
+    // We did not get all the scan lines we expected;we need to Fill in the missing rows with blank lines.
+    while  (scanLinesNextRow < scanLines->Length)  {
+      array<byte>^ scanLine = gcnew array<byte> (scanLineSize);
+      for (int zed = 0;  zed < scanLineSize;  ++zed)
+        scanLine[zed] = 0;
+      scanLines[scanLinesNextRow] = scanLine;
+      ++scanLinesNextRow;
+    }
+  }
   
   return  scanLines;
 } /* GetScanLines */                               
@@ -697,7 +708,9 @@ UmiRaster^  UmiScannerFileBuffered::GetRasterForParticle (UmiParticleEntry^ pe)
   for (row = 0;  row < particleHeight;  ++row, ++particleRow)
   {
     array<byte>^  rowData = rows[row];
-    uchar*        particleRowData = particleRaster[particleRow];
+    if  (rowData == nullptr)
+      continue;
+    uchar* particleRowData = particleRaster[particleRow];
 
     scannerCol = peScannerCol;
     col = 0;
