@@ -291,6 +291,8 @@ namespace LarcosCounterUnManaged
 
     void   SampleLastFrameBeforeFlatField (bool _sampleLastFrameBeforeFlatField);
 
+    void   SaveDebugImages            (bool _saveDebugImages)     {saveDebugImages = _saveDebugImages;}
+
     void   SnapshotInterval           (kkint32 _snapshotInterval);
     
     void   ThroughPutField            (StatusSnapshot::FieldIdx  _throughPutField)  {throughPutField = _throughPutField;}
@@ -357,6 +359,7 @@ namespace LarcosCounterUnManaged
     const KKStr&  TrainingModelName              () const;
     bool          WeAreConnectedToCamera         () const;  /**< Returns true is the acquisition thread exists and it is connected to a camera or reading from a file. */
     bool          WeAreConnectingToCamera        () const;  /**< Returns true is the acquisition thread exists and it is connecting to a camera or getting ready to read from a file. */
+    bool          SaveDebugImages                () const {return saveDebugImages;}   /**< Indicates that we are to save images after features have been computed along with their respective feature vectors. */
 
     
     const CameraParametersPtr     CameraParams ()  const;  /**< Return pointer to current camera parameters of currently connected camera. */
@@ -736,10 +739,12 @@ namespace LarcosCounterUnManaged
     kkint32                       cameraFrameHeight;
     kkint32                       cameraFrameWidth;
 
-    MsgQueuePtr                   msgQueue;         /**< Messages that are to be logged are to be added to this MsgQueue; after they are written to Log file in 'LoggerThread' will be moved to 'loggedMsgs'. */
-    MsgQueuePtr                   loggedMsgs;       /**< Messages that have been written to the log file in 'LoggerThread' are copied to this MsgQueue and are removed by owner of 'LarcosCounterManager' when needed for display. */
+    MsgQueuePtr                   msgQueue;               /**< Messages that are to be logged are to be added to this MsgQueue; after they are written to Log file in 'LoggerThread' will be moved to 'loggedMsgs'. */
+    MsgQueuePtr                   loggedMsgs;             /**< Messages that have been written to the log file in 'LoggerThread' are copied to this MsgQueue and are removed by owner of 'LarcosCounterManager' when needed for display. */
 
     RunLogPtr                     runLog;
+
+    bool                          saveDebugImages;        /**< Indicaes that we are to save images after features have been computed along with their respective feature vectors. */
 
     friend  class  StopButtonThread;
     friend  class  ConnectButtonThread;

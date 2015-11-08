@@ -50,7 +50,8 @@ LarcosCounterManagerWrapper::LarcosCounterManagerWrapper ():
     larcosCounterStats         (NULL),
     lastReportedMemoryPreasure (0),
     loggedMsgs                 (NULL),
-    msgQueue                   ()
+    msgQueue                   (),
+    saveDebugImages            (false)
 {
   LarcosBase::LarcosVariables::SetLarcosHomeDir ();
 
@@ -59,8 +60,10 @@ LarcosCounterManagerWrapper::LarcosCounterManagerWrapper ():
 
   int maxNumOfThreads = System::Environment::ProcessorCount;
   larcosCounterManager = new LarcosCounterManager (msgQueue, loggedMsgs, maxNumOfThreads);
+  larcosCounterManager->SaveDebugImages (saveDebugImages);
   UpdateUnManagedConsumedMemory ();
 }
+
 
 
 
@@ -83,6 +86,13 @@ void  LarcosCounterManagerWrapper::Initialize ()
   larcosCounterManager->Initialize ();
 }
 
+
+
+void  LarcosCounterManagerWrapper::SaveDebugImages (bool _saveDebugImages)
+{
+  saveDebugImages = _saveDebugImages;
+  larcosCounterManager->SaveDebugImages (saveDebugImages);
+}
 
 
 String^  LarcosCounterManagerWrapper::CounterStateToStr (LarcosCounterState  state)

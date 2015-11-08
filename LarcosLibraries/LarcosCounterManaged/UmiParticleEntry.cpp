@@ -1276,13 +1276,14 @@ array<float>^  UmiParticleEntryList::ParticleFrequencyByTimeIntervals (int    in
   int  maxIntervals = (int)Math::Ceiling ((float)maxNumSecs / (float)interval) + 1;
 
   array<float>^  freqHistogram = gcnew array<float> (maxIntervals);
+  int maxIntervalsIdx = maxIntervals - 1;
 
   for  (int x = 0;  x < Count;  ++x)
   {
     UmiParticleEntry^ pe = (*this)[x];
     float  count = pe->PredClass->CountFactor;
     int  particleOffsetSecs = (int)(0.5f + (float)(pe->ScannerRow) / scanRate);
-    int  particleInterval = (int)(0.5f + (float)particleOffsetSecs / (float)interval);
+    int  particleInterval = Math::Min ((int)(0.5f + (float)particleOffsetSecs / (float)interval), maxIntervalsIdx);
     freqHistogram[particleInterval] += 1.0f;
   }
 

@@ -20,6 +20,7 @@ namespace LarcosFileViewer
 {
   public partial class LarcosFileViewer : Form
   {
+    private  int  zed = 0;
        
     private  Queue<String>               alarms                = new Queue<string> ();
     private  Queue<String>               alarmFileNames        = new Queue<string> ();
@@ -45,6 +46,8 @@ namespace LarcosFileViewer
 
     private  int                         oldWidth              = 0;
     private  int                         oldHeight             = 0;
+
+    private  bool                        saveDebugImages       = false;
 
 
     public  int  BlobMinSize  
@@ -783,7 +786,8 @@ namespace LarcosFileViewer
         ImageEditor  imageEditor = new ImageEditor (fileName, 
                                                     height, 
                                                     width, 
-                                                    selectedRegion
+                                                    selectedRegion,
+                                                    saveDebugImages
                                                    );
         
         imageEditor.Show ();

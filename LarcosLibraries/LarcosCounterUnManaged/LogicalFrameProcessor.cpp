@@ -428,7 +428,9 @@ LogicalFrameProcessor::LogicalFrameProcessor
     frameStartScanLineNum      (0),
     logFrameScannerFileScanRow (0),
     workLinesArea              (NULL),
-    workLines                  (NULL)
+    workLines                  (NULL),
+
+    saveDebugImages            (false)
 
 
 {
@@ -448,6 +450,8 @@ LogicalFrameProcessor::LogicalFrameProcessor
     sizingSamplingInterval = 1;
   else
     sizingSamplingInterval = 30;
+
+  saveDebugImages = Manager ()->SaveDebugImages ();
 }
 
 
@@ -957,7 +961,7 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
   if  (predictedClass)
   {
     // Special one time debugging issue
-    if  (true)
+    if  (saveDebugImages)
     {
       FileDescPtr  fd = fvProducer->FileDesc ();
       KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";

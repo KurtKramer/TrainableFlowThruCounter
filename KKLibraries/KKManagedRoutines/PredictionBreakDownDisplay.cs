@@ -34,6 +34,7 @@ namespace KKManagedRoutines
 
     public PredictionBreakDownDisplay (UmiRaster          _raster,
                                        UmiTrainingModel2  _trainingModel,
+                                       bool               _saveDebugImgaes,
                                        UmiRunLog          _runLog
                                       )
     {
@@ -53,7 +54,7 @@ namespace KKManagedRoutines
 
       featureCalcImages = new UmiRasterList ();
 
-      featureVector = new UmiFeatureVector (raster, fileName, featureCalcImages, runLog);
+      featureVector = new UmiFeatureVector (raster, fileName, featureCalcImages, _saveDebugImgaes, runLog);
 
       InitializeComponent ();
     }

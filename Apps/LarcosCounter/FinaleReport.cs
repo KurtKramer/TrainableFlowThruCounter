@@ -58,6 +58,8 @@ namespace LarcosCounter
 
     private  FinaleReportDataSource  reportDataSource = null;
 
+    private  bool  saveDebugImages = false;
+
 
     
     public  UmiOperatingParameters  OperatingParameters  {get {return operatingParameters;}}
@@ -69,10 +71,12 @@ namespace LarcosCounter
     public FinaleReport (LarcosCounterManagerWrapper  _cameraManager,
                          String                       _scannerFileName,
                          bool                         _autoSaveReport,
+                         bool                         _saveDebugImages,
                          UmiRunLog                    _runLog
                         )
     {
       cameraManager = _cameraManager;
+      saveDebugImages = _saveDebugImages;
       runLog = _runLog;
       if  (runLog == null)
         runLog = new UmiRunLog ();
@@ -772,6 +776,7 @@ namespace LarcosCounter
                                                                 cameraManager,
                                                                 scannerFileBuffered,
                                                                 particlesForSizeRange,
+                                                                saveDebugImages,
                                                                 runLog
                                                                );
         dpi.ShowDialog (this);

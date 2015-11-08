@@ -233,6 +233,10 @@ namespace LarcosCounterManaged
     kkint64                    TotalBytesRead                 ();
     kkint64                    TotalBytesToRead               ();
 
+    bool                       SaveDebugImages                ()  {return saveDebugImages;}
+
+    void   SaveDebugImages (bool _saveDebugImages);
+
 
     void  GetStatistics (float%  frameRate,               float%  scanRate,
                          Int64%  bytesWritten,            Int32%  waitingToWriteToDisk,
@@ -379,5 +383,6 @@ namespace LarcosCounterManaged
     kkint64                  lastReportedMemoryPreasure;
     MsgQueuePtr              loggedMsgs;
     MsgQueuePtr              msgQueue;
+    bool                     saveDebugImages;  /**< Indicates that we are to save images after features have been computed along with their respective feature vectors. */
   };  /* LarcosCounterManagerWrapper */
 }  /* LarcosCounterManaged */

@@ -36,6 +36,7 @@ namespace LarcosCounter
     private  UmiClass                     selectedClass                  = null;
     private  UmiTrainingConfiguration     trainingConfiguration          = null;
     private  string                       trainingModelName              = "";
+    private  bool                         saveDebugImages                = false;
 
 
     private  int   thumbNailHeight = 150;
@@ -76,6 +77,7 @@ namespace LarcosCounter
     public AuditorByClass (LarcosCounterManagerWrapper  _cameraManager,
                            UmiScannerFileBuffered       _scannerFile,
                            UmiOperatingParameters       _opParametersToExtractParticles,
+                           bool                         _saveDebugImages,
                            UmiRunLog                    _runLog
                           )
     {
@@ -83,6 +85,7 @@ namespace LarcosCounter
       scannerFile                    = _scannerFile;
       scanRate                       = scannerFile.ScanRate;
       opParametersToExtractParticles = _opParametersToExtractParticles;
+      saveDebugImages                = _saveDebugImages;
       runLog                         = _runLog;
 
       if  (runLog == null)
@@ -606,7 +609,7 @@ namespace LarcosCounter
       UmiRaster  r = scannerFile.GetRasterForParticleAsCounted (pe, opParametersToExtractParticles);
       if  (r != null)
       {
-        ImageVerifier iv = new ImageVerifier (cameraManager, pe, r, fileName, pixelsPerMM, runLog);
+        ImageVerifier iv = new ImageVerifier (cameraManager, pe, r, fileName, pixelsPerMM, saveDebugImages, runLog);
         iv.ShowDialog (this);
         if  (iv.ClassUserValidatesAs != pe.PredClass)
         {

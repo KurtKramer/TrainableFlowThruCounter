@@ -48,6 +48,8 @@ namespace LarcosCounter
 
     private  UmiOperatingParameters       opParametersToExtractParticles = null;
 
+    private  bool                         saveDebugImages;
+
     
     enum   PlottingOptions  {ShrimpCount = 0, ParticleCount = 1, Bytes = 2, FlowRateRatio = 3, FlowRate = 4};
 
@@ -59,11 +61,13 @@ namespace LarcosCounter
     
     public  Auditor (LarcosCounterManagerWrapper  _cameraManager,
                      String                       _scannerFileName,
+                     bool                         _saveDebugImages,
                      UmiRunLog                    _runLog
                     )
     {
       cameraManager   = _cameraManager;
       scannerFileName = _scannerFileName;
+      saveDebugImages = _saveDebugImages;
 
       runLog = _runLog;
       if  (runLog == null)
@@ -599,7 +603,7 @@ namespace LarcosCounter
 
     private void GenerateReportButton_Click (object sender, EventArgs e)
     {
-      FinaleReport  fr = new FinaleReport (cameraManager, scannerFileName, true, runLog);
+      FinaleReport  fr = new FinaleReport (cameraManager, scannerFileName, true, saveDebugImages, runLog);
       fr.ShowDialog (this);
     }
 
@@ -681,7 +685,7 @@ namespace LarcosCounter
       UmiRaster r = scannerFile.GetRasterForParticleAsCounted (pe, opParametersToExtractParticles);
       if  (r != null)
       {
-        ImageVerifier  imageVerifier = new ImageVerifier (cameraManager, pe, r, fileName, pixelsPerMM, runLog);
+        ImageVerifier  imageVerifier = new ImageVerifier (cameraManager, pe, r, fileName, pixelsPerMM, saveDebugImages, runLog);
         imageVerifier.LengthComputer (this.lengthComputer);
         imageVerifier.ShowDialog (this);
 
@@ -706,7 +710,7 @@ namespace LarcosCounter
         return;
       }
 
-      AuditorByClass  abc = new AuditorByClass (cameraManager, scannerFile, opParametersToExtractParticles, runLog);
+      AuditorByClass  abc = new AuditorByClass (cameraManager, scannerFile, opParametersToExtractParticles, saveDebugImages, runLog);
       abc.ShowDialog (this);
       scannerFile.ParticleEntries ().SortByScanLine ();
       PopulateCount ();

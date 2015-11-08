@@ -212,7 +212,8 @@ LarcosCounterManager::LarcosCounterManager (MsgQueuePtr  _msgQueue,
     generateFinaleReport           (false),
     msgQueue                       (_msgQueue),
     loggedMsgs                     (_loggedMsgs),
-    runLog                         (NULL)
+    runLog                         (NULL),
+    saveDebugImages                (false)
 {
   ValidateLarcosInstallation ();
 
@@ -856,7 +857,6 @@ void  LarcosCounterManager::ConnectToCamera (bool&  _successful)
     curState = CounterState::Stopped;
     runLog->Level (-1) << "ConnectToCamera   Could not connect to camera." << endl;
   }
-
 
   SaveConfiguration ();
 

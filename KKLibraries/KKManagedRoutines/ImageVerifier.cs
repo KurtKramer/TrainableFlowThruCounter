@@ -53,6 +53,8 @@ namespace KKManagedRoutines
     private  bool       groundTruthing = false;
     private  Color      groundTruthBackGroundColor = Color.Gray;
 
+    private  bool       saveDebugImages = false;
+
 
     public  UmiClass  ClassUserValidatesAs  {get {return classUserValidatesAs;}}
 
@@ -112,6 +114,7 @@ namespace KKManagedRoutines
                           UmiRaster                    _raster,
                           String                       _fileName,
                           float                        _pixelsPerMM,
+                          bool                         _saveDebugImages,
                           UmiRunLog                    _runLog
                          )
     {
@@ -121,6 +124,7 @@ namespace KKManagedRoutines
       raster            = _raster;
       fileName          = _fileName;
       runLog            = _runLog;
+      saveDebugImages   = _saveDebugImages;
 
       pixelsPerMM = cameraManager.ImagingChamberPixelsPerMM ();
       if  (pixelsPerMM <= 0.0f)
@@ -228,7 +232,7 @@ namespace KKManagedRoutines
 
       UmiPredictionList  predictions1 = null;
 
-      ActiveTrainingLibraries.MakePredictions (raster, fileName, ref predictions1, runLog);
+      ActiveTrainingLibraries.MakePredictions (raster, fileName, ref predictions1, saveDebugImages, runLog);
 
       if  ((predictions1 != null)  &&  (predictions1.Count > 1))
       {
@@ -562,7 +566,7 @@ namespace KKManagedRoutines
 
     private void BreakDownTrainingLibrary1Button_Click (object sender, EventArgs e)
     {
-      PredictionBreakDownDisplay  pbdd = new PredictionBreakDownDisplay (raster, ActiveTrainingLibraries.Model1 (), runLog);
+      PredictionBreakDownDisplay  pbdd = new PredictionBreakDownDisplay (raster, ActiveTrainingLibraries.Model1 (), saveDebugImages, runLog);
       pbdd.ShowDialog ();
       pbdd = null;
     }

@@ -73,6 +73,7 @@ namespace LarcosCounterManaged
     UmiFeatureVector (UmiRaster^       raster,
                       System::String^  imageFileName,
                       UmiRasterList^   intermediateImages,
+                      bool             saveDebugImages,
                       UmiRunLog^       log
                      );
 

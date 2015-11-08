@@ -32,16 +32,22 @@ namespace KKManagedRoutines
 
     private  bool     displayGrid = false;
 
+    private  bool     saveDebugImages = false;
+
     
     public  UmiClass  ClassUserValidatesAs  {get {return classUserValidatesAs;}}
 
 
+
+
     public ImageViewer (UmiRaster     _raster,
+                        bool          _saveDebugImages,
                         UmiRunLog     _runLog
                        )
     {
       raster  = _raster;
       runLog  = _runLog;
+      saveDebugImages = _saveDebugImages;
 
       if  (raster == null)
       {
@@ -469,7 +475,7 @@ namespace KKManagedRoutines
 
     private void BreakDownTrainingLibrary1Button_Click (object sender, EventArgs e)
     {
-      PredictionBreakDownDisplay  pbdd = new PredictionBreakDownDisplay (raster, ActiveTrainingLibraries.Model1 (), runLog);
+      PredictionBreakDownDisplay  pbdd = new PredictionBreakDownDisplay (raster, ActiveTrainingLibraries.Model1 (), saveDebugImages, runLog);
       pbdd.ShowDialog ();
       pbdd = null;
     }
@@ -477,7 +483,7 @@ namespace KKManagedRoutines
 
     private void BreakDownTrainingLibrary2Button_Click (object sender, EventArgs e)
     {
-      PredictionBreakDownDisplay  pbdd = new PredictionBreakDownDisplay (raster, ActiveTrainingLibraries.Model2 (), runLog);
+      PredictionBreakDownDisplay  pbdd = new PredictionBreakDownDisplay (raster, ActiveTrainingLibraries.Model2 (), saveDebugImages, runLog);
       pbdd.ShowDialog ();
       pbdd = null;
     }

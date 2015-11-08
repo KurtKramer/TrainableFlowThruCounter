@@ -213,6 +213,7 @@ namespace KKManagedRoutines
                                            String                 imageFileName,
                                            ref UmiPredictionList  model1Predictions,
                                            ref UmiPredictionList  model2Predictions,
+                                           bool                   saveDebugImages,
                                            UmiRunLog              runLog 
                                           )
     {
@@ -225,7 +226,7 @@ namespace KKManagedRoutines
       String  scannerFileName = pifn.scannerFileName;
       uint    scanLineNum    = pifn.scanLineNum;
 
-      UmiFeatureVector  fv = new UmiFeatureVector (raster, imageFileName, null, runLog);
+      UmiFeatureVector  fv = new UmiFeatureVector (raster, imageFileName, null, saveDebugImages, runLog);
 
       if  (model1 != null)
         model1Predictions = model1.PredictProbabilities (fv);
@@ -249,6 +250,7 @@ namespace KKManagedRoutines
     public  static  void  MakePredictions (UmiRaster              raster,
                                            String                 imageFileName,
                                            ref UmiPredictionList  model1Predictions,
+                                           bool                   saveDebugImages,
                                            UmiRunLog              runLog 
                                           )
     {
@@ -260,7 +262,7 @@ namespace KKManagedRoutines
       String  scannerFileName = pifn.scannerFileName;
       uint    scanLineNum     = pifn.scanLineNum;
 
-      UmiFeatureVector  fv = new UmiFeatureVector (raster, imageFileName, null, runLog);
+      UmiFeatureVector  fv = new UmiFeatureVector (raster, imageFileName, null, saveDebugImages, runLog);
 
       if  (model1 != null)
         model1Predictions = model1.PredictProbabilities (fv);

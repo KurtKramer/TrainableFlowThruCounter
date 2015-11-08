@@ -54,11 +54,14 @@ namespace LarcosCounter
 
     private  ToolTip         toolTip = null;
 
+    private  bool            saveDebugImages = false;
+
     private  UmiRunLog       runLog = null;  
 
 
     public  LarcosCounter ()
     {
+      int  zed = 100;
       SplashScreen sc = new SplashScreen ();
       sc.Show (this);
 
@@ -73,6 +76,7 @@ namespace LarcosCounter
 
       cameraManager = new LarcosCounterManagerWrapper ();
       cameraManager.Initialize ();
+      cameraManager.SaveDebugImages (saveDebugImages);
 
       runLog = cameraManager.GetUmiRunLogInstance ();
       runLog.WriteLn (10, "LarcosCounter  Loading.");
@@ -829,7 +833,7 @@ namespace LarcosCounter
       DisableAllControls ();
 
       String  sourceScannerFileName = cameraManager.LastScannerFileCounted ();
-      Auditor auditor = new Auditor (cameraManager, sourceScannerFileName, runLog);
+      Auditor auditor = new Auditor (cameraManager, sourceScannerFileName, saveDebugImages, runLog);
       auditor.ShowDialog (this);
       if (auditor.RunPlayBack)
       {
@@ -1367,7 +1371,7 @@ namespace LarcosCounter
       {
         sourceScannerFileName = fd.FileName;
         runLog.WriteLn (20, "AuditButton_Click   File Selected: " + sourceScannerFileName);
-        Auditor auditor = new Auditor (cameraManager, sourceScannerFileName, runLog);
+        Auditor auditor = new Auditor (cameraManager, sourceScannerFileName, saveDebugImages, runLog);
         auditor.ShowDialog (this);
         if (auditor.RunPlayBack)
         {

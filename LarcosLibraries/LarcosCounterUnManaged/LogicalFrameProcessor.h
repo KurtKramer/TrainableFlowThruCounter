@@ -263,6 +263,8 @@ namespace LarcosCounterUnManaged
     uchar*        workLinesArea;
     uchar**       workLines;
 
+    bool          saveDebugImages;            /**< Indicates that we are to save images after features have been computed along with their respective feature vectors. */
+
 
     static  volatile
     GoalKeeperPtr  classifierBuildBlocker;

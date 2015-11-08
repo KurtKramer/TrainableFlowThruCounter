@@ -39,6 +39,8 @@ namespace KKManagedRoutines
 
     UmiRunLog       runLog = new UmiRunLog ();
 
+    bool            saveDebugImages = false;
+
 
     private  class  Operation
     {
@@ -197,11 +199,12 @@ namespace KKManagedRoutines
 
 
 
-    public  ImageEditor (String _fileName)
+    public  ImageEditor (String _fileName, bool _saveDebugImgaes)
     {
       InitializeComponent();
 
-      imageFileName = _fileName;
+      imageFileName   = _fileName;
+      saveDebugImages = _saveDebugImgaes;
 
       UmiRaster  pr = null;
       try
@@ -281,10 +284,13 @@ namespace KKManagedRoutines
     public ImageEditor (string    _fileName,
                         int       _height,
                         int       _width,
-                        byte[][]  _raster   // Will take ownership of '_raster'
+                        byte[][]  _raster,  // Will take ownership of '_raster'
+                        bool      _saveDebugImgaes
                        )
     {
       InitializeComponent();
+
+      saveDebugImages = _saveDebugImgaes;
       
       fileName = _fileName;
       raster   = _raster;
@@ -425,7 +431,8 @@ namespace KKManagedRoutines
       ActiveTrainingLibraries.MakePredictions (larcosRaster,
                                                imageFileName, 
                                                ref trainLibrary1Predictions, 
-                                               ref trainLibrary2Predictions, 
+                                               ref trainLibrary2Predictions,
+                                               saveDebugImages,
                                                runLog
                                               );
  

@@ -61,6 +61,7 @@ UmiFeatureVector::UmiFeatureVector (UmiFeatureVector^  umiFeatureVector):
 UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
                                     System::String^  imageFileName,
                                     UmiRasterList^   intermediateImages,
+                                    bool             saveDebugImages,
                                     UmiRunLog^       log
                                    ):
    mlClass (nullptr)
@@ -80,25 +81,34 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
   LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
   features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), tempIntermediateImages, 1.0, log->Log ());
 
-  if  (true)
+  if  (saveDebugImages)
   {
-    FileDescPtr  fd = fvp->FileDesc ();
-    KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";
-    KKStr  rootName = osGetRootName (UmiKKStr::SystemStringToKKStr (imageFileName)) + "_ScannerFile";
-    KKStr  fullFN = rootDir + rootName + ".bmp";
-    KKB::SaveImageGrayscaleInverted8Bit (*r, fullFN);
+    try {
+      FileDescPtr  fd = fvp->FileDesc ();
+      KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";
+      KKStr  rootName = osGetRootName (UmiKKStr::SystemStringToKKStr (imageFileName)) + "_ScannerFile";
+      KKStr  fullFN = rootDir + rootName + ".bmp";
+      KKB::SaveImageGrayscaleInverted8Bit (*r, fullFN);
 
-    KKStr  fdFN = rootDir + rootName + ".txt";
-    std::ofstream o (fdFN.Str ());
-    o << "rootName" << "\t" << "priorReductionFactor" << "\t" << "predictedClass"        << "\t" << "probability";
-    for  (uint zed = 0;  zed < fd->NumOfFields ();  ++zed)
-      o << "\t" << fd->FieldName (zed);
-    o << std::endl;
-    o <<  rootName  << "\t" <<  ""  << "\t" << "" << "\t" << "0.0";
-    for  (int zed2 = 0;  zed2 < features->NumOfFeatures ();  ++zed2)
-      o << "\t" << features->FeatureData (zed2);
-    o << std::endl;
-    o.close();
+      KKStr  fdFN = rootDir + rootName + ".txt";
+      std::ofstream o (fdFN.Str ());
+      o << "rootName" << "\t" << "priorReductionFactor" << "\t" << "predictedClass"        << "\t" << "probability";
+      for  (uint zed = 0;  zed < fd->NumOfFields ();  ++zed)
+        o << "\t" << fd->FieldName (zed);
+      o << std::endl;
+      o <<  rootName  << "\t" <<  ""  << "\t" << "" << "\t" << "0.0";
+      for  (int zed2 = 0;  zed2 < features->NumOfFeatures ();  ++zed2)
+        o << "\t" << features->FeatureData (zed2);
+      o << std::endl;
+      o.close();
+    }
+    catch (const std::exception& e)  {
+      String^ errMsg = gcnew String(e.what());
+      log->WriteLine("\nUmiFeatureVector::UmiFeatureVector  ***ERROR***   Exception: " + errMsg + "\n");
+    }
+    catch (...) {
+      log->WriteLine("\nUmiFeatureVector::UmiFeatureVector  ***ERROR***   Exception Thrown\n");
+    }
   }
 
   UmiRasterList::CopyOverIntermediateImages (tempIntermediateImages, intermediateImages);
@@ -162,6 +172,7 @@ UmiFeatureVector::UmiFeatureVector (String^         _imageFileName,
   LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
   features = fvp->ComputeFeatureVectorFromImage (UmiKKStr::SystemStringToKKStr (_imageFileName), mlClass->UnmanagedImageClass (), tempIntermediateImages, log->Log ());
   UmiRasterList::CopyOverIntermediateImages (tempIntermediateImages, _intermediateImages);
+
   delete  fvp;
   fvp = NULL;
   GC::AddMemoryPressure (MemPreasPerFV);

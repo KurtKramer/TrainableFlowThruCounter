@@ -29,6 +29,8 @@ namespace KKManagedRoutines
     private  UmiShrimpLengthComputer      lengthComputer = null;
     private  UmiOperatingParameters       operatingParameters = null;
 
+    private  bool  saveDebugImages = false;
+
 
     public  bool  UpdatesWereMade  {get {return updatesWereMade;}}
 
@@ -37,16 +39,18 @@ namespace KKManagedRoutines
                                   LarcosCounterManagerWrapper  _cameraManager,
                                   UmiScannerFileBuffered       _scannerFile,
                                   UmiParticleEntryList         _particles,
+                                  bool                         _saveDebugImages,
                                   UmiRunLog                    _runLog
                                  )
     {
       InitializeComponent ();
 
-      Text          = _title;
-      cameraManager = _cameraManager;
-      scannerFile   = _scannerFile;
-      particles     = _particles;
-      runLog        = _runLog;
+      Text            = _title;
+      cameraManager   = _cameraManager;
+      scannerFile     = _scannerFile;
+      particles       = _particles;
+      saveDebugImages = _saveDebugImages;
+      runLog          = _runLog;
 
       operatingParameters = particles.GetOperatingParameters ();
 
@@ -186,7 +190,7 @@ namespace KKManagedRoutines
             pr = pr.ConnectedComponent ();
             pr = pr.StreatchImage (particles.FlowRateFactor, 1.0f);
 
-            ImageVerifier  iv = new ImageVerifier (cameraManager, particles[particleEntryIndex], pr, fileName, pixelsPerMM, runLog);
+            ImageVerifier  iv = new ImageVerifier (cameraManager, particles[particleEntryIndex], pr, fileName, pixelsPerMM, saveDebugImages, runLog);
             iv.LengthComputer (lengthComputer);
             iv.ShowDialog (this);
     
