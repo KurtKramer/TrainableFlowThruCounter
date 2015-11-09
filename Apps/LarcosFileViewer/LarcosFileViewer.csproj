@@ -39,7 +39,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -77,10 +77,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChartControls, Version=1.0.5783.18899, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\ChartControls.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -190,6 +186,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\KSquareLibraries\KKControls\KKControls.csproj">
+      <Project>{3404fea2-61a5-4102-9280-729ac235a031}</Project>
+      <Name>KKControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\KKLibraries\KKManagedRoutines\KKManagedRoutines.csproj">
       <Project>{D6AFBB16-C907-4944-AA25-BE9E00D97980}</Project>
       <Name>KKManagedRoutines</Name>

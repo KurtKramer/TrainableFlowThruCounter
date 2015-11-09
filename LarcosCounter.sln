@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{609D9988-3286-440F-AA35-6E1F10E09573}"
 EndProject
@@ -67,6 +67,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LarcosControls", "LarcosLib
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImportSipper4Images", "Apps\ImportSipper4Images\ImportSipper4Images.vcxproj", "{AC7CF691-8BCA-4567-A722-93740113D3BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{76C41245-C049-43AC-AD3A-DB674C25144D} = {76C41245-C049-43AC-AD3A-DB674C25144D}
+		{DA361848-46CB-481C-98E1-8D1206422DDC} = {DA361848-46CB-481C-98E1-8D1206422DDC}
+		{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11} = {D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}
+		{65B4E499-F9C5-472A-B5D1-90541F817513} = {65B4E499-F9C5-472A-B5D1-90541F817513}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKBase", "..\KSquareLibraries\KKBase\KKBase.vcxproj", "{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}"
 EndProject

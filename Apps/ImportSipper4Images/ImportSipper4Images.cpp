@@ -25,8 +25,8 @@ using namespace  KKB;
 #include "ScannerFile.h"
 using namespace  KKLSC;
 
-
-#include  "ImportSipper4Images.h"
+#include "ScannerFile4BitEncoded.h"
+#include "ImportSipper4Images.h"
 
 
 // -rd "E:\Pices\SipperFiles\WB0813-08_Sipper4\lir.20.SIPPER 4 August 2013 Trials.DSH09.UDR 1"
@@ -39,18 +39,19 @@ using namespace  KKLSC;
 ImportSipper4Images::ImportSipper4Images (int     argc,
                                           char**  argv
                                          ):
-  Application (argc, argv),
+  Application (),
+  rng ((long)(KKB::osGetLocalDateTime().Seconds () % (1024 * 1024))),
+
   flatField      (NULL),
   outScannerFile (NULL),
   report         (NULL),
   reportFile     (NULL),
   reportFileName (),
   rootDir        (),
-  scanRowsAdded  (0)
+  scanRowsAdded  (0),
+  imagesPerFrame (50)
 
 {
-  ProcessCmdLineParameters (argc, argv);
-
   //flatField = new FlatFieldCorrection (20, 4096, ScannerFile4BitEncoded::CompensationTable ());
   //flatField = new FlatFieldCorrection (20, 4096, NULL);
 
@@ -190,7 +191,7 @@ void  ImportSipper4Images::ProcessDirectory (const KKStr&  subDirName)
     KKB::osDeleteFile (scannerFileName);
 
   outScannerFile = ScannerFile::CreateScannerFileForOutput 
-    (scannerFileName, ScannerFile::sf4BitEncoded, 4096, 420, log);
+    (scannerFileName, ScannerFile::Format::sf4BitEncoded, 4096, 420, log);
 
   outScannerFile->InitiateWritting ();
 
@@ -208,7 +209,7 @@ void  ImportSipper4Images::ProcessDirectory (const KKStr&  subDirName)
     KKStrList::iterator idx;
     for  (idx = files->begin ();  idx != files->end ();  ++idx)
     {
-      KKStr  fileName = *idx;
+      KKStr  fileName = **idx;
       cout << fileName << endl;
       *report << fileName << endl;
       KKStr  fullFileName = osAddSlash (subDirName) + fileName;
@@ -224,7 +225,7 @@ void  ImportSipper4Images::ProcessDirectory (const KKStr&  subDirName)
     KKStrList::iterator idx;
     for  (idx = subDirNames->begin ();  idx != subDirNames->end ();  ++idx)
     {
-      KKStr  dirName = *idx;
+      KKStr  dirName = **idx;
       KKStr  fullSubDirName = osAddSlash (subDirName) + dirName;
       ProcessDirectory (fullSubDirName);
     }
@@ -319,7 +320,7 @@ void  ImportSipper4Images::AddImageToScannerFile (const KKStr&  fileName)
   //KKB::SaveImage (*j, "C:\\Temp\\Sipper4Images\\" + KKB::osGetRootName (fileName) + "_04-Smoothed.bmp");
 
   
-  j->Dilation (SQUARE7);
+  j->Dilation (MaskTypes::SQUARE7);
   //KKB::SaveImage (*j, "C:\\Temp\\Sipper4Images\\" + KKB::osGetRootName (fileName) + "_05-Dialated01.bmp");
 
   //j->FillHole ();
@@ -407,29 +408,215 @@ void  ImportSipper4Images::AddImageToScannerFile2 (const KKStr&  fileName)
 }  /* AddImageToScannerFile2 */
 
 
+RasterListPtr ImportSipper4Images::LoadSampleImages (const KKStr&  rootDir)
+{
+  RasterListPtr sampleImages = new RasterList (true);
+  KKStrListPtr  names =  KKB::osGetListOfFiles(osAddSlash (rootDir) + "*.bmp");
+  for (auto idx: *names) {
+    RasterPtr image = KKB::ReadImage (osAddSlash(rootDir) + *idx);
+    if  (image != NULL)
+      sampleImages->PushOnBack (image);
+  }
+  return  sampleImages;
+}
+
+
+
+RasterPtr  ImportSipper4Images::RandomizeImage (const Raster&  i)
+{
+  float heightAdjRatio = 1.3f  - (float)(0.4f * ((float)(rng.Next () % 100) / 99.0f));
+  float widthAdjRatio  = 1.3f  - (float)(0.4f * ((float)(rng.Next () % 100) / 99.0f));
+
+  RasterPtr resizedImage = i.StreatchImage (heightAdjRatio, widthAdjRatio);
+  RasterPtr rotatedImage = NULL; 
+
+  float  randRotationAngle = (float)(rng.Next () % 90);
+  if  (randRotationAngle == 0.0f)
+  {
+    rotatedImage = resizedImage;
+    resizedImage = NULL;
+  }
+  else
+  {
+    rotatedImage = resizedImage->Rotate (randRotationAngle);
+    delete  resizedImage;
+    resizedImage = NULL;
+  }
+
+  RasterPtr  resultImage = rotatedImage->TightlyBounded (1);
+
+  delete  rotatedImage;  rotatedImage = NULL;
+  delete  resizedImage;  resizedImage = NULL;
+
+  return  resultImage;
+}  /* RandomizeImage */
+
+
+
+bool  ImportSipper4Images::DoesImageFit (Raster&  dest,  const Raster&  src, int row, int col)
+{
+  kkint32  collisions = 0;
+
+  kkint32  srcRow = 0, srcCol = 0;
+  kkint32  destRow = row, destCol = col;
+
+  for  (srcRow = 0;  (srcRow < src.Height ())  &&  (destRow < dest.Height ());  ++srcRow, ++destRow)
+  {
+    for  (srcCol = 0;  (srcCol < src.Width ())  &&  (destCol < dest.Width ());  ++srcCol, ++destCol)
+    {
+      if  (src.ForegroundPixel (srcRow, srcCol)  &&  dest.ForegroundPixel (destRow, destCol))
+        ++collisions;
+    }
+  }
+  return (collisions < 1);
+}
+
+
+
+
+void  ImportSipper4Images::PaintImage (Raster&  dest,  const Raster&  src, int row, int col)
+{
+  kkint32  srcRow = 0, srcCol = 0;
+  kkint32  destRow = row, destCol = col;
+  for  (srcRow = 0;  (srcRow < src.Height ())  &&  (destRow < dest.Height ());  ++srcRow, ++destRow)
+  {
+    destCol = col;
+    for  (srcCol = 0;  (srcCol < src.Width ())  &&  (destCol < dest.Width ());  ++srcCol, ++destCol)
+    {
+      if  (src.ForegroundPixel (srcRow, srcCol))
+        dest.SetPixelValue (destRow, destCol, src.GetPixelValue (srcRow, srcCol));
+    }
+  }
+}
+
+
+
+kkint32  rcount = 0;
+
+
+bool  ImportSipper4Images::FitImageRandomly (Raster&  dest,  const Raster&  src)
+{
+  kkint32  size = 0, weight = 0;
+  float rowCenter = 0.0f, colCenter = 0.0f;
+  float rowCenterWeidght = 0.0f, colCenterWeight = 0.0f;
+
+  src.CalcCentroid (size, weight, rowCenter, colCenter, rowCenterWeidght, colCenterWeight);
+
+  bool  imageFits = false;
+  RasterPtr  candidateImage = NULL;
+
+  kkint32  randomTries = 0;
+
+  while  ((!imageFits)  &&  (randomTries < 10))
+  {
+    RasterPtr  rImage = RandomizeImage (src);
+
+    kkint32  rangeColLeft  = 110;
+    kkint32  rangeColRight = dest.Width  () - (rImage->Width () + 100);
+    kkint32  rangeRowTop   = 0;
+    kkint32  rangeRowBot   = dest.Height () - (rImage->Height () + 1);
+    kkint32  rangeWidth    = 1 + rangeColRight - rangeColLeft;
+    kkint32  rangeHeight   = 1 + rangeRowBot   - rangeRowTop;
+
+
+    kkint32  attempts = 0;
+    while  ((!imageFits)  &&  (attempts < 10))
+    {
+      kkint32  randomRow = rng.Next () % rangeHeight;
+      kkint32  randomCol = rangeColLeft + (rng.Next () % rangeWidth);
+
+      if  (DoesImageFit (dest, *rImage, randomRow,  randomCol))
+      {
+
+        KKStr  randomImageName = "E:\\ThePlanktonCounter\\ScannerFiles\\DemoScannerFiles\\EricsBAckYard_" + StrFormatInt(rcount, "000000") + ".bmp";
+        //KKB::SaveImageGrayscaleInverted8Bit (*rImage, randomImageName);
+
+        PaintImage (dest, *rImage, randomRow,  randomCol);
+        imageFits = true;
+      }
+
+      ++attempts;
+    }
+    delete  rImage;
+    rImage = NULL;
+    ++randomTries;
+  }
+
+  return  imageFits;
+}
+
+
+
+bool  ImportSipper4Images::FitRandomImageRandomly (RasterListPtr  candidateImages, Raster&  dest)
+{
+  kkint32 randomIdx = (rng.Next () % candidateImages->QueueSize ());
+  return  FitImageRandomly (dest, *(candidateImages->IdxToPtr (randomIdx)));
+}
+
+
+
+
+void  ImportSipper4Images::PopulateWithRandomImagesRandomly (RasterListPtr  candidateImages, Raster&  dest, int numPerFrame)
+{
+  kkint32 numImagesToFit =  (numPerFrame / 2) +  (rng.Next () % numPerFrame);
+  kkint32 numImagesFitted = 0; 
+
+  for  (kkint32 idx = 0;  idx < numImagesToFit;  ++idx)
+  {
+    if  (FitRandomImageRandomly(candidateImages, dest))
+      ++numImagesFitted;
+  }
+}
+
 
 
 void  ImportSipper4Images::Main ()
 {
-  if  (rootDir.Empty ())
+  RasterListPtr  candidateImages = LoadSampleImages ("E:\\ThePlanktonCounter\\InterestingImages");
+  RasterListPtr  tinyImages = LoadSampleImages ("E:\\ThePlanktonCounter\\TinyImages");
+
+  KKStr  scannerFileName = "E:\\ThePlanktonCounter\\ScannerFiles\\DemoScannerFiles\\EricsBAckYard.lsc";
+
+  KKB::osDeleteFile (scannerFileName);
+  ScannerFilePtr  sf = ScannerFile::CreateScannerFileForOutput (scannerFileName, ScannerFile::Format::sf4BitEncoded, 2048, 2048, log); 
+  sf->AddHeaderField ("Description", "Created this file from contents of several scanner files collected from Canal");
+
+  sf->InitiateWritting ();
+
+
+  kkint32  frameHeight = 2048 * 12;
+
+  kkint64  numScanLines = 20000 * 3600 * 2;
+  kkint32  numFrames = (kkint32)(numScanLines / frameHeight);
+
+  kkint32  numFramesCreated = 0;
+  while  (numFramesCreated < numFrames)
   {
-    log.Level (-1) << endl
-      << "ImportSipper4Images::Main   ***ERROR***   Root Directory is not defined." << endl
-      << endl;
-    return;
+    cout << "numFramesCreated: " << "\t" << numFramesCreated << endl;
+    RasterPtr  frame = new Raster (frameHeight, 2048);
+    PopulateWithRandomImagesRandomly (candidateImages, *frame, 25);
+
+    PopulateWithRandomImagesRandomly (tinyImages, *frame, 800);
+
+
+    uchar** frameData = frame->Green ();
+
+    for (kkint32 idx = 0;  idx < frame->Height ();  ++idx)
+    {
+      sf->WriteScanLine (frameData[idx], frame->Width ());
+    }
+
+    delete  frame;
+    frame = NULL;
+    ++numFramesCreated;
   }
 
-  if  (!osValidDirectory (rootDir))
-  {
-    log.Level (-1) << endl
-      << "ImportSipper4Images::Main   ***ERROR***   Root Directory: " << rootDir << "Does not exist." << endl
-      << endl;
-    return;
-  }
+  sf->Close ();
+  delete sf;
+  sf = NULL;
 
-  ProcessDirectory (rootDir);
-
-  outScannerFile->Close ();
+  delete  candidateImages;
+  candidateImages = NULL;
 }  /* Main */
 
 
@@ -437,7 +624,7 @@ void  ImportSipper4Images::Main ()
 void  main (int  argc,  char** argv)
 {
   ImportSipper4Images app (argc, argv);
-
+  app.InitalizeApplication (argc, argv);
   app.Main ();
 }
 

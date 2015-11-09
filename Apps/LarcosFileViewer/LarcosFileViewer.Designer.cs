@@ -61,7 +61,6 @@ namespace LarcosFileViewer
       this.AutoScrollingRateLabel = new System.Windows.Forms.Label();
       this.ScrollingPannel = new System.Windows.Forms.Panel();
       this.groundTruth = new System.Windows.Forms.CheckBox();
-      this.rangeSelector1 = new KKControls.RangeSelector();
       this.menuStrip1.SuspendLayout();
       this.ScrollingPannel.SuspendLayout();
       this.SuspendLayout();
@@ -397,21 +396,12 @@ namespace LarcosFileViewer
       this.groundTruth.UseCompatibleTextRendering = true;
       this.groundTruth.UseVisualStyleBackColor = true;
       // 
-      // rangeSelector1
-      // 
-      this.rangeSelector1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.rangeSelector1.Location = new System.Drawing.Point(0, 0);
-      this.rangeSelector1.Name = "rangeSelector1";
-      this.rangeSelector1.Size = new System.Drawing.Size(984, 27);
-      this.rangeSelector1.TabIndex = 43;
-      // 
       // LarcosFileViewer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(210)))), ((int)(((byte)(255)))));
       this.ClientSize = new System.Drawing.Size(732, 715);
-      this.Controls.Add(this.rangeSelector1);
       this.Controls.Add(this.groundTruth);
       this.Controls.Add(this.ScanLinesDisplayed);
       this.Controls.Add(this.ScanLinesDisplayedLabel);
@@ -481,7 +471,6 @@ namespace LarcosFileViewer
     private System.Windows.Forms.CheckBox groundTruth;
     private System.Windows.Forms.ToolStripMenuItem displayHeaderFieldsToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem cameraLineToolStripMenuItem;
-    private KKControls.RangeSelector rangeSelector1;
   }
 }
 

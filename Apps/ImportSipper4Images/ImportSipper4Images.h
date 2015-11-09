@@ -4,6 +4,7 @@
 
 #include "Application.h"
 #include "Raster.h"
+#include "RandomNumGenerator.h"
 using namespace KKB;
 
 #include "FlatFieldCorrection.h"
@@ -39,12 +40,27 @@ public:
 
 
 private:
+  RasterListPtr  LoadSampleImages (const KKStr&  rootDir);
+  RasterPtr  RandomizeImage (const Raster&  i);
+  bool  FitImageRandomly (Raster&  dest,  const Raster&  src);
+
+  bool  FitRandomImageRandomly (RasterListPtr  candidateImages, Raster&  dest);
+  void  PopulateWithRandomImagesRandomly (RasterListPtr  candidateImages, Raster&  dest, int numPerFrame);
+
+
+
+  bool  DoesImageFit (Raster&  dest,  const Raster&  src, int row, int col);
+  void  PaintImage (Raster&  dest,  const Raster&  src, int row, int col);
+
   void  ProcessDirectory (const KKStr&  subDirName);
   void  AddImageToScannerFile (const KKStr&  fileName);
   void  AddImageToScannerFile2 (const KKStr&  fileName);
   void  SortByNumberAtEnd (KKStrListPtr  list);
 
   
+  RandomNumGenerator rng;
+  int                imagesPerFrame;
+
   FlatFieldCorrectionPtr  flatField;
   ostream*                report;
   ofstream*               reportFile;
