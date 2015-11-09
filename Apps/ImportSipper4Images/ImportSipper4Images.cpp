@@ -586,7 +586,7 @@ void  ImportSipper4Images::Main ()
 
   kkint32  frameHeight = 2048 * 12;
 
-  kkint64  numScanLines = 20000 * 3600 * 2;
+  kkint64  numScanLines = 20000 * 3600 * 1;
   kkint32  numFrames = (kkint32)(numScanLines / frameHeight);
 
   kkint32  numFramesCreated = 0;
@@ -594,9 +594,9 @@ void  ImportSipper4Images::Main ()
   {
     cout << "numFramesCreated: " << "\t" << numFramesCreated << endl;
     RasterPtr  frame = new Raster (frameHeight, 2048);
-    PopulateWithRandomImagesRandomly (candidateImages, *frame, 25);
+    PopulateWithRandomImagesRandomly (candidateImages, *frame, 60);
 
-    PopulateWithRandomImagesRandomly (tinyImages, *frame, 800);
+    PopulateWithRandomImagesRandomly (tinyImages, *frame, 2000);
 
 
     uchar** frameData = frame->Green ();
