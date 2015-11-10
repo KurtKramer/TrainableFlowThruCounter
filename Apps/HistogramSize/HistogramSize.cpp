@@ -922,9 +922,9 @@ void  ScannerFileCharacteristics_ProcessDirTree (const KKStr&  baseDir,
       KKStr nextSubDir = "";
 
       if  (subDir.Empty ())
-        nextSubDir = *idx;
+        nextSubDir = **idx;
       else
-        nextSubDir = osAddSlash (subDir) + (*idx);
+        nextSubDir = osAddSlash (subDir) + (**idx);
 
       ScannerFileCharacteristics_ProcessDirTree (baseDir, nextSubDir, o);
     }

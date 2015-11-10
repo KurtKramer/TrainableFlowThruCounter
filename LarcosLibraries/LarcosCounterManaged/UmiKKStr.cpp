@@ -144,9 +144,10 @@ kkuint32  UmiKKStr::StrToUint (String^  s)
 int   UmiKKStr::StrToInt (String^  s)
 {
   int i = 0;
-
-  try {i = int::Parse (StripOutCommas (s));}
-  catch  (Exception^) {i = 0;}
+  if  (!String::IsNullOrEmpty (s)) {
+    try {i = int::Parse (StripOutCommas (s));}
+    catch  (Exception^) {i = 0;}
+  }
   return  i;
 }  /* StrToInt */
 
