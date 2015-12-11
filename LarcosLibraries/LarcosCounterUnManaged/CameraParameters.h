@@ -5,7 +5,7 @@
 #if   !defined(_CAMERAPARAMETERS_)
 #define  _CAMERAPARAMETERS_
 
-#include  "KKStr.h"
+#include "KKStr.h"
 
 namespace LarcosCounterUnManaged
 {

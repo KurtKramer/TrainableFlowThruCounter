@@ -1,7 +1,7 @@
 #pragma once
 
-#include  "OSservices.h"
-#include  "MsgQueue.h"
+#include "OSservices.h"
+#include "MsgQueue.h"
 //#include  "UmiRunLog.h"
 
 using namespace System;
@@ -13,17 +13,31 @@ using namespace System::Drawing;
 
 //using namespace  LarcosCounterManaged;
 
+
+
 #include "UmiScannerHeaderFields.h"
 #include "LarcosCounterStats.h"
 #include "UmiRaster.h"
 #include "StatusSnapshotManaged.h"
+
+// Problem is in include below
 #include "LarcosCounterManager.h"
+
+
 using namespace  LarcosCounterUnManaged;
+
 
 #include "LarcosCounterState.h"
 #include "LarcosOperatingModes.h"
 #include "StatusSnapshotManaged.h"
+
+
+
 #include "UmiInstallationConfig.h"
+
+
+
+
 #include "UmiOperatingParameters.h"
 #include "UmiScannerFile.h"
 #include "UmiSessionParameters.h"

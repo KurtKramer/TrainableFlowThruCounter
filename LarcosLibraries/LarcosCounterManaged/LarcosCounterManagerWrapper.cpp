@@ -1,12 +1,9 @@
 #include "StdAfx.h"
-#include  "FirstIncludes.h"
-
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <math.h>
-
 #include <ctype.h>
 #include <time.h>
-
 #include <deque>
 #include <fstream>
 #include <iostream>
@@ -17,7 +14,6 @@
 #include <string>
 #include <vector>
 #include "MemoryDebug.h"
-
 
 #include "KKException.h"
 #include "KKStr.h"
@@ -31,11 +27,15 @@ using namespace  KKB;
 #include "LarcosVariables.h"
 using namespace  LarcosBase;
 
+
 #include "CameraParametersManaged.h"
 #include "LarcosCounterStatsManaged.h"
 #include "UmiKKStr.h"
 
+
 #include "LarcosCounterManagerWrapper.h"
+
+
 using  namespace  LarcosCounterManaged;
 
 

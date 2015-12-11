@@ -12,7 +12,6 @@ using namespace System::Drawing;
 #include "CameraParameters.h"
 using namespace  LarcosCounterUnManaged;
 
-#include  "CameraParametersManaged.h"
 
 namespace LarcosCounterManaged
 {

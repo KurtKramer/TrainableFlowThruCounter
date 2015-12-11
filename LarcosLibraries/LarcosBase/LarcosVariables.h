@@ -1,7 +1,7 @@
 #if  !defined(_LARCOSVARIABLES_)
 #define  _LARCOSVARIABLES_
 
-#include  "KKStr.h"
+#include "KKStr.h"
 
 
 /**

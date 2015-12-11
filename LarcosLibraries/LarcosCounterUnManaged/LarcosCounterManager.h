@@ -4,6 +4,7 @@
  * For conditions of distribution and use, see copyright notice in LarcosCounterUnManaged.txt
  */
 
+
 #if  !defined(_LARCOSCOUNTERMANAGER_)
 #define  _LARCOSCOUNTERMANAGER_
 
@@ -18,7 +19,11 @@
 
 #include "Classifier2.h"
 #include "TrainingProcess2.h"
+
+
 using namespace  KKMLL;
+
+
 
 #include "FlowMeterTracker.h"
 #include "ScannerHeaderFields.h"
