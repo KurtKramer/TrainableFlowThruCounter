@@ -31,14 +31,14 @@ using namespace  KKB;
 DiversifyFlowRateTrainingLibrary::DiversifyFlowRateTrainingLibrary (int     argc,
                                                                     char**  argv
                                                                    ):
-  Application (argc, argv),
+  Application (),
   report             (NULL),
   reportFile         (NULL),
   reportFileName     (),
   trainLibRootDir    ()
 
 {
-  ProcessCmdLineParameters (argc, argv);
+  this->InitalizeApplication(argc, argv);
 
   if  (Abort ())
   {
@@ -111,7 +111,7 @@ void   DiversifyFlowRateTrainingLibrary::DisplayCommandLineParameters ()
 {
   log.Level (0) << "DiversifyFlowRateTrainingLibrary  -RootDir <xxx> -Report <xxxx>" << endl;
   log.Level (0) << endl;
-  log.Level (0) << "    -RootDir  Root directory of traininig library." << endl;
+  log.Level (0) << "    -RootDir  Root directory of training library." << endl;
   log.Level (0)                                                         << endl;
   log.Level (0) << "    -Report  Report File."                          << endl;
   log.Level (0)                                                         << endl;
@@ -136,9 +136,9 @@ void  DiversifyFlowRateTrainingLibrary::ProcessDirectory (const KKStr&  subDirNa
     KKStrList::iterator idx;
     for  (idx = files->begin ();  idx != files->end ();  ++idx)
     {
-      KKStr  fileName = *idx;
-      cout << fileName << endl;
-      KKStr  fullFileName = osAddSlash (subDirName) + fileName;
+      KKStrPtr  fileName = *idx;
+      cout << *fileName << endl;
+      KKStr  fullFileName = osAddSlash (subDirName) + *fileName;
       DiversifyImage (fullFileName);
     }
   }
@@ -149,8 +149,8 @@ void  DiversifyFlowRateTrainingLibrary::ProcessDirectory (const KKStr&  subDirNa
     KKStrList::iterator idx;
     for  (idx = subDirNames->begin ();  idx != subDirNames->end ();  ++idx)
     {
-      KKStr  dirName = *idx;
-      KKStr  fullSubDirName = osAddSlash (subDirName) + dirName;
+      KKStrPtr  dirName = *idx;
+      KKStr  fullSubDirName = osAddSlash (subDirName) + *dirName;
       ProcessDirectory (fullSubDirName);
     }
   }

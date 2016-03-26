@@ -148,12 +148,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\LarcosLibraries\LarcosCounterManaged\LarcosCounterManaged.vcxproj">
-      <Project>{69108ADE-3BF7-4329-BFC2-9AB5FA70923D}</Project>
-      <Name>LarcosCounterManaged</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="FeatureDataDisplay.resx">
       <DependentUpon>FeatureDataDisplay.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -201,6 +195,16 @@
       <DependentUpon>TemporalDisplay.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\KSquareLibraries\KKControls\KKControls.csproj">
+      <Project>{3404fea2-61a5-4102-9280-729ac235a031}</Project>
+      <Name>KKControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LarcosLibraries\LarcosCounterManaged\LarcosCounterManaged.vcxproj">
+      <Project>{69108ade-3bf7-4329-bfc2-9ab5fa70923d}</Project>
+      <Name>LarcosCounterManaged</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

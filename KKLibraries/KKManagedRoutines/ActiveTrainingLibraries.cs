@@ -1,7 +1,7 @@
 //********************************************************************************************
-//*  A class that will consist of static metods only.  This is where we will keep track of   *
-//*  the current active training libraries.  Thios way we will not need to implement the     *
-//*  code in each seperate application.                                                      *
+//*  A class that will consist of static methods only.  This is where we will keep track of  *
+//*  the current active training libraries.  This way we will not need to implement the      *
+//*  code in each separate application.                                                      *
 //********************************************************************************************
 
 using  System;
@@ -24,9 +24,9 @@ using LarcosCounterManaged;
 namespace KKManagedRoutines
 {
   /// <summary>
-  /// A class that will consist of static metods only.  This is where we will keep track of
-  /// the current active training libraries.  Thios way we will not need to implement the
-  /// code in each seperate application. 
+  /// A class that will consist of static methods only.  This is where we will keep track of
+  /// the current active training libraries.  This way we will not need to implement the
+  /// code in each separate application. 
   /// 
   ///  Once a model is loaded via  "SetModel1"  or  "SetModel2"  they will not be unloaded 
   ///  except by the Memory Manager. This way if a process is using a specific model that 

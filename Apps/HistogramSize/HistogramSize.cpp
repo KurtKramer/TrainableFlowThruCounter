@@ -190,7 +190,7 @@ void  HistogramSize::ProcessDirectory ()
     KKStrList::iterator idx;
     for  (idx = files->begin ();  idx != files->end ();  ++idx)
     {
-      KKStr  fileName = *idx;
+      KKStr  fileName = **idx;
       cout << fileName << endl;
       KKStr  fullFileName = osAddSlash (targetDir) + fileName;
       ProcessImage (fullFileName);
@@ -1279,14 +1279,20 @@ FMEntryListPtr   LoadFlowMeterData (const KKStr&  flowMeterDataFileName)
   bool  eof = false;
   bool  eol = false;
 
-  KKStr  line = KKB::osReadRestOfLine (frd, eof);
-  while  (!eof)
+  KKStrPtr  line = KKB::osReadRestOfLine (frd, eof);
+  while  (line)
   {
-    kkuint32  scanLineNum = line.ExtractTokenUint ("\t");
-    kkuint32  counter     = line.ExtractTokenUint ("\t");
-    data->push_back (FMEntry (scanLineNum, counter));
+    if  (!line->Empty ())
+    {
+      kkuint32  scanLineNum = line->ExtractTokenUint ("\t");
+      kkuint32  counter     = line->ExtractTokenUint ("\t");
+      data->push_back (FMEntry (scanLineNum, counter));
+      delete  line;
+    }
     line = KKB::osReadRestOfLine (frd, eof);
   }
+  delete line;
+  line = NULL;
 
   frd.close ();
 
