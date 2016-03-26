@@ -7,7 +7,7 @@ using System.Drawing.Imaging;
 using System.Threading;
 
 using LarcosCounterManaged;
-using KKManagedRoutines;
+using LarcosManagedRoutines;
 
 
  

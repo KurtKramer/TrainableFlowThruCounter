@@ -4,7 +4,7 @@ using System.Text;
 
 using LarcosCounterManaged;
 
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   /*!
    \brief  Used for Connected Component Analysis.  One instance for each blob detected.

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using LarcosCounterManaged;
 
 
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   public partial class ImageEditor : Form
   {

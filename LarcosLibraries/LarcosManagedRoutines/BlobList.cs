@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   public  class  BlobList:  List<Blob> 
   {

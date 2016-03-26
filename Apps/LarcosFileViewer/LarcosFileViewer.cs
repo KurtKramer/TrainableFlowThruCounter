@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
 using LarcosCounterManaged;
-using KKManagedRoutines;
+using LarcosManagedRoutines;
 
 
 

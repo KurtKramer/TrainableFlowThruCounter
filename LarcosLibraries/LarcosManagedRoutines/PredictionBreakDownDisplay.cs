@@ -12,7 +12,7 @@ using LarcosCounterManaged;
 
 
 
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   public partial class PredictionBreakDownDisplay : Form
   {

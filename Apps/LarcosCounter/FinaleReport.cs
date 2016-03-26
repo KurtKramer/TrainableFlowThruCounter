@@ -13,7 +13,7 @@ using System.IO;
 //using Microsoft.Reporting.WinForms;
 
 using LarcosCounterManaged;
-using KKManagedRoutines;
+using LarcosManagedRoutines;
 
 
 namespace LarcosCounter

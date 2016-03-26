@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using KKManagedRoutines;
+using LarcosManagedRoutines;
 using LarcosCounterManaged;
 
 
 
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   public partial class  AddAClass : Form
   {

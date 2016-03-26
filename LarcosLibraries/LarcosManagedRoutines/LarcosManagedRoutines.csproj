@@ -8,8 +8,8 @@
     <ProjectGuid>{D6AFBB16-C907-4944-AA25-BE9E00D97980}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KKManagedRoutines</RootNamespace>
-    <AssemblyName>KKManagedRoutines</AssemblyName>
+    <RootNamespace>LarcosManagedRoutines</RootNamespace>
+    <AssemblyName>LarcosManagedRoutines</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -101,7 +101,7 @@
     <Compile Include="ImageVerifier.Designer.cs">
       <DependentUpon>ImageVerifier.cs</DependentUpon>
     </Compile>
-    <Compile Include="KKManagedRoutines.cs" />
+    <Compile Include="LarcosManagedRoutines.cs" />
     <Compile Include="FeatureDataDisplay.cs">
       <SubType>Form</SubType>
     </Compile>

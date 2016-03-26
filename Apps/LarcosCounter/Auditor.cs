@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 using LarcosCounterManaged;
-using KKManagedRoutines;
+using LarcosManagedRoutines;
 
 
 namespace LarcosCounter

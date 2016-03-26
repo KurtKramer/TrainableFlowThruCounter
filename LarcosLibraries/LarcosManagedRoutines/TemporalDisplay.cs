@@ -10,7 +10,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 
 
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   public partial class TemporalDisplay : Form
   {

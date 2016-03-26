@@ -21,7 +21,7 @@ using LarcosCounterManaged;
 //-------------------------------------------------------------------------------------------------------------------
 
 
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   /// <summary>
   /// A class that will consist of static methods only.  This is where we will keep track of

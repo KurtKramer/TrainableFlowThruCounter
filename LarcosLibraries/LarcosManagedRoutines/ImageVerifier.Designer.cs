@@ -1,4 +1,4 @@
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   partial class ImageVerifier
   {

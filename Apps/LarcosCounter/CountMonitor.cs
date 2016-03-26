@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 
-using KKManagedRoutines;
+using LarcosManagedRoutines;
 using LarcosControls;
 using LarcosCounterManaged;
 

@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using System.Text;
 using System.Windows.Forms;
 using LarcosCounterManaged;
-using KKManagedRoutines;
+using LarcosManagedRoutines;
 
 namespace LarcosControls
 {

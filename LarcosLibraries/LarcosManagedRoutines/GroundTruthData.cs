@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using LarcosCounterManaged;
 
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   /// <summary>
   /// Object is responsible for maintaining a list of all Ground Truth locations.   

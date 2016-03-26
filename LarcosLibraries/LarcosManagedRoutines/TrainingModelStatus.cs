@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 using LarcosCounterManaged;
 
-namespace KKManagedRoutines
+namespace LarcosManagedRoutines
 {
   public partial class TrainingModelStatus : Form
   {
