@@ -40,6 +40,12 @@ namespace  ScannerFileEncoderApp
 
     RasterListPtr  GetImagesInSubDirectory (KKStr  dirName);
 
+    virtual
+    void  InitalizeApplication (kkint32 argc,
+                                char**  argv
+                               );
+                                        
+
     void  PopulateScanLinePositions ();
 
     virtual

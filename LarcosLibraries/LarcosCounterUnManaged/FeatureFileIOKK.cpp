@@ -507,15 +507,15 @@ kkint32  GetClassIdx (const map<MLClassPtr, kkint32>&  classIdx,
 
 
 
-void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
-                                  const KKStr&           _fileName,
-                                  FeatureNumListConst&   _selFeatures,
-                                  ostream&               _out,
-                                  kkuint32&              _numExamplesWritten,
-                                  VolConstBool&          _cancelFlag,
-                                  bool&                  _successful,
-                                  KKStr&                 _errorMessage,
-                                  RunLog&                _log
+void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
+                                  const KKStr&          _fileName,
+                                  FeatureNumListConst&  _selFeatures,
+                                  ostream&              _out,
+                                  kkuint32&             _numExamplesWritten,
+                                  VolConstBool&         _cancelFlag,
+                                  bool&                 _successful,
+                                  KKStr&                _errorMessage,
+                                  RunLog&               _log
                                  )
 {
   LarcosFeatureVectorListPtr  examples  = NULL;
@@ -618,9 +618,9 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
         kkint32  predClassIdx  = GetClassIdx (classIdx, example->PredictedClass ());
         kkint32  p = (kkint32)_out.precision();
         _out.precision (11);
-        _out << example->ClassName          () << "\t" 
+        _out << example->MLClassName        () << "\t" 
              << imageClassIdx                  << "\t"
-             << example->ExampleFileName      () << "\t" 
+             << example->ExampleFileName    () << "\t" 
              << example->OrigSize           () << "\t"
              << example->NumOfEdgePixels    () << "\t"
              << example->Probability        () << "\t"

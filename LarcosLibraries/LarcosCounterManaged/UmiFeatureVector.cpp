@@ -210,7 +210,7 @@ String^  UmiFeatureVector::ClassName::get ()
     return  mlClass->Name;
   if  (features == NULL)
     return  "";
-  return  UmiKKStr::KKStrToSystenStr (features->ClassName ());
+  return  UmiKKStr::KKStrToSystenStr (features->MLClassName ());
 }
 
 

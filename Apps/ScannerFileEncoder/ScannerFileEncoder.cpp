@@ -1,15 +1,15 @@
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
-#include  <stdlib.h>
-#include  <memory.h>
-#include  <math.h>
+#include <stdlib.h>
+#include <memory.h>
+#include <math.h>
 
-#include  <map>
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <queue>
-#include  <vector>
+#include <map>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <queue>
+#include <vector>
 using namespace std;
 
 
@@ -18,15 +18,15 @@ using namespace std;
 // -src C:\Users\kkramer\Desktop\AEOS\Shrimp images  -sfn Shrimp2.spr
 
 
-#include  "MemoryDebug.h"
-#include  "KKBaseTypes.h"
+#include "MemoryDebug.h"
+#include "KKBaseTypes.h"
 
 
-#include  "ImageIO.h"
-#include  "OSservices.h"
-#include  "Raster.h"
-#include  "RandomNumGenerator.h"
-#include  "KKStr.h"
+#include "ImageIO.h"
+#include "OSservices.h"
+#include "Raster.h"
+#include "RandomNumGenerator.h"
+#include "KKStr.h"
 using namespace KKB;
 
 
@@ -49,7 +49,7 @@ ScannerFileEncoder::ScannerFileEncoder (int     argc,
                                         char**  argv
                                        ):
 
-   Application (argc, argv),
+   Application (),
    destFileName              (),
    imagesPerSec              (10),
    randGen                   ((long)osGetLocalDateTime ().Seconds ()),
@@ -77,7 +77,22 @@ ScannerFileEncoder::ScannerFileEncoder (int     argc,
     return;
   }
 
-  ProcessCmdLineParameters (argc, argv);
+}
+
+
+
+ScannerFileEncoder::~ScannerFileEncoder ()
+{
+  delete  srcImages;  srcImages = NULL;
+}
+
+
+
+void  ScannerFileEncoder::InitalizeApplication (kkint32 argc,
+                                                char**  argv
+                                               )
+{
+  Application::InitalizeApplication(argc, argv);
   if  (Abort ())
   {
     DisplayCommandLineParameters ();
@@ -124,18 +139,6 @@ ScannerFileEncoder::ScannerFileEncoder (int     argc,
   scanLineBufferStart = 0;
   scanLineBufferEnd   = 0;
 }
-
-
-
-
-
-ScannerFileEncoder::~ScannerFileEncoder ()
-{
-  delete  srcImages;  srcImages = NULL;
-}
-
-
-
 
 
 
@@ -572,7 +575,8 @@ int  main (int     argc,
            char**  argv
           )
 {
-  ScannerFileEncoder  scannerFileEncoder (argc, argv);
+  ScannerFileEncoder  scannerFileEncoder ();
+  scannerFileEncoder.InitalizeApplication(argc, argv)
   if  (scannerFileEncoder.Abort ())
     return 1;
 
