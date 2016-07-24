@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <iostream>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -85,6 +86,7 @@ UmiScannerFileBuffered::UmiScannerFileBuffered (String^     _fileName,
   }
   catch  (IOException^  ioException)
   {
+    Console::WriteLine("UmiScannerFileBuffered::UmiScannerFileBuffered   ***EXCEPTION***  CReating Scanner File: " + _fileName + ioException->ToString());
     throw;
   }
       
