@@ -1,4 +1,4 @@
-#ifndef  _SCANNERFILEENCODER_
+#if !defined(_SCANNERFILEENCODER_)
 #define  _SCANNERFILEENCODER_
 
 #include "Application.h"
@@ -14,12 +14,15 @@ namespace  ScannerFileEncoderApp
   class  ScannerFileEncoder: public Application
   {
   public:
-    ScannerFileEncoder (int     argc, 
-                       char**  argv
-                      );
+    ScannerFileEncoder ();
 
     ~ScannerFileEncoder ();
 
+    virtual
+    void  InitalizeApplication (kkint32 argc,
+                                char**  argv
+                               );
+                                        
     void  Main ();
 
   private:
@@ -39,12 +42,6 @@ namespace  ScannerFileEncoderApp
     RasterPtr  GenerateRandomImage ();
 
     RasterListPtr  GetImagesInSubDirectory (KKStr  dirName);
-
-    virtual
-    void  InitalizeApplication (kkint32 argc,
-                                char**  argv
-                               );
-                                        
 
     void  PopulateScanLinePositions ();
 

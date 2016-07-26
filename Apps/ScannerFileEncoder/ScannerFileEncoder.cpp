@@ -45,9 +45,7 @@ using  namespace  ScannerFileEncoderApp;
 
 
 
-ScannerFileEncoder::ScannerFileEncoder (int     argc, 
-                                        char**  argv
-                                       ):
+ScannerFileEncoder::ScannerFileEncoder ():
 
    Application (),
    destFileName              (),
@@ -66,17 +64,6 @@ ScannerFileEncoder::ScannerFileEncoder (int     argc,
    totalImages               (0)
 
 {
-  if  (argc < 2)
-  {
-    log.Level (-1) << endl << endl 
-                   << "No Command Line Parameters were provided." << endl
-                   << endl;
-
-    DisplayCommandLineParameters ();
-    Abort (true);
-    return;
-  }
-
 }
 
 
@@ -466,7 +453,7 @@ void  ScannerFileEncoder::WritePixelToScannerFile (ulong  scanLineRow,
   if  (scanLineRow < scanLineBufferStart)
   {
     log.Level (-1) << endl << endl
-      << "ScannerFileEncoder::WritePixelToScannerFile   ***ERROR***    ScanLineRow[" << (uint64)scanLineRow << "] preceeds burrenty uffer position." << endl
+      << "ScannerFileEncoder::WritePixelToScannerFile   ***ERROR***    ScanLineRow[" << (kkuint64)scanLineRow << "] preceeds burrenty uffer position." << endl
       << endl;
     return;
   }
@@ -575,8 +562,8 @@ int  main (int     argc,
            char**  argv
           )
 {
-  ScannerFileEncoder  scannerFileEncoder ();
-  scannerFileEncoder.InitalizeApplication(argc, argv)
+  ScannerFileEncoderApp::ScannerFileEncoder  scannerFileEncoder;
+  scannerFileEncoder.InitalizeApplication(argc, argv);
   if  (scannerFileEncoder.Abort ())
     return 1;
 

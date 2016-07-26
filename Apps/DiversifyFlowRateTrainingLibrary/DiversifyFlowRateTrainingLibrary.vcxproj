@@ -77,13 +77,16 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>KKBase.lib;fftw.lib;zlib.lib;USER32.LIB;Winmm.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KKBase.lib;fftw.lib;zlib.lib;USER32.LIB;Winmm.lib;libfftw3-3.lib;libfftw3f-3.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DiversifyFlowRateTrainingLibrary.cpp" />
