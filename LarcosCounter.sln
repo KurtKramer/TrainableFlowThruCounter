@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{609D9988-3286-440F-AA35-6E1F10E09573}"
 EndProject
@@ -315,7 +315,6 @@ Global
 		{F199DB78-F104-4469-BBE6-3E79BBB83526}.CD_ROM|x86.Build.0 = Release|Win32
 		{F199DB78-F104-4469-BBE6-3E79BBB83526}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{F199DB78-F104-4469-BBE6-3E79BBB83526}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{F199DB78-F104-4469-BBE6-3E79BBB83526}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{F199DB78-F104-4469-BBE6-3E79BBB83526}.Debug|Win32.ActiveCfg = Debug|Win32
 		{F199DB78-F104-4469-BBE6-3E79BBB83526}.Debug|Win32.Build.0 = Debug|Win32
 		{F199DB78-F104-4469-BBE6-3E79BBB83526}.Debug|x64.ActiveCfg = Debug|Win32
