@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle ("Larcos Counter")]
+[assembly: AssemblyTitle ("K-Square")]
 [assembly: AssemblyDescription ("Trainable Flow-Through Counter")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany ("Larcos")]
-[assembly: AssemblyProduct("LarcosCounter")]
+[assembly: AssemblyCompany ("K-Square Softaware")]
+[assembly: AssemblyProduct("K-Square Counter")]
 [assembly: AssemblyCopyright ("Copyright © Microsoft 2011-2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

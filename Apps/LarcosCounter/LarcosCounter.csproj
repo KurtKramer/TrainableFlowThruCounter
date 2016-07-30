@@ -330,10 +330,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\KSquareLogo.png" />
+    <None Include="Resources\KSquareLogoSmall.bmp" />
     <None Include="app.config" />
     <None Include="LarcosLogoMedium.jpg" />
     <None Include="GoForward.bmp" />
     <None Include="GoBackward.bmp" />
+    <None Include="KSquareLogo.png" />
     <Content Include="LarcosLogoSmall.ico" />
     <None Include="Properties\DataSources\FinaleReportChartDataSource.datasource" />
     <None Include="Properties\DataSources\FinaleReportDataSource.datasource" />
