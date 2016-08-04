@@ -96,8 +96,6 @@
       this.FramesWaitingLabel = new System.Windows.Forms.Label();
       this.PhysicalFramesWaitingToProcess = new System.Windows.Forms.TextBox();
       this.StatsPannel = new System.Windows.Forms.Panel();
-      this.SensitivityLabel = new System.Windows.Forms.Label();
-      this.Sensitivity = new System.Windows.Forms.TextBox();
       this.ScanLinesReadLabel = new System.Windows.Forms.Label();
       this.ScanLinesRead = new System.Windows.Forms.TextBox();
       this.LogicalFrameProcessorsAvailabeLabel = new System.Windows.Forms.Label();
@@ -140,7 +138,7 @@
       this.SampleBeforeFlatField = new System.Windows.Forms.CheckBox();
       this.liveVideoFrame = new System.Windows.Forms.PictureBox();
       this.Visibility = new System.Windows.Forms.TabPage();
-      this.cameraLine = new LarcosControls.CameraLine();
+      this.cameraLine = new LarcosControls.CameraLine ();
       this.DefaultOperatingParametersTab = new System.Windows.Forms.TabPage();
       this.SaveParticleImages = new System.Windows.Forms.TextBox();
       this.SaveParticleImagesLabel = new System.Windows.Forms.Label();
@@ -181,14 +179,15 @@
       this.ExitButton = new System.Windows.Forms.Button();
       this.FlowRateLabel = new System.Windows.Forms.Label();
       this.FlowRate = new System.Windows.Forms.TextBox();
-      this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.SensitivityLabel = new System.Windows.Forms.Label ();
+      this.Sensitivity = new System.Windows.Forms.TextBox ();
       this.StatsPannel.SuspendLayout();
       this.TabDisplayed.SuspendLayout();
       this.Throughput.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.ThroughputChart)).BeginInit();
       this.liveCamera.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.liveVideoFrame)).BeginInit();
-      this.Visibility.SuspendLayout();
+      this.Visibility.SuspendLayout ();
       this.DefaultOperatingParametersTab.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.SnapshotInterval2)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.BackGroundPixelTH)).BeginInit();
@@ -515,26 +514,6 @@
       this.StatsPannel.Name = "StatsPannel";
       this.StatsPannel.Size = new System.Drawing.Size(938, 452);
       this.StatsPannel.TabIndex = 54;
-      // 
-      // SensitivityLabel
-      // 
-      this.SensitivityLabel.AutoSize = true;
-      this.SensitivityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.SensitivityLabel.Location = new System.Drawing.Point(341, 327);
-      this.SensitivityLabel.Name = "SensitivityLabel";
-      this.SensitivityLabel.Size = new System.Drawing.Size(54, 13);
-      this.SensitivityLabel.TabIndex = 87;
-      this.SensitivityLabel.Text = "Sensitivity";
-      // 
-      // Sensitivity
-      // 
-      this.Sensitivity.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.Sensitivity.Location = new System.Drawing.Point(344, 343);
-      this.Sensitivity.Name = "Sensitivity";
-      this.Sensitivity.ReadOnly = true;
-      this.Sensitivity.Size = new System.Drawing.Size(72, 22);
-      this.Sensitivity.TabIndex = 86;
-      this.Sensitivity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       // 
       // ScanLinesReadLabel
       // 
@@ -927,14 +906,14 @@
       chartArea1.AxisX.IsLabelAutoFit = false;
       chartArea1.AxisX.LabelStyle.Angle = -90;
       chartArea1.AxisX.LabelStyle.Format = "hh:mm:ss";
-      chartArea1.AxisX.LabelStyle.Interval = 0D;
+      chartArea1.AxisX.LabelStyle.Interval = 0;
       chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver;
       chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
       chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.DarkGray;
       chartArea1.AxisY2.LabelStyle.Format = "0.0";
       chartArea1.AxisY2.MajorGrid.Enabled = false;
-      chartArea1.AxisY2.Maximum = 1D;
-      chartArea1.AxisY2.Minimum = 0D;
+      chartArea1.AxisY2.Maximum = 1;
+      chartArea1.AxisY2.Minimum = 0;
       chartArea1.CursorX.IsUserEnabled = true;
       chartArea1.Name = "ChartArea1";
       this.ThroughputChart.ChartAreas.Add(chartArea1);
@@ -1063,7 +1042,7 @@
       // 
       // Visibility
       // 
-      this.Visibility.Controls.Add(this.cameraLine);
+      this.Visibility.Controls.Add (this.cameraLine);
       this.Visibility.Location = new System.Drawing.Point(4, 29);
       this.Visibility.Name = "Visibility";
       this.Visibility.Padding = new System.Windows.Forms.Padding(3);
@@ -1075,11 +1054,11 @@
       // cameraLine
       // 
       this.cameraLine.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.cameraLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.cameraLine.Location = new System.Drawing.Point(3, 3);
+      this.cameraLine.Font = new System.Drawing.Font ("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.cameraLine.Location = new System.Drawing.Point (3, 3);
       this.cameraLine.Name = "cameraLine";
       this.cameraLine.RequestedSensitivityMode = "Low";
-      this.cameraLine.Size = new System.Drawing.Size(940, 450);
+      this.cameraLine.Size = new System.Drawing.Size (940, 450);
       this.cameraLine.TabIndex = 0;
       // 
       // DefaultOperatingParametersTab
@@ -1567,7 +1546,7 @@
       // 
       // pictureBox1
       // 
-      this.pictureBox1.Image = global::LarcosCounter.Properties.Resources.LarcosLogoSmall2;
+      this.pictureBox1.Image = global::LarcosCounter.Properties.Resources.ZOIS_Logo_Small;
       this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
       this.pictureBox1.Location = new System.Drawing.Point(21, 22);
       this.pictureBox1.Name = "pictureBox1";
@@ -1618,10 +1597,25 @@
       this.FlowRate.TabIndex = 229;
       this.FlowRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       // 
-      // contextMenuStrip1
+      // SensitivityLabel
       // 
-      this.contextMenuStrip1.Name = "contextMenuStrip1";
-      this.contextMenuStrip1.Size = new System.Drawing.Size(153, 26);
+      this.SensitivityLabel.AutoSize = true;
+      this.SensitivityLabel.Font = new System.Drawing.Font ("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.SensitivityLabel.Location = new System.Drawing.Point (341, 327);
+      this.SensitivityLabel.Name = "SensitivityLabel";
+      this.SensitivityLabel.Size = new System.Drawing.Size (54, 13);
+      this.SensitivityLabel.TabIndex = 87;
+      this.SensitivityLabel.Text = "Sensitivity";
+      // 
+      // Sensitivity
+      // 
+      this.Sensitivity.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.Sensitivity.Location = new System.Drawing.Point (344, 343);
+      this.Sensitivity.Name = "Sensitivity";
+      this.Sensitivity.ReadOnly = true;
+      this.Sensitivity.Size = new System.Drawing.Size (72, 22);
+      this.Sensitivity.TabIndex = 86;
+      this.Sensitivity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       // 
       // LarcosCounter
       // 
@@ -1645,10 +1639,10 @@
       this.Controls.Add(this.LarcosStatus);
       this.MinimumSize = new System.Drawing.Size(1000, 762);
       this.Name = "LarcosCounter";
-      this.Text = "Larcos Shrimp Counter";
-      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LarcosCounter_FormClosing);
+      this.Text = "K-Square Flow-Thru Counter";
       this.Load += new System.EventHandler(this.LarcosCounter_Load);
       this.SizeChanged += new System.EventHandler(this.LarcosCounter_SizeChanged);
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler (this.LarcosCounter_FormClosing);
       this.StatsPannel.ResumeLayout(false);
       this.StatsPannel.PerformLayout();
       this.TabDisplayed.ResumeLayout(false);
@@ -1657,7 +1651,7 @@
       this.liveCamera.ResumeLayout(false);
       this.liveCamera.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.liveVideoFrame)).EndInit();
-      this.Visibility.ResumeLayout(false);
+      this.Visibility.ResumeLayout (false);
       this.DefaultOperatingParametersTab.ResumeLayout(false);
       this.DefaultOperatingParametersTab.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.SnapshotInterval2)).EndInit();
@@ -1787,7 +1781,6 @@
     private System.Windows.Forms.Label DataIsToBeRecordedLabel;
     private System.Windows.Forms.Label SensitivityLabel;
     private System.Windows.Forms.TextBox Sensitivity;
-    private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
   }
 }
 

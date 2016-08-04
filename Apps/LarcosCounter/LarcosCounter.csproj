@@ -330,8 +330,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\ZOIS_Logo_Small.png" />
+    <None Include="Resources\ZOIS_Logo.png" />
     <None Include="Resources\KSquareLogo.png" />
-    <None Include="Resources\KSquareLogoSmall.bmp" />
     <None Include="app.config" />
     <None Include="LarcosLogoMedium.jpg" />
     <None Include="GoForward.bmp" />

@@ -116,7 +116,7 @@ namespace LarcosCounter
 
     private void  LarcosCounter_Load (object sender, EventArgs e)
     {
-      Text = "Larcos Counter      version: " + cameraManager.LarcosVersionNumber ();
+      Text = "K-Square Counter    version: " + cameraManager.LarcosVersionNumber ();
       if  (cameraManager.OperatingMode () == LarcosOperatingModes.Advanced)
       {
         SampleBeforeFlatField.Visible    = true;
@@ -1359,7 +1359,7 @@ namespace LarcosCounter
       fd.InitialDirectory  = UmiOSservices.GetPathPartOfFile (sourceScannerFileName);
       fd.AddExtension = true;
       fd.DefaultExt = "lsc";
-      fd.Filter = "Larcos Files (*.lsc)|*.lsc";
+      fd.Filter = "Scanner Files (*.lsc)|*.lsc";
 
       DialogResult dr = fd.ShowDialog (this);
       if  (dr != DialogResult.OK)

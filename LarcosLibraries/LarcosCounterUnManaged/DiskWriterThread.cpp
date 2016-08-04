@@ -199,10 +199,6 @@ void  DiskWriterThread::Run ()
   }
 
 
-
-  ofstream*  fm = NULL;
-
-
   ScannerFilePtr  scannerFile = NULL;
   scannerFileSize = 0;
 
@@ -220,16 +216,10 @@ void  DiskWriterThread::Run ()
 
     if  (frame->ScannerFileRootName () != curScannerFileRootName)
     {
-      if  (fm != NULL)
-      {
-        fm->close ();
-        delete  fm;
-      }
-
-      if  (false)
+      if  (true)
       {
         delete  flowMeterFile;
-        KKStr  flowMeterFileName =  KKB::osRemoveExtension (frame->ScannerFileRootName ()) + "_FlowMeterData.txt";
+        KKStr  flowMeterFileName =  KKB::osRemoveExtension (frame->ScannerFileFullName ()) + "_FlowMeterData.txt";
         flowMeterFile = new ofstream (flowMeterFileName.Str ());
       }
 
@@ -292,12 +282,18 @@ void  DiskWriterThread::Run ()
         kkint32 width  = frame->FrameWidth ();
 
         kkuint32  flowMeterCounter = frame->FlowMeterCounter ();
+        
         if  (flowMeterCounter  != lastFlowMeterCounter)
         {
           WordFormat32Bits  dw (flowMeterCounter);
           
           if  (flowMeterFile)
-            *flowMeterFile << scannerFile->LastScanLine () << "\t" << flowMeterCounter << endl;
+            *flowMeterFile 
+                 << "\t" << "ScannerFileScanLine"      << "\t" << frame->ScannerFileScanLine ()
+                 << "\t" << "FlowMeterCounter"         << "\t" << flowMeterCounter 
+                 << "\t" << "FlowMeterCounterScanLine" << "\t" << frame->FlowMeterCounterScanLine () 
+                 << "\t" << "FlowRateRatio"            << "\t" << frame->FlowRateRatio ()
+                 << endl;
 
           scannerFile->WriteInstrumentDataWord (0, scannerFile->LastScanLine (), dw);
           lastFlowMeterCounter = flowMeterCounter;

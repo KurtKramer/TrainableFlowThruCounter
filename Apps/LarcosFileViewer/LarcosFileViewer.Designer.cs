@@ -423,7 +423,7 @@ namespace LarcosFileViewer
       this.MainMenuStrip = this.menuStrip1;
       this.MinimumSize = new System.Drawing.Size(662, 747);
       this.Name = "LarcosFileViewer";
-      this.Text = "Larcos File Viewer";
+      this.Text = "K-Square File Viewer";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LarcosFileViewer_FormClosing);
       this.Load += new System.EventHandler(this.LarcosFileViewer_Load);
       this.SizeChanged += new System.EventHandler(this.LarcosFileViewer_SizeChanged);
