@@ -963,7 +963,7 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
     // Special one time debugging issue
     if  (saveDebugImages)
     {
-      FileDescPtr  fd = fvProducer->FileDesc ();
+      FileDescConstPtr  fd = fvProducer->FileDesc ();
       KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";
       KKStr  rootName = osGetRootName (particle->FileName ());
       KKStr  fullFN = rootDir + rootName + ".bmp";

@@ -124,9 +124,9 @@ namespace LarcosCounterUnManaged
                                      );
 
 
-    static  FileDescPtr    postLarvaeFeaturesFileDesc;
+    static  FileDescConstPtr    postLarvaeFeaturesFileDesc;
     
-    static  FileDescPtr    PostLarvaeFeaturesFileDesc ();
+    static  FileDescConstPtr    PostLarvaeFeaturesFileDesc ();
 
     static  KKStr    FeatureName (kkint32  fieldNum);
     static  kkint32  MaxNumOfFeatures () {return maxNumOfFeatures;}
@@ -231,8 +231,8 @@ namespace LarcosCounterUnManaged
   public: 
     typedef  PostLarvaeFVList*  PostLarvaeFVListPtr;
 
-    PostLarvaeFVList (FileDescPtr  _fileDesc,
-                      bool         _owner
+    PostLarvaeFVList (FileDescConstPtr  _fileDesc,
+                      bool              _owner
                      );
 
   private:

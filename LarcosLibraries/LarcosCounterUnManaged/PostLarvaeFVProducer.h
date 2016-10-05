@@ -53,7 +53,7 @@ namespace LarcosCounterUnManaged
                                                               const;
 
   protected:
-    virtual  FileDescPtr  DefineFileDesc () const;
+    virtual  FileDescConstPtr  DefineFileDesc () const;
 
 
   private:
@@ -93,7 +93,7 @@ namespace LarcosCounterUnManaged
 
     virtual  const type_info*  FeatureVectorListTypeId ()  const;
 
-    virtual  FileDescPtr  FileDesc ()  const;
+    virtual  FileDescConstPtr  FileDesc ()  const;
 
     virtual  PostLarvaeFVProducerPtr  ManufactureInstance (RunLog&  runLog);
 

@@ -84,7 +84,7 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
   if  (saveDebugImages)
   {
     try {
-      FileDescPtr  fd = fvp->FileDesc ();
+      FileDescConstPtr  fd = fvp->FileDesc ();
       KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";
       KKStr  rootName = osGetRootName (UmiKKStr::SystemStringToKKStr (imageFileName)) + "_ScannerFile";
       KKStr  fullFN = rootDir + rootName + ".bmp";

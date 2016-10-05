@@ -205,7 +205,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^      _umiRunLog,
 
   KKStr  configFileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + modelNameKKStr;
 
-  FileDescPtr fd = LarcosFVProducer::DefineFileDescStatic ();
+  FileDescConstPtr fd = LarcosFVProducer::DefineFileDescStatic ();
 
   try
   {
@@ -640,7 +640,7 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
   if  (!factoryFVProducer)
     factoryFVProducer = GetConfigToUse ()->FvFactoryProducer (*runLog);
   
-  FileDescPtr fd = factoryFVProducer->FileDesc ();
+  FileDescConstPtr fd = factoryFVProducer->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
 
@@ -743,7 +743,7 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
   PostLarvaeFVResetDarkSpotCounts ();
 
   FactoryFVProducer*  fvProducerFactory = LarcosFVProducerFactory::Factory (runLog);
-  FileDescPtr fd = fvProducerFactory->FileDesc ();
+  FileDescConstPtr fd = fvProducerFactory->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
   *cancelFlag = false;

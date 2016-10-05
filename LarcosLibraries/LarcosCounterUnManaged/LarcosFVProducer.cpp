@@ -657,16 +657,16 @@ const type_info*  LarcosFVProducer::FeatureVectorListTypeId () const
 
 
 
-FileDescPtr  LarcosFVProducer::DefineFileDesc ()  const
+FileDescConstPtr  LarcosFVProducer::DefineFileDesc ()  const
 {
   return  DefineFileDescStatic ();
 }  /* DefineFileDesc */
 
 
 
-FileDescPtr  LarcosFVProducer::existingFileDesc = NULL;
+FileDescConstPtr  LarcosFVProducer::existingFileDesc = NULL;
 
-FileDescPtr  LarcosFVProducer::DefineFileDescStatic ()
+FileDescConstPtr  LarcosFVProducer::DefineFileDescStatic ()
 {
   if  (existingFileDesc)
     return  existingFileDesc;
@@ -740,7 +740,7 @@ const type_info*  LarcosFVProducerFactory::FeatureVectorListTypeId  () const
 
 
 
-FileDescPtr  LarcosFVProducerFactory::FileDesc ()  const
+FileDescConstPtr  LarcosFVProducerFactory::FileDesc ()  const
 {
   return  LarcosFVProducer::DefineFileDescStatic ();
 }

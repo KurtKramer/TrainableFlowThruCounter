@@ -163,13 +163,13 @@ VectorInt  FeatureFileIOKK::CreateIndirectionTable (const VectorKKStr&  fields,
 
 
 
-FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
-                                           istream&        _in,
-                                           MLClassListPtr  _classes,
-                                           kkint32&        _estSize,
-                                           KKStr&          _errorMessage,
-                                           RunLog&         _log
-                                          )
+FileDescConstPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
+                                                istream&        _in,
+                                                MLClassListPtr  _classes,
+                                                kkint32&        _estSize,
+                                                KKStr&          _errorMessage,
+                                                RunLog&         _log
+                                               )
 {
   _errorMessage = "";
   
@@ -247,7 +247,7 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
 
 
 LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
-                                                       const FileDescPtr _fileDesc,
+                                                       FileDescConstPtr  _fileDesc,
                                                        MLClassList&      _classes, 
                                                        istream&          _in,
                                                        kkint32           _maxCount,    // Maximum # images to load,  less than '0'  indicates all.
@@ -541,7 +541,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
     examples->Version (_data.Version ());
   }
 
-  const FileDescPtr  fileDesc = _data.FileDesc ();
+  const FileDescConstPtr  fileDesc = _data.FileDesc ();
 
   ClassStatisticListPtr  classStatistics = examples->GetClassStatistics ();
 

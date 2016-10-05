@@ -102,8 +102,8 @@ namespace LarcosCounterUnManaged
   public: 
     typedef  LarcosFeatureVectorList*  LarcosFeatureVectorListPtr;
 
-    LarcosFeatureVectorList (FileDescPtr  _fileDesc,
-                             bool         _owner
+    LarcosFeatureVectorList (FileDescConstPtr  _fileDesc,
+                             bool              _owner
                             );
 
   private:

@@ -146,7 +146,7 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromFeatureVe
                                                     )
 {
   _log.Level (10) << "LarcosTrainingConfiguration::CreateFromFeatureVectorList" << endl;
-  FileDescPtr  fileDesc = _examples.FileDesc ();
+  FileDescConstPtr  fileDesc = _examples.FileDesc ();
 
   MLClassListPtr  mlClasses = _examples.ExtractListOfClasses ();
   mlClasses->SortByName ();

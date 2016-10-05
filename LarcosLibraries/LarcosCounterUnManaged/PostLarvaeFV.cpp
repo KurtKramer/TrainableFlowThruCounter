@@ -436,23 +436,23 @@ KKStr  PostLarvaeFV::FeatureName (kkint32  fieldNum)
 
 
 
-FileDescPtr  PostLarvaeFV::postLarvaeFeaturesFileDesc = NULL;
+FileDescConstPtr  PostLarvaeFV::postLarvaeFeaturesFileDesc = NULL;
 
 
-FileDescPtr  PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
+FileDescConstPtr  PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
 {
   if  (postLarvaeFeaturesFileDesc)
     return  postLarvaeFeaturesFileDesc;
 
   bool  alreadyExists = false;
-  postLarvaeFeaturesFileDesc = new FileDesc ();
+  auto tempFileDesc = new FileDesc ();
   for  (kkint32 fieldNum = 0;  fieldNum < MaxNumOfFeatures ();  fieldNum++)
   {
-    postLarvaeFeaturesFileDesc->AddAAttribute (FeatureName (fieldNum),  AttributeType::Numeric, alreadyExists);
+    tempFileDesc->AddAAttribute (FeatureName (fieldNum),  AttributeType::Numeric, alreadyExists);
   }
 
   // Lets make sure that one was already created by opening up a data file.
-  postLarvaeFeaturesFileDesc = FileDesc::GetExistingFileDesc (postLarvaeFeaturesFileDesc);
+  postLarvaeFeaturesFileDesc = FileDesc::GetExistingFileDesc (tempFileDesc);
 
   return  postLarvaeFeaturesFileDesc;
 }  /* PostLarvaeFeaturesFileDesc () */
@@ -1024,8 +1024,8 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
 
 
 
-PostLarvaeFVList::PostLarvaeFVList (FileDescPtr  _fileDesc,
-                                    bool         _owner
+PostLarvaeFVList::PostLarvaeFVList (FileDescConstPtr  _fileDesc,
+                                    bool             _owner
                                    ):
 
     FeatureVectorList (_fileDesc, _owner)
@@ -1144,11 +1144,6 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList,
     }
   }
 }
-
-
-
-
-
 
 
 

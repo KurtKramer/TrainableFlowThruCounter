@@ -109,8 +109,8 @@ LarcosFeatureVectorPtr  LarcosFeatureVector::Duplicate ()  const
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (FileDescPtr  _fileDesc,
-                                                  bool         _owner
+LarcosFeatureVectorList::LarcosFeatureVectorList (FileDescConstPtr  _fileDesc,
+                                                  bool              _owner
                                                  ):
     FeatureVectorList (_fileDesc, _owner)
 {

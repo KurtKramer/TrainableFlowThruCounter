@@ -41,24 +41,24 @@ namespace LarcosCounterUnManaged
     FeatureFileIOKK ();
     virtual ~FeatureFileIOKK ();
 
-    virtual  FileDescPtr  GetFileDesc (const KKStr&    _fileName,
-                                       std::istream&   _in,
-                                       MLClassListPtr  _classes,
-                                       kkint32&        _estSize,
-                                       KKStr&          _errorMessage,
-                                       RunLog&         _runLog
-                                      );
+    virtual  FileDescConstPtr  GetFileDesc (const KKStr&    _fileName,
+                                            std::istream&   _in,
+                                            MLClassListPtr  _classes,
+                                            kkint32&        _estSize,
+                                            KKStr&          _errorMessage,
+                                            RunLog&         _runLog
+                                           );
 
 
-    virtual  LarcosFeatureVectorListPtr  LoadFile (const KKStr&       _fileName,
-                                                   const FileDescPtr  _fileDesc,
-                                                   MLClassList&       _classes, 
-                                                   std::istream&      _in,
-                                                   kkint32            _maxCount,    // Maximum # images to load.
-                                                   VolConstBool&      _cancelFlag,
-                                                   bool&              _changesMade,
-                                                   KKStr&             _errorMessage,
-                                                   RunLog&            _log
+    virtual  LarcosFeatureVectorListPtr  LoadFile (const KKStr&      _fileName,
+                                                   FileDescConstPtr  _fileDesc,
+                                                   MLClassList&      _classes, 
+                                                   std::istream&     _in,
+                                                   kkint32           _maxCount,    // Maximum # images to load.
+                                                   VolConstBool&     _cancelFlag,
+                                                   bool&             _changesMade,
+                                                   KKStr&            _errorMessage,
+                                                   RunLog&           _log
                                                   );
 
 

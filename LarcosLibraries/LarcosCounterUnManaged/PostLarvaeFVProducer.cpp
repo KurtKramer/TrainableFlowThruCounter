@@ -87,7 +87,7 @@ PostLarvaeFVListPtr  PostLarvaeFVProducer::ManufacturFeatureVectorList (bool    
 }
 
 
-FileDescPtr  PostLarvaeFVProducer::DefineFileDesc () const
+FileDescConstPtr  PostLarvaeFVProducer::DefineFileDesc () const
 {
   return  PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
 }
@@ -129,7 +129,7 @@ const type_info*  PostLarvaeFVProducerFactory::FeatureVectorListTypeId  () const
 
 
 
-FileDescPtr  PostLarvaeFVProducerFactory::FileDesc ()  const
+FileDescConstPtr  PostLarvaeFVProducerFactory::FileDesc ()  const
 {
   return  PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
 }

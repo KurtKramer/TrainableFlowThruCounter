@@ -3609,7 +3609,7 @@ void  LarcosCounterManager::ReadConfiguration ()
   if  (!trainModelName.Empty ())
   {
     // retrieve any parameters specified in the default training model.
-    FileDescPtr  fileDesc = LarcosFVProducer::DefineFileDescStatic ();
+    FileDescConstPtr  fileDesc = LarcosFVProducer::DefineFileDescStatic ();
     LarcosTrainingConfigurationPtr  config = new LarcosTrainingConfiguration ();
     config->Load (trainModelName, operatingParameters, false, *runLog);
     if  (!config->FormatGood ())
