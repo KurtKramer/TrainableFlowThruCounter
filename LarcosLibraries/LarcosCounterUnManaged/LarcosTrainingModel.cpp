@@ -63,7 +63,7 @@ LarcosTrainingModel::~LarcosTrainingModel ()
 
 
 
-kkint32  LarcosTrainingModel::MemoryConsumedEstimated ()  const
+kkMemSize  LarcosTrainingModel::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this) + 
           subject.MemoryConsumedEstimated           () +

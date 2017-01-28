@@ -49,7 +49,7 @@ namespace LarcosCounterUnManaged
     kkint32      FrameHeight             () const  {return frameHeight;}
     kkint32      FrameWidth              () const  {return frameWidth;}
     kkint32      FrameHeightUsed         () const  {return frameHeightUsed;}
-    kkint32      MemoryConsumedEstimated () const;
+    kkMemSize    MemoryConsumedEstimated () const;
     kkint64      FrameSeqNum             () const  {return frameSeqNum;}
     kkint32      ScanLineNumStart        () const  {return scanLineNumStart;}
     kkint32      ScanLineNumStartCurSF   () const  {return scanLineNumStartCurSF;}
@@ -141,7 +141,7 @@ namespace LarcosCounterUnManaged
 
     LogicalFramePtr  GetNextFrameToProcess ();
 
-    kkint32    MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     kkint32    NumWaitingToBeProcessed ()  const;
 

@@ -47,7 +47,7 @@ StopButtonThread::~StopButtonThread ()
 
 
 
-kkint32  StopButtonThread::MemoryConsumedEstimated ()
+kkMemSize  StopButtonThread::MemoryConsumedEstimated ()
 {
   return  sizeof (StopButtonThread);
 }

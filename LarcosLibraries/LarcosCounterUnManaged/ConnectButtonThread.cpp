@@ -42,7 +42,7 @@ ConnectButtonThread::~ConnectButtonThread ()
 
 
 
-kkint32  ConnectButtonThread::MemoryConsumedEstimated ()
+kkMemSize  ConnectButtonThread::MemoryConsumedEstimated ()
 {
   return  sizeof (ConnectButtonThread);
 }

@@ -95,7 +95,7 @@ DiskWriterThread::~DiskWriterThread ()
 
 
 
-kkint32 DiskWriterThread::MemoryConsumedEstimated ()
+kkMemSize  DiskWriterThread::MemoryConsumedEstimated ()
 {
   return  sizeof (DiskWriterThread);
 }

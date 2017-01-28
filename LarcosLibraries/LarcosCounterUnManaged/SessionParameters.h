@@ -33,7 +33,7 @@ namespace LarcosCounterUnManaged
 
     virtual ~SessionParameters ();
 
-    virtual  int  MemoryConsumedEstimated ()  const;
+    virtual  kkMemSize  MemoryConsumedEstimated ()  const;
 
     void  Assign (const SessionParameters&  parms);
 

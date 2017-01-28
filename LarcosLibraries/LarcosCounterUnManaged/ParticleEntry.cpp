@@ -104,7 +104,7 @@ ParticleEntry::~ParticleEntry ()
 
 
 
-kkint32  ParticleEntry::MemoryConsumedEstimated ()  const
+kkMemSize  ParticleEntry::MemoryConsumedEstimated ()  const
 {
   return 4 * sizeof(kkint32) + sizeof (MLClassPtr) + scannerFileRootName.MemoryConsumedEstimated ();
 }
@@ -971,7 +971,7 @@ ParticleEntryBuffer::~ParticleEntryBuffer ()
 }
 
 
-kkint32  ParticleEntryBuffer::MemoryConsumedEstimated ()  const
+kkMemSize  ParticleEntryBuffer::MemoryConsumedEstimated ()  const
 {
   return buff.size () * 80 + goalie->MemoryConsumedEstimated ();
 }

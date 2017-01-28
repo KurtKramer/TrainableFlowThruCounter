@@ -140,7 +140,7 @@ void  LogicalFrameBuilder::CleanUpMemory ()
 
 
 
-kkint32 LogicalFrameBuilder::MemoryConsumedEstimated ()
+kkMemSize LogicalFrameBuilder::MemoryConsumedEstimated ()
 {
   return  sizeof (LogicalFrameBuilder);
 }

@@ -48,17 +48,17 @@ SessionParameters::~SessionParameters ()
 
 
 
-int  SessionParameters::MemoryConsumedEstimated ()  const
+kkMemSize  SessionParameters::MemoryConsumedEstimated ()  const
 {
-  int  x = comments.MemoryConsumedEstimated            () + 
-           destination.MemoryConsumedEstimated         () +
-           destScannerFileName.MemoryConsumedEstimated () +
-           hostName.MemoryConsumedEstimated            () +
-           personInCharge.MemoryConsumedEstimated      () +         
-           controlNum.MemoryConsumedEstimated          () +  
-           sessionDescription.MemoryConsumedEstimated  () + 
-           source.MemoryConsumedEstimated              () + 
-           trainingModelName.MemoryConsumedEstimated   ();
+  kkMemSize  x = comments.MemoryConsumedEstimated            () + 
+                 destination.MemoryConsumedEstimated         () +
+                 destScannerFileName.MemoryConsumedEstimated () +
+                 hostName.MemoryConsumedEstimated            () +
+                 personInCharge.MemoryConsumedEstimated      () +         
+                 controlNum.MemoryConsumedEstimated          () +  
+                 sessionDescription.MemoryConsumedEstimated  () + 
+                 source.MemoryConsumedEstimated              () + 
+                 trainingModelName.MemoryConsumedEstimated   ();
 
   return  x;
 }

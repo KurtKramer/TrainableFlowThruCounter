@@ -43,7 +43,7 @@ namespace LarcosCounterUnManaged
 
     ~LogicalFrameEntry ();
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
 
     float                FlowRate         () const {return flowRate;}
@@ -89,7 +89,7 @@ namespace LarcosCounterUnManaged
 
     ~LogicalFrameEntryList ();
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
   };
 
@@ -108,7 +108,7 @@ namespace LarcosCounterUnManaged
 
     ~LogicalFrameEntryQueue ();
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     void  PushOnFront (LogicalFrameEntryPtr  entry);
 

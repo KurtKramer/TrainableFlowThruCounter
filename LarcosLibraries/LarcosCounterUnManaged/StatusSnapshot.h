@@ -83,7 +83,7 @@ namespace LarcosCounterUnManaged
 
     ~StatusSnapshot ();
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     void  Assign (const StatusSnapshot&   _entry);
 

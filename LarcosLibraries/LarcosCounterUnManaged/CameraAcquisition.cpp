@@ -307,17 +307,17 @@ CameraAcquisition::~CameraAcquisition ()
 
 
 
-kkint32 CameraAcquisition::MemoryConsumedEstimated ()
+kkMemSize CameraAcquisition::MemoryConsumedEstimated ()
 {
   kkint32 frameBufferSize = 0;
   if  (frameBuffer)
     frameBufferSize = frameBuffer->MemoryConsumedEstimated ();
 
-  kkint32 memConsumed =  CameraThread::MemoryConsumedEstimated ()        + 
-                       6 * sizeof (kkint32)                              + 
-                       sizeof (CameraFrameBufferPtr) + frameBufferSize +
-                       sizeof (frameRate)                              +
-                       sizeof (cameraTemparature);
+  kkMemSize memConsumed =  CameraThread::MemoryConsumedEstimated ()        + 
+                           6 * sizeof (kkint32)                              + 
+                           sizeof (CameraFrameBufferPtr) + frameBufferSize +
+                           sizeof (frameRate)                              +
+                           sizeof (cameraTemparature);
 
   if  (cameraParams)
     memConsumed += cameraParams->MemoryConsumedEstimated ();

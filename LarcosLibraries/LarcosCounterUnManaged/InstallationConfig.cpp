@@ -173,7 +173,7 @@ bool  InstallationConfig::FlowMeterPresent () const
 
 
 
-kkint32  InstallationConfig::MemoryConsumedEstimated ()  const
+kkMemSize  InstallationConfig::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this) + description.MemoryConsumedEstimated ()  + name.MemoryConsumedEstimated ();
 }

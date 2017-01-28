@@ -157,7 +157,7 @@ StatusSnapshot::~StatusSnapshot ()
 
 
 
-kkint32  StatusSnapshot::MemoryConsumedEstimated ()  const
+kkMemSize  StatusSnapshot::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }

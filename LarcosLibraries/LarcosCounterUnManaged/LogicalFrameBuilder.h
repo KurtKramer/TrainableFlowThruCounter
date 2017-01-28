@@ -101,7 +101,7 @@ namespace LarcosCounterUnManaged
      * @brief  Returns an estimate of the amount of memory consumed in bytes.
      * @details This will help Managed-Objects keep track of how much memory they are using in the unmanaged world.
      */
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated ();
 
     virtual  void  ResetCounts ();
 

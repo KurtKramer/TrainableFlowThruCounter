@@ -72,7 +72,7 @@ ShrimpLengthComputer::~ShrimpLengthComputer ()
 
 
 
-kkint32  ShrimpLengthComputer::MemoryConsumedEstimated ()  const
+kkMemSize  ShrimpLengthComputer::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }

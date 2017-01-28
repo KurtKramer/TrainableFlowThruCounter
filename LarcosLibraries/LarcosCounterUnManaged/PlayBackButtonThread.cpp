@@ -49,7 +49,7 @@ PlayBackButtonThread::~PlayBackButtonThread ()
 
 
 
-kkint32  PlayBackButtonThread::MemoryConsumedEstimated ()
+kkMemSize  PlayBackButtonThread::MemoryConsumedEstimated ()
 {
   return  sizeof (PlayBackButtonThread);
 }

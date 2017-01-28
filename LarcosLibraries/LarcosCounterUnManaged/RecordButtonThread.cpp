@@ -48,7 +48,7 @@ RecordButtonThread::~RecordButtonThread ()
 
 
 
-kkint32  RecordButtonThread::MemoryConsumedEstimated ()
+kkMemSize  RecordButtonThread::MemoryConsumedEstimated ()
 {
   return  sizeof (RecordButtonThread);
 }

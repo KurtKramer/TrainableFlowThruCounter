@@ -38,7 +38,7 @@ namespace LarcosCounterUnManaged
 
     virtual ~OperatingParameters ();
 
-    virtual  int  MemoryConsumedEstimated ()  const;
+    virtual  kkMemSize  MemoryConsumedEstimated ()  const;
 
     void  Assign (const OperatingParameters&  parms);
 

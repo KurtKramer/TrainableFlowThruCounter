@@ -57,7 +57,7 @@ StatusSnapshotThread::~StatusSnapshotThread ()
 
 
 
-kkint32  StatusSnapshotThread::MemoryConsumedEstimated ()
+kkMemSize  StatusSnapshotThread::MemoryConsumedEstimated ()
 {
   return  sizeof (StatusSnapshotThread);
 }

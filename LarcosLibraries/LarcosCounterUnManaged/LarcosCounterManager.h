@@ -109,7 +109,7 @@ namespace LarcosCounterUnManaged
      *@details This will help managed objects keep track of how much memory 
      * they are using in the unmanaged world.
      */
-    kkint64   MemoryConsumedEstimated ();
+    kkMemSize   MemoryConsumedEstimated ();
 
 
     /**

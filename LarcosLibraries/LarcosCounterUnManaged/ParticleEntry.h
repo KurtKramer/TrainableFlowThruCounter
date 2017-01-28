@@ -50,7 +50,7 @@ namespace LarcosCounterUnManaged
 
     ~ParticleEntry ();
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
 
     const KKStr&  ScannerFileRootName () const {return scannerFileRootName;}
@@ -236,7 +236,7 @@ namespace LarcosCounterUnManaged
 
     ~ParticleEntryBuffer ();
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     void  Add (ParticleEntryList&   list);
 

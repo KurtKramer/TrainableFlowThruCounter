@@ -50,7 +50,7 @@ LarcosDataRec::~LarcosDataRec ()
 
 
 
-int  LarcosDataRec::MemoryConsumedEstimated ()  const
+kkMemSize  LarcosDataRec::MemoryConsumedEstimated ()  const
 {
   return sizeof (*this);
 }

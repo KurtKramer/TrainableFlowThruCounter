@@ -430,9 +430,9 @@ void  LarcosCounterManager::InitializeFlowMeterTracker ()
 
 
 
-kkint64  LarcosCounterManager::MemoryConsumedEstimated ()
+kkMemSize  LarcosCounterManager::MemoryConsumedEstimated ()
 {
-  kkint32  memoryConsumed =  sizeof (LarcosCounterManager);
+  kkMemSize  memoryConsumed =  sizeof (LarcosCounterManager);
 
   CameraThreadList::const_iterator  idx;
   if  (allThreads)
