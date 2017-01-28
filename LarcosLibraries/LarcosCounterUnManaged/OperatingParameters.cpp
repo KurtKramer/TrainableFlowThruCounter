@@ -77,7 +77,7 @@ OperatingParameters::~OperatingParameters ()
 
 
 
-int  OperatingParameters::MemoryConsumedEstimated ()  const
+kkMemSize  OperatingParameters::MemoryConsumedEstimated ()  const
 {
   return sizeof (*this);
 }

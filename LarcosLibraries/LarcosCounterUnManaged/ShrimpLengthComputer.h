@@ -36,7 +36,7 @@ namespace LarcosCounterUnManaged
     virtual
     ~ShrimpLengthComputer ();
 
-    virtual  kkint32  MemoryConsumedEstimated ()  const;
+    virtual  kkMemSize  MemoryConsumedEstimated ()  const;
 
     RasterPtr  DemoImage                 () const  {return demoImage;}
     kkint32    ErosionStructSize         () const  {return erosionStructSize;}

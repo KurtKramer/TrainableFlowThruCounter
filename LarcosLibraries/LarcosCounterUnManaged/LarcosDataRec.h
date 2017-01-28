@@ -27,12 +27,12 @@ namespace LarcosCounterUnManaged
                    const KKStr&   _sectionName
                   );
 
-     LarcosDataRec (const LarcosDataRec&   _larcosDataRec);
+     LarcosDataRec (const LarcosDataRec&  _larcosDataRec);
 
 
     virtual ~LarcosDataRec ();
 
-    virtual  int  MemoryConsumedEstimated ()  const;
+    virtual  kkMemSize  MemoryConsumedEstimated ()  const;
 
     virtual
     void  AddToHeaderFields (ScannerHeaderFieldsPtr  headerFields) = 0;
@@ -61,7 +61,6 @@ namespace LarcosCounterUnManaged
 
     virtual
     void  WriteFieldValues (std::ostream&   o)  const = 0;
-
 
 
   protected:
@@ -113,7 +112,7 @@ namespace LarcosCounterUnManaged
       */
      virtual
      const KKStr&  GetScannerFileValue (ScannerFilePtr  sf, 
-                                        const KKStr&  fieldName
+                                        const KKStr&    fieldName
                                        );
 
 
@@ -130,11 +129,11 @@ namespace LarcosCounterUnManaged
 
 
      kkint32  GetScannerFileValueInt32   (ScannerFilePtr  sf, 
-                                        const KKStr&    fieldName,
-                                        kkint32         curValue
-                                       );
+                                          const KKStr&    fieldName,
+                                          kkint32         curValue
+                                         );
 
-     float  GetScannerFileValueFloat   (ScannerFilePtr  sf, 
+     float  GetScannerFileValueFloat   (ScannerFilePtr  sf,
                                         const KKStr&    fieldName,
                                         float           curValue
                                        );
@@ -155,7 +154,6 @@ namespace LarcosCounterUnManaged
     KKStr   scannerFilePrefix;
     KKStr   sectionName;
   };  /* LarcosDataRec */
-
 
 }  /* LarcosCounterUnManaged */
 

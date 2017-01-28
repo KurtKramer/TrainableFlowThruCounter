@@ -85,7 +85,7 @@ LogicalFrameEntry::~LogicalFrameEntry ()
 
 
 
-kkint32  LogicalFrameEntry::MemoryConsumedEstimated ()  const
+kkMemSize  LogicalFrameEntry::MemoryConsumedEstimated ()  const
 {
   return sizeof (*this);
 }
@@ -147,9 +147,9 @@ LogicalFrameEntryList::~LogicalFrameEntryList ()
 
 
 
-kkint32  LogicalFrameEntryList::MemoryConsumedEstimated ()  const
+kkMemSize  LogicalFrameEntryList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (*this);
+  kkMemSize  memoryConsumedEstimated = sizeof (*this);
   if  (Owner ())
   {
     const_iterator idx;
@@ -190,9 +190,9 @@ LogicalFrameEntryQueue::~LogicalFrameEntryQueue ()
 }
 
 
-kkint32  LogicalFrameEntryQueue::MemoryConsumedEstimated ()  const
+kkMemSize  LogicalFrameEntryQueue::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (*this);
+  kkMemSize  memoryConsumedEstimated = sizeof (*this);
   if  (owner)
   {
     const_iterator idx;

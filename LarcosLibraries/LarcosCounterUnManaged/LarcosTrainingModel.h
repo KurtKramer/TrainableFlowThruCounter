@@ -37,7 +37,7 @@ namespace LarcosCounterUnManaged
 
     ~LarcosTrainingModel ();
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     const KKStr&   Subject           () const {return subject;}
     const KKStr&   Size              () const {return size;}

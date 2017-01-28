@@ -51,7 +51,7 @@ CameraAutoGainThread::~CameraAutoGainThread ()
 
 
 
-kkint32  CameraAutoGainThread::MemoryConsumedEstimated ()
+kkMemSize  CameraAutoGainThread::MemoryConsumedEstimated ()
 {
   return  sizeof (CameraAutoGainThread);
 }

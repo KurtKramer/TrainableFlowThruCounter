@@ -77,7 +77,7 @@ ReportWriterThread::~ReportWriterThread ()
 
 
 
-kkint32  ReportWriterThread::MemoryConsumedEstimated ()
+kkMemSize  ReportWriterThread::MemoryConsumedEstimated ()
 {
   return  sizeof (ReportWriterThread);
 }

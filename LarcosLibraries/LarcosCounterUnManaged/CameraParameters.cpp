@@ -73,7 +73,7 @@ CameraParameters::~CameraParameters ()
 
 
 
-kkint32  CameraParameters::MemoryConsumedEstimated ()
+kkMemSize  CameraParameters::MemoryConsumedEstimated ()
 {
   return  sizeof (CameraParameters) + 
     deviceVendorName.MemoryConsumedEstimated ()  +

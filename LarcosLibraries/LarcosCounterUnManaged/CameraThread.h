@@ -53,7 +53,7 @@ namespace  LarcosCounterUnManaged
       * help managed objects keep track of how much memory they are using in the 
       * unmanaged world.
       */
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated ();
 
 
     virtual  void  Run ();
@@ -106,7 +106,7 @@ namespace  LarcosCounterUnManaged
     //CameraThreadList (const CameraThreadList&  list);
     ~CameraThreadList ();
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     void  DeleteAllStoppedThreads ();
 

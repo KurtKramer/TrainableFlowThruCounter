@@ -65,7 +65,7 @@ namespace LarcosCounterUnManaged
      *@details This will help managed objects keep track of how much memory they are using in the 
      * unmanaged world.
      */
-    virtual  kkint32  MemoryConsumedEstimated ()  const;
+    virtual  kkMemSize  MemoryConsumedEstimated ()  const;
 
 
     // Access Methods

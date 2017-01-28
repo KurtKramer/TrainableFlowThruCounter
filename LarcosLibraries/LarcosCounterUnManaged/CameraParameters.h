@@ -15,7 +15,7 @@ namespace LarcosCounterUnManaged
     CameraParameters ();
     ~CameraParameters ();
 
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated ();
 
     float         AnalogGain       () const {return analogGain;}
     const KKStr&  DeviceVendorName () const {return deviceVendorName;}

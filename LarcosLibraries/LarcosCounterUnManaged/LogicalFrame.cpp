@@ -87,9 +87,9 @@ void  LogicalFrame::CleanUpMemory()
 
 
 
-kkint32 LogicalFrame::MemoryConsumedEstimated ()  const
+kkMemSize  LogicalFrame::MemoryConsumedEstimated ()  const
 {
-  //                                                                frameLinesArea  +               frameLines
+  //                                         frameLinesArea  +                  frameLines
   int  memConsumed = sizeof (LogicalFrame) + bytesAllocated * sizeof(uchar)   + frameHeight * sizeof(uchar*);
   return  memConsumed;
 }
@@ -195,7 +195,7 @@ LogicalFrameList::~LogicalFrameList ()
 
 
 
-kkint32  LogicalFrameList::MemoryConsumedEstimated ()  const
+kkMemSize  LogicalFrameList::MemoryConsumedEstimated ()  const
 {
   kkint32  memConsumed = sizeof (LogicalFrameList);
   LogicalFrameVector::const_iterator  idx;

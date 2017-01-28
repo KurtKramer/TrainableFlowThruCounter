@@ -71,7 +71,7 @@ void  CameraThread::TerminateFlagChanged ()
 
 
 
-kkint32 CameraThread::MemoryConsumedEstimated ()
+kkMemSize  CameraThread::MemoryConsumedEstimated ()
 {
   return  KKThread::MemoryConsumedEstimated () + log.MemoryConsumedEstimated ();
 }
@@ -109,9 +109,9 @@ CameraThreadList::~CameraThreadList ()
 
 
 
-kkint32  CameraThreadList::MemoryConsumedEstimated ()  const
+kkMemSize  CameraThreadList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (*this) + size () * sizeof (void*);
+  kkMemSize  memoryConsumedEstimated = sizeof (*this) + size () * sizeof (void*);
   if  (this->Owner ())
   {
     CameraThreadList::const_iterator idx;

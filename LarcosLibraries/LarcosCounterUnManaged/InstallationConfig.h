@@ -59,7 +59,7 @@ namespace LarcosCounterUnManaged
     virtual
       ~InstallationConfig ();
 
-    virtual  kkint32  MemoryConsumedEstimated ()  const;
+    virtual  kkMemSize  MemoryConsumedEstimated ()  const;
 
     void  Assign (const InstallationConfig&  parms);
 

@@ -135,9 +135,9 @@ public:
   }
 
 
-  kkint32  MemoryConsumedEstimated ()
+  kkMemSize  MemoryConsumedEstimated ()
   {
-    kkint32  memoryConsumedEstimated = sizeof (BlobList) + sizeof (kkint32) * freedUpBlobs.size ();
+    kkMemSize  memoryConsumedEstimated = sizeof (BlobList) + sizeof (kkint32) * freedUpBlobs.size ();
 
     if  (blobList)
       memoryConsumedEstimated += blobListAllocated * sizeof (Blob);
@@ -529,9 +529,9 @@ void  LogicalFrameProcessor::CleanUpMemory()
 
 
 
-kkint32  LogicalFrameProcessor::MemoryConsumedEstimated ()  const
+kkMemSize  LogicalFrameProcessor::MemoryConsumedEstimated ()  const
 {
-  int  memConsumed = sizeof (LogicalFrameProcessor);
+  kkMemSize  memConsumed = sizeof (LogicalFrameProcessor);
 
   if  (blobs)
     memConsumed += blobs->MemoryConsumedEstimated ();

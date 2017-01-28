@@ -83,7 +83,7 @@ LoggerThread::~LoggerThread ()
 
 
 
-kkint32  LoggerThread::MemoryConsumedEstimated ()
+kkMemSize  LoggerThread::MemoryConsumedEstimated ()
 {
   return  sizeof (LoggerThread);
 }
