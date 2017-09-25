@@ -312,14 +312,6 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\KSquareLibraries\KKControls\KKControls.csproj">
-      <Project>{3404fea2-61a5-4102-9280-729ac235a031}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\KSquareLibraries\KKLineScanner\KKLineScanner.vcxproj">
       <Project>{65b4e499-f9c5-472a-b5d1-90541f817513}</Project>
       <Private>true</Private>
