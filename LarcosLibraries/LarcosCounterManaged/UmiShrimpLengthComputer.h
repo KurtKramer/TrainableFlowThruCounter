@@ -45,6 +45,6 @@ namespace LarcosCounterManaged
 
   private:
     ShrimpLengthComputerPtr   lengthComputer;
-    int                       allocatedMemory;
+    kkMemSize                 allocatedMemory;
   };  /* UmiShrimpLengthComputer */
 }

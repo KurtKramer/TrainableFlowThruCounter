@@ -672,10 +672,10 @@ void  CameraFrameBuffer::DoneProcessingFrame (CameraFramePtr  frame)
 
 
 
-kkMemSize CameraFrameBuffer::MemoryConsumedEstimated ()
+kkMemSize CameraFrameBuffer::MemoryConsumedEstimated ()  const
 {
   gateKeeper->StartBlock ();
-  kkint32 memoryConsumed = sizeof (CameraFrameBuffer) + buffer->size () * frameHeight * frameWidth;
+  kkMemSize memoryConsumed = sizeof (CameraFrameBuffer) + buffer->size () * frameHeight * frameWidth;
   gateKeeper->EndBlock ();
   return  memoryConsumed;
 }  /* MemoryConsumedEstimated */

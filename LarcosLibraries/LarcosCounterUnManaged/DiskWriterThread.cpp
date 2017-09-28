@@ -174,7 +174,7 @@ void  DiskWriterThread::AddCameraLineToHeaderFields (ScannerFilePtr  scannerFile
   if  ((!highPoints)  ||  (!scannerFile))
     return;
 
-  kkint32  width = highPoints->size ();
+  kkint32  width = (kkint32)highPoints->size ();
 
   KKStr  highPointsStr (width * 4 + 10);  // 3 Bytes per pixel plus one byte for comma.
   highPointsStr << (*highPoints)[0];

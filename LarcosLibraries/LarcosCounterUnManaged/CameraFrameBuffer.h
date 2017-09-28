@@ -121,7 +121,7 @@ namespace LarcosCounterUnManaged
     // Returns an estimate of the amount of memory consumed in bytes.  This will 
     // help managed objects keep track of how much memory they are using in the 
     // unmanaged world.
-    kkMemSize  MemoryConsumedEstimated ();  
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
 
     void  MaxNumOfBuffers (kkint32 _maxNumOfBuffers)  {maxNumOfBuffers = _maxNumOfBuffers;}
