@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Printing;
 using System.Windows.Forms.DataVisualization.Charting;
 
-using Microsoft.Reporting.WinForms;
+//using Microsoft.Reporting.WinForms;
 
 using  LarcosCounterManaged;
 
