@@ -5,11 +5,11 @@
 #if  !defined(_CAMERAACQUISITIONPLEORA_)
 #define  _CAMERAACQUISITIONPLEORA_
 
-//#include <PvDeviceInfoGEV.h>
-//#include <PvDeviceGEV.h>
-//#include <PvPipeline.h>
-//#include <PvBuffer.h>
-//#include <PvStreamGEV.h>
+#include <PvDeviceInfoGEV.h>
+#include <PvDeviceGEV.h>
+#include <PvPipeline.h>
+#include <PvBuffer.h>
+#include <PvStreamGEV.h>
 
 #include "MsgQueue.h"
 
@@ -22,11 +22,16 @@ namespace LarcosCounterUnManaged
 //  #ifndef __PV_DEVICEINFO_H__
 //  class  __declspec( dllimport ) PvDeviceInfo;
 //  #endif
+  typedef  PvDeviceInfo*  PvDeviceInfoPtr;
   
   //#ifndef __PV_DEVICE_GEV_H__
   //class  PvDeviceGEV;
   //#endif
 
+  typedef  PvDeviceGEV*  PvDeviceGEVPtr;
+  typedef  PvStreamGEV*  PvStreamGEVPtr;
+  typedef  PvPipeline*   PvPipelinePtr;
+  
 
   /**
    *@class  CameraAcquisitionPleora
@@ -127,27 +132,6 @@ namespace LarcosCounterUnManaged
      */
     virtual  void  PerformAutoGainProcedureOld ();
     virtual  void  PerformAutoGainProcedure ();
-
-
-    class PvGenType { int zed; };
-
-
-
-    class  PvGenParameter {
-    public:
-      int zed;
-    };
-
-
-    class  PvGenParameterArray {
-      int zed;
-    };
-
-    class  PvResult {
-      int zed;
-    };
-
-
 
 
   private:
@@ -280,6 +264,29 @@ namespace LarcosCounterUnManaged
 
     void  RaiseDigitalGainUntilAtLeastHighValue (int  minHighValue);
 
+
+    PvDeviceGEV*          lDevice;
+    PvGenParameterArray*  lDeviceParams;   /**< Parameters of currently selected camera.  */
+    PvPipeline*           lPipeline;
+    PvStreamGEVPtr        lStream;
+    PvGenParameterArray*  lStreamParams;
+
+    PvGenInteger*         lAcquisitionLinePeriod;
+    PvGenFloat*           lAnalogGainAbs;
+    PvGenInteger*         lCameraTemparature;
+    PvGenInteger*         lDigitalGainRaw;
+    PvGenInteger*         lExposureTime;
+    PvGenFloat*           lFrameRate;
+    PvGenInteger*         lGain;
+    PvGenEnum*            lGainSelector;
+    PvGenInteger*         lIPAddressParam;
+    PvGenInteger*         lPayloadSize;
+    PvGenCommand*         lReadVoltageAndTemperature;
+    PvGenFloat*           lScanRate;
+    PvGenEnum*            lSensitivityMode;
+    PvGenCommand*         lStart;
+    PvGenCommand*         lStop;
+    PvGenInteger*         lTLLocked;
 
 
     kkint32               oneSecFrameInterval;    /**< Number of frames per second. */ 

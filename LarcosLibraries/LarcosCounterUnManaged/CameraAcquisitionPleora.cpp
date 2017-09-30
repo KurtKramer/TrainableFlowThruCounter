@@ -18,13 +18,13 @@
 using namespace std;
 
 
-//#include <PvDeviceFinderWnd.h>
-//#include <PvDeviceGEV.h>
-//#include <PvPipeline.h>
-//#include <PvBuffer.h>
-//#include <PvStreamGEV.h>
-////#include <PvStreamRaw.h>
-//#include <PvSystem.h>
+#include <PvDeviceFinderWnd.h>
+#include <PvDeviceGEV.h>
+#include <PvPipeline.h>
+#include <PvBuffer.h>
+#include <PvStreamGEV.h>
+//#include <PvStreamRaw.h>
+#include <PvSystem.h>
 
 #include "KKBaseTypes.h"
 #include "GoalKeeper.h"
@@ -46,6 +46,7 @@ using namespace  LarcosBase;
 #include "CameraAcquisition.h"
 #include "CameraFrame.h"
 #include "CameraFrameBuffer.h"
+#include "CameraAcquisitionPleora.h"
 #include "CameraParameters.h"
 #include "InstallationConfig.h"
 
@@ -80,6 +81,30 @@ CameraAcquisitionPleora::CameraAcquisitionPleora
                                       const KKStr&            _threadName
                                      ):
     CameraAcquisition (_manager, _frameBuffer, _flowMeter, _msgQueue, _threadName),
+
+    lDevice                    (NULL),
+    lDeviceParams              (NULL),
+    lPipeline                  (NULL),
+    lStream                    (NULL),
+    lStreamParams              (NULL),
+
+    lAcquisitionLinePeriod     (NULL),
+    lAnalogGainAbs             (NULL),
+    lCameraTemparature         (NULL),
+    lDigitalGainRaw            (NULL),
+    lExposureTime              (NULL),
+    lFrameRate                 (NULL),
+    lGain                      (NULL),
+    lGainSelector              (NULL),
+    lIPAddressParam            (NULL),
+    lPayloadSize               (NULL),
+    lReadVoltageAndTemperature (NULL),
+    lScanRate                  (NULL),
+    lSensitivityMode           (NULL),
+    lStart                     (NULL),
+    lStop                      (NULL),
+    lTLLocked                  (NULL),
+
 
     oneSecFrameInterval        (41),    /**< Number of frames at 480 Scan Lines per frame 20K scan rate for  1 second interval. */
     twoSecFrameInterval        (82),
@@ -119,6 +144,29 @@ CameraAcquisitionPleora::CameraAcquisitionPleora
                                      ):
     CameraAcquisition (_manager, _cameraParams, _frameBuffer, _flowMeter, _msgQueue, _threadName),
 
+    lDevice                    (NULL),
+    lDeviceParams              (NULL),
+    lPipeline                  (NULL),
+    lStream                    (NULL),
+    lStreamParams              (NULL),
+
+    lAcquisitionLinePeriod     (NULL),
+    lAnalogGainAbs             (NULL),
+    lCameraTemparature         (NULL),
+    lDigitalGainRaw            (NULL),
+    lExposureTime              (NULL),
+    lFrameRate                 (NULL),
+    lGain                      (NULL),
+    lGainSelector              (NULL),
+    lIPAddressParam            (NULL),
+    lPayloadSize               (NULL),
+    lReadVoltageAndTemperature (NULL),
+    lScanRate                  (NULL),
+    lSensitivityMode           (NULL),
+    lStart                     (NULL),
+    lStop                      (NULL),
+    lTLLocked                  (NULL),
+
     oneSecFrameInterval        (41),    /**< Number of frames at 480 Scan Lines per frame 20K scan rate for  1 second interval. */
     twoSecFrameInterval        (82),
     threeSecFrameInterval      (123),
@@ -154,12 +202,34 @@ CameraAcquisitionPleora::~CameraAcquisitionPleora ()
 
 void  CameraAcquisitionPleora::InitializeDeviceParameterAccessVariables ()
 {
+  lDeviceParams = lDevice->GetParameters();
+  lIPAddressParam            = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("IPAddressParam"));
+  lTLLocked                  = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("TLParamsLocked"));
+  lPayloadSize               = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("PayloadSize"));
+  lStart                     = dynamic_cast<PvGenCommand *> (lDeviceParams->Get ("AcquisitionStart"));
+  lStop                      = dynamic_cast<PvGenCommand *> (lDeviceParams->Get ("AcquisitionStop"));
+  lReadVoltageAndTemperature = dynamic_cast<PvGenCommand *> (lDeviceParams->Get ("ReadVoltageAndTemperature"));
+  lScanRate                  = dynamic_cast<PvGenFloat   *> (lDeviceParams->Get ("AcquisitionLineRateAbs"));
+  lGainSelector              = dynamic_cast<PvGenEnum    *> (lDeviceParams->Get ("GainSelector"));
+  lAnalogGainAbs             = dynamic_cast<PvGenFloat   *> (lDeviceParams->Get ("GainAbs"));
+  lDigitalGainRaw            = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("DigitalGainRaw"));
+
+  lSensitivityMode           = dynamic_cast<PvGenEnum    *> (lDeviceParams->Get ("SensitivityMode"));
+  lGain                      = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("Gain"));
+  lAcquisitionLinePeriod     = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("AcquisitionLinePeriod"));
+  lExposureTime              = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("ExposureTime"));
+  lCameraTemparature         = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("CameraTemparature"));
+
+  if  (!lCameraTemparature)
+    lCameraTemparature = dynamic_cast<PvGenInteger *>(lDeviceParams->Get ("DeviceTemperature"));
 }  /* InitializeDeviceParameterAccessVariables */
 
 
 
 void  CameraAcquisitionPleora::InitializeStreamParameterAccessVariables ()
 {
+  lStreamParams = lStream->GetParameters ();
+  lFrameRate    = dynamic_cast<PvGenFloat *>  (lStreamParams->Get ("AcquisitionRateAverage"));
 }
 
 
@@ -168,6 +238,20 @@ void  CameraAcquisitionPleora::InitializeStreamParameterAccessVariables ()
 const char*  CameraAcquisitionPleora::PvGenTypeToCStr (PvGenType  genType)
 {
   const char* s = "UnKnown";
+  switch  (genType)
+  {
+  case  PvGenTypeInteger:    s = "Integer";    break;
+  case  PvGenTypeEnum:       s = "Enum";       break;
+  case  PvGenTypeBoolean:    s = "Boolean";    break;
+  case  PvGenTypeString:     s = "String";     break;
+  case  PvGenTypeCommand:    s = "Command";    break;
+  case  PvGenTypeFloat:      s = "Float";      break;
+  case  PvGenTypeRegister:   s = "register";   break;
+  case  PvGenTypeUndefined:  s = "Undefined";  break;
+  default:
+    s = "UnKnown";
+  }
+
   return s;
 }  /* PvGenTypeToCStr */
 
@@ -178,7 +262,37 @@ double  CameraAcquisitionPleora::GetPvParameterFloat (PvGenParameterArray*  para
                                                       double                defaultValue  /**< Value if parameter not available. */
                                                      )
 {
-  return 0.0;
+  if  (!params)
+    return defaultValue;
+
+  double result = defaultValue;
+
+  PvGenParameter*  param = params->Get (paramName.Str ());
+  if  (param)
+  {
+    PvGenType  pvGenType;
+    if  (param->GetType (pvGenType).IsOK ())
+    {
+      if  (pvGenType == PvGenTypeFloat)
+      {
+        PvGenFloat*  pvGenFloat = dynamic_cast<PvGenFloat *> (param);
+        double  pvFloat;
+        if  (pvGenFloat->GetValue (pvFloat).IsOK ())
+          result = pvFloat;
+      }
+    }
+    else
+    {
+      PvString  pvString;
+      if  (param->ToString (pvString).IsOK ())
+      {
+        KKStr  s = pvString.GetAscii ();
+        result = s.ToDouble ();
+      }
+    }
+  }
+
+  return result;
 }  /* GetPvParameterFloat */
 
 
@@ -188,8 +302,37 @@ kkint64  CameraAcquisitionPleora::GetPvParameterInteger (PvGenParameterArray*  p
                                                          kkint64               defaultValue
                                                         )
 {
+  if  (!params)
+    return defaultValue;
 
-  return 0;
+  kkint64  result = defaultValue;
+
+  PvGenParameter*  param = params->Get (paramName.Str ());
+  if  (param)
+  {
+    PvGenType  pvGenType;
+    if  (param->GetType (pvGenType).IsOK ())
+    {
+      if  (pvGenType == PvGenTypeInteger)
+      {
+        PvGenInteger*  pvGenInteger = dynamic_cast<PvGenInteger *> (param);
+        int64_t  pvInt;
+        if  (pvGenInteger->GetValue (pvInt).IsOK ())
+          result = pvInt;
+      }
+    }
+    else
+    {
+      PvString  pvString;
+      if  (param->ToString (pvString).IsOK ())
+      {
+        KKStr  s = pvString.GetAscii ();
+        result = s.ToInt64 ();
+      }
+    }
+  }
+
+  return result;
 }  /* GetPvParameterInteger */
 
 
@@ -199,7 +342,37 @@ kkint32  CameraAcquisitionPleora::GetPvParameterEnum (PvGenParameterArray*  para
                                                     kkint32               defaultValue
                                                    )
 {
-  return 0;
+  if  (!params)
+    return defaultValue;
+
+  kkint64  result = defaultValue;
+
+  PvGenParameter*  param = params->Get (paramName.Str ());
+  if  (param)
+  {
+    PvGenType  pvGenType;
+    if  (param->GetType (pvGenType).IsOK ())
+    {
+      if  (pvGenType == PvGenTypeEnum)
+      {
+        PvGenEnum*  pvGenEnum = dynamic_cast<PvGenEnum *> (param);
+        int64_t  pvInt;
+        if  (pvGenEnum->GetValue (pvInt).IsOK ())
+          result = pvInt;
+      }
+    }
+    else
+    {
+      PvString  pvString;
+      if  (param->ToString (pvString).IsOK ())
+      {
+        KKStr  s = pvString.GetAscii ();
+        result = s.ToInt64 ();
+      }
+    }
+  }
+
+  return (kkint32)result;
 }  /* GetPvParameterEnum */
 
 
@@ -210,7 +383,19 @@ KKStr  CameraAcquisitionPleora::GetPvParameterEnumStr (PvGenParameterArray*  par
                                                        const KKStr&          defaultValue
                                                       )
 {
+  if  (!params)
+    return defaultValue;
+
   KKStr  result = defaultValue;
+
+  PvGenParameter*  param = params->Get (paramName.Str ());
+  if  (param)
+  {
+    PvString  pvString;
+    if  (param->ToString (pvString).IsOK ())
+     result  = pvString.GetAscii ();
+  }
+
   return  result;
 }  /* GetPvParameterEnumStr */
 
@@ -224,7 +409,33 @@ KKStr  CameraAcquisitionPleora::GetPvParameterString (PvGenParameterArray*  para
                                                       const KKStr&          defaultValue
                                                      )
 {
-  KKStr result = defaultValue;
+  if  (!params)
+    return defaultValue;
+
+  KKStr  result = defaultValue;
+
+  PvGenParameter*  param = params->Get (paramName.Str ());
+  if  (param)
+  {
+    PvGenType  pvGenType;
+    if  (param->GetType (pvGenType).IsOK ())
+    {
+      if  (pvGenType == PvGenTypeString)
+      {
+        PvGenString*  pvGenString = dynamic_cast<PvGenString *> (param);
+        PvString  pvString;
+        if  (pvGenString->GetValue (pvString).IsOK ())
+          result = pvString.GetAscii ();
+      }
+    }
+    else
+    {
+      PvString  pvString;
+      if  (param->ToString (pvString).IsOK ())
+        result = pvString.GetAscii ();
+    }
+  }
+
   return result;
 }  /* GetPvParameterString */
 
@@ -239,6 +450,38 @@ void  CameraAcquisitionPleora::SetPvParameterEnum (const KKStr&  paramName,
                                                   )
 {
   successful = false;
+  PvGenEnum*  lParam = dynamic_cast<PvGenEnum*> (lDeviceParams->Get (paramName.Str ()));
+  if  (!lParam)
+  {
+    errMsg = "Parameter name not valid.";
+    return;
+  }
+
+  PvResult   pvR;
+  bool writable = false;
+  pvR = lParam->IsWritable (writable);
+  if  (!pvR.IsOK ())
+  {
+    errMsg = "Could not determine if parameter is writable.";
+    return;
+  }
+
+  if  (!writable)
+  {
+    errMsg = "Parameter is not writable.";
+    return;
+  }
+
+  PvString enumStr = value.Str ();
+  pvR = lParam->SetValue (enumStr);
+  if  (!pvR.IsOK ())
+  {
+    errMsg = PvResultToStr  (pvR);
+    return;
+  }
+
+  errMsg = "";
+  successful = true;
   return;
 }  /* SetPvParameterEnum */
 
@@ -250,6 +493,36 @@ void  CameraAcquisitionPleora::SetPvParameterBool (const KKStr&  paramName,
                                                    KKStr&        errMsg
                                                   )
 {
+  successful = false;
+  PvGenBoolean*  lParam = dynamic_cast<PvGenBoolean*> (lDeviceParams->Get (paramName.Str ()));
+  if  (!lParam)
+  {
+    errMsg = "Parameter name not valid.";
+    return;
+  }
+
+  PvResult   pvR;
+  bool writable = false;
+  pvR = lParam->IsWritable (writable);
+  if  (!pvR.IsOK ())
+  {
+    errMsg = "Could not determine if parameter is writable.";
+    return;
+  }
+
+  if  (!writable)
+  {
+    errMsg = "Parameter is not writable.";
+    return;
+  }
+
+  pvR = lParam->SetValue (value);
+  if  (!pvR.IsOK ())
+  {
+    errMsg = PvResultToStr (pvR);
+    return;
+  }
+
   errMsg = "";
   successful = true;
   return;
@@ -278,6 +551,104 @@ KKStr  CameraAcquisitionPleora::Int64ToIpAddress (int64_t i)
 
 void  CameraAcquisitionPleora::AddToHeaderField (PvGenParameter*  p)
 {
+  if  (!p)  return;
+
+  KKStr returnStr (512);
+  
+  PvString   aName;
+  PvGenType  aType;
+  
+  if  (!p->GetName (aName).IsOK ())
+    return;
+
+  KKStr  fieldName = aName.GetAscii ();
+  
+
+  KKStr  value = "";
+
+  p->GetType (aType);
+
+  log.Level (40) << "CameraAcquisitionPleora::AddToHeaderField    FieldName[" << fieldName << "]"
+                 << "  Type[" << PvGenTypeToCStr (aType) << "]." << endl;
+
+  switch  (aType)
+  {
+  case  PvGenTypeInteger:
+    {
+      PvGenInteger *lGenInteger = dynamic_cast<PvGenInteger *>(p);
+      int64_t i;
+      if  (lGenInteger->GetValue (i).IsOK ())
+        value = StrFromInt64 (i);
+      else
+        value = "***ERROR***";
+    }
+    break;
+
+  case  PvGenTypeEnum:       
+    {
+      PvString enumValue;
+      PvGenEnum*  pvEnum = dynamic_cast<PvGenEnum *>(p);
+      if  (pvEnum->GetValue (enumValue).IsOK ())
+        value = enumValue.GetAscii ();
+      else
+        value = "***ERROR***";
+    }
+    break;
+
+  case  PvGenTypeBoolean:
+    {
+      PvGenBoolean  *pvBool = dynamic_cast<PvGenBoolean *>(p);
+      bool b = false;
+      if  (pvBool->GetValue (b).IsOK ())
+        value = (b ? "True" : "False");
+      else
+        value = "***ERROR***";
+    }
+    break;
+
+  case  PvGenTypeString:
+    {
+      PvString  pvString;
+      PvGenString  *pStr = dynamic_cast<PvGenString *>(p);
+      if  (pStr->GetValue (pvString).IsOK ())
+        value = pvString.GetAscii ();
+      else
+        value = "***ERROR***";
+    }
+    break;
+
+  case  PvGenTypeCommand:    
+    value = "Command";    
+    break;
+
+  case  PvGenTypeFloat:  
+    {
+      double  d;
+      PvGenFloat*  pvFloat =  dynamic_cast<PvGenFloat *>(p);
+      if  (pvFloat->GetValue (d).IsOK ())
+      {
+        value = StrFormatDouble (d, "######0.00000");
+      }
+      else
+        value = "***ERROR***";
+    }
+    break;
+
+  case  PvGenTypeRegister:   
+    value = "register";
+    break;
+
+
+  case  PvGenTypeUndefined:  
+    value = "Undefined";
+    break;
+
+  default:
+    value = "UnKnown";
+  }
+
+  Manager ()->AddHeaderField (fieldName, value);
+  log.Level (10) << "AddToHeaderField\t" << fieldName << "\t" << value << endl;
 }  /* AddToHeaderField */
 
 
@@ -285,6 +656,30 @@ void  CameraAcquisitionPleora::AddToHeaderField (PvGenParameter*  p)
 
 void   CameraAcquisitionPleora::AddPleoraVariableToHeaderField (const KKStr&  varName)
 {
+  log.Level (40) << "CameraAcquisitionPleora::AddPleoraVariableToHeaderField    VarName[" << varName << "]." << endl;
+
+  if  (lDevice == NULL)
+  {
+    log.Level (10) << "CameraAcquisitionPleora::AddPleoraVariableToHeaderField  VarName[" << varName << "]     ***  lDevice== NULL   ***." << endl;
+    return;
+  }
+
+  if  (!lDeviceParams)
+    lDeviceParams = lDevice->GetParameters ();
+
+  PvString  pvVarName = varName.Str ();
+
+  PvGenParameter*  lPvGenParam = NULL;
+  lPvGenParam = lDeviceParams->Get (pvVarName);
+
+  if  (!lPvGenParam)
+  {
+    log.Level (10) << "Invalid Pleora Variable Name :" << varName.QuotedStr () << endl;
+  }
+  else
+  {
+    AddToHeaderField (lPvGenParam);
+  }
 }
 
 
@@ -296,6 +691,48 @@ void   CameraAcquisitionPleora::CameraParametersPopulate (PvGenParameterArray*  
                                                          )
 {
   runLog.Level (40) << "CameraAcquisitionPleora::CameraParametersPopulate " << ((params == NULL) ? "***  params == NULL  ***" : "") << endl;
+
+  if  (!params)
+    return;
+
+  kkint32  acquisitionLinePeriod = 0;
+  float  scanRate = 0.0f;
+  float  analogGain = 0.0f;
+
+  analogGain = (float)GetPvParameterFloat (params, "GainAbs", -1.0);
+  scanRate = (float)GetPvParameterFloat  (params, "AcquisitionLineRateAbs", 0.0);
+
+  cameraParams.DeviceVendorName (GetPvParameterString           (params, "DeviceVendorName", ""));
+  cameraParams.DeviceModelName  (GetPvParameterString           (params, "DeviceModelName",  ""));
+  cameraParams.DeviceVersion    (GetPvParameterString           (params, "DeviceVersion",    ""));
+  cameraParams.DigitalGain      ((kkint32)GetPvParameterInteger (params, "DigitalGainRaw",   -1));
+  cameraParams.FrameHeight      ((kkint32)GetPvParameterInteger (params, "Height",            0));
+  cameraParams.FrameWidth       ((kkint32)GetPvParameterInteger (params, "Width",             0));
+  cameraParams.Model            (GetPvParameterString           (params, "DeviceModelName",  ""));
+  cameraParams.SensitivityMode  (GetPvParameterEnumStr          (params, "SensitivityMode",  -1));
+
+  kkint64  ipAddr = GetPvParameterInteger (params, "GevCurrentIPAddress",    0);
+  cameraParams.IpAddress (Int64ToIpAddress (ipAddr));
+
+  if  (cameraParams.DeviceModelName ().EqualIgnoreCase ("DiviinaLM1GE"))
+  {
+    acquisitionLinePeriod = (kkint32)GetPvParameterInteger (params, "AcquisitionLinePeriod", -1);
+    analogGain            = (float)GetPvParameterInteger (params, "Gain",                  -1);
+  }
+
+  if  ((scanRate <= 0.0f)  &&  (acquisitionLinePeriod > 0))
+    scanRate = 1000000.0f / (float)acquisitionLinePeriod;
+
+  else if  ((scanRate > 0.0f)  &&  (acquisitionLinePeriod <= 0))
+    acquisitionLinePeriod = (kkint32)(0.5f + 1000000.0f / scanRate);
+
+  cameraParams.AnalogGain (analogGain);
+  cameraParams.LinePeriod (acquisitionLinePeriod);
+  cameraParams.ScanRate   (scanRate);
+
+
+  //result->serialNumber     = GetPvParameterString (lDeviceParams, "???????????????");
+  //result->macAddress       = GetPvParameterString (lDeviceParams, "DeviceModelName");
   return;
 }  /* CameraParametersPopulate */
 
@@ -303,12 +740,44 @@ void   CameraAcquisitionPleora::CameraParametersPopulate (PvGenParameterArray*  
 
 void  CameraAcquisitionPleora::SetGainTap (kkint64 gainTap)
 {
+  if  (lGainSelector)
+  {
+    PvResult  pvr = lGainSelector->SetValue (gainTap);
+    if  (!pvr.IsOK ())
+    {
+      KKStr  msg = "CameraAcquisitionPleora::SetGainTap   ***ERROR***  Setting GainTap to " + StrFormatInt64 (gainTap, "###,##0") + " " + PvResultToStr (pvr);
+      log.Level (-1) << msg << endl;
+    }
+
+    int64_t  tempGainTap = 0;
+    if  (lGainSelector->GetValue (tempGainTap).IsOK ())
+      gainTapSel = (kkint32)tempGainTap;
+    else
+      gainTapSel = -1;
+    log.Level (40) << "SetGainTap  GainTap value :" << gainTapSel << endl;
+  }
 }
 
 
 KKStr  CameraAcquisitionPleora::PvResultToStr (PvResult&  r)
 {
-  KKStr s = "";
+  KKStr   description = r.GetDescription ().GetAscii ();
+  kkuint32  code        = r.GetCode ();
+  KKStr   codeStr     = r.GetCodeString ().GetAscii ();
+
+  KKStr  s (512);
+  s << "Code [" << code << "," << codeStr  << "]";
+  if  (!description.Empty ())
+    s << " Desc [" << description << "].";
+
+  if  (r.IsFailure ())
+    s  << " Failed";
+
+  if  (r.IsPending ())
+    s << " Pending";
+
+  if  (r.IsSuccess ())
+    s << " Success";
 
   return  s;
 }  /* PvResultToStr */
@@ -318,23 +787,212 @@ KKStr  CameraAcquisitionPleora::PvResultToStr (PvResult&  r)
 
 void  CameraAcquisitionPleora::SetSensitivityMode (const KKStr& requestedSensitivityMode)
 {
+  if  (!lSensitivityMode)
+  {
+    log.Level (10) << "CameraAcquisitionPleora::SetSensitivityMode   ***ERROR***    \"lSensitivityMode\"  Not Defined." << endl;
+    return;
+  }
+
+  PvResult stopResult = lStop->Execute ();
+  if  (stopResult.IsOK ())
+  {
+    log.Level (40) << "SetSensitivityMode  Device Stopped :" << PvResultToStr (stopResult) << endl;
+  }
+  else
+  {
+    log.Level (-1) << "SetSensitivityMode  ***ERROR***    Failed to STOP Device :" << PvResultToStr (stopResult) << endl;
+  }
+
+
+  if  (lTLLocked)
+    lTLLocked->SetValue (0);
+
+  PvString  str (requestedSensitivityMode.Str ());
+  PvResult result = lSensitivityMode->SetValue (str);
+  if  (result.IsOK ())
+  {
+    log.Level (10) << "SetSensitivityMode   Sensitivity Mode set to :" << curSensitivityMode << endl;
+  }
+  else
+  {
+    KKStr msg (128);
+    msg << "SetSensitivityMode   ***ERROR***  Set SensitivityMode Failure Mode :" << requestedSensitivityMode << "  Result code :" << PvResultToStr (result);
+    log.Level (-1) << msg << endl;
+  }
+
+  {  
+    int64_t  tempSensitivityMode = 0;
+    if  (lSensitivityMode->GetValue (tempSensitivityMode).IsOK ())
+    {
+      switch  (tempSensitivityMode)
+      {
+      case 0:  curSensitivityMode = "Low";   break;
+      case 1:  curSensitivityMode = "High";  break;
+      case 2:  curSensitivityMode = "Tall";  break;
+      default: curSensitivityMode = "UnKnown";
+      }
+    }
+
+    log.Level (10) << "SetSensitivityMode  Sensitivity Mode set to :" << curSensitivityMode << endl;
+  }
+
+  // Need to get the Pipe Line Running again.
+  if  (lTLLocked)
+    lTLLocked->SetValue (1);
+  PvResult  startResult =  lStart->Execute ();
+  if  (startResult.IsOK ())
+  {
+    log.Level (40) << "SetSensitivityMode   Device start successful :" <<  PvResultToStr (startResult);
+  }
+  else
+  {
+    KKStr msg (128);
+    msg << "SetSensitivityMode   ***ERROR***   Start command failed :" <<  PvResultToStr (startResult);
+    log.Level (-1) << msg << endl;
+  }
 }   /* SetSensitivityMode */
 
 
 
 void  CameraAcquisitionPleora::SetScanRate  (float requestedScanRate)
-{}  /* SetScanRate */
+{
+  KKStr  requestedScanRateStr = StrFormatDouble (requestedScanRate, "-ZZZ,ZZ0.0");
+  if  (requestedScanRate < 1.0f)
+  {
+    log.Level (-1) << "CameraAcquisitionPleora::SetScanRate   ***ERROR***  Invalid RequestedScanRate :" << requestedScanRateStr << endl;
+    return;
+  }
+
+  if  (cameraParams->DeviceModelName ().EqualIgnoreCase ("DiviinaLM1GE"))
+  {
+    int64_t  acquisitionLinePeriod = (int)(0.5f + 1000000.0f / requestedScanRate);
+
+    if  (acquisitionLinePeriod < 55)
+    {
+      requestedScanRate = 1000000.0f / 55.0f;
+      KKStr newRequestedScanRateStr = StrFormatDouble (requestedScanRate, "-ZZZ,ZZ0.0");
+      KKStr warnMsg (128);
+      warnMsg  << "CameraAcquisitionPleora::SetScanRate   RequestedScanRate: " << requestedScanRateStr << "  too fast; adjusted to: " << StrFormatDouble (requestedScanRate, "###,##0.00");
+      log.Level (20) << warnMsg << endl;
+      requestedScanRateStr = newRequestedScanRateStr;
+      acquisitionLinePeriod = 55;
+    }
+
+    int64_t  exposureTime = acquisitionLinePeriod - 5;
+
+    if  (lExposureTime)
+    {
+      PvResult  pvr = lExposureTime->SetValue (exposureTime);
+      if  (!pvr.IsOK ())
+      {
+        KKStr  msg = "CameraAcquisitionPleora::SetScanRate   ***ERROR***  Could not set ExposureTime to: " +  PvResultToStr (pvr);
+        log.Level (-1) << endl << msg << endl << endl;
+      }
+      else 
+      {
+        pvr = lAcquisitionLinePeriod->SetValue (acquisitionLinePeriod);
+        if  (!pvr.IsOK ())
+        {
+          KKStr  msg = "CameraAcquisitionPleora::SetScanRate   ***ERROR***  Could not set AcquisitionLinePeriod to: " + PvResultToStr (pvr);
+          log.Level (-1) << endl << msg << endl << endl;
+        }
+      }
+    }
+  }
+  else
+  {
+    if  (lScanRate)
+    {
+      PvResult pvr = lScanRate->SetValue (requestedScanRate);
+      if  (!pvr.IsOK ())
+      {
+        log.Level (-1) << "CameraAcquisitionPleora::SetScanRate   ***ERROR***  Error setting ScanRate :" << requestedScanRate << " :" << PvResultToStr (pvr) << endl;
+      }
+
+      double  scanRateD = 0.0;
+      if  (lScanRate->GetValue (scanRateD).IsOK ())
+      {
+        curScanRate = (float)scanRateD;
+        cameraParams->ScanRate (curScanRate);
+        log.Level (10) << "SetScanRate   ScanRate set to : " << StrFormatDouble (scanRateD, "###,##0.0") << endl;
+        Manager ()->ScanRateChanged (curScanRate);
+        ComputeFramneIntervals ();
+      }
+    }
+  }
+}  /* SetScanRate */
 
 
 
 void  CameraAcquisitionPleora::SetAnalogGain  (float requestedAnalogGain)
 {
+  log.Level (40) << "SetAnalogGain   :" << requestedAnalogGain << endl;
+  if  (cameraParams->DeviceModelName ().EqualIgnoreCase ("DiviinaLM1GE"))
+  {
+    //analogGain = (float)GetPvParameterInteger (params, "Gain", -1);
+
+    int64_t  adjGain = (int)(800.0f * ((requestedAnalogGain + 10.0f) / 20.0f));
+
+    PvResult  pvr = lGain->SetValue (adjGain);
+    if  (!pvr.IsOK ())
+    {
+      KKStr  msg (128);
+      msg << "SetAnalogGain   ***ERROR***   Setting 'Gain' to : " << StrFormatInt ((int)adjGain, "##0") << "  Result Code :" << PvResultToStr (pvr);
+      log.Level (-1) << msg << endl;
+    }
+    if  (lGain->GetValue (adjGain).IsOK ())
+    {
+      curAnalogGain = (20.0f * (float)adjGain / 800.0f) - 10.0f;
+      cameraParams->AnalogGain ((float)curAnalogGain);
+      log.Level (10) << "SetAnalogGain   Gain set to :" << StrFormatInt ((int)adjGain, "##,##0") << endl;
+    }
+  }
+  else
+  {
+    if  (lAnalogGainAbs)
+    {
+      SetGainTap (0);
+
+      PvResult  pvSetResult = lAnalogGainAbs->SetValue (requestedAnalogGain);
+      if  (!pvSetResult.IsOK ())
+        log.Level (-1) << "SetAnalogGain   ***ERROR***   Error setting 'GainAbs' :" << PvResultToStr (pvSetResult) << endl;
+
+      double  analogGainD = 0.0;
+      PvResult pvGetResult = lAnalogGainAbs->GetValue (analogGainD);
+      if  (pvGetResult.IsOK ())
+      {
+        curAnalogGain = (float)analogGainD;
+        cameraParams->AnalogGain ((float)analogGainD);
+        log.Level (10) << "SetAnalogGain   Analog Gain set to :" << StrFormatDouble (analogGainD, "---,--0.0") << endl;
+      }
+    }
+  }
 }  /* SetAnalogGain */
 
 
 
 void  CameraAcquisitionPleora::SetDigitalGain  (kkint32 requestedDigitalGain)
 {
+  if  (lDigitalGainRaw)
+  {
+    SetGainTap (0);
+
+    PvResult digitalGainRawSet = lDigitalGainRaw->SetValue (requestedDigitalGain);
+
+    if  (!digitalGainRawSet.IsOK ())
+    {
+      KKStr  msg = "SetDigitalGain   ***ERROR***  Setting DigitalGainRaw :" + StrFormatInt (requestedDigitalGain, "###,##0") + "  :" + PvResultToStr (digitalGainRawSet);
+      log.Level (-1) << msg << endl;
+    }
+
+    int64_t  digitalGainD = 0;
+    if  (lDigitalGainRaw->GetValue (digitalGainD).IsOK ())
+    {
+      curDigitalGain = (kkint32)digitalGainD;
+      cameraParams->DigitalGain ((kkint32)digitalGainD);
+      log.Level (10) << "SetDigitalGain   Digital Gain : " << StrFormatInt64 (digitalGainD, "###,##0") << endl;
+    }
+  }
 }  /* SetDigitalGain */
 
 
@@ -529,6 +1187,310 @@ void  CameraAcquisitionPleora::SetCameraParametersForFlowMeter ()
 
 void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
 {
+  log.Level (10) << "ConnectToCamera" << endl;
+  connectionSuccessful = false;
+  StartStatus (StartStatusType::Connecting, "");
+
+  Manager ()->AddSecondaryMsg ("Connecting to Camera.");
+
+  if  (lPipeline  ||  lStream  ||  lDevice)
+  {
+    log.Level (10) << "ConnectToCamera  Previous connection not cleaned up need to call 'DisconnectFromCamera'." << endl;
+    DisconnectFromCamera ();
+    log.Level (40) << "ConnectToCamera    back from 'DisconnectFromCamera' can now proceed to connect to camera." << endl;
+  }
+
+  // Connect to the GEV Device
+  lDevice = new PvDeviceGEV ();
+
+  KKStr  status;
+  status << "Connecting to Mac Address: " << MacAddress ();
+  log.Level (10) << status << endl;
+
+  PvString  pcMacAddress = MacAddress ().Str ();
+
+  log.Level (40) << "ConnectToCamera   Establishing connection to :" << MacAddress () << endl;
+  PvResult  pvConnectResult = lDevice->Connect (pcMacAddress);
+  if   (!pvConnectResult.IsOK ())
+  {
+    status = "";
+    status << "Unable to connect to Mac-Address: " << MacAddress ();
+    log.Level (-1) << "ConnectToCamera   ***ERROR*** Trying to connect :" << PvResultToStr (pvConnectResult) << endl
+                   << "   " << status << endl;
+    StartStatus (StartStatusType::ConnectionFailed, status);
+
+    PvString  pvIpAddress               = cameraParams->IpAddress  ().Str ();
+    PvString  pvMacAddress              = cameraParams->MacAddress ().Str ();
+    PvString  pvInterfaceSubnetMask     = cameraParams->InterfaceSubnetMask ().Str ();
+    PvString  pvInterfaceDefaultGateway = cameraParams->InterfaceDefaultGateway ().Str ();
+
+    log.Level (40) << "ConnectToCamera  Attempting to configure IP address of Mac :" << cameraParams->MacAddress () << "  to IP :" << cameraParams->IpAddress () << endl;
+
+    PvResult pvr = PvDeviceGEV::SetIPConfiguration (pvMacAddress, 
+                                                    pvIpAddress, 
+                                                    pvInterfaceSubnetMask, 
+                                                    pvInterfaceDefaultGateway
+                                                   );
+    if  (!pvr.IsOK ())
+    {
+      log.Level (-1) << "ConnectToCamera  ***ERROR***  Setting IP Address  " << PvResultToStr (pvr) << endl;
+    }
+    else
+    {
+      log.Level (40) << "ConnectToCamera  IP Address successfully configured  will now try connecting again." << endl;
+      pvConnectResult = lDevice->Connect (pvMacAddress);
+    }
+
+    if  (pvConnectResult.IsOK ())
+    {
+      log.Level (30) << "ConnectToCamera   Connection successful :" << PvResultToStr (pvConnectResult) << endl;
+    }
+    else
+    {
+      log.Level (30) << "Failed to connect after setting IP :" << PvResultToStr (pvConnectResult) << endl;
+      delete lDevice;
+      lDevice = NULL;
+      return;
+    }
+  }
+
+  status = "";
+  status << "Successfully connected to MacAddress: " << MacAddress ();
+  log.Level (10) << status << endl;
+
+  //PrintDeviceParameters ();
+
+  // Get device parameters needed to control streaming
+  InitializeDeviceParameterAccessVariables ();
+
+  if  (embeddedFlowMeter)
+    SetCameraParametersForFlowMeter ();
+
+  CameraParametersPopulate (lDeviceParams, *cameraParams, log);
+  Manager ()->FrameHeightWidthChanged (cameraParams->FrameHeight (), cameraParams->FrameWidth ());
+  curScanRate    = cameraParams->ScanRate ();
+  curAnalogGain  = cameraParams->AnalogGain ();
+  curDigitalGain = cameraParams->DigitalGain ();
+
+  if  ((requestedScanRate > 1)  &&  (requestedScanRate < 36000))
+    AddScanRateCommand (requestedScanRate);
+
+  if  ((requestedAnalogGain >= analogGainMin)  &&  (requestedAnalogGain <= analogGainMax))
+    AddAnalogGainCommand (requestedAnalogGain);
+
+  if  ((requestedDigitalGain >= 0)  &&  (requestedDigitalGain <= digitalGainMax))
+    AddDigitalGainCommand (requestedDigitalGain);
+
+  analogGainMin = -7.0f;
+  digitalGainMax = 10000;
+  if  (lAnalogGainAbs)
+  {
+    // Retrieve Min-Max analogGain values.
+    analogGainMin = -7.0f;
+    double  min = 0.0;
+  
+    PvResult  getMinResult = lAnalogGainAbs->GetMin (min);
+    if  (getMinResult.IsOK ())
+    {
+      log.Level (50) << "ConnectToCamera  AnalogGainAbs::Min :" << min << endl;
+      if  (min < -1000.0f)
+        analogGainMin = -1000.0f;
+      else
+        analogGainMin =  (float)min;
+    }
+    else
+    {
+      log.Level (40) << "ConnectToCamera   ***ERROR***  AnalogGainAbs.GetMin() :" << PvResultToStr (getMinResult) << endl;
+    }
+
+    double  max = 0.0;
+    PvResult getMaxResult = lAnalogGainAbs->GetMax (max);
+    if  (getMaxResult.IsOK ())
+    {
+      log.Level (50) << "ConnectToCamera   AnalogGainAbs::Max :" << max << endl;
+      if  (max > 1000.0f)
+        analogGainMax = 1000.0f;
+      else
+        analogGainMax = (float)max;
+    }
+    else
+    {
+      log.Level (40) << "ConnectToCamera   *** ERROR ***  AnalogGainAbs.GetMin()[" << PvResultToStr (getMaxResult) << "]." << endl;
+    }
+  }
+
+  // Negotiate streaming packet size
+  log.Level (20) << "ConnectToCamera   Negotiating Streaming Packet Size." << endl;
+  PvResult  negotiateResult = lDevice-> NegotiatePacketSize ();
+  if  (!negotiateResult.IsOK ())
+    log.Level (-1) << "ConnectToCamera  ***ERROR***   NegotiatePacketSize failed :" << PvResultToStr (negotiateResult) << endl;
+  else
+    log.Level (40) << "ConnectToCamera  NegotiatePacketSize Successful :" << PvResultToStr (negotiateResult) << endl;
+
+  log.Level (20) << "ConnectToCamera   Opening stream to device." << endl;
+  lStream = new PvStreamGEV ();
+  PvResult  streamOpenResult = lStream->Open (IpAddress ().Str ());
+  if  (!streamOpenResult.IsOK ())
+  { 
+    log.Level (-1) << "ConnectToCamera   ***ERROR***    Unable to open Camera Stream :" << PvResultToStr (streamOpenResult) << endl;
+    delete  lStream;
+    lStream = NULL;
+    return;
+  }
+  else
+  {
+    log.Level (40) << "ConnectToCamera  Camera Stream Opened :" << PvResultToStr (streamOpenResult) << endl;
+  }
+
+
+  lPipeline = new PvPipeline (lStream);
+
+  int64_t payloadSize = 0;
+  
+  PvResult getPayloadSizeResult = lPayloadSize->GetValue (payloadSize);
+  if  (!getPayloadSizeResult.IsOK ())
+    log.Level (-1) << "ConnectToCamera   ***ERROR***  Error retrieving PayLoadSize :" << PvResultToStr (getPayloadSizeResult) << endl;
+  else
+    log.Level (40) << "ConnectToCamera   PayLoadSize Retrieved :" << (kkint64)payloadSize << " :" << PvResultToStr (getPayloadSizeResult) << endl;
+
+
+  lPipeline->SetBufferSize (static_cast<uint32_t> (payloadSize));
+
+  PvResult  bufferCountResult = lPipeline->SetBufferCount (64); // Increase for high frame rate without missing block IDs
+  if  (bufferCountResult.IsOK ())
+    log.Level (40) << "ConnectToCamera   BufferCount successfully set to :" << 64 << " :" << PvResultToStr (bufferCountResult) << endl;
+  else
+    log.Level (-1) << "ConnectToCamera   ***ERROR***   Setting BufferCount :" << PvResultToStr (bufferCountResult) << endl;
+ 
+  // Have to set the Device IP destination to the Stream
+
+  PvString localIPAddress = lStream->GetLocalIPAddress ();
+  uint16_t localPort      = lStream->GetLocalPort ();
+
+  PvResult streamDestResult = lDevice->SetStreamDestination (localIPAddress, localPort);
+  if  (streamDestResult.IsOK ())
+    log.Level (40) << "ConnectToCamera   Device StreamDestination set to :" << localIPAddress.GetAscii () << " : " << localPort << endl;
+  else
+    log.Level (-1) << "ConnectToCamera   ***ERROR***   Setting Device-Stream-Destination :" << PvResultToStr (streamDestResult) << endl;
+
+
+  // TLParamsLocked is optional but when present, it MUST be set to 1 before sending the AcquisitionStart command
+  if  (lTLLocked != NULL)
+  {
+    log.Level (40) << "ConnectToCamera   Setting TLParamsLocked to 1" << endl;
+    PvResult tlParamsLockedResult = lTLLocked->SetValue (1);
+    if  (tlParamsLockedResult.IsOK ())
+      log.Level (40) << "ConnectToCamera  'tlParamsLocked' successfully set to '1' :" << PvResultToStr (tlParamsLockedResult) << endl;
+    else
+      log.Level (-1) << "ConnectToCamera  ***ERROR***  Failure setting 'tlParamsLocked' to 1 :" << PvResultToStr (tlParamsLockedResult) << endl;
+  }
+
+
+  // IMPORTANT: the pipeline needs to be "armed", or started before we instruct the device to send us images
+  log.Level (20) << "ConnectToCamera   Starting pipeline" << endl;
+  PvResult pipeLineStartResult = lPipeline->Start ();
+  if  (pipeLineStartResult.IsOK ())
+    log.Level (40) << "ConnectToCamera   Pipeline Started Successfully." << endl;
+  else
+    log.Level (-1) << "ConnectToCamera   ***ERROR*** Starting Pipeline :" << PvResultToStr (pipeLineStartResult) << endl;
+ 
+  // Get stream parameters/stats
+  InitializeStreamParameterAccessVariables ();
+
+
+  log.Level (40) << "ConnectToCamera   Retrieving  'GevTimestampControlReset' parameter." << endl;
+  PvGenCommand *lResetTimestamp = dynamic_cast<PvGenCommand *>(lDeviceParams->Get ("GevTimestampControlReset"));
+  if  (!lResetTimestamp)
+  {
+    log.Level (40) << "ConnectToCamera   Parameter 'GevTimestampControlReset'  not retrieved." << endl;
+  }
+  else
+  {
+    log.Level (40) << "ConnectToCamera  Executing 'GevTimestampControlReset'." << endl;
+    PvResult timestampControlResetResult = lResetTimestamp->Execute ();
+    if  (timestampControlResetResult.IsOK ())
+      log.Level (40) << "ConnectToCamera  'GevTimestampControlReset' successfully executed :" << PvResultToStr (timestampControlResetResult) << endl;
+    else
+      log.Level (-1) << "ConnectToCamera  ***ERROR***  'GevTimestampControlReset' execute failed :" << PvResultToStr (timestampControlResetResult) << endl;
+  }
+
+
+  {
+    // Setting "MaximumResendGroupSize" to 30;  this helps to reduce if not eliminate 
+    // "2819,TOO_MANY_CONSECUTIVE_RESENDS"  errors when retrieving camera frame buffers.
+    PvGenInteger*  maxResendGroupSize = dynamic_cast<PvGenInteger *> (lStreamParams->Get ("MaximumResendGroupSize"));
+    if  (maxResendGroupSize)
+    {
+      PvResult maxResendGroupSizeResult;
+
+      int64_t  curValue = 0;
+      maxResendGroupSizeResult = maxResendGroupSize->GetValue (curValue);
+      if  (!maxResendGroupSizeResult.IsOK ())
+      {
+        log.Level (-1) << "ConnectToCamera   ***ERROR***   Unable to get current 'MaximumResendGroupSize' value." << endl
+                       << "                  " << PvResultToStr (maxResendGroupSizeResult) << endl;
+        curValue = 0;
+      }
+       
+      if  (curValue >= 30)
+      {
+        log.Level (10) << "ConnectToCamera   MaximumResendGroupSize: " << (kkint64)curValue << "  Not going to override." << endl;
+      }
+      else
+      {
+        maxResendGroupSizeResult = maxResendGroupSize->SetValue (30);
+        if  (!maxResendGroupSizeResult.IsOK ())
+        {
+          log.Level (-1) << "ConnectToCamera   ***ERROR***   Unable to set 'MaximumResendGroupSize' to 30" << endl
+                         << "                  " << PvResultToStr (maxResendGroupSizeResult) << endl;
+        }
+        else
+        {
+          log.Level (10) << "ConnectToCamera   MaximumResendGroupSize: Set to 30." << endl;
+        }
+      }
+    }
+  }
+
+  if  (Manager ()->OperatingMode () == LarcosCounterManager::LarcosOperatingModes::Advanced)
+    Manager ()->AddSecondaryMsg ("Setting Camera Parameters.");
+  ApplyCommandEntries ();
+
+  // The pipeline is already "armed", we just have to tell the device to start sending us images
+  log.Level (10) << "ConnectToCamera   Sending Start command to device." << endl;
+  PvResult deviveStartResult = lStart->Execute();
+  if  (deviveStartResult.IsOK ())
+    log.Level (40) << "ConnectToCamera   Start command successful :" << PvResultToStr (deviveStartResult) << endl;
+  else
+    log.Level (-1) << "ConnectToCamera   ***ERROR***   Start Command failed :" << PvResultToStr (deviveStartResult) << endl;
+
+  if  (embeddedFlowMeter)
+  {
+    AddPleoraVariableToHeaderField ("PLC_Q1_Variable0");
+    AddPleoraVariableToHeaderField ("PLC_Q1_Operator0");
+    AddPleoraVariableToHeaderField ("PLC_Q1_Variable1");
+    AddPleoraVariableToHeaderField ("LineSelector");
+    AddPleoraVariableToHeaderField ("LineFormat");
+    AddPleoraVariableToHeaderField ("OutputSelector");
+    AddPleoraVariableToHeaderField ("OutputFormat");
+    AddPleoraVariableToHeaderField ("CounterSelector");
+    AddPleoraVariableToHeaderField ("PLC_I0");
+    AddPleoraVariableToHeaderField ("PLC_Q17_Variable0");
+    AddPleoraVariableToHeaderField ("PLC_Q17_Operator0");
+    AddPleoraVariableToHeaderField ("PLC_Q17_Variable1");
+    AddPleoraVariableToHeaderField ("GevTimestampCounterSelector");
+    AddPleoraVariableToHeaderField ("GrbCh0AcqCfgIncludeMetadataInImage");
+    AddPleoraVariableToHeaderField ("GrbCh0MetadataInsertionMode");
+  }
+
+  CameraParametersAddToHeaderFields ();
+
+  connectionSuccessful = true;
+
+  Manager ()->AddSecondaryMsg ("Camera Connection Established!");
+
+  log.Level (40) << "CameraAcquisitionPleora::ConnectToCamera    Exiting." << endl;
+
   return;
 }  /* ConnectToCamera */
 
@@ -537,6 +1499,76 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
 
 void  CameraAcquisitionPleora::DisconnectFromCamera ()
 {
+  log.Level (10) << endl << "DisconnectFromCamera" << endl;
+  Manager ()->AddSecondaryMsg ("Disconnecting from Camera.");
+  if  (lStop)
+  {
+    log.Level (20) << "DisconnectFromCamera   Executing Stop Command." << endl;
+    PvResult stopResult = lStop->Execute();
+    log.Level (40) << "DisconnectFromCamera   Stop Command Results :" << this->PvResultToStr (stopResult) << endl;
+  }
+
+  // If present reset TLParamsLocked to 0. Must be done AFTER the 
+  // streaming has been stopped
+  if  (lTLLocked != NULL)
+  {
+    log.Level (20) << "DisconnectFromCamera   Resetting TLParamsLocked to 0." << endl;
+    PvResult lockResult = lTLLocked->SetValue (0);
+    log.Level (40) << "DisconnectFromCamera   Resetting Results :" << PvResultToStr (lockResult) << endl;
+  }
+  
+  if  (lPipeline)
+  {
+    // We stop the pipeline - letting the object lapse out of 
+    // scope would have had the destructor do the same, but we do it anyway
+
+    log.Level (20) << "DisconnectFromCamera   Stopping pipeline." <<endl;
+    PvResult pipeLineResult = lPipeline->Stop();
+    log.Level (40) << "DisconnectFromCamera   Stopping Results :" <<  PvResultToStr (pipeLineResult) << endl;
+    delete  lPipeline;
+    lPipeline = NULL;
+  }
+
+  if  (lStream)
+  {
+    // Now close the stream. Also optional but nice to have
+    log.Level (20) << "DisconnectFromCamera   Closing Stream." << endl;
+    PvResult streamResult = lStream->Close();
+    log.Level (40) << "DisconnectFromCamera   Closing Stream Result :" << PvResultToStr (streamResult) << endl;
+    delete  lStream;
+    lStream = NULL;
+  }
+
+  if  (lDevice)
+  {
+    // Finally disconnect the device. Optional, still nice to have
+    log.Level (20) << "DisconnectFromCamera    Disconnecting From Device." << endl;
+    PvResult deviceResult = lDevice->Disconnect();
+    log.Level (40) << "DisconnectFromCamera    Disconnecting From Device :" << PvResultToStr (deviceResult) << endl;
+    delete  lDevice;
+    lDevice = NULL;
+  }
+
+  lStreamParams              = NULL;
+  lFrameRate                 = NULL;
+  lCameraTemparature         = NULL;
+  lTLLocked                  = NULL;
+  lPayloadSize               = NULL;
+  lStart                     = NULL;
+  lReadVoltageAndTemperature = NULL;
+  lStop                      = NULL;
+  lScanRate                  = NULL;
+  lGainSelector              = NULL;
+  lAnalogGainAbs             = NULL;
+  lDigitalGainRaw            = NULL;
+  lGain                      = NULL;
+  lExposureTime              = NULL;
+  lAcquisitionLinePeriod     = NULL;
+
+  Manager ()->AddSecondaryMsg ("Disconnected From Camera.");
+
+  log.Level (40) << "CameraAcquisitionPleora::DisconnectFromCamera    Exiting." << endl;
+
   return;
 }  /* DisconnectFromCamera */
 
@@ -560,6 +1592,246 @@ void  CameraAcquisitionPleora::ComputeFramneIntervals ()
 
 void  CameraAcquisitionPleora::Run ()
 {
+  Status (ThreadStatus::Running);
+
+  log.Level (10) << "CameraAcquisitionPleora::Run" << endl;
+
+  KKStr  status (128);
+
+  StartStatus (StartStatusType::Connecting, "Connecting to Camera.");
+
+  bool  connectionSuccessful = false;
+  ConnectToCamera (connectionSuccessful);
+  if  (!connectionSuccessful)
+  {
+    StartStatus (StartStatusType::ConnectionFailed, "Connection FAILED!!!.");
+    Manager ()->AddSecondaryMsg ("");
+    status = "";
+    status << "Unable to connect to Mac-Address: " << MacAddress ();
+    log.Level (10) << status << endl;
+    DisconnectFromCamera ();
+    Status (ThreadStatus::Stopping);
+    Crashed (true);
+    return;
+  }
+
+  kkint32  loopCount = 0;
+  kkint32  whosTurn = 0;  /**< Will be used to determine who's turn to talk to camera;  FrameRate == 0;  CameraTemperature == 1 */
+
+  lastBlockId = 0;
+
+  totalLostPackets = 0;
+
+  StartStatus (StartStatusType::Connected, "Camera Connected.");
+
+  ComputeFramneIntervals ();
+
+  ofstream* flowRate = NULL;
+  kkint32  flowRateScanLineCount = 0;
+  kkint32  lastFlowRateCount = -1;
+  if  (generateFlowRateReport)
+  {
+    DateTime dt = KKB::osGetLocalDateTime ();
+    KKStr  flowMeterName = "C:\\Temp\\FlowMeter_" + dt.Date ().YYYYMMDD () + "-" + dt.Time ().HHMMSS () + ".txt";
+    flowRate = new ofstream (flowMeterName.Str ());
+    *flowRate << "Frame"  << "\t" << "Scan"  << "\t"  << ""    << "\t"  << ""    << "\t"  << ""    << "\t"  << ""    << "\t"  << ""    << "\t"  << "Total" << endl;
+    *flowRate << "number" << "\t" << "Line"  << "\t"  << "P0"  << "\t"  << "P1"  << "\t"  << "P2"  << "\t"  << "P3"  << "\t"  << "P4"  << "\t"  << "Count" << endl;
+  }
+
+  // Acquire images until the user instructs us to stop
+  log.Level (10) << "CameraAcquisitionPleora::Run   Image Acquisition Loop Started." << endl;
+  while  (!TerminateFlag ()  &&  !ShutdownFlag ())
+  {
+    if  (!lPipeline)
+    {
+      // We are not communicating to the camera lets try reconnecting.
+      StartStatus (StartStatusType::Disconnected, "Camera Disconnected !!!  Attempting to reconnect.");
+
+      log.Level (-1) << endl << "CameraAcquisitionPleora::Run    Will Sleep for 2 Seconds." << endl << endl;
+
+      osSleepMiliSecs (1000);
+      ConnectToCamera (connectionSuccessful);
+      if  (connectionSuccessful)
+      {
+        StartStatus (StartStatusType::Connected, "Camera Connected.");
+        if  (Manager ()->OperatingMode () == LarcosCounterManager::LarcosOperatingModes::Advanced)
+          Manager ()->AddSecondaryMsg ("Re-connected to Camera.");
+
+        log.Level (-1) << endl << "CameraAcquisitionPleora::Run    *** Connection Re-Established  ***" << endl << endl;
+
+        lastBlockId = 0;
+      }
+      else
+      {
+        log.Level (-1) << endl << "CameraAcquisitionPleora::Run    ***ERROR***    Camera is not talking to us." << endl << endl;
+        DisconnectFromCamera ();
+      }
+    }
+    if  (lPipeline)
+    {
+      if  (QueueActive ())
+        ApplyCommandEntries ();
+
+      // Retrieve next buffer		
+      PvBuffer *lBuffer = NULL;
+      PvResult  lOperationResult;
+
+      PvResult lResult = lPipeline->RetrieveNextBuffer (&lBuffer, 2000, &lOperationResult);
+      if  (!lResult.IsOK ())
+      {
+        KKStr  kkMsg (100);
+        kkMsg << "lPipeline->RetrieveNextBuffer  ***ERROR***   Retrieving NextBuffer: " <<  PvResultToStr (lResult);
+        log.Level (-1) << kkMsg << endl;
+        StartStatus (StartStatusType::Disconnected, kkMsg);
+        if  (Manager ()->OperatingMode () == LarcosCounterManager::LarcosOperatingModes::Advanced)
+          Manager ()->AddSecondaryMsg ("Error Retrieving Frame from Camera.");
+        DisconnectFromCamera ();
+      }
+      else
+      {
+        kkuint32  pvOutputQueueSize = lPipeline->GetOutputQueueSize ();
+
+        if  (!lOperationResult.IsOK ())
+        {
+          KKStr  resultStr = PvResultToStr (lOperationResult);
+          log.Level (-1) << "lPipeline->RetrieveNextBuffer   ***WARNING***  :" << resultStr << endl
+                         << "    pvOutputQueueSize: " << pvOutputQueueSize << endl;
+          if  (Manager ()->OperatingMode () == LarcosCounterManager::LarcosOperatingModes::Advanced)
+            Manager ()->AddSecondaryMsg ("Camera Timed Out.");
+        }
+        else
+        {
+          const uint8_t*  rawData = lBuffer->GetDataPointer ();
+
+          kkint32 lostPacketCount = lBuffer->GetLostPacketCount ();
+          PvImage* i = lBuffer->GetImage ();
+          kkuint32  imageSize = i->GetImageSize ();
+
+          kkuint64  blockId = lBuffer->GetBlockID ();
+          kkint64   numBlocksSkipped = blockId - (lastBlockId + 1);
+          if  (numBlocksSkipped < 0)
+            numBlocksSkipped += 65535;
+
+          if  (numBlocksSkipped > 0)
+          {
+            log.Level (-1) << "CameraAcquisitionPleora::Run   ***ERROR***  'blockId's Skipped   LastBlockId: " << lastBlockId << "   BlockId: " << blockId << "   Approx ScanLine: " << scanLinesRead << endl;
+            physicalSeqNumsSkipped += (kkint32)numBlocksSkipped;
+          }
+
+          lastBlockId = blockId;
+
+          totalLostPackets += lostPacketCount;
+
+          loopCount++;
+          if  ((loopCount % fiveSecFrameInterval) == 0)
+          {
+            switch  (whosTurn)
+            {
+            case 0:
+              {
+                if  (lFrameRate)
+                {
+                  double  frameRateD = 0.0;
+                  lFrameRate->GetValue (frameRateD);
+                  frameRate = (float)frameRateD;
+                }
+              }
+              break;
+
+            case 1:
+              {
+                if  (lCameraTemparature  &&  lReadVoltageAndTemperature)
+                {
+                  PvResult tempReadResult = lReadVoltageAndTemperature->Execute ();
+                  if  (tempReadResult.IsOK ())
+                  {
+                    int64_t  pvInt = -1;
+                    lCameraTemparature->GetValue (pvInt);
+                    cameraTemparature = (kkint32)pvInt;
+                    log.Level (50) << "CameraAcquisitionPleora::Run   lCameraTemparature :" << cameraTemparature << endl;
+                  }
+                  else
+                  {
+                    log.Level (-1) << "CameraAcquisitionPleora::Run   ***ERROR***  executing 'ReadVoltageAndTemperature :" << PvResultToStr (tempReadResult) << endl;
+                  }
+                }
+              }
+              break;
+            }
+
+            ++whosTurn;
+            if  (whosTurn > 1)
+              whosTurn = 0;
+          }
+
+          if  (embeddedFlowMeter)
+          {
+            // Flow Counter as beginning of frame.
+            kkuint32  tempFlowMeterCounter = rawData[0] + rawData[1] * 256 + (rawData[2] * 256 * 256) + (rawData[3] * 256 * 256 * 256);
+            if  (tempFlowMeterCounter != flowMeterCounter)
+            {
+              // At some point in the future we might want to call "Call-Back" function from here to let other objects 
+              // know that the flow meter changed value.
+              flowMeterCounter = tempFlowMeterCounter;
+              flowMeterCounterScanLine = scanLinesRead;
+              FlowMeterCounterUpdate (scanLinesRead, flowMeterCounter);
+            }
+
+            if  (generateFlowRateReport)
+            {
+              // This code was added to help get diagnostic info on the 1ast 4 columns of imagery which
+              // are being used to communicate FlowRate meter pulse count.
+              const uint8_t* sld = rawData;
+              for (int rrr = 0;  rrr < FrameHeight ();  ++rrr)
+              {
+                kkint32 flowRateCount = sld[0] + sld[1] * 256 + (sld[2] * 256 * 256) + (sld[3] * 256 * 256 * 256);
+                if  (flowRateCount != lastFlowRateCount)
+                {
+                  *flowRate << physicalFramesRead    << "\t" 
+                            << flowRateScanLineCount << "\t"
+                            << (int)(sld[0])         << "\t" 
+                            << (int)(sld[1])         << "\t" 
+                            << (int)(sld[2])         << "\t" 
+                            << (int)(sld[3])         << "\t" 
+                            << flowRateCount
+                            << endl;
+                  lastFlowRateCount = flowRateCount;
+                }
+
+                sld += FrameWidth ();
+                ++flowRateScanLineCount;
+              }
+            }
+          }
+
+          ++physicalFramesRead;
+          scanLinesRead += FrameHeight ();
+
+          float flowRate = 0.0f;
+          float flowRateRatio = -1.0f;
+          flowMeter->GetFlowRateTrend (flowRate, flowRateRatio);
+          frameBuffer->AddFrame ((uchar*)rawData, imageSize, FrameHeight (), FrameWidth (), flowMeterCounter, flowMeterCounterScanLine, flowRateRatio, flowRate);
+
+          PvResult releaseBufferResult = lPipeline->ReleaseBuffer (lBuffer);
+          if  (!releaseBufferResult.IsOK ())
+            log.Level (-1) << "CameraAcquisitionPleora::Run   ***ERROR***  ReleaseBuffer failed :" << PvResultToStr (releaseBufferResult) << endl;
+        }
+      }
+    }
+  }
+
+  DisconnectFromCamera ();
+
+  delete  flowRate;
+  flowRate = NULL;
+
+  Manager ()->AddSecondaryMsg ("Cameras Acquisition Stopped.");
+
+  StartStatus (StartStatusType::Disconnected, "Camera Stopped.");
+  Status (ThreadStatus::Stopping);
+
+  log.Level (10) << "CameraAcquisitionPleora::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
+
   return;
 }  /* Run */
 
@@ -567,8 +1839,91 @@ void  CameraAcquisitionPleora::Run ()
 
 CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _msgQueue)
 {
+  const PvDeviceInfoGEV*  pvDeviceInfoGEV = NULL;
 
-  return NULL;
+  RunLog  runLog (_msgQueue);
+  runLog.SetLevel (LarcosVariables::DebugLevel ());
+  runLog.Level (40) << "CameraAcquisitionPleora::GetCameraList" << endl;
+
+  PvSystem  pvSystem;
+  PvResult  pvResult = pvSystem.Find ();
+  if  (!pvResult.IsOK ())
+  {
+    runLog.Level (10) << "CameraAcquisitionPleora::GetCameraList   ***ERROR***   Pleora drivers not installed: " << PvResultToStr (pvResult) << endl;
+    return  NULL;
+  }
+
+  CameraParametersListPtr  cameras = new CameraParametersList (true);
+
+  uint32_t  interfaceCount = pvSystem.GetInterfaceCount ();
+
+  for (uint32_t interfaceIdx = 0; interfaceIdx < interfaceCount;  ++interfaceIdx)
+  {
+    const PvInterface*   pvInterface = pvSystem.GetInterface (interfaceIdx);
+    if  (pvInterface == NULL)
+      continue;
+
+    PvInterfaceType type = pvInterface->GetType ();
+    if  (type != PvInterfaceTypeNetworkAdapter)
+      continue;
+
+    const PvNetworkAdapter* pvNetAdapter = dynamic_cast<const PvNetworkAdapter *>(pvInterface);
+
+    KKStr  interfaceDescription =  pvNetAdapter->GetDescription ().GetAscii ();
+    KKStr  interfaceId          =  pvNetAdapter->GetUniqueID    ().GetAscii ();
+    KKStr  interfaceIpAddress   =  pvNetAdapter->GetIPAddress   ().GetAscii ();
+    KKStr  interfaceMacAddress  =  pvNetAdapter->GetMACAddress  ().GetAscii ();
+    KKStr  interfaceSubnetMask  =  pvNetAdapter->GetSubnetMask  ().GetAscii ();
+
+    uint32_t  deviceCount = pvInterface->GetDeviceCount ();
+
+    runLog.Level (20) << "GetCameraList  InterfaceDescription :" << interfaceDescription << endl;
+    runLog.Level (20) << "GetCameraList  DeviceCount :" << deviceCount << endl;
+
+    for  (uint32_t  deviceIdx = 0;  deviceIdx < deviceCount; ++deviceIdx)
+    {
+      const PvDeviceInfo*  pvDeviceInfo = pvNetAdapter->GetDeviceInfo (deviceIdx);
+      pvDeviceInfoGEV = dynamic_cast<const PvDeviceInfoGEV*>(pvDeviceInfo);
+      if  (pvDeviceInfoGEV == NULL)
+        continue;
+
+      KKStr  deviceId         = pvDeviceInfoGEV->GetUniqueID         ().GetAscii ();
+      KKStr  macAddress       = pvDeviceInfoGEV->GetMACAddress       ().GetAscii ();
+      KKStr  serialNum        = pvDeviceInfoGEV->GetSerialNumber     ().GetAscii ();
+      KKStr  model            = pvDeviceInfoGEV->GetModelName        ().GetAscii ();
+      KKStr  manufacturerInfo = pvDeviceInfoGEV->GetManufacturerInfo ().GetAscii ();
+      KKStr  deviceIpAddress  = pvDeviceInfoGEV->GetIPAddress        ().GetAscii ();
+
+      runLog.Level (20) << "GetCameraList   DeviceID :" << deviceId << "  macAddress :" << macAddress << endl;
+
+      {
+        kkint32  numTries = 0;
+        CameraParametersPtr  cp = NULL;
+        while  ((numTries < 3)  &&  (cp == NULL))
+        {
+          delete  cp;  cp = NULL;
+          cp = GetCameraParameters (macAddress, _msgQueue, runLog);
+          if  ((cp == NULL)                    ||
+               (cp->FrameHeight () <= 0)    ||
+               (cp->FrameWidth  () <= 0)    ||
+               (cp->ScanRate    () <= 0)
+              )
+          {
+            runLog.Level (-1) << "GetCameraList   ***ERROR***   Failed to retrieve camera parameters." << endl;
+            // For some reason we did not retrieve all the parameters;  we need to try again.
+            delete  cp;
+            cp = NULL;
+          }
+          ++numTries;
+        }
+
+        if  (cp)
+          cameras->PushOnBack (cp);
+      }
+    }
+  }
+
+  return cameras;
 }  /* GetCameraList */
 
 
@@ -578,7 +1933,153 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
                                                              RunLog&      _runLog
                                                             )
 {
-  return NULL;
+  _runLog.Level (30) << "CameraAcquisitionPleora::GetDeviceInfo  KeyValue[" << _keyValue << "]." << endl;
+
+  PvSystem  pvSystem;
+  PvResult  pvResult = pvSystem.Find ();
+  if  (!pvResult.IsOK ())
+  {
+    _runLog.Level (-1) << "CameraAcquisitionPleora::GetDeviceInfo   ***ERROR***   Pleora drivers not installed :" << PvResultToStr (pvResult) << endl;
+    return  NULL;
+  }
+
+  _runLog.Level (40) << "CameraAcquisitionPleora::GetDeviceInfo   'pvSystem.Find'  successful." << endl;
+
+  CameraParametersPtr  cp = NULL;
+
+  uint32_t  interfaceCount = pvSystem.GetInterfaceCount ();
+
+  for  (uint32_t interfaceIdx = 0;  (interfaceIdx < interfaceCount)  &&  (cp == NULL);  ++interfaceIdx)
+  {
+    const PvInterface*   pvInterface = pvSystem.GetInterface (interfaceIdx);
+    if  (pvInterface == NULL)
+      continue;
+
+    const PvNetworkAdapter* pvNetAdapter = dynamic_cast<const PvNetworkAdapter*>(pvInterface);
+    if  (!pvNetAdapter)
+      continue;
+
+    PvString  interfaceDescription = pvNetAdapter->GetDescription ();
+
+    _runLog.Level (40) << "GetDeviceInfo   Checking Interface[" << interfaceDescription.GetAscii () << "]" << endl;
+
+    PvString  interfaceId             = pvNetAdapter->GetUniqueID ();
+    KKStr     interfaceIpAddress      = pvNetAdapter->GetIPAddress ().GetAscii ();
+    KKStr     interfaceMacAddress     = pvNetAdapter->GetMACAddress ().GetAscii ();
+    PvString  interfaceSubnetMask     = pvNetAdapter->GetSubnetMask ();
+    PvString  interfaceDefaultGateway = pvNetAdapter->GetDefaultGateway ();
+
+    uint32_t  deviceCount = pvInterface->GetDeviceCount ();
+
+    _runLog.Level (40) << "GetDeviceInfo   InterfaceDescription :" << interfaceDescription.GetAscii () << endl;
+    _runLog.Level (40) << "GetDeviceInfo   Device Count :" << deviceCount << endl;
+
+    uint32_t  deviceIdx = 0;
+    while  ((deviceIdx < deviceCount)  &&  (cp == NULL))
+    {
+      const PvDeviceInfo* pvDeviceInfo = pvInterface->GetDeviceInfo (deviceIdx);
+
+      pvDeviceInfo = pvInterface->GetDeviceInfo (deviceIdx);
+      if  (pvDeviceInfo == NULL)
+        continue;
+
+      const PvDeviceInfoGEV*  pvDeviceInfoGEV = dynamic_cast<const PvDeviceInfoGEV*> (pvDeviceInfo);
+      if  (!pvDeviceInfoGEV)
+        continue;
+
+      PvString  deviceId         = pvDeviceInfoGEV->GetUniqueID ();
+      KKStr     deviceIpAddress  = pvDeviceInfoGEV->GetIPAddress ().GetAscii ();
+      KKStr     deviceMacAddress = pvDeviceInfoGEV->GetMACAddress ().GetAscii ();
+
+      _runLog.Level (40) << "GetDeviceInfo   deviceMacAddress :" << deviceMacAddress << "  deviceIpAddress :" << deviceIpAddress << endl;
+      _runLog.Level (40) << "GetDeviceInfo   DeviceID: " << + deviceId.GetAscii () << endl;
+
+      KKStr  keyValue = "";
+      if  (_keyType == 'M')
+        keyValue = deviceMacAddress;
+      else
+        keyValue = pvDeviceInfoGEV->GetSerialNumber ().GetAscii ();
+
+      if  (_keyValue.EqualIgnoreCase (keyValue))
+      {
+        _runLog.Level (40) << "GetDeviceInfo   Device Found  deviceId :" << deviceId.GetAscii () << endl;
+
+        PvDeviceGEV* pvDevice = new PvDeviceGEV ();
+        PvString  pvMacAddress = deviceMacAddress.Str ();
+        PvResult  pvDeviveConnectResult = pvDevice->Connect (pvMacAddress);
+
+        if  (!pvDeviveConnectResult.IsOK ())
+        {
+          _runLog.Level (40) << "GetDeviceInfo   Connect Failed :" << PvResultToStr (pvDeviveConnectResult)  << endl;
+
+          kkint32  lastDot = interfaceIpAddress.LocateLastOccurrence ('.');
+          if  (lastDot > 0)
+          {
+            KKStr  newIpAddress = interfaceIpAddress.SubStrPart (0, lastDot) + "122";
+            PvString  pvNewIpAddress = newIpAddress.Str ();
+
+            _runLog.Level (20) << "GetDeviceInfo   Attempting to set IP Address :" << newIpAddress << endl;
+
+            PvResult  pvr = PvDeviceGEV::SetIPConfiguration (pvMacAddress, pvNewIpAddress, interfaceSubnetMask, interfaceDefaultGateway);
+            if  (!pvr.IsOK ())
+            {
+              _runLog.Level (10) << "GetDeviceInfo   Error Setting IP Address :" << PvResultToStr (pvr) << endl;
+            }
+            else
+            {
+              _runLog.Level (40) << "GetDeviceInfo   IP-Address successfully set." << endl;
+              pvDeviveConnectResult = pvDevice->Connect (pvMacAddress);
+              _runLog.Level (10) << "GetDeviceInfo   Connection attempt after IP Address set :" << PvResultToStr (pvDeviveConnectResult) << endl;
+            }
+          }
+        }
+        if  (pvDeviveConnectResult.IsOK ())
+        {
+          delete  cp;
+          cp = NULL;
+
+          if  (false)
+          {
+            PvGenParameterArray *lLinkParams = pvDevice->GetCommunicationParameters ();
+            PrintDeviceParameters ("CommunicationParameters", lLinkParams);
+            lLinkParams   = NULL;
+          }
+
+          PvGenParameterArray *lDeviceParams = pvDevice->GetParameters();
+          if  (false)
+          {
+            PrintDeviceParameters ("ParmsGen", lDeviceParams);
+          }
+
+          cp = new CameraParameters ();
+          cp->IpAddress (deviceIpAddress);
+          cp->MacAddress (deviceMacAddress);
+          cp->InterfaceDefaultGateway (interfaceDefaultGateway.GetAscii ());
+          cp->InterfaceSubnetMask     (interfaceSubnetMask.GetAscii ());
+          CameraParametersPopulate (lDeviceParams, *cp, _runLog);
+          lDeviceParams = NULL;
+
+          _runLog.Level (40) << "GetDeviceInfo   Camera Parameters retrieved." << endl;
+
+          pvDevice->Disconnect ();
+          delete  pvDevice;
+          pvDevice = NULL;
+
+          if  ((cp->FrameHeight () <= 0)  ||  (cp->FrameWidth () <= 0)  ||  (cp->ScanRate () <= 0))
+          {
+            delete  cp;
+            cp = NULL;
+          }
+        }
+
+        delete  pvDevice;
+        pvDevice = NULL;
+      }
+      ++deviceIdx;
+    }
+  }
+
+  return cp;
 }  /* GetDeviceInfo */
 
 
@@ -589,7 +2090,51 @@ CameraParametersPtr  CameraAcquisitionPleora::GetCameraParameters (const KKStr& 
                                                                    RunLog&       _runLog
                                                                   )
 {
-  return  NULL;
+  _runLog.Level (40) << "CameraAcquisitionPleora::GetCameraParameters    MacAddress[" << _macAddress << "]." << endl;
+  CameraParametersPtr  result = NULL;
+  PvString macAddress (_macAddress.Str ());
+
+  PvDeviceGEVPtr  lDevice = new PvDeviceGEV ();
+
+  PvResult  pvResult = lDevice->Connect (macAddress);
+  if  (!pvResult.IsOK ())
+  {
+    _runLog.Level (10) << "CameraAcquisitionPleora::GetCameraParameters  ***ERROR***  Unable to connect to [" << _macAddress << "]." << endl;
+    _runLog.Level (10) << "    Error " << PvResultToStr (pvResult) << endl;
+  }
+
+  if  (pvResult.IsOK ())
+  {
+    _runLog.Level (40) << "GetCameraParameters  Connected to MacAddress[" << _macAddress << "]." << endl;
+
+    if  (false)
+    {
+      PvGenParameterArray *lLinkParams = lDevice->GetCommunicationParameters ();
+      PrintDeviceParameters ("CommunicationParameters", lLinkParams);
+    }
+
+    PvGenParameterArray *lDeviceParams = lDevice->GetParameters();
+    //PrintDeviceParameters ("ParmsGen", lDeviceParams);
+
+    result = new CameraParameters ();
+    result->MacAddress (_macAddress);
+
+    if  (!lDeviceParams)
+    {
+      _runLog.Level (10) << "CameraAcquisitionPleora::GetCameraParameters   ***ERROR***  Unable to 'GetGenParameters' for camera [" << _macAddress << "]" << endl;
+    }
+    else
+    {
+      CameraParametersPopulate (lDeviceParams, *result, _runLog);
+      _runLog.Level (50) << "GetCameraParameters  Camera Parameters Retrieved." << endl;
+      lDeviceParams = NULL;
+    }
+  }
+
+  delete  lDevice;
+  lDevice = NULL;
+
+  return  result;
 }  /* GetCameraParameters */
 
 
@@ -680,7 +2225,28 @@ CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromCameraParameters
 
 KKStr  CameraAcquisitionPleora::PromptForCameraMacAddress ()
 {
-  KKStr  macAddress = "";
+  // Create a GEV Device finder dialog
+  PvDeviceFinderWnd  lDeviceFinderWnd;
+
+  // Prompt the user to select a GEV Device
+  lDeviceFinderWnd.ShowModal();
+
+  // Get the connectivity information for the selected GEV Device
+  const PvDeviceInfo* deviceInfo = lDeviceFinderWnd.GetSelected();
+
+  // If no device is selected, abort
+  if  (deviceInfo == NULL)
+    return "";
+
+  PvDeviceInfoType   type = deviceInfo->GetType ();
+  if  (type != PvDeviceInfoTypeGEV)
+  {
+    // We curently only handle GEV devices.
+    return "";
+  }
+
+  const PvDeviceInfoGEV* deviceInfoGEV = dynamic_cast<const PvDeviceInfoGEV*>(deviceInfo);
+  KKStr  macAddress = deviceInfoGEV->GetMACAddress ().GetAscii ();
   return  macAddress;
 }  /* PromptForCameraMacAddress */
 
@@ -691,7 +2257,169 @@ KKStr  CameraAcquisitionPleora::GetPvGenParameterDesc (PvGenParameter*  p,
                                                        bool             tabDelStr
                                                       )
 {
-  KKStr returnStr = "";
+  if  (!p)  return "";
+
+  KKStr returnStr (512);
+  
+  PvString   aName;
+  PvString   aDescription;
+  PvGenType  aType;
+
+  PvResult  getNameResult = p->GetName (aName);
+  cout << "getNameResult  Name : " << aName.GetAscii () << "  Result: " << PvResultToStr (getNameResult) << endl;
+
+  PvResult  getDescResult = p->GetDescription (aDescription);
+  cout << "getDescResult  : " << PvResultToStr (getDescResult) << endl;
+
+  PvResult  getTypeResult = p->GetType (aType);
+  cout << "getTypeResult  : " << PvResultToStr (getTypeResult) << endl;
+
+  KKStr  category = "";
+  PvString  pvCategoryStr;
+  PvResult  getCatResult = p->GetCategory (pvCategoryStr);
+  cout << "getCatResult  : " << PvResultToStr (getCatResult) << endl;
+
+  if  (getCatResult.IsOK ())
+     category = pvCategoryStr.GetAscii ();
+
+  KKStr  toolTipStr = "";
+  PvString pvToolTipStr;
+  PvResult pvr = p->GetToolTip (pvToolTipStr);
+  if  (pvr.IsOK ())
+    toolTipStr = pvToolTipStr.GetAscii ();
+
+  bool  isAvailable = p->IsAvailable ();
+  KKStr  s;
+
+  switch  (aType)
+  {
+  case  PvGenTypeInteger:
+    {
+      PvGenInteger *pvGenInt = dynamic_cast<PvGenInteger *>(p);
+      int64_t i;
+      if  (pvGenInt->GetValue (i).IsOK ())
+        s = (kkint32)i;
+      else
+        s = "***Error***";
+    }
+  break;
+
+  case  PvGenTypeEnum:       
+    {
+      int64_t  enumValue = 0;
+      PvGenEnum*  pvEnum = dynamic_cast<PvGenEnum *>(p);
+      if  (pvEnum->GetValue (enumValue).IsOK ())
+        s = (kkint32)enumValue;
+      else
+        s = "***ERROR***";
+
+      int64_t  numEntries = 0;
+      if  (pvEnum->GetEntriesCount (numEntries).IsOK ())
+      {
+        KKStr  entryNames = "";
+        for  (int xx = 0;  xx < numEntries;  ++xx)
+        {
+          if  (xx > 0)
+            entryNames << ", ";
+          const PvGenEnumEntry*  enumEntry;
+          if  (pvEnum->GetEntryByIndex (xx, &enumEntry))
+          {
+            PvString  enumEntryName;
+            if  (enumEntry->GetName (enumEntryName))
+              entryNames << xx << "-" << enumEntryName.GetAscii ();
+          }
+        }
+
+        s << "(" << entryNames << ")";
+      }
+    }
+    break;
+
+
+  case  PvGenTypeBoolean:
+    {
+      PvGenBoolean  *pvBool = dynamic_cast<PvGenBoolean *>(p);
+      bool b = false;
+      if  (pvBool->GetValue (b).IsOK ())
+        s = (b ? "True" : "False");
+      else
+        s = "***ERROR***";
+    }
+    break;
+
+  case  PvGenTypeString:
+    {
+      s = "";
+      PvString  pvString;
+      PvGenString  *pStr = dynamic_cast<PvGenString *>(p);
+      if  (pStr->GetValue (pvString).IsOK ())
+        s = pvString.GetAscii ();
+      else
+        s = "***Error***";
+    }
+    break;
+
+  case  PvGenTypeCommand:    
+    s = "Command";    
+    break;
+
+  case  PvGenTypeFloat:  
+    {
+      double  d;
+      PvGenFloat*  pvFloat =  dynamic_cast<PvGenFloat *>(p);
+      if  (pvFloat->GetValue (d).IsOK ())
+      {
+        s = StrFormatDouble (d, "######0.00000");
+      }
+      else
+        s = "***ERROR***";
+    }
+    break;
+
+  case  PvGenTypeRegister:   
+    s = "register";
+    break;
+
+
+  case  PvGenTypeUndefined:  
+    s = "Undefined";
+    break;
+
+  default:
+    s = "UnKnown";
+  }
+
+  bool  readable = false;
+  bool  writable = false;
+  p->IsReadable (readable);
+  p->IsWritable (writable);
+
+  if  (tabDelStr)
+  {
+    returnStr  
+       << PvGenTypeToCStr (aType)             << "\t"
+       << aName.GetAscii ()                   << "\t" 
+       << category                            << "\t"
+       << (readable ? "Readable" : "")        << "\t"
+       << (writable ? "Writable" : "")        << "\t"
+       << (isAvailable ? "Available" : "Not") << "\t"
+       << s                                   << "\t"
+       << aDescription.GetAscii ()            << "\t"
+       << toolTipStr
+       << endl;
+  }
+  else
+  {
+    returnStr << "GenType     [" << PvGenTypeToCStr (aType)          << "]" << endl
+              << "Name        [" << aName.GetAscii ()                << "]" << endl
+              << "Category    [" << category                         << "]" << endl
+              << "Readable    [" << (readable    ? "Readable"  : "") << "]" << endl
+              << "Writable    [" << (writable    ? "Writable"  : "") << "]" << endl
+              << "Available   [" << (isAvailable ? "Available" : "") << "]" << endl
+              << "Value       [" << s                                << "]" << endl
+              << "Description [" << aDescription.GetAscii ()         << "]" << endl
+              << "ToolTip     [" << toolTipStr                       << "]" << endl;
+  }
   return  returnStr;
 }  /* GetPvGenParameterDesc */
 
@@ -701,6 +2429,37 @@ void  CameraAcquisitionPleora::PrintDeviceParameters (const KKStr&          subN
                                                       PvGenParameterArray*  lDeviceParams
                                                      )
 {
+  if  (!lDeviceParams)
+    return;
+
+  KKStr  fileName = osAddSlash (LarcosVariables::TempDir ()) + "CameraParametrs_" + subName + ".txt";
+
+  ofstream  outFile (fileName.Str ());
+
+  PvGenInteger*  lTLLocked  = dynamic_cast<PvGenInteger *> (lDeviceParams->Get ("TLParamsLocked"));
+  if  (lTLLocked)
+    lTLLocked->SetValue (1);
+
+  kkint32 numberOfParameters = lDeviceParams->GetCount ();
+  for  (kkint32 zed = 0;  zed < numberOfParameters;  ++zed)
+  {
+    KKStr     s = "";
+
+
+    PvGenParameter*  p = lDeviceParams->Get (zed);
+    if  (!p)
+      continue;
+
+    KKStr  msg = GetPvGenParameterDesc (p, false);
+
+    outFile  << msg << endl;
+    osSleepMiliSecs (10);
+  }
+
+  if  (lTLLocked)
+    lTLLocked->SetValue (0);
+
+  outFile.close ();
 }  /* PrintDeviceParameters */
 
 
@@ -721,7 +2480,25 @@ void  CameraAcquisitionPleora::ResetCounts ()
 
 kkuint16 CameraAcquisitionPleora::CameraHighValue ()
 {
-  return  255;
+  VectorUcharPtr  scanLine = Manager ()->LastFrameHighValuesScanLine ();
+  if  (!scanLine)
+    return  false;
+
+  kkuint16  highPoint = 0;
+
+  // We start from the 4th column because the first 4 columns may be carrying the "Flow-Meter" counter value.
+  kkuint16  x = 4;
+  for  (x = 4;  x < scanLine->size ();  ++x)
+  {
+    uchar v = (*scanLine)[x];
+    if  (v > highPoint)
+      highPoint = v;
+  }
+
+  delete  scanLine;
+  scanLine = NULL;
+
+  return  highPoint;
 }  /* CameraHighValue */
 
 
@@ -729,8 +2506,41 @@ kkuint16 CameraAcquisitionPleora::CameraHighValue ()
 
 bool  CameraAcquisitionPleora::CameraSomePixelsSaturated (float percentThreshold)
 {
+  kkuint16  numWithHighPointTH = (kkuint16)(0.5f + (float)(FrameWidth ()) * percentThreshold);
 
-  return  true;
+  VectorUcharPtr  scanLine = Manager ()->LastFrameHighValuesScanLine ();
+  if  (!scanLine)
+    return  false;
+
+  kkuint16  highPoint = 0;
+  kkuint16  x = 0;
+  kkuint16 numWithHighPoint = 0;
+
+  // KAK 2013-10-08
+  // I added a offset to beginning and end of scan-line after there was an issue with Auto Gain that was
+  // caused by the Flow-Meter count being put into the first 4 pixels in the column. This would cause the 
+  // Auto Gain to fail thinking all settings were saturated. Decided to offset by 30 firm both ends.
+  kkuint16  firstCol = 30;
+  kkuint16  lastCol = (kkuint16)scanLine->size () - 30;
+
+  for  (x = firstCol;  x < lastCol;  ++x)
+  {
+    uchar v = (*scanLine)[x];
+    if  (v > highPoint)
+    {
+      highPoint = v;
+      numWithHighPoint = 1;
+    }
+    else if  (v == highPoint)
+    {
+      ++numWithHighPoint;
+    }
+  }
+
+  delete  scanLine;
+  scanLine = NULL;
+
+  return  numWithHighPoint >= numWithHighPointTH;
 }  /* CameraSomePixelsSaturated */
 
 
