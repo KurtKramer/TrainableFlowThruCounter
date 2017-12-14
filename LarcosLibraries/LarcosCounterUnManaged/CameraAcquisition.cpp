@@ -307,9 +307,9 @@ CameraAcquisition::~CameraAcquisition ()
 
 
 
-kkMemSize CameraAcquisition::MemoryConsumedEstimated ()
+kkMemSize CameraAcquisition::MemoryConsumedEstimated () const
 {
-  kkint32 frameBufferSize = 0;
+  kkMemSize frameBufferSize = 0;
   if  (frameBuffer)
     frameBufferSize = frameBuffer->MemoryConsumedEstimated ();
 

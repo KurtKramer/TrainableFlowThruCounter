@@ -118,7 +118,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;$(KSquareLibraries)\KKLineScanner;$(KSquareLibraries)\KKMachineLearning;$(SolutionDir)\LarcosLibraries\LarcosBase;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged;$(OutsidePackages)\fftw-3.3.2;$(PUREGEV_ROOT)\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -128,8 +128,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;zlib.lib;libfftw3-3.lib;libfftw3f-3.lib;Advapi32.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)Libraries;$(SolutionDir)Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;zlib-1.2.11.lib;libfftw3-3.lib;libfftw3f-3.lib;Advapi32.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)Libraries;$(SolutionDir)$(Platform)\$(Configuration)\;$(OutsidePackages)\fftw-3.3.5-dll64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
@@ -159,7 +159,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;$(KSquareLibraries)\KKLineScanner;$(KSquareLibraries)\KKMachineLearning;$(SolutionDir)\LarcosLibraries\LarcosBase;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged;$(OutsidePackages)\fftw-3.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -169,8 +169,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;zlib.lib;libfftw3-3.lib;libfftw3f-3.lib;Advapi32.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)Libraries;$(SolutionDir)Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;zlib-1.2.11.lib;libfftw3-3.lib;libfftw3f-3.lib;Advapi32.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)Libraries;$(SolutionDir)$(Platform)\$(Configuration)\;$(OutsidePackages)\fftw-3.3.5-dll64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -306,14 +306,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\KSquareLibraries\KKBase\KKBase.vcxproj">
       <Project>{d9bb6d83-937e-40fd-bfc3-ff48d8a04d11}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\KSquareLibraries\KKControls\KKControls.csproj">
-      <Project>{3404fea2-61a5-4102-9280-729ac235a031}</Project>
       <Private>true</Private>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
