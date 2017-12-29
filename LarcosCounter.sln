@@ -540,6 +540,7 @@ Global
 		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.Release|Win32.ActiveCfg = Release|Win32
 		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.Release|Win32.Build.0 = Release|Win32
 		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.Release|x64.ActiveCfg = Release|x64
+		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.Release|x64.Build.0 = Release|x64
 		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.Release|x86.ActiveCfg = Release|Win32
 		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.SingleImage|Any CPU.ActiveCfg = Release|Win32
 		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.SingleImage|Mixed Platforms.ActiveCfg = Release|Win32
