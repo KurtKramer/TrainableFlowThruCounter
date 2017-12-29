@@ -28,7 +28,7 @@ namespace LarcosCounterManaged
 
     ~UmiScannerHeaderFields ();
 
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated ();
 
     void  Add (UmiScannerHeaderFields^  fields);
 

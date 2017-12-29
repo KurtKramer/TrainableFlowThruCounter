@@ -197,7 +197,7 @@ LogicalFrameList::~LogicalFrameList ()
 
 kkMemSize  LogicalFrameList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memConsumed = sizeof (LogicalFrameList);
+  kkMemSize  memConsumed = sizeof (LogicalFrameList);
   LogicalFrameVector::const_iterator  idx;
   for  (idx = allFrames.begin ();  idx != allFrames.end ();  ++idx)
   {

@@ -215,7 +215,7 @@ namespace LarcosCounterManaged
 
   private:
      RasterPtr  raster;
-     int        memoryPreasure;  /**< used by GC::RemoveMemoryPressure  to know how much memory pressure to remove. */
+     kkMemSize  memoryPreasure;  /**< used by GC::RemoveMemoryPressure  to know how much memory pressure to remove. */
   };  /* UmiRaster */
 
 

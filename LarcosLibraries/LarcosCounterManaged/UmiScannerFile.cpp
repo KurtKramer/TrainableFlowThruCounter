@@ -111,13 +111,13 @@ UmiScannerFile::!UmiScannerFile ()
 
 void  UmiScannerFile::UpdateMemoryPressure ()
 {
-  kkint32  mem = 0;
+  kkMemSize  mem = 0;
   if  (lineBuff)  mem += ((100 + pixelsPerScanLine) * sizeof (uchar));
   if  (colCount)  mem += ((100 + pixelsPerScanLine) * sizeof (kkuint32));
 
   if  (scannerFile)  mem += scannerFile->MemoryConsumedEstimated ();
 
-  kkint32  deltaMemory = mem - memoryPreasureAdded;
+  kkMemSize  deltaMemory = mem - memoryPreasureAdded;
 
   if  (deltaMemory > 0)
     GC::AddMemoryPressure (deltaMemory);
@@ -504,7 +504,7 @@ array<UmiScannerFile::HeaderField^>^  UmiScannerFile::GetHeaderFields ()
   if  (headerFields == NULL)
     return nullptr;
 
-  array<HeaderField^>^  results = gcnew array<HeaderField^>(headerFields->size ());
+  array<HeaderField^>^  results = gcnew array<HeaderField^>((int)headerFields->size ());
 
   kkint32  resultsIDX = 0;
   ScannerHeaderFields::iterator  idx;
@@ -611,7 +611,7 @@ array<float>^  UmiScannerFile::RecordRateByTimeIntervals (int intervalSecs)
   if  (scanRates == NULL)
     return nullptr;
 
-  kkuint32  size = scanRates->size ();
+  kkuint32  size = (kkuint32)scanRates->size ();
   array<float>^  scanRates2 = gcnew array<float> (size);
   for  (kkuint32 x = 0;  x < size;  ++x)
     scanRates2[x] = (*scanRates)[x];

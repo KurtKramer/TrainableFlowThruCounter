@@ -1108,7 +1108,7 @@ array<String^>^  UmiTrainingModel2::SupportVectorNames (UmiClass^ c1,
 
   std::vector<KKStr> fvNames = classifier->SupportVectorNames (c1Scs, c2Scs);
 
-  array<String^>^  results = gcnew array<String^> (fvNames.size ());
+  array<String^>^  results = gcnew array<String^> ((int)fvNames.size ());
   for  (kkuint32 zed = 0;  zed < fvNames.size ();  zed++)
     results[zed] = UmiKKStr::KKStrToSystenStr (fvNames[zed]);
     
@@ -1140,7 +1140,7 @@ array<LarcosCounterManaged::ProbNamePair^>^
                                            c2Scs
                                           );
 
-  array<LarcosCounterManaged::ProbNamePair^>^  results = gcnew array<LarcosCounterManaged::ProbNamePair^> (worstExamples.size ());
+  array<LarcosCounterManaged::ProbNamePair^>^  results = gcnew array<LarcosCounterManaged::ProbNamePair^> ((int)worstExamples.size ());
   for  (kkuint32 zed = 0;  zed < worstExamples.size ();  zed++)
     results[zed] = gcnew LarcosCounterManaged::ProbNamePair (worstExamples[zed].name, worstExamples[zed].probability);
 
@@ -1176,7 +1176,7 @@ array<LarcosCounterManaged::ProbNamePair^>^
                                             c2Scs
                                            );
 
-  array<LarcosCounterManaged::ProbNamePair^>^  results = gcnew array<LarcosCounterManaged::ProbNamePair^> (worstExamples.size ());
+  array<LarcosCounterManaged::ProbNamePair^>^  results = gcnew array<LarcosCounterManaged::ProbNamePair^> ((int)worstExamples.size ());
   for  (kkuint32 zed = 0;  zed < worstExamples.size ();  zed++)
     results[zed] = gcnew LarcosCounterManaged::ProbNamePair (worstExamples[zed].name, worstExamples[zed].probability);
 

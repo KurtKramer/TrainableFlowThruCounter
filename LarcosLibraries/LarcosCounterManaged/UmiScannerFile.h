@@ -184,7 +184,7 @@ namespace LarcosCounterManaged
 
     bool              isDisposed;
 
-    kkint32           memoryPreasureAdded;
+    kkMemSize         memoryPreasureAdded;
 
     bool              frameIndexBuilt;                   /**<  Indicates if 'frameByteOffsets' has been completely built. */
     kkint32           frameNumLastRead;

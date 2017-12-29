@@ -71,7 +71,7 @@ void  CameraThread::TerminateFlagChanged ()
 
 
 
-kkMemSize  CameraThread::MemoryConsumedEstimated ()
+kkMemSize  CameraThread::MemoryConsumedEstimated ()  const
 {
   return  KKThread::MemoryConsumedEstimated () + log.MemoryConsumedEstimated ();
 }
