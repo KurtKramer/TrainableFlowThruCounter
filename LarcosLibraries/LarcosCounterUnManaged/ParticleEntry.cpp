@@ -335,7 +335,7 @@ void  ParticleEntryList::SplitIntoNameAndData (const KKStr&  line,
                                                KKStr&        value
                                               )
 {
-  int idx = line.LocateCharacter ('\t');
+  kkint64 idx = line.LocateCharacter ('\t');
   if  (idx < 0)
   {
     name = line;

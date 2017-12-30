@@ -640,7 +640,7 @@ void  PostLarvaeFV::ParseImageFileName (const KKStr&  fullFileName,
   if  (rootName.Empty ())
     return;
   
-  kkint32  x = rootName.LocateLastOccurrence ('_');
+  kkint64  x = rootName.LocateLastOccurrence ('_');
   if  (x > 0)
   {
     KKStr  colStr = rootName.SubStrPart (x + 1);

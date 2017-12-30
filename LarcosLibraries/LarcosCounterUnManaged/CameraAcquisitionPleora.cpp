@@ -2012,7 +2012,7 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
         {
           _runLog.Level (40) << "GetDeviceInfo   Connect Failed :" << PvResultToStr (pvDeviveConnectResult)  << endl;
 
-          kkint32  lastDot = interfaceIpAddress.LocateLastOccurrence ('.');
+          kkint64  lastDot = interfaceIpAddress.LocateLastOccurrence ('.');
           if  (lastDot > 0)
           {
             KKStr  newIpAddress = interfaceIpAddress.SubStrPart (0, lastDot) + "122";
