@@ -694,10 +694,7 @@ FileDescConstPtr  LarcosFVProducer::DefineFileDescStatic ()
 
 
 
-FeatureVectorListPtr  LarcosFVProducer::ManufacturFeatureVectorList (bool     owner,
-                                                                     RunLog&  runLog
-                                                                    )
-                                                                    const
+FeatureVectorListPtr  LarcosFVProducer::ManufacturFeatureVectorList (bool owner) const
 {
   return  new LarcosFeatureVectorList (FileDesc (), owner);
 }

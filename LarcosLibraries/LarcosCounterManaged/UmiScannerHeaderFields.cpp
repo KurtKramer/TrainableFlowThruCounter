@@ -48,7 +48,7 @@ UmiScannerHeaderFields::~UmiScannerHeaderFields ()
 }
 
 
-kkint32  UmiScannerHeaderFields::MemoryConsumedEstimated ()
+kkMemSize  UmiScannerHeaderFields::MemoryConsumedEstimated ()
 {
   return  scannerHeaderFields->MemoryConsumedEstimated ();
 }

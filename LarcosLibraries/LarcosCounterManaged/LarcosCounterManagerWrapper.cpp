@@ -460,7 +460,7 @@ array<byte>^  LarcosCounterManagerWrapper::CameraHighPoints ()
   VectorUcharPtr  cameraHighs  = larcosCounterManager->CameraHighPoints ();
   if  (!cameraHighs)
     return nullptr;
-  array<byte>^  results = gcnew array<byte> (cameraHighs->size ());
+  array<byte>^  results = gcnew array<byte> ((int)cameraHighs->size ());
   for  (uint x = 0;  x < cameraHighs->size ();  x++)
     results[x] = (*cameraHighs)[x];
   delete  cameraHighs;   cameraHighs = NULL;
@@ -474,7 +474,7 @@ array<byte>^    LarcosCounterManagerWrapper::CameraHighPointsFromLastNSampleLine
   VectorUcharPtr  cameraHighs  = larcosCounterManager->CameraHighPointsFromLastNSampleLines (n);
   if  (!cameraHighs)
     return nullptr;
-  array<byte>^  results = gcnew array<byte> (cameraHighs->size ());
+  array<byte>^  results = gcnew array<byte> ((int)cameraHighs->size ());
   for  (uint x = 0;  x < cameraHighs->size ();  x++)
     results[x] = (*cameraHighs)[x];
   delete  cameraHighs;   cameraHighs = NULL;

@@ -2012,7 +2012,7 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
         {
           _runLog.Level (40) << "GetDeviceInfo   Connect Failed :" << PvResultToStr (pvDeviveConnectResult)  << endl;
 
-          kkint32  lastDot = interfaceIpAddress.LocateLastOccurrence ('.');
+          kkint64  lastDot = interfaceIpAddress.LocateLastOccurrence ('.');
           if  (lastDot > 0)
           {
             KKStr  newIpAddress = interfaceIpAddress.SubStrPart (0, lastDot) + "122";
@@ -2977,7 +2977,7 @@ void  CameraAcquisitionPleora::PerformAutoCrop ()
 
   kkuint16  threshhold = highPoint * 1 / 2;
   
-  kkint32  midPoint = scanLine->size () / 2;
+  kkint32  midPoint = (kkint32)scanLine->size () / 2;
 
   kkint32  cropLeft = midPoint;
   while  ((cropLeft > 6)  && 
@@ -2986,7 +2986,7 @@ void  CameraAcquisitionPleora::PerformAutoCrop ()
     --cropLeft;
   cropLeft += 2;
 
-  kkint32  rightSide = scanLine->size ();
+  kkint32  rightSide = (kkint32)scanLine->size ();
   kkint32  cropRight = midPoint;
   while  ((cropRight <  rightSide)  && 
           (((*scanLine)[cropRight] > threshhold)  ||  ((*scanLine)[cropRight - 1] > threshhold))

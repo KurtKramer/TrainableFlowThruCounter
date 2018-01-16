@@ -319,7 +319,7 @@ const StatusSnapshotPtr  StatusSnapshotBuffer::LastEntry ()
 {
   StatusSnapshotPtr  result = NULL;
   goalie->StartBlock ();
-  int  c = size ();
+  kkint32  c = (kkint32)size ();
   if  (c > 0)
     result = (*this)[c-1];
   goalie->EndBlock ();

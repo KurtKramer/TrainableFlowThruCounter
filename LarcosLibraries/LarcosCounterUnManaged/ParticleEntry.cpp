@@ -335,7 +335,7 @@ void  ParticleEntryList::SplitIntoNameAndData (const KKStr&  line,
                                                KKStr&        value
                                               )
 {
-  int idx = line.LocateCharacter ('\t');
+  kkint64 idx = line.LocateCharacter ('\t');
   if  (idx < 0)
   {
     name = line;
@@ -514,7 +514,7 @@ void  ParticleEntryList::ProcessFieldDefinitions (const KKStr&  value)
   if  (!fields[0].EqualIgnoreCase ("PE"))
     return;
 
-  numFields = fields.size () - 1;
+  numFields = (kkint32)fields.size () - 1;
 
   kkuint32  idx = 1;
   kkuint32  defIDX = 0;

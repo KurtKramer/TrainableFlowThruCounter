@@ -72,6 +72,7 @@ public:
   }
 
 
+
   void  PrintStatsLine (ostream& o)
   {
     uint  x;
@@ -109,6 +110,7 @@ public:
   {
   }
 
+  
 
   ~DarkSpotsStatsList ()
   {
@@ -139,6 +141,7 @@ public:
   }
 
 
+
   void  PrintHeaderLine (ostream&  o)
   {
     o << "ClassName" << "\t" << "Count";
@@ -151,6 +154,7 @@ public:
     o << endl;
     return;
   }
+
 
 
   struct  SortKey
@@ -177,8 +181,7 @@ public:
     DarkSpotStats*  ds;
   };
 
-
-
+ 
 
   void  PrintReport (ostream&  o)
   {
@@ -205,13 +208,11 @@ public:
 };  /* DarkSpotsStatsList */
 
 
-
 DarkSpotsStatsList*  darkSportStats001 = NULL;
 DarkSpotsStatsList*  darkSportStats010 = NULL;
 DarkSpotsStatsList*  darkSportStats050 = NULL;
 DarkSpotsStatsList*  darkSportStats100 = NULL;
 DarkSpotsStatsList*  darkSportStats500 = NULL;
-
 
 
 void  LarcosCounterUnManaged::PostLarvaeFVResetDarkSpotCounts ()
@@ -228,7 +229,6 @@ void  LarcosCounterUnManaged::PostLarvaeFVResetDarkSpotCounts ()
   darkSportStats100 = new DarkSpotsStatsList (100);
   darkSportStats500 = new DarkSpotsStatsList (500);
 }  /* PostLarvaeFVResetDarkSpotCounts */
-
 
 
 
@@ -272,8 +272,6 @@ void  LarcosCounterUnManaged::PostLarvaeFVAddBlobList (MLClassPtr     c,
     darkSportStats500->AddDarkSpotsList (c, blobs);
 }
                          
-
-
 
 
 const  kkint32  PostLarvaeFV::SizeThreshold = 10000;  /**< Size of example in number of pixels before we decide to reduce the
@@ -482,7 +480,6 @@ PostLarvaeFV::PostLarvaeFV (const PostLarvaeFV&  _image):
 
 
 
-
 PostLarvaeFV::PostLarvaeFV (const BmpImage&   _image,
                             const MLClassPtr  _mlClass,
                             RasterListPtr     _intermediateImages
@@ -499,7 +496,6 @@ PostLarvaeFV::PostLarvaeFV (const BmpImage&   _image,
   CalcFeatures (*raster, _intermediateImages);
   delete  raster;
 }
-
 
 
 
@@ -625,7 +621,6 @@ void  PostLarvaeFV::SaveIntermediateImage (Raster&        raster,
 
 
 
-
 void  PostLarvaeFV::ParseImageFileName (const KKStr&  fullFileName, 
                                         KKStr&        scannerFileName,
                                         kkuint32&     scanLineNum,
@@ -640,7 +635,7 @@ void  PostLarvaeFV::ParseImageFileName (const KKStr&  fullFileName,
   if  (rootName.Empty ())
     return;
   
-  kkint32  x = rootName.LocateLastOccurrence ('_');
+  kkint64  x = rootName.LocateLastOccurrence ('_');
   if  (x > 0)
   {
     KKStr  colStr = rootName.SubStrPart (x + 1);
@@ -657,10 +652,6 @@ void  PostLarvaeFV::ParseImageFileName (const KKStr&  fullFileName,
 }  /* ParseImageFileName */
 
 
-
-
-
-//#define  DEBUB_CalcFeatures
 
 void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
                                   RasterListPtr  intermediateImages
@@ -912,7 +903,6 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
     featureData[WeighedMoment0Index] = weighedSizeBeforeReduction;
   }
 
-
   if ((area > convexf)  &&  (convexf > 0))
      featureData[TransparancyConvexHullIndex] = 1.0;
   else 
@@ -946,7 +936,6 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   featureData[IntensityHist5Index] = ((float)intensityHistBuckets[5] / areaD);
   featureData[IntensityHist6Index] = ((float)intensityHistBuckets[6] / areaD);
   featureData[IntensityHist7Index] = ((float)intensityHistBuckets[7] / areaD);
-
 
   {
     RasterPtr  darkSpots = NULL;
@@ -1021,9 +1010,6 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
 
 
 
-
-
-
 PostLarvaeFVList::PostLarvaeFVList (FileDescConstPtr  _fileDesc,
                                     bool             _owner
                                    ):
@@ -1032,7 +1018,6 @@ PostLarvaeFVList::PostLarvaeFVList (FileDescConstPtr  _fileDesc,
 {
 
 }
-
 
 
 
@@ -1047,7 +1032,6 @@ PostLarvaeFVList::PostLarvaeFVList (MLClassPtr _mlClass,
 {
   FeatureExtraction (_dirName, _fileName, _mlClass, _log);
 }
-
 
 
 
@@ -1067,7 +1051,6 @@ PostLarvaeFVList::PostLarvaeFVList (const PostLarvaeFVList&  examples):
 
 
 
-
 PostLarvaeFVList::PostLarvaeFVList (const PostLarvaeFVList&  examples,
                                     bool                     _owner
                                    ):
@@ -1084,6 +1067,7 @@ PostLarvaeFVList::PostLarvaeFVList (const PostLarvaeFVList&  examples,
       PushOnBack (imageExample);
   }
 }
+
 
 
 PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList,
@@ -1147,7 +1131,6 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList,
 
 
 
-
 //****************************************************************************
 //*  Will Create a list of examples that are a subset of the ones in _examples.  *
 //* The subset will consist of the examples who's mlClass is one of the     *
@@ -1160,7 +1143,6 @@ PostLarvaeFVList::PostLarvaeFVList (MLClassList&       _mlClasses,
   
 {
 }
-
 
 
 
@@ -1223,15 +1205,9 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)
 
 
 
-
-
 PostLarvaeFVList::~PostLarvaeFVList ()
 {
 }
-
-
-
-
 
 
 
@@ -1239,7 +1215,6 @@ PostLarvaeFVPtr  PostLarvaeFVList::IdxToPtr (kkint32 idx)  const
 {
   return  (PostLarvaeFVPtr)FeatureVectorList::IdxToPtr (idx);
 }  /* IdxToPtr */
-
 
 
 
@@ -1268,7 +1243,6 @@ PostLarvaeFVPtr  PostLarvaeFVList::BackOfQueue ()
 
 
 
-
 PostLarvaeFVPtr  PostLarvaeFVList::PopFromBack ()
 {
   if  (size () < 1)  return NULL;
@@ -1287,9 +1261,6 @@ PostLarvaeFVPtr  PostLarvaeFVList::PopFromBack ()
 
 
 
-
-
-
 void  PostLarvaeFVList::AddQueue (PostLarvaeFVList&  imagesToAdd)
 {
   FeatureVectorList::AddQueue (imagesToAdd);
@@ -1297,15 +1268,10 @@ void  PostLarvaeFVList::AddQueue (PostLarvaeFVList&  imagesToAdd)
 
 
 
-
-
-
 PostLarvaeFVPtr  PostLarvaeFVList::BinarySearchByName (const KKStr&  _imageFileName)  const
 {
   return  (PostLarvaeFVPtr)FeatureVectorList::BinarySearchByName (_imageFileName);
 }  /* BinarySearchByName */
-
-
 
 
 
@@ -1340,9 +1306,6 @@ PostLarvaeFVListPtr  PostLarvaeFVList::OrderUsingNamesFromAFile (const KKStr&  f
   delete  examples;
   return  orderedImages;
 }  /* OrderUsingNamesFromAFile */
-
-
-
 
 
 
@@ -1443,12 +1406,10 @@ void   PostLarvaeFVList::FeatureExtraction (KKStr       _dirName,
 
 
 
-
 PostLarvaeFVListPtr  PostLarvaeFVList::Duplicate (bool _owner)  const
 {
   return new PostLarvaeFVList (*this, _owner);
 }
-
 
 
 
@@ -1470,9 +1431,6 @@ PostLarvaeFVListPtr  PostLarvaeFVList::DuplicateListAndContents ()  const
 
   return  copyiedList;
 }  /* DuplicateListAndContents */
-
-
-
 
 
 
@@ -1532,8 +1490,6 @@ void  PostLarvaeFVList::RecalcFeatureValuesFromImagesInDirTree (KKStr    rootDir
 
 
 
-
-
 PostLarvaeFVListPtr  PostLarvaeFVList::ExtractDuplicatesByRootImageFileName ()
 {
   FeatureVectorListPtr  duplicateFeatureVectorObjects = FeatureVectorList::ExtractDuplicatesByRootImageFileName ();
@@ -1542,9 +1498,6 @@ PostLarvaeFVListPtr  PostLarvaeFVList::ExtractDuplicatesByRootImageFileName ()
   delete  duplicateFeatureVectorObjects;  duplicateFeatureVectorObjects = NULL;
   return  duplicateImageFeaturesObjects;
 }  /* ExtractDuplicatesByRootImageFileName */
-
-
-
 
 
 
@@ -1562,8 +1515,6 @@ PostLarvaeFVListPtr   PostLarvaeFVList::ExtractExamplesForAGivenClass (MLClassPt
 
 
 
-
-
 PostLarvaeFVListPtr  PostLarvaeFVList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                                 kkint32         maxImagesPerClass,
                                                                 kkint32         numOfFolds,
@@ -1576,7 +1527,6 @@ PostLarvaeFVListPtr  PostLarvaeFVList::StratifyAmoungstClasses (MLClassListPtr  
   delete stratifiedFeatureVectors;  stratifiedFeatureVectors = NULL;
   return  stratifiedImagefeatures;
 }  /* StratifyAmoungstClasses */
-
 
 
 
@@ -1596,4 +1546,3 @@ PostLarvaeFVListPtr  PostLarvaeFVList::StratifyAmoungstClasses (kkint32  numOfFo
 
   return  stratifiedImagefeatures;
 }  /* StratifyAmoungstClasses */
-
