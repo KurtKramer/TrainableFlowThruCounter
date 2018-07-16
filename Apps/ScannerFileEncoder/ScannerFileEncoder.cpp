@@ -13,7 +13,6 @@
 using namespace std;
 
 
-
 // -src D:\Users\kkramer\AEOS\ShrimpImages  -SFN Shrimp.Spr
 // -src C:\Users\kkramer\Desktop\AEOS\Shrimp images  -sfn Shrimp2.spr
 
@@ -33,7 +32,6 @@ using namespace KKB;
 #include "ScannerFile.h"
 #include "ScannerFile3BitEncoded.h"
 using namespace KKLSC;
-
 
 
 //using namespace KKMLL;
@@ -186,7 +184,6 @@ bool  ScannerFileEncoder::ProcessCmdLineParameter (char    parmSwitchCode,
 
 
 
-
 /******************************************************************************
  * DisplayCommandLineParameters()
  * DESC: Displays a help message to the user
@@ -201,9 +198,6 @@ void   ScannerFileEncoder::DisplayCommandLineParameters ()
   log.Level (0) << "    -dest  <Scanner File>  Name of Scanner-file to create."                        << endl;
   log.Level (0)                                                                                      << endl;
 }  /* DisplayCommandLineParameters */
-
-
-
 
 
 
@@ -266,9 +260,6 @@ void  ScannerFileEncoder::ProcessFile (const KKStr&  fileName)
     SaveImage (*image, saveImageFileName);
   }
 
-
-
-
   delete  image;
   image = NULL;
 }  /* ProcessFile */
@@ -288,7 +279,6 @@ void  ScannerFileEncoder::ProcessDirectory (KKStr  dirName)
   }
 
   int numFilesProcessed = 0;
-
 
   KKStrList::iterator  idx;
   for  (idx = fileNames->begin ();  idx != fileNames->end ();  idx++)
@@ -312,9 +302,6 @@ void  ScannerFileEncoder::ProcessDirectory (KKStr  dirName)
 
   delete  fileNames;       fileNames = NULL;
 }  /* ProcessDirectory */
-
-
-
 
 
 
@@ -369,7 +356,6 @@ RasterListPtr  ScannerFileEncoder::GetImagesInSubDirectory (KKStr  dirName)
 
 
 
-
 void  ScannerFileEncoder::PopulateScanLinePositions ()
 {
   int  x = 0;
@@ -382,8 +368,6 @@ void  ScannerFileEncoder::PopulateScanLinePositions ()
 
   sort (scanLinePositions.begin (), scanLinePositions.end ());
 }  /* PopulateScanLinePositions */
-
-
 
 
 
@@ -414,9 +398,6 @@ RasterPtr  ScannerFileEncoder::GenerateRandomImage ()
 
 
 
-
-
-
 void  ScannerFileEncoder::AddScanLineToBuffer ()
 {
   ScanLinePtr scanLine = new ScanLine (scanLineWidth);
@@ -444,11 +425,10 @@ void  ScannerFileEncoder::FlushScanLineBuffer (ulong scanRow)
 
 
 
-
 void  ScannerFileEncoder::WritePixelToScannerFile (ulong  scanLineRow, 
-                                                  uint   col,
-                                                  uchar  pixel
-                                                 )
+                                                   uint   col,
+                                                   uchar  pixel
+                                                  )
 {
   if  (scanLineRow < scanLineBufferStart)
   {
@@ -531,8 +511,6 @@ void  ScannerFileEncoder::BuildScannerFile ()
 
 
 
-
-
 void   ScannerFileEncoder::Main ()
 {
   if  (Abort ())
@@ -552,9 +530,6 @@ void   ScannerFileEncoder::Main ()
   delete  scannerFile;
   scannerFile = NULL;
 }  /* Main */
-
-
-
 
 
 

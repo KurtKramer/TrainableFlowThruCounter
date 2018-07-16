@@ -22,7 +22,7 @@
     <ProjectGuid>{DA81759E-70DD-496E-8D93-E41B1BD938BC}</ProjectGuid>
     <RootNamespace>ScannerFileEncoder</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -115,8 +115,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>fftw.lib;zlib.lib;KKBase.lib;KKLineScanner.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;zlib-1.2.11.lib;libfftw3-3.lib;libfftw3f-3.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(OutsidePackages)\fftw-3.3.5-dll64\</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
     </Link>
@@ -158,7 +158,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>libfftw3-3.lib;libfftw3f-3.lib;zlib.lib;KKBase.lib;KKLineScanner.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(OutsidePackages)\fftw-3.3.5-dll64\</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -170,6 +170,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ScannerFileEncoder.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\KSquareLibraries\KKBase\KKBase.vcxproj">
+      <Project>{d9bb6d83-937e-40fd-bfc3-ff48d8a04d11}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\KSquareLibraries\KKLineScanner\KKLineScanner.vcxproj">
+      <Project>{65b4e499-f9c5-472a-b5d1-90541f817513}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
