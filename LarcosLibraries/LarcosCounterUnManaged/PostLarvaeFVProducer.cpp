@@ -27,12 +27,12 @@ using namespace KKB;
 #include "FeatureVectorProducer.h"
 using namespace  KKMLL;
 
+
 #include "PostLarvaeFVProducer.h"
 
 #include "FeatureFileIOKK.h"
 #include "PostLarvaeFV.h"
 using  namespace  LarcosCounterUnManaged;
-
 
 
 PostLarvaeFVProducer::PostLarvaeFVProducer (FactoryFVProducerPtr  factory):
@@ -42,7 +42,6 @@ PostLarvaeFVProducer::PostLarvaeFVProducer (FactoryFVProducerPtr  factory):
     totPixsForMorphOps (100000)
 {
 }
-
 
 
 
@@ -64,11 +63,11 @@ PostLarvaeFVPtr  PostLarvaeFVProducer::ComputeFeatureVector (const Raster&     i
 
 
 
-
 const type_info*   PostLarvaeFVProducer::FeatureVectorTypeId () const
 {
   return  &(typeid (PostLarvaeFV));
 }
+
 
 
 const type_info*   PostLarvaeFVProducer::FeatureVectorListTypeId () const
@@ -78,21 +77,17 @@ const type_info*   PostLarvaeFVProducer::FeatureVectorListTypeId () const
 
 
 
-PostLarvaeFVListPtr  PostLarvaeFVProducer::ManufacturFeatureVectorList (bool     owner,
-                                                                        RunLog&  runLog
-                                                                       )
-                                                                       const
+PostLarvaeFVListPtr  PostLarvaeFVProducer::ManufacturFeatureVectorList (bool   owner)  const
 {
   return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner);
 }
+
 
 
 FileDescConstPtr  PostLarvaeFVProducer::DefineFileDesc () const
 {
   return  PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
 }
-
-
 
 
 
@@ -113,6 +108,7 @@ FeatureFileIOPtr  PostLarvaeFVProducerFactory::DefaultFeatureFileIO ()  const
 {
   return  FeatureFileIOKK::Driver ();
 }
+
 
 
 const type_info*  PostLarvaeFVProducerFactory::FeatureVectorTypeId ()  const  
@@ -136,7 +132,6 @@ FileDescConstPtr  PostLarvaeFVProducerFactory::FileDesc ()  const
 
 
 
-
 PostLarvaeFVProducerPtr  PostLarvaeFVProducerFactory::ManufactureInstance (RunLog&  runLog)
 {
   return new PostLarvaeFVProducer (this);
@@ -144,20 +139,13 @@ PostLarvaeFVProducerPtr  PostLarvaeFVProducerFactory::ManufactureInstance (RunLo
 
 
 
-
-PostLarvaeFVListPtr  PostLarvaeFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
-                                                                               RunLog&  runLog
-                                                                              )
-                                                                              const
+PostLarvaeFVListPtr  PostLarvaeFVProducerFactory::ManufacturFeatureVectorList (bool  owner)  const
 {
   return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner);
 }
 
 
-
 PostLarvaeFVProducerFactory*  PostLarvaeFVProducerFactory::factory = Factory (NULL);
-
-
 
 
 PostLarvaeFVProducerFactory*  PostLarvaeFVProducerFactory::Factory (RunLog*  runLog)
@@ -173,4 +161,3 @@ PostLarvaeFVProducerFactory*  PostLarvaeFVProducerFactory::Factory (RunLog*  run
 
   return  factory;
 }
-

@@ -47,10 +47,7 @@ namespace LarcosCounterUnManaged
      *@brief Manufactures a instance of a derived 'FeatureVectorList' class that is appropriate for containing instances
      *of FeatureVectors by this FeatureVectorProducer.
      */
-    virtual  PostLarvaeFVListPtr  ManufacturFeatureVectorList (bool     owner,
-                                                               RunLog&  runLog
-                                                              )
-                                                              const;
+    virtual  PostLarvaeFVListPtr  ManufacturFeatureVectorList (bool   owner)  const;
 
   protected:
     virtual  FileDescConstPtr  DefineFileDesc () const;
@@ -101,10 +98,7 @@ namespace LarcosCounterUnManaged
     /**
      *@brief Manufactures a instance of a 'PostLarvaeFVList' class that will own its contents.
      */
-    virtual  PostLarvaeFVListPtr  ManufacturFeatureVectorList (bool     owner,
-                                                               RunLog&  runLog
-                                                              )
-                                                              const;
+    virtual  PostLarvaeFVListPtr  ManufacturFeatureVectorList (bool  owner)  const;
 
     /**
      *@brief  Returns instance of "PostLarvaeFVProducerFactory"  that is registered with "FactoryFVProducer::RegisterFactory".
