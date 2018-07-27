@@ -27,12 +27,12 @@ using namespace KKB;
 #include "FeatureVectorProducer.h"
 using namespace  KKMLL;
 
+
 #include "PostLarvaeFVProducer.h"
 
 #include "FeatureFileIOKK.h"
 #include "PostLarvaeFV.h"
 using  namespace  LarcosCounterUnManaged;
-
 
 
 PostLarvaeFVProducer::PostLarvaeFVProducer (FactoryFVProducerPtr  factory):
@@ -77,7 +77,7 @@ const type_info*   PostLarvaeFVProducer::FeatureVectorListTypeId () const
 
 
 
-PostLarvaeFVListPtr  PostLarvaeFVProducer::ManufacturFeatureVectorList (bool owner)  const
+PostLarvaeFVListPtr  PostLarvaeFVProducer::ManufacturFeatureVectorList (bool   owner)  const
 {
   return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner);
 }
@@ -139,15 +139,13 @@ PostLarvaeFVProducerPtr  PostLarvaeFVProducerFactory::ManufactureInstance (RunLo
 
 
 
-PostLarvaeFVListPtr  PostLarvaeFVProducerFactory::ManufacturFeatureVectorList (bool owner)  const
+PostLarvaeFVListPtr  PostLarvaeFVProducerFactory::ManufacturFeatureVectorList (bool  owner)  const
 {
   return new PostLarvaeFVList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), owner);
 }
 
 
-
 PostLarvaeFVProducerFactory*  PostLarvaeFVProducerFactory::factory = Factory (NULL);
-
 
 
 PostLarvaeFVProducerFactory*  PostLarvaeFVProducerFactory::Factory (RunLog*  runLog)
@@ -163,4 +161,3 @@ PostLarvaeFVProducerFactory*  PostLarvaeFVProducerFactory::Factory (RunLog*  run
 
   return  factory;
 }
-
