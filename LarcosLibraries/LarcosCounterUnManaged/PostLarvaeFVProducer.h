@@ -67,9 +67,6 @@ namespace LarcosCounterUnManaged
 
 
 
-
-
-
   class  PostLarvaeFVProducerFactory:  public  FactoryFVProducer
   {
     typedef  PostLarvaeFVProducerFactory*  PostLarvaeFVProducerFactoryPtr;
