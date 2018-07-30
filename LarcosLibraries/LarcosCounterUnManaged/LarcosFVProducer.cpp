@@ -16,6 +16,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+
 #include "Blob.h"
 #include "ConvexHull.h"
 #include "KKBaseTypes.h"
@@ -30,13 +31,13 @@ using namespace KKB;
 #include "FileDesc.h"
 using namespace  KKMLL;
 
+
 #include "LarcosFVProducer.h"
 
 #include "FeatureFileIOKK.h"
 #include "LarcosFeatureVector.h"
 #include "LarcosTrainingConfiguration.h"
 using  namespace  LarcosCounterUnManaged;
-
 
 
 kkint16  LarcosFVProducer::maxNumOfFeatures      = 56;
@@ -172,10 +173,6 @@ const  KKStr  LarcosFVProducer::featureNames[] =
 
 
 
-
-
-
-
 LarcosFVProducer::LarcosFVProducer (FactoryFVProducerPtr  factory):
     FeatureVectorProducer ("LarcosFVProducer",
                            factory
@@ -192,7 +189,6 @@ LarcosFVProducer::LarcosFVProducer (FactoryFVProducerPtr  factory):
   workRaster2Area = new uchar[totPixsForMorphOps];
   workRaster3Area = new uchar[totPixsForMorphOps];
 }
-
 
 
 
@@ -263,7 +259,6 @@ void  LarcosFVProducer::ReductionByMultiple (kkint32        multiple,
     srcRow += multiple;
   }
 }  /* ReductionByMultiple */
-
 
 
 
@@ -548,7 +543,6 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
     featureData[WeighedMoment0Index] = weighedSizeBeforeReduction  * priorReductionFactor;
   }
 
-
   if ((area > convexf)  &&  (convexf > 0))
      featureData[TransparancyConvexHullIndex] = 1.0;
   else 
@@ -643,11 +637,11 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
 
 
 
-
 const type_info*   LarcosFVProducer::FeatureVectorTypeId () const
 {
   return  &(typeid (LarcosFeatureVector));
 }
+
 
 
 const type_info*  LarcosFVProducer::FeatureVectorListTypeId () const
@@ -693,14 +687,10 @@ FileDescConstPtr  LarcosFVProducer::DefineFileDescStatic ()
 
 
 
-
-FeatureVectorListPtr  LarcosFVProducer::ManufacturFeatureVectorList (bool owner) const
+FeatureVectorListPtr  LarcosFVProducer::ManufacturFeatureVectorList (bool  owner) const
 {
   return  new LarcosFeatureVectorList (FileDesc (), owner);
 }
-
-
-
 
 
 
@@ -721,6 +711,7 @@ FeatureFileIOPtr  LarcosFVProducerFactory::DefaultFeatureFileIO ()  const
 {
   return  FeatureFileIOKK::Driver ();
 }
+
 
 
 const type_info*  LarcosFVProducerFactory::FeatureVectorTypeId ()  const  
@@ -758,8 +749,6 @@ TrainingConfiguration2Ptr  LarcosFVProducerFactory::ManufacturTrainingConfigurat
 
 
 
-
-
 LarcosFeatureVectorListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
                                                                                   RunLog&  runLog
                                                                                  )
@@ -771,7 +760,6 @@ LarcosFeatureVectorListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList
 
 
 LarcosFVProducerFactory*  LarcosFVProducerFactory::factory = Factory (NULL);
-
 
 
 
@@ -788,4 +776,3 @@ LarcosFVProducerFactory*  LarcosFVProducerFactory::Factory (RunLog*  runLog)
 
   return  factory;
 }
-
