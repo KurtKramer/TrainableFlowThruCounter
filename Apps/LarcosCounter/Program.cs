@@ -16,6 +16,7 @@ namespace LarcosCounter
     [STAThread]
     static void Main()
     {
+      SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
       UmiMethods.StartMemoryLeakDetection ();
 
       //LarcosCounterManaged.UmiVariables.SetLarcosHomeDir ();  // Will set the application frame work variables to there default values.
