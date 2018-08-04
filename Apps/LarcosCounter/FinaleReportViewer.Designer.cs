@@ -1,5 +1,6 @@
 ﻿namespace LarcosCounter
 {
+  using System.Windows.Forms.DataVisualization.Charting;
   partial class FinaleReportViewer
   {
     /// <summary>
@@ -28,25 +29,25 @@
     /// </summary>
     private void InitializeComponent ()
     {
-      this.components = new System.ComponentModel.Container ();
-      Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource ();
-      Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource ();
-      this.FinaleReportDataSourceBindingSource = new System.Windows.Forms.BindingSource (this.components);
-      this.chartsBindingSource = new System.Windows.Forms.BindingSource (this.components);
-      this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer ();
-      ((System.ComponentModel.ISupportInitialize)(this.FinaleReportDataSourceBindingSource)).BeginInit ();
-      ((System.ComponentModel.ISupportInitialize)(this.chartsBindingSource)).BeginInit ();
-      this.SuspendLayout ();
+      this.components = new System.ComponentModel.Container();
+      Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+      Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
+      this.FinaleReportDataSourceBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.chartsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+      ((System.ComponentModel.ISupportInitialize)(this.FinaleReportDataSourceBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.chartsBindingSource)).BeginInit();
+      this.SuspendLayout();
       // 
       // FinaleReportDataSourceBindingSource
       // 
-      this.FinaleReportDataSourceBindingSource.DataSource = typeof (global::LarcosCounter.FinaleReportDataSource);
-      this.FinaleReportDataSourceBindingSource.CurrentChanged += new System.EventHandler (this.FinaleReportDataSourceBindingSource_CurrentChanged);
+      this.FinaleReportDataSourceBindingSource.CurrentChanged += new System.EventHandler(this.FinaleReportDataSourceBindingSource_CurrentChanged);
       // 
       // chartsBindingSource
       // 
       this.chartsBindingSource.DataMember = "Charts";
       this.chartsBindingSource.DataSource = this.FinaleReportDataSourceBindingSource;
+      this.chartsBindingSource.CurrentChanged += new System.EventHandler(this.chartsBindingSource_CurrentChanged);
       // 
       // reportViewer1
       // 
@@ -55,28 +56,30 @@
       reportDataSource1.Value = this.FinaleReportDataSourceBindingSource;
       reportDataSource2.Name = "LarcosCounter_FinaleReportChartDataSource";
       reportDataSource2.Value = this.chartsBindingSource;
-      this.reportViewer1.LocalReport.DataSources.Add (reportDataSource1);
-      this.reportViewer1.LocalReport.DataSources.Add (reportDataSource2);
+      this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
+      this.reportViewer1.LocalReport.DataSources.Add(reportDataSource2);
       this.reportViewer1.LocalReport.ReportEmbeddedResource = "LarcosCounter.LarcosSessionReport.rdlc";
-      this.reportViewer1.Location = new System.Drawing.Point (2, 2);
+      this.reportViewer1.Location = new System.Drawing.Point(4, 4);
+      this.reportViewer1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
       this.reportViewer1.Name = "reportViewer1";
-      this.reportViewer1.Size = new System.Drawing.Size (700, 700);
+      this.reportViewer1.Size = new System.Drawing.Size(1398, 1344);
       this.reportViewer1.TabIndex = 0;
       this.reportViewer1.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.PageWidth;
       // 
       // FinaleReportViewer
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF (6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size (708, 705);
-      this.Controls.Add (this.reportViewer1);
+      this.ClientSize = new System.Drawing.Size(1416, 1356);
+      this.Controls.Add(this.reportViewer1);
+      this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
       this.Name = "FinaleReportViewer";
       this.Text = "FinaleReportViewer";
-      this.Load += new System.EventHandler (this.FinaleReportViewer_Load);
-      this.SizeChanged += new System.EventHandler (this.FinaleReportViewer_SizeChanged);
-      ((System.ComponentModel.ISupportInitialize)(this.FinaleReportDataSourceBindingSource)).EndInit ();
-      ((System.ComponentModel.ISupportInitialize)(this.chartsBindingSource)).EndInit ();
-      this.ResumeLayout (false);
+      this.Load += new System.EventHandler(this.FinaleReportViewer_Load);
+      this.SizeChanged += new System.EventHandler(this.FinaleReportViewer_SizeChanged);
+      ((System.ComponentModel.ISupportInitialize)(this.FinaleReportDataSourceBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.chartsBindingSource)).EndInit();
+      this.ResumeLayout(false);
 
     }
 
