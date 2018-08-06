@@ -19,9 +19,9 @@ namespace LarcosCounterManaged
   public:
     enum  class  FlowMeterMethods: int  
     {
-      Null      = InstallationConfig::FlowMeterMethods::Null,
-      Embedded  = InstallationConfig::FlowMeterMethods::Embedded,
-      EndOfList = InstallationConfig::FlowMeterMethods::EndOfList,
+      Null      = (int)InstallationConfig::FlowMeterMethods::Null,
+      Embedded  = (int)InstallationConfig::FlowMeterMethods::Embedded,
+      EndOfList = (int)InstallationConfig::FlowMeterMethods::EndOfList,
     };
 
     static String^            FlowMeterMethodToStr   (FlowMeterMethods  method);

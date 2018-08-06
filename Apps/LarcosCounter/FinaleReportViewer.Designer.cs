@@ -59,20 +59,18 @@
       this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
       this.reportViewer1.LocalReport.DataSources.Add(reportDataSource2);
       this.reportViewer1.LocalReport.ReportEmbeddedResource = "LarcosCounter.LarcosSessionReport.rdlc";
-      this.reportViewer1.Location = new System.Drawing.Point(4, 4);
-      this.reportViewer1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+      this.reportViewer1.Location = new System.Drawing.Point(2, 2);
       this.reportViewer1.Name = "reportViewer1";
-      this.reportViewer1.Size = new System.Drawing.Size(1398, 1344);
+      this.reportViewer1.Size = new System.Drawing.Size(700, 700);
       this.reportViewer1.TabIndex = 0;
       this.reportViewer1.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.PageWidth;
       // 
       // FinaleReportViewer
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1416, 1356);
+      this.ClientSize = new System.Drawing.Size(708, 705);
       this.Controls.Add(this.reportViewer1);
-      this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
       this.Name = "FinaleReportViewer";
       this.Text = "FinaleReportViewer";
       this.Load += new System.EventHandler(this.FinaleReportViewer_Load);
