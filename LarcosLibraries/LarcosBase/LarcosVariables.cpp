@@ -56,7 +56,7 @@ KKStr  LarcosVariables::LarcosHomeDir ()
 
   if  (larcosHomeDir.Empty ())
   {
-    #if  defined(OS_WINDOWS)
+    #if  defined(KKOS_WINDOWS)
        larcosHomeDir = "C:\\Larcos";
        cout << endl << "larcosHomeDir" << "\t" << larcosHomeDir << endl << endl;
     #else
@@ -92,6 +92,7 @@ void   LarcosVariables::SetLarcosHomeDir ()
   KKMLVariables::SetMachineLearninigHomeDir (osAddSlash (LarcosHomeDir ()) + "Classifier");
   KKLSC::Variables::SetHomeDir (LarcosHomeDir ());
 }
+
 
 
 void   LarcosVariables::SetLarcosHomeDir (const KKStr&  _larcosHomeDir)

@@ -33,7 +33,8 @@ LarcosTrainingModelManaged::LarcosTrainingModelManaged (LarcosTrainingModelPtr  
  }
 
 
- String^     LarcosTrainingModelManaged::Subject::get ()
+
+ String^  LarcosTrainingModelManaged::Subject::get ()
  {
    if  (larcosTrainingModel)
      return  UmiKKStr::KKStrToSystenStr (larcosTrainingModel->Subject ());
@@ -42,7 +43,8 @@ LarcosTrainingModelManaged::LarcosTrainingModelManaged (LarcosTrainingModelPtr  
  }
 
 
- String^     LarcosTrainingModelManaged::Size::get ()
+
+ String^  LarcosTrainingModelManaged::Size::get ()
  {
    if  (larcosTrainingModel)
      return  UmiKKStr::KKStrToSystenStr (larcosTrainingModel->Size ());
@@ -51,7 +53,8 @@ LarcosTrainingModelManaged::LarcosTrainingModelManaged (LarcosTrainingModelPtr  
  }
 
 
- String^     LarcosTrainingModelManaged::WaterQuality::get ()
+
+ String^  LarcosTrainingModelManaged::WaterQuality::get ()
  {
    if  (larcosTrainingModel)
      return  UmiKKStr::KKStrToSystenStr (larcosTrainingModel->WaterQuality ());
@@ -75,7 +78,6 @@ LarcosTrainingModelPtr  LarcosTrainingModelManaged::UnManaged ()
 {
   return larcosTrainingModel;
 }
-
 
 
 
@@ -120,12 +122,18 @@ LarcosTrainingModelListManaged^  LarcosTrainingModelListManaged::BuildFromTraini
 
 array<String^>^  LarcosTrainingModelListManaged::GetListOfSubjects ()
 {
+  if (larcosTrainingModels == NULL)
+  {
+    return nullptr;
+  }
+
   KKStrListPtr  subjects = larcosTrainingModels->GetListOfSubjects ();
   array<String^>^  managedSubjects =  UmiKKStr::KKStrToListToStringArray (subjects);
   delete  subjects;
   subjects = NULL;
   return  managedSubjects;
 }
+
 
 
 array<String^>^  LarcosTrainingModelListManaged::GetListOfSizes (String^ subject)

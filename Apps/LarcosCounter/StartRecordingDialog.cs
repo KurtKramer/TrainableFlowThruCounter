@@ -36,7 +36,6 @@ namespace LarcosCounter
 
     private  bool    playingBack = false;
 
-
     public  String  Comments           {get {return comments.Text;}            set  {comments.Text           = value;}}
     public  String  Destination        {get {return destination.Text;}         set  {destination.Text        = value;}}
     public  String  PersonInCharge     {get {return personInCharge.Text;}      set  {personInCharge.Text     = value;}}
@@ -66,6 +65,7 @@ namespace LarcosCounter
     private  bool  waterQualitySuspend = false;
 
 
+
     private  void  PopulateSubjects ()
     {
       bool  subjectSuspendOrig = subjectSuspend;
@@ -81,6 +81,7 @@ namespace LarcosCounter
       subject.DataSource = trainModels.GetListOfSubjects ();
       subjectSuspend = subjectSuspendOrig;
     }
+
 
 
     public  String  TrainingModelName
@@ -138,6 +139,7 @@ namespace LarcosCounter
         waterQualitySuspend = waterQualitySuspendOrig;
       }
     }
+
 
 
     /// <summary>
@@ -300,7 +302,6 @@ namespace LarcosCounter
 
       lastTrainingModelName = newTrainingModelName;
     }
-
 
 
 
