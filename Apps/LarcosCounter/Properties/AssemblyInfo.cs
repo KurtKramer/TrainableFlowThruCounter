@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle ("Larcos Counter")]
+[assembly: AssemblyTitle("ZOIS Counter")]
 [assembly: AssemblyDescription ("Trainable Flow-Through Counter")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany ("Larcos")]
-[assembly: AssemblyProduct("LarcosCounter")]
-[assembly: AssemblyCopyright ("Copyright © Microsoft 2011-2014")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Line Scan Counter")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

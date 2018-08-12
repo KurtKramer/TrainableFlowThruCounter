@@ -80,12 +80,11 @@ namespace LarcosFileViewer
 
       if  (String.IsNullOrEmpty (fileName))
       {
-        //try
-        //{
+        try
+        {
           Application.Run (new LarcosFileViewer ());
-        //}
+        }
 
-        /*
         catch  (FileNotFoundException  e0)
         {
           MessageBox.Show ("FileNotFoundException FileName [" + e0.FileName + "] Starting LarcosFileViewer" + "\n\n" + 
@@ -113,7 +112,6 @@ namespace LarcosFileViewer
                            e2.StackTrace
                           );
         }
-        */
       }
       else
       {

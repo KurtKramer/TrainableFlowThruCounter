@@ -101,7 +101,6 @@ CameraAcquisitionPleora::CameraAcquisitionPleora
     lStop                      (NULL),
     lTLLocked                  (NULL),
 
-
     oneSecFrameInterval        (41),    /**< Number of frames at 480 Scan Lines per frame 20K scan rate for  1 second interval. */
     twoSecFrameInterval        (82),
     threeSecFrameInterval      (123),
