@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <StartupObject>LarcosCounter.Program</StartupObject>
-    <ApplicationIcon>LarcosLogoSmall.ico</ApplicationIcon>
+    <ApplicationIcon>zois_icon.ico</ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -357,6 +357,9 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="zois.ico" />
+    <Content Include="zois_icon.ico" />
+    <Content Include="zois_icon_fKj_icon.ico" />
     <None Include="Resources\ZOIS_Logo.png" />
     <None Include="Resources\KSquareLogo.png" />
     <None Include="app.config" />

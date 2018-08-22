@@ -32,7 +32,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <ApplicationIcon>LarcosLogoSmall.ico</ApplicationIcon>
+    <ApplicationIcon>zois_icon.ico</ApplicationIcon>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DownArrow.ico" />
+    <Content Include="zois_icon.ico" />
     <None Include="LarcosLogoMedium.jpg" />
     <Content Include="LarcosLogoSmall.ico" />
     <Content Include="UpArrow.ico" />

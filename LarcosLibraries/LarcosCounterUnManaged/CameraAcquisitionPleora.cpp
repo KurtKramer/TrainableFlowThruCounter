@@ -53,7 +53,6 @@ using namespace  LarcosBase;
 using  namespace  LarcosCounterUnManaged;
 
 
-
 // 2013-10-19,   KAK,  Will learned possible way to get to talk thru camera to get flow data,
 //                     Seems bug in firmware where we have to set format to "NoConnect"  then
 //                     to "TTL";  this will force the command to propagate thru the rest if the 
@@ -2407,8 +2406,7 @@ void  CameraAcquisitionPleora::PrintDeviceParameters (const KKStr&          subN
   kkint32 numberOfParameters = lDeviceParams->GetCount ();
   for  (kkint32 zed = 0;  zed < numberOfParameters;  ++zed)
   {
-    KKStr     s = "";
-
+    KKStr  s = "";
 
     PvGenParameter*  p = lDeviceParams->Get (zed);
     if  (!p)
