@@ -48,7 +48,7 @@ namespace LarcosCounterUnManaged
 
     virtual  kkint16  Version ()  const {return _LarcosFVProducer_VersionNum_;}
 
-    static   kkint32  MaxNumOfFeatures  ()  {return maxNumOfFeatures;}
+    static   kkuint32  MaxNumOfFeatures  ()  {return maxNumOfFeatures;}
 
   protected:
     virtual  FileDescConstPtr  DefineFileDesc ()  const;
@@ -87,7 +87,7 @@ namespace LarcosCounterUnManaged
                                    * constraint.
                                    */
 
-    static  kkint16  maxNumOfFeatures;
+    static  kkuint32  maxNumOfFeatures;
     static  const    kkint32  SizeThreshold;
 
     static  const    KKStr  featureNames[];

@@ -1983,10 +1983,10 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
         {
           _runLog.Level (40) << "GetDeviceInfo   Connect Failed :" << PvResultToStr (pvDeviveConnectResult)  << endl;
 
-          kkint64  lastDot = interfaceIpAddress.LocateLastOccurrence ('.');
-          if  (lastDot > 0)
+          auto  lastDot = interfaceIpAddress.LocateLastOccurrence ('.');
+          if  (lastDot.Exists ()  &&  (lastDot.value > 0))
           {
-            KKStr  newIpAddress = interfaceIpAddress.SubStrPart (0, lastDot) + "122";
+            KKStr  newIpAddress = interfaceIpAddress.SubStrPart (0, lastDot.value) + "122";
             PvString  pvNewIpAddress = newIpAddress.Str ();
 
             _runLog.Level (20) << "GetDeviceInfo   Attempting to set IP Address :" << newIpAddress << endl;

@@ -335,16 +335,16 @@ void  ParticleEntryList::SplitIntoNameAndData (const KKStr&  line,
                                                KKStr&        value
                                               )
 {
-  kkint64 idx = line.LocateCharacter ('\t');
-  if  (idx < 0)
+  auto idx = line.LocateCharacter ('\t');
+  if  (idx.None ())
   {
     name = line;
     value = "";
     return;
   }
 
-  name  = line.SubStrPart (0, idx - 1);
-  value = line.SubStrPart (idx + 1);
+  name  = line.SubStrPart (0, idx.value - 1);
+  value = line.SubStrPart (idx.value + 1);
 }  /* SplitIntoNameAndData */
 
 
@@ -1067,7 +1067,7 @@ void  ParticleEntryBuffer::AddToReport (ostream& o)
     if  (fv)
     {
       o << "FV" << "\t" << fv->ExampleFileName ();
-      for  (kkint32 idx = 0;  idx < fv->NumOfFeatures ();  ++idx)
+      for  (kkuint32 idx = 0;  idx < fv->NumOfFeatures ();  ++idx)
         o << "\t" << fv->FeatureData (idx);
       o << endl;
       delete  fv;

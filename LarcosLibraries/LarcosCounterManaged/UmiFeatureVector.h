@@ -97,8 +97,8 @@ namespace LarcosCounterManaged
     property String^    ClassName          {String^     get ();}
     property bool       FeatureDataMissing {bool        get ();}  // If feature values are 0.0f then will return 'true' else 'false'.
     property UmiClass^  MLClass            {UmiClass^   get ();  void  set (UmiClass^  _mlClass);}
-    property String^    ExampleFileName      {String^     get ();  void  set (String^    _imageFileName);}
-    property int        NumFeatures        {int         get ();}
+    property String^    ExampleFileName    {String^     get ();  void  set (String^    _imageFileName);}
+    property uint       NumFeatures        {uint        get ();}
     property float      OrigSize           {float       get ();}
     property float      Probability        {float       get ();  void  set (float      _probability);}
     property bool       Validated          {bool        get ();  void  set (bool       _validated);}
@@ -106,10 +106,10 @@ namespace LarcosCounterManaged
     FeatureVectorPtr  Features ()  {return  features;}
 
 
-    String^  FeatureName (int featureNum);
+    String^  FeatureName (uint featureNum);
 
 
-    double  FeatureValue (int featureNum);
+    float  FeatureValue (kkuint32 featureNum);
 
 
     static  ParsedImageFileName^  ParseImageFileName (System::String^  fullFileName);

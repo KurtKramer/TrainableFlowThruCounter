@@ -58,7 +58,7 @@ namespace LarcosCounterUnManaged
 
     //PostLarvaeFV (MLClassPtr  mlClass);
 
-    PostLarvaeFV (kkint32  _numOfFeatures);
+    PostLarvaeFV (kkuint32  _numOfFeatures);
 
     PostLarvaeFV (const PostLarvaeFV&  _image);
 
@@ -128,10 +128,9 @@ namespace LarcosCounterUnManaged
     
     static  FileDescConstPtr    PostLarvaeFeaturesFileDesc ();
 
-    static  KKStr    FeatureName (kkint32  fieldNum);
-    static  kkint32  MaxNumOfFeatures () {return maxNumOfFeatures;}
+    static  KKStr     FeatureName (kkuint32  fieldNum);
+    static  kkuint32  MaxNumOfFeatures () {return maxNumOfFeatures;}
 
-    
 
 
   private:
@@ -150,8 +149,8 @@ namespace LarcosCounterUnManaged
     float     centroidRow;     /**<  centroid Row with just respect to image. */
     kkint32   numOfEdgePixels;
 
-    static  kkint16  maxNumOfFeatures;
-    static  const    kkint32  SizeThreshold;
+    static  kkuint32  maxNumOfFeatures;
+    static  const     kkint32  SizeThreshold;
 
     static  const    char*  FeatureNames[];
 
