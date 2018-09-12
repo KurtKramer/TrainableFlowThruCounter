@@ -336,15 +336,15 @@ void  ParticleEntryList::SplitIntoNameAndData (const KKStr&  line,
                                               )
 {
   auto idx = line.LocateCharacter ('\t');
-  if  (idx.None ())
+  if  (!idx)
   {
     name = line;
     value = "";
     return;
   }
 
-  name  = line.SubStrPart (0, idx.value - 1);
-  value = line.SubStrPart (idx.value + 1);
+  name  = line.SubStrPart (0, idx.value () - 1);
+  value = line.SubStrPart (idx.value () + 1);
 }  /* SplitIntoNameAndData */
 
 

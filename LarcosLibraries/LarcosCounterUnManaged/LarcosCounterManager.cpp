@@ -878,7 +878,7 @@ void  LarcosCounterManager::BuildDestScannerFileName (bool playingBackExistingFi
     KKStr  srcFileRootName = osGetRootName (srcScannerFileName);
     destScannerFileDir = osGetPathPartOfFile (srcScannerFileName);
     KKStr  baseRootName = srcFileRootName;
-    if  (baseRootName.Find (controlNum, 0).None ())
+    if  (!baseRootName.Find (controlNum, 0))
       baseRootName << "_" << controlNum;
 
     kkint32  seqNum = 0;

@@ -669,7 +669,7 @@ FileDescConstPtr  LarcosFVProducer::DefineFileDescStatic ()
   {
     bool  alreadyExists = false;
     FileDescPtr  tempFileDesc = new KKMLL::FileDesc ();
-    for  (kkint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
+    for  (kkuint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
     {
       tempFileDesc->AddAAttribute (featureNames[fieldNum], AttributeType::Numeric, alreadyExists);
     }
