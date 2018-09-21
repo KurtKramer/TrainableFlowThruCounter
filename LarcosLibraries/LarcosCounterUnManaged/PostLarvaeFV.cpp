@@ -1410,7 +1410,7 @@ PostLarvaeFVListPtr  PostLarvaeFVList::DuplicateListAndContents ()  const
 {
   PostLarvaeFVListPtr  copyiedList = new PostLarvaeFVList (FileDesc (), true);
 
-  for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
+  for  (kkuint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     PostLarvaeFVPtr  curImage = (PostLarvaeFVPtr)IdxToPtr (idx);
     copyiedList->AddSingleImageFeatures (new PostLarvaeFV (*curImage));

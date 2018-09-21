@@ -543,7 +543,7 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::DuplicateListAndContents ()
 {
   LarcosFeatureVectorListPtr  copyiedList = new LarcosFeatureVectorList (FileDesc (), true);
 
-  for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
+  for  (kkuint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     LarcosFeatureVectorPtr  curImage = (LarcosFeatureVectorPtr)IdxToPtr (idx);
     copyiedList->PushOnBack (new LarcosFeatureVector (*curImage));
