@@ -285,7 +285,6 @@ void  LarcosCounterManager::Initialize ()
 
 
 
-
 KKStr  LarcosCounterManager::LarcosVersionNumber ()
 {
 /*  KKStr  dateStr = __DATE__;
