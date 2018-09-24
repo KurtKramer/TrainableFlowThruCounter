@@ -3,7 +3,6 @@
  * For conditions of distribution and use, see copyright notice in KKLineScanner.h
  */
 #include "FirstIncludes.h"
-
 #include <errno.h>
 #include <fstream>
 #include <istream>
@@ -13,9 +12,9 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "ImageIO.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "Raster.h"
 using namespace KKB;
@@ -23,9 +22,9 @@ using namespace KKB;
 #include "MLClass.h"
 using namespace KKMLL;
 
-
 #include "ParticleEntry.h"
 using  namespace  LarcosCounterUnManaged;
+
 
 
 ParticleEntry::ParticleEntry ():
@@ -44,6 +43,7 @@ ParticleEntry::ParticleEntry ():
     featureVector       (NULL)
 {
 }
+
 
 
 ParticleEntry::ParticleEntry (const ParticleEntry&  _entry):
@@ -96,6 +96,7 @@ ParticleEntry::ParticleEntry (const KKStr&  _scannerFileRootName,
 }
 
 
+
 ParticleEntry::~ParticleEntry ()
 {
   delete  featureVector;
@@ -143,7 +144,6 @@ void  ParticleEntry::Assign (const ParticleEntry&   _entry)
 
 
 
-
 bool  ParticleEntry::ExactMatch (kkint32  _scannerRow,
                                  kkint16  _scannerCol,
                                  kkint16  _height,
@@ -158,14 +158,12 @@ bool  ParticleEntry::ExactMatch (kkint32  _scannerRow,
 
 
 
-
 FeatureVectorPtr  ParticleEntry::TakeOwnershipOfFeatureVector ()
 {
   FeatureVectorPtr  tempFV = featureVector;
   featureVector = NULL;
   return  tempFV;
 }
-
 
 
 
@@ -198,6 +196,7 @@ void  ParticleEntry::Assign (const KKStr& _scannerFileRootName,
 }
 
 
+
 ParticleEntryList::ParticleEntryList (bool _owner):
    KKQueue<ParticleEntry> (_owner),
    baseScannerName        (""),
@@ -228,6 +227,7 @@ ParticleEntryList::ParticleEntryList (bool _owner):
 { 
   SetDefaultFieldIndexs ();
 }
+
 
 
 ParticleEntryList::ParticleEntryList (const ParticleEntryList&  _list):
@@ -301,13 +301,10 @@ ParticleEntryList::ParticleEntryList (const KKStr&  _scannerFileName,
 }
 
 
-
-
  
 ParticleEntryList::~ParticleEntryList ()
 {
 }
-
 
 
 
@@ -343,10 +340,9 @@ void  ParticleEntryList::SplitIntoNameAndData (const KKStr&  line,
     return;
   }
 
-  name  = line.SubStrPart (0, idx.value () - 1);
-  value = line.SubStrPart (idx.value () + 1);
+  name  = line.SubStrSeg (0, idx);
+  value = line.SubStrPart (idx + 1);
 }  /* SplitIntoNameAndData */
-
 
 
 
@@ -370,16 +366,12 @@ public:
 
 
 
-
 void  ParticleEntryList::SortByScanLine ()
 {
   ScanLinePredecessor  pr;
   sort (begin (), end (), pr);
   sortedByScanLine = true;
 }  /* SortByScanLine */
-
-
-
 
 
 
@@ -610,7 +602,6 @@ ParticleEntryPtr  ParticleEntryList::ParseParticleImageLine (const KKStr&  value
 
 
    
-
 void  ParticleEntryList::LoadFile (RunLog&  _log)
 {
   scannerFileRootName = osGetRootName (scannerFileName);
@@ -634,7 +625,7 @@ void  ParticleEntryList::LoadFile (RunLog&  _log)
   while  (!sr->eof ())
   {
     KKStr l = buff;
-    if  ((l.Len () < 3)  ||  (l.SubStrPart (0, 1) == "//"))
+    if  ((l.Len () < 3)  ||  (l.StartsWith ("//")))
       continue;
 
     KKStr  name = "";
@@ -721,7 +712,6 @@ void  ParticleEntryList::LoadFile (RunLog&  _log)
 
 
 
-
 MLClassListPtr  ParticleEntryList::ExtractListOfClasses ()  const
 {
   MLClassListPtr  classes = new MLClassList ();
@@ -775,7 +765,6 @@ VectorFloatPtr  ParticleEntryList::CountFrequencyByTimeIntervals (int    interva
 
   return  freqHistogram;
 }  /* CountFrequencyByTimeIntervals  */
-
 
 
 
@@ -870,7 +859,6 @@ VectorFloatPtr  ParticleEntryList::FlowRateByTimeIntervals (int    interval,
 
   return  flowRateByIntervals;
 }  /* FlowRateByTimeIntervals  */
-
 
 
 
@@ -969,6 +957,7 @@ ParticleEntryBuffer::~ParticleEntryBuffer ()
   GoalKeeperSimple::Destroy (goalie);  
   goalie = NULL;
 }
+
 
 
 kkMemSize  ParticleEntryBuffer::MemoryConsumedEstimated ()  const
@@ -1090,10 +1079,8 @@ void  ParticleEntryBuffer::StartBlock ()
 }
 
 
+
 void  ParticleEntryBuffer::EndBlock ()
 {
   goalie->EndBlock ();
 }
-
-
-

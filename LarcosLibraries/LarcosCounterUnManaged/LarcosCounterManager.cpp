@@ -577,7 +577,7 @@ KKStr  LarcosCounterManager::GetNextControlNumber ()
 
     kkint32  lastSeqNum = lastControlNumber.SubStrPart (x).ToInt32 ();
 
-    KKStr  firstPart = lastControlNumber.SubStrPart (0, x - 1);
+    KKStr  firstPart = lastControlNumber.SubStrSeg (0, x);
     if  (firstPart.LastChar () == '_')
       firstPart.ChopLastChar ();
 
