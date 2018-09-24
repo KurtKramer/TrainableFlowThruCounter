@@ -1,9 +1,7 @@
 #include "FirstIncludes.h"
-
 #include <ctype.h>
 #include <math.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -11,11 +9,8 @@
 #include <vector>
 #include <string.h>
 #include <typeinfo>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
-
 
 #include "KKBaseTypes.h"
 #include "Blob.h"
@@ -25,12 +20,12 @@ using namespace  std;
 #include "DateTime.h"
 #include "ImageIO.h"
 #include "KKException.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "Raster.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "FeatureNumList.h"
 #include "FeatureFileIO.h"
@@ -627,13 +622,13 @@ void  PostLarvaeFV::ParseImageFileName (const KKStr&  fullFileName,
   auto  x = rootName.LocateLastOccurrence ('_');
   if  (x  &&  (x.value () > 0))
   {
-    KKStr  colStr = rootName.SubStrPart (x.value () + 1);
-    KKStr  temp = rootName.SubStrPart (0, x.value () - 1);
+    KKStr  colStr = rootName.SubStrPart (x);
+    KKStr  temp = rootName.SubStrSeg (0, x);
     x = temp.LocateLastOccurrence ('_');
     if  (x  &&  (x.value () > 0))
     {
-      scannerFileName = temp.SubStrPart (0, x.value () - 1);
-      KKStr  rowStr = temp.SubStrPart (x.value () + 1);
+      scannerFileName = temp.SubStrSeg (0, x);
+      KKStr  rowStr = temp.SubStrPart (x + 1);
       scanCol     = atoi (colStr.Str ());
       scanLineNum = atoi (rowStr.Str ());
     }
@@ -1410,7 +1405,7 @@ PostLarvaeFVListPtr  PostLarvaeFVList::DuplicateListAndContents ()  const
 {
   PostLarvaeFVListPtr  copyiedList = new PostLarvaeFVList (FileDesc (), true);
 
-  for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
+  for  (kkuint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     PostLarvaeFVPtr  curImage = (PostLarvaeFVPtr)IdxToPtr (idx);
     copyiedList->AddSingleImageFeatures (new PostLarvaeFV (*curImage));

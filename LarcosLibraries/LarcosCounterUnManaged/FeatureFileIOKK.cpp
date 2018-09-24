@@ -250,7 +250,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
                                                        FileDescConstPtr  _fileDesc,
                                                        MLClassList&      _classes, 
                                                        istream&          _in,
-                                                       kkint32           _maxCount,    // Maximum # images to load,  less than '0'  indicates all.
+                                                       OptionUInt32      _maxCount,
                                                        VolConstBool&     _cancelFlag,
                                                        bool&             _changesMade,
                                                        KKStr&            _errorMessage,
@@ -259,8 +259,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
 {
   _log.Level (10) << "FeatureFileIOKK::LoadFile   Loading file[" << _fileName << "]." << endl;
   _log.Flush ();
-
-
+  
   VectorInt  featureFieldIndexTable;
 
   bool eof = false;
@@ -321,15 +320,17 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
 
   KKStr field (128);
 
+  kkuint32 maxToLoad = _maxCount ? _maxCount.value () : uint32_max;
+
   GetToken (_in, ",\t", field, eof, eol);
-  while  ((!eof)   &&  (!_cancelFlag)   &&  (((kkint32)examples->size () < _maxCount)  ||  (_maxCount < 0)))
+  while  ((!eof)  &&  (!_cancelFlag)  &&  (examples->QueueSize () < maxToLoad))
   {
     if  (eol)
     {
       // We must have a blank line.  There is nothing to do in this case.
     }
 
-    else if  (field.SubStrPart (0, 1) == "//")
+    else if  (field.StartsWith ("//"))
     {
       // We are looking at a comment line.  Will skip to end of line
       while  ((!eol)  &&  (!eof))

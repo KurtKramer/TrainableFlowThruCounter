@@ -82,8 +82,8 @@ namespace LarcosCounterUnManaged
 
     CameraFrameBuffer (LarcosCounterManagerPtr _manager,
                        const KKStr&            _name,
-                       kkint32                 _bufferSize,
-                       kkint32                 _maxNumOfBuffers,
+                       kkuint32                _bufferSize,
+                       kkuint32                _maxNumOfBuffers,
                        kkint32                 _frameHeight,
                        kkint32                 _frameWidth,
                        bool                    _dataIsToBeCounted,
@@ -99,7 +99,7 @@ namespace LarcosCounterUnManaged
     bool                 DataIsToBeCounted              () const {return dataIsToBeCounted;}
     kkint32              FrameHeight                    () const {return frameHeight;}
     kkint32              FrameWidth                     () const {return frameWidth;}
-    kkint32              MaxNumOfBuffers                () const {return maxNumOfBuffers;}
+    kkuint32             MaxNumOfBuffers                () const {return maxNumOfBuffers;}
     kkint64              NextFrameSeqNum                () const {return nextFrameSeqNum;}
     kkint32              NumAvailable                   () const;
     kkint32              NumWaitingToProcess            () const;
@@ -184,7 +184,7 @@ namespace LarcosCounterUnManaged
     /**@brief  Call this method when ever FlatField is enabled and/or ScanRate is changed. */
     void  ComputeFlatFeildSamplingInterval ();
 
-    void  IncreaseBufferSize (kkint32 numNewFrameBuffers);
+    void  IncreaseBufferSize (kkuint32 numNewFrameBuffers);
 
     void  LastFramesAllocate ();
 
@@ -235,7 +235,7 @@ namespace LarcosCounterUnManaged
 
     LarcosCounterManagerPtr manager;
 
-    kkint32                 maxNumOfBuffers;
+    kkuint32                maxNumOfBuffers;
     KKStr                   name;                       /**< Name of camera buffer, needs to be unique amongst all camera buffer instances. */
     kkint64                 nextFrameSeqNum;
     kkint32                 physicalFramesDropped;
