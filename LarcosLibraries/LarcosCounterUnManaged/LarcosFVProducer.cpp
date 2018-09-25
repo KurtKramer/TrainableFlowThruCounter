@@ -39,8 +39,7 @@ using namespace  KKMLL;
 #include "LarcosTrainingConfiguration.h"
 using  namespace  LarcosCounterUnManaged;
 
-
-kkint16  LarcosFVProducer::maxNumOfFeatures      = 56;
+kkuint32  LarcosFVProducer::maxNumOfFeatures     = 56;
 
 kkint16  LarcosFVProducer::SizeIndex             = 0;
 kkint16  LarcosFVProducer::Moment1Index          = 1;
@@ -411,8 +410,8 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
 
   if  (areaBeforeReduction < 20)
   {
-    for  (kkint32 tp = 0;  tp < maxNumOfFeatures;  tp++)
-      featureData[tp] = 9999999;
+    for  (kkuint32 tp = 0;  tp < maxNumOfFeatures;  tp++)
+      featureData[tp] = FLT_MAX;
     return fv;
   }
   
@@ -670,7 +669,7 @@ FileDescConstPtr  LarcosFVProducer::DefineFileDescStatic ()
   {
     bool  alreadyExists = false;
     FileDescPtr  tempFileDesc = new KKMLL::FileDesc ();
-    for  (kkint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
+    for  (kkuint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
     {
       tempFileDesc->AddAAttribute (featureNames[fieldNum], AttributeType::Numeric, alreadyExists);
     }

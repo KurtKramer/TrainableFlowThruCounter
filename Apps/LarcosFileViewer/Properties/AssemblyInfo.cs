@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("")]
 [assembly: AssemblyProduct ("LarcosFileViewer")]
-[assembly: AssemblyCopyright ("Copyright ©  2011")]
+[assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 

@@ -72,5 +72,10 @@ namespace LarcosCounter
       oldHeight = Height;
       oldWidth  = Width;
     }
+
+    private void chartsBindingSource_CurrentChanged(object sender, EventArgs e)
+    {
+
+    }
   }
 }

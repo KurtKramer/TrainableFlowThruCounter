@@ -26,7 +26,6 @@ using  namespace  LarcosBase;
 #include "UmiVariables.h"
 using namespace  LarcosCounterManaged;
 
-
 using namespace System;
 using namespace System::IO;
 using namespace System::Windows::Forms;
@@ -35,10 +34,10 @@ using namespace System::Windows::Forms;
 
 
 
-
 UmiVariables::UmiVariables (void)
 {
 }
+
 
 
 void  UmiVariables::SetLarcosHomeDir ()
@@ -55,12 +54,12 @@ void  UmiVariables::SetLarcosHomeDir (String^  _larcosHomeDir)
 
 
 
-
 String^  UmiVariables::LarcosHomeDir ()
 {
   String^  result = UmiKKStr::KKStrToSystenStr (LarcosVariables::LarcosHomeDir ());
   return  result;
 }
+
 
 
 String^  UmiVariables::ConfigurationDir ()

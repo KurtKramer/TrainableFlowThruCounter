@@ -1,9 +1,7 @@
 #include "FirstIncludes.h"
-
 #include <ctype.h>
 #include <math.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -11,11 +9,8 @@
 #include <vector>
 #include <string.h>
 #include <typeinfo>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
-
 
 #include "KKBaseTypes.h"
 #include "Blob.h"
@@ -25,12 +20,12 @@ using namespace  std;
 #include "DateTime.h"
 #include "ImageIO.h"
 #include "KKException.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "Raster.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "FeatureNumList.h"
 #include "FeatureFileIO.h"
@@ -280,7 +275,7 @@ const  kkint32  PostLarvaeFV::SizeThreshold = 10000;  /**< Size of example in nu
 
 
 							
-kkint16  PostLarvaeFV::maxNumOfFeatures      = 56;
+kkuint32  PostLarvaeFV::maxNumOfFeatures      = 56;
 
 kkint16  PostLarvaeFV::SizeIndex             = 0;
 kkint16  PostLarvaeFV::Moment1Index          = 1;
@@ -415,20 +410,9 @@ RunLog  PostLarvaeFV::runLog;
 
 
 
-KKStr  PostLarvaeFV::FeatureName (kkint32  fieldNum)
+KKStr  PostLarvaeFV::FeatureName (kkuint32  fieldNum)
 {
-  if  ((fieldNum < 0)  ||  (fieldNum >= MaxNumOfFeatures ()))
-  {
-    // This should never happen,  if it does I want to know right away and fix
-    // the problem, will probably be indicative a greater more involved 
-    // problem.
-
-    cerr << endl
-         << "PostLarvaeFV::::FeatureName   ***ERROR***  FeatureNum[" << fieldNum << "] is out of bounds." << endl
-         << endl;
-    return  KKStr::EmptyStr ();
-  }
-  
+  KKCheck (fieldNum < MaxNumOfFeatures (), "PostLarvaeFV::::FeatureName   ***ERROR***  FeatureNum: " << fieldNum << " is out of bounds.")
   return  FeatureNames [fieldNum];
 }  /* FeatureName */
 
@@ -444,7 +428,7 @@ FileDescConstPtr  PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
 
   bool  alreadyExists = false;
   auto tempFileDesc = new FileDesc ();
-  for  (kkint32 fieldNum = 0;  fieldNum < MaxNumOfFeatures ();  fieldNum++)
+  for  (kkuint32 fieldNum = 0;  fieldNum < MaxNumOfFeatures ();  ++fieldNum)
   {
     tempFileDesc->AddAAttribute (FeatureName (fieldNum),  AttributeType::Numeric, alreadyExists);
   }
@@ -457,7 +441,7 @@ FileDescConstPtr  PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
 
 
 
-PostLarvaeFV::PostLarvaeFV (kkint32  _numOfFeatures):
+PostLarvaeFV::PostLarvaeFV (kkuint32  _numOfFeatures):
        FeatureVector (_numOfFeatures),
 
         centroidCol     (-1),
@@ -535,8 +519,8 @@ PostLarvaeFV::PostLarvaeFV (KKStr          _fileName,
   if  (raster == NULL)
   {
     _successfull = false;
-    for  (kkint32 x = 0; x < MaxNumOfFeatures (); x++)
-      featureData[x] = 0;
+    for  (kkuint32 x = 0;  x < MaxNumOfFeatures ();  ++x)
+      featureData[x] = 0.0f;
     cerr  << "PostLarvaeFV::PostLarvaeFV  ***ERROR***, Opening File[" << _fileName << "]." << endl;
     return;
   }
@@ -635,15 +619,15 @@ void  PostLarvaeFV::ParseImageFileName (const KKStr&  fullFileName,
   if  (rootName.Empty ())
     return;
   
-  kkint64  x = rootName.LocateLastOccurrence ('_');
-  if  (x > 0)
+  auto  x = rootName.LocateLastOccurrence ('_');
+  if  (x  &&  (x.value () > 0))
   {
-    KKStr  colStr = rootName.SubStrPart (x + 1);
-    KKStr  temp = rootName.SubStrPart (0, x - 1);
+    KKStr  colStr = rootName.SubStrPart (x);
+    KKStr  temp = rootName.SubStrSeg (0, x);
     x = temp.LocateLastOccurrence ('_');
-    if  (x > 0)
+    if  (x  &&  (x.value () > 0))
     {
-      scannerFileName = temp.SubStrPart (0, x - 1);
+      scannerFileName = temp.SubStrSeg (0, x);
       KKStr  rowStr = temp.SubStrPart (x + 1);
       scanCol     = atoi (colStr.Str ());
       scanLineNum = atoi (rowStr.Str ());
@@ -718,8 +702,8 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
 
   if  (areaBeforeReduction < 20)
   {
-    for  (kkint32 tp = 0; tp < numOfFeatures; tp++)
-      featureData[tp] = 9999999;
+    for  (kkuint32 tp = 0;  tp < numOfFeatures;  ++tp)
+      featureData[tp] = FLT_MAX;
     
     if  (weOwnRaster)
     {
@@ -1421,7 +1405,7 @@ PostLarvaeFVListPtr  PostLarvaeFVList::DuplicateListAndContents ()  const
 {
   PostLarvaeFVListPtr  copyiedList = new PostLarvaeFVList (FileDesc (), true);
 
-  for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
+  for  (kkuint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     PostLarvaeFVPtr  curImage = (PostLarvaeFVPtr)IdxToPtr (idx);
     copyiedList->AddSingleImageFeatures (new PostLarvaeFV (*curImage));

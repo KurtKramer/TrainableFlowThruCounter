@@ -8,11 +8,8 @@
 #include <iostream>
 #include <ostream>
 #include <string>
-#include <strstream>
 #include <vector>
 #include "MemoryDebug.h"
-
-
 #include "KKBaseTypes.h"
 #include "..\\KKBase\\GoalKeeper.h"
 #include "KKStr.h"
@@ -70,13 +67,13 @@ UmiTrainingConfiguration::UmiTrainingConfiguration (String^                  _co
   if  (_initialOperatingParameters != nullptr)
     op = _initialOperatingParameters->UnManagedClass ();
 
-  std::strstream  logStr;
+  std::stringstream  logStr;
   KKStr  configFileName = UmiKKStr::SystemStringToKKStr (_configFileName);
   config = new LarcosTrainingConfiguration ();
   config->Load (configFileName, op, true, log->Log ());
   valid = gcnew System::Boolean (config->FormatGood ());
   if  (!config->FormatGood ())
-     loadLogStream = gcnew String (logStr.str ());
+     loadLogStream = gcnew String (logStr.str ().c_str ());
 }
 
 
@@ -303,21 +300,21 @@ String^   UmiTrainingConfiguration::GetSettingValue (String^ sectionName,
 
 Dictionary<String^,String^>^   UmiTrainingConfiguration::GetSettingValues (String^  _sectionName)
 {
-  kkint32  sectionNum =  config->SectionNum (UmiKKStr::SystemStringToKKStr (_sectionName));
-  if  (sectionNum < 0)
+  auto  sectionNum =  config->SectionNum (UmiKKStr::SystemStringToKKStr (_sectionName));
+  if  (!sectionNum)
     return nullptr;
 
   Dictionary<String^,String^>^ settings = gcnew Dictionary<String^,String^> ();
 
-  kkint32 settingNum = 0;
+  kkuint32 settingNum = 0;
   do
   {
     kkint32  lineNum = 0;
-    KKStrConstPtr   settingValue = config->SettingValue (sectionNum, settingNum, lineNum);
+    KKStrConstPtr   settingValue = config->SettingValue (sectionNum.value (), settingNum, lineNum);
     if  (settingValue == NULL)
       break;
 
-    KKStrConstPtr   settingName = config->SettingName (sectionNum, settingNum);
+    KKStrConstPtr   settingName = config->SettingName (sectionNum.value (), settingNum);
     if  (settingName == NULL)
       break;
 

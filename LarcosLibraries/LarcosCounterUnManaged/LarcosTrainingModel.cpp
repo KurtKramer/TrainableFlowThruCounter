@@ -24,6 +24,7 @@ using namespace KKMLL;
 using  namespace  LarcosCounterUnManaged;
 
 
+
 LarcosTrainingModel::LarcosTrainingModel ():
    subject           (),
    size              (),
@@ -31,6 +32,7 @@ LarcosTrainingModel::LarcosTrainingModel ():
    trainingModelName ()
 {
 }
+
 
 
 LarcosTrainingModel::LarcosTrainingModel (const LarcosTrainingModel&  _entry):
@@ -57,6 +59,7 @@ LarcosTrainingModel::LarcosTrainingModel (const KKStr&  _subject,
 }
 
 
+
 LarcosTrainingModel::~LarcosTrainingModel ()
 {
 }
@@ -71,7 +74,6 @@ kkMemSize  LarcosTrainingModel::MemoryConsumedEstimated ()  const
           waterQuality.MemoryConsumedEstimated      () +
           trainingModelName.MemoryConsumedEstimated ();
 }
-
 
 
 

@@ -976,7 +976,7 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
         o << "\t" << fd->FieldName (zed);
       o << endl;
       o <<  rootName  << "\t" <<  priorReductionFactor  << "\t" << predictedClass->Name () << "\t" << probability;
-      for  (int zed2 = 0;  zed2 < fv->NumOfFeatures ();  ++zed2)
+      for  (kkuint32 zed2 = 0;  zed2 < fv->NumOfFeatures ();  ++zed2)
         o << "\t" << fv->FeatureData (zed2);
       o << endl;
       o.close();

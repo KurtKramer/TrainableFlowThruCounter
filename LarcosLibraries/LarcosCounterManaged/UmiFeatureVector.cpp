@@ -11,14 +11,12 @@
 #include <vector>
 #include "MemoryDebug.h"
 
-
 #include "KKBaseTypes.h"
 #include "GoalKeeper.h"
 #include "ImageIO.h"
 #include "OSservices.h"
 #include "Raster.h"
 using namespace KKB;
-
 
 #include "FeatureVector.h"
 #include "FileDesc.h"
@@ -28,7 +26,6 @@ using namespace  KKMLL;
 #include "FeatureFileIOKK.h"
 #include "LarcosFVProducer.h"
 using namespace  LarcosCounterUnManaged;
-
 
 #include "UmiFeatureVector.h"
 #include "UmiClassList.h"
@@ -97,7 +94,7 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
         o << "\t" << fd->FieldName (zed);
       o << std::endl;
       o <<  rootName  << "\t" <<  ""  << "\t" << "" << "\t" << "0.0";
-      for  (int zed2 = 0;  zed2 < features->NumOfFeatures ();  ++zed2)
+      for  (kkuint32 zed2 = 0;  zed2 < features->NumOfFeatures ();  ++zed2)
         o << "\t" << features->FeatureData (zed2);
       o << std::endl;
       o.close();
@@ -237,7 +234,7 @@ String^  UmiFeatureVector::ExampleFileName::get ()
 
 
 
-int  UmiFeatureVector::NumFeatures::get ()
+uint  UmiFeatureVector::NumFeatures::get ()
 {
   if  (!features)
     return 0;
@@ -324,25 +321,22 @@ bool   UmiFeatureVector::FeatureDataMissing::get ()
 
 
 
-String^  UmiFeatureVector::FeatureName (int featureNum)
+String^  UmiFeatureVector::FeatureName (uint featureNum)
 {
   return  UmiKKStr::KKStrToSystenStr (PostLarvaeFV::FeatureName (featureNum));
 }
 
 
 
-double  UmiFeatureVector::FeatureValue (int featureNum)
+float  UmiFeatureVector::FeatureValue (kkuint32 featureNum)
 {
-  if  (!features)
-    return 0.0;
+  KKCheck (features, "UmiFeatureVector::FeatureValue    'features' is undefined!!!")
 
-  if  ((featureNum < 0)  ||  (featureNum >= this->features->NumOfFeatures ()))
+  KKCheck (featureNum < features->NumOfFeatures (), "UmiFeatureVector::FeatureValue   featureNum: " << featureNum << " exceeds NumOfFeatures: " << features->NumOfFeatures ())
     return 0.0;
 
   return  features->FeatureData (featureNum);
 }
-
-
 
 
 

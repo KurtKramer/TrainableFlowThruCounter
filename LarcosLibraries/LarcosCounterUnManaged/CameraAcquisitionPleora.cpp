@@ -10,7 +10,7 @@
 #include <fstream>
 #include <queue>
 #include <vector>
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
 #include <windows.h>
 #endif
 #include <math.h>
@@ -49,13 +49,8 @@ using namespace  LarcosBase;
 #include "CameraAcquisitionPleora.h"
 #include "CameraParameters.h"
 #include "InstallationConfig.h"
-
-
 #include "LarcosCounterManager.h"
-
-
 using  namespace  LarcosCounterUnManaged;
-
 
 
 // 2013-10-19,   KAK,  Will learned possible way to get to talk thru camera to get flow data,
@@ -104,7 +99,6 @@ CameraAcquisitionPleora::CameraAcquisitionPleora
     lStart                     (NULL),
     lStop                      (NULL),
     lTLLocked                  (NULL),
-
 
     oneSecFrameInterval        (41),    /**< Number of frames at 480 Scan Lines per frame 20K scan rate for  1 second interval. */
     twoSecFrameInterval        (82),
@@ -231,7 +225,6 @@ void  CameraAcquisitionPleora::InitializeStreamParameterAccessVariables ()
   lStreamParams = lStream->GetParameters ();
   lFrameRate    = dynamic_cast<PvGenFloat *>  (lStreamParams->Get ("AcquisitionRateAverage"));
 }
-
 
 
 
@@ -377,7 +370,6 @@ kkint32  CameraAcquisitionPleora::GetPvParameterEnum (PvGenParameterArray*  para
 
 
 
-
 KKStr  CameraAcquisitionPleora::GetPvParameterEnumStr (PvGenParameterArray*  params,
                                                        const KKStr&          paramName,
                                                        const KKStr&          defaultValue
@@ -398,9 +390,6 @@ KKStr  CameraAcquisitionPleora::GetPvParameterEnumStr (PvGenParameterArray*  par
 
   return  result;
 }  /* GetPvParameterEnumStr */
-
-
-
 
 
 
@@ -438,8 +427,6 @@ KKStr  CameraAcquisitionPleora::GetPvParameterString (PvGenParameterArray*  para
 
   return result;
 }  /* GetPvParameterString */
-
-
 
 
 
@@ -530,7 +517,6 @@ void  CameraAcquisitionPleora::SetPvParameterBool (const KKStr&  paramName,
 
 
 
-
 KKStr  CameraAcquisitionPleora::Int64ToIpAddress (int64_t i)
 {
   kkint32 p1 = i % 256;  i /= 256;
@@ -544,8 +530,6 @@ KKStr  CameraAcquisitionPleora::Int64ToIpAddress (int64_t i)
 
   return  ipStr;
 }  /* Int64ToIpAddress */
-
-
 
 
 
@@ -653,7 +637,6 @@ void  CameraAcquisitionPleora::AddToHeaderField (PvGenParameter*  p)
 
 
 
-
 void   CameraAcquisitionPleora::AddPleoraVariableToHeaderField (const KKStr&  varName)
 {
   log.Level (40) << "CameraAcquisitionPleora::AddPleoraVariableToHeaderField    VarName[" << varName << "]." << endl;
@@ -681,7 +664,6 @@ void   CameraAcquisitionPleora::AddPleoraVariableToHeaderField (const KKStr&  va
     AddToHeaderField (lPvGenParam);
   }
 }
-
 
 
 
@@ -759,6 +741,7 @@ void  CameraAcquisitionPleora::SetGainTap (kkint64 gainTap)
 }
 
 
+
 KKStr  CameraAcquisitionPleora::PvResultToStr (PvResult&  r)
 {
   KKStr   description = r.GetDescription ().GetAscii ();
@@ -781,7 +764,6 @@ KKStr  CameraAcquisitionPleora::PvResultToStr (PvResult&  r)
 
   return  s;
 }  /* PvResultToStr */
-
 
 
 
@@ -1043,9 +1025,6 @@ void  CameraAcquisitionPleora::ApplyCommandNextEntry ()
 
 
 
-
-
-
 void  CameraAcquisitionPleora::SetCameraParametersForFlowMeter ()
 {
   //KKKK  I want to move this code to a point where the variables are writable.
@@ -1066,7 +1045,6 @@ void  CameraAcquisitionPleora::SetCameraParametersForFlowMeter ()
                    << errMsg << endl;
   }
 
-
   SetPvParameterEnum ("PLC_Q1_Variable1", "One", successful, errMsg);
   if  (!successful)
   {
@@ -1080,7 +1058,6 @@ void  CameraAcquisitionPleora::SetCameraParametersForFlowMeter ()
     log.Level (-1) << "SetCameraParametersForFlowMeter    ***ERROR***  setting 'OutputSelector'." << endl
                    << errMsg << endl;
   }
-
 
   SetPvParameterEnum ("OutputFormat", "NoConnect", successful, errMsg);
   if  (!successful)
@@ -1180,8 +1157,6 @@ void  CameraAcquisitionPleora::SetCameraParametersForFlowMeter ()
                    << errMsg << endl;
   }
 }  /* SetCameraParametersForFlowMeter */
-
-
 
 
 
@@ -1373,7 +1348,6 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
   else
     log.Level (-1) << "ConnectToCamera   ***ERROR***   Setting Device-Stream-Destination :" << PvResultToStr (streamDestResult) << endl;
 
-
   // TLParamsLocked is optional but when present, it MUST be set to 1 before sending the AcquisitionStart command
   if  (lTLLocked != NULL)
   {
@@ -1385,7 +1359,6 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
       log.Level (-1) << "ConnectToCamera  ***ERROR***  Failure setting 'tlParamsLocked' to 1 :" << PvResultToStr (tlParamsLockedResult) << endl;
   }
 
-
   // IMPORTANT: the pipeline needs to be "armed", or started before we instruct the device to send us images
   log.Level (20) << "ConnectToCamera   Starting pipeline" << endl;
   PvResult pipeLineStartResult = lPipeline->Start ();
@@ -1396,7 +1369,6 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
  
   // Get stream parameters/stats
   InitializeStreamParameterAccessVariables ();
-
 
   log.Level (40) << "ConnectToCamera   Retrieving  'GevTimestampControlReset' parameter." << endl;
   PvGenCommand *lResetTimestamp = dynamic_cast<PvGenCommand *>(lDeviceParams->Get ("GevTimestampControlReset"));
@@ -1496,7 +1468,6 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
 
 
 
-
 void  CameraAcquisitionPleora::DisconnectFromCamera ()
 {
   log.Level (10) << endl << "DisconnectFromCamera" << endl;
@@ -1574,7 +1545,6 @@ void  CameraAcquisitionPleora::DisconnectFromCamera ()
 
 
 
-
 void  CameraAcquisitionPleora::ComputeFramneIntervals ()
 {
   if  (curScanRate <= 1.0f)
@@ -1588,6 +1558,7 @@ void  CameraAcquisitionPleora::ComputeFramneIntervals ()
   tenSecFrameInterval   = oneSecFrameInterval * 10;
   voltTempReadInterval  = oneSecFrameInterval * 10;
 }
+
 
 
 void  CameraAcquisitionPleora::Run ()
@@ -2012,10 +1983,10 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
         {
           _runLog.Level (40) << "GetDeviceInfo   Connect Failed :" << PvResultToStr (pvDeviveConnectResult)  << endl;
 
-          kkint64  lastDot = interfaceIpAddress.LocateLastOccurrence ('.');
-          if  (lastDot > 0)
+          auto  lastDot = interfaceIpAddress.LocateLastOccurrence ('.');
+          if  (lastDot  &&  (lastDot.value () > 0))
           {
-            KKStr  newIpAddress = interfaceIpAddress.SubStrPart (0, lastDot) + "122";
+            KKStr  newIpAddress = interfaceIpAddress.SubStrPart (0, lastDot.value ()) + "122";
             PvString  pvNewIpAddress = newIpAddress.Str ();
 
             _runLog.Level (20) << "GetDeviceInfo   Attempting to set IP Address :" << newIpAddress << endl;
@@ -2084,7 +2055,6 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
 
 
 
-
 CameraParametersPtr  CameraAcquisitionPleora::GetCameraParameters (const KKStr&  _macAddress,
                                                                    MsgQueuePtr   _msgQueue,
                                                                    RunLog&       _runLog
@@ -2139,8 +2109,6 @@ CameraParametersPtr  CameraAcquisitionPleora::GetCameraParameters (const KKStr& 
 
 
 
-
-
 CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromSerialNumber 
            (LarcosCounterManagerPtr _manager,
             const KKStr             _serialNumber,
@@ -2177,7 +2145,6 @@ CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromSerialNumber
 
 
 
-
 CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromMacAddress 
            (LarcosCounterManagerPtr _manager,
             const KKStr&            _macAddress,
@@ -2199,7 +2166,6 @@ CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromMacAddress
                                        _threadName
                                      );
 }  /* CreateFromMacAddress */
-
 
 
 
@@ -2249,7 +2215,6 @@ KKStr  CameraAcquisitionPleora::PromptForCameraMacAddress ()
   KKStr  macAddress = deviceInfoGEV->GetMACAddress ().GetAscii ();
   return  macAddress;
 }  /* PromptForCameraMacAddress */
-
 
 
 
@@ -2335,7 +2300,6 @@ KKStr  CameraAcquisitionPleora::GetPvGenParameterDesc (PvGenParameter*  p,
     }
     break;
 
-
   case  PvGenTypeBoolean:
     {
       PvGenBoolean  *pvBool = dynamic_cast<PvGenBoolean *>(p);
@@ -2379,7 +2343,6 @@ KKStr  CameraAcquisitionPleora::GetPvGenParameterDesc (PvGenParameter*  p,
   case  PvGenTypeRegister:   
     s = "register";
     break;
-
 
   case  PvGenTypeUndefined:  
     s = "Undefined";
@@ -2443,8 +2406,7 @@ void  CameraAcquisitionPleora::PrintDeviceParameters (const KKStr&          subN
   kkint32 numberOfParameters = lDeviceParams->GetCount ();
   for  (kkint32 zed = 0;  zed < numberOfParameters;  ++zed)
   {
-    KKStr     s = "";
-
+    KKStr  s = "";
 
     PvGenParameter*  p = lDeviceParams->Get (zed);
     if  (!p)
@@ -2463,6 +2425,7 @@ void  CameraAcquisitionPleora::PrintDeviceParameters (const KKStr&          subN
 }  /* PrintDeviceParameters */
 
 
+
 void  CameraAcquisitionPleora::ResetCounts ()
 {
   CameraAcquisition::ResetCounts ();
@@ -2473,9 +2436,6 @@ void  CameraAcquisitionPleora::ResetCounts ()
 /******************************************************************************/
 /*                             Auto gain Procedure                            */
 /******************************************************************************/
-
-
-
 
 
 kkuint16 CameraAcquisitionPleora::CameraHighValue ()
@@ -2500,7 +2460,6 @@ kkuint16 CameraAcquisitionPleora::CameraHighValue ()
 
   return  highPoint;
 }  /* CameraHighValue */
-
 
 
 
@@ -2545,7 +2504,6 @@ bool  CameraAcquisitionPleora::CameraSomePixelsSaturated (float percentThreshold
 
 
 
-
 kkuint16 CameraAcquisitionPleora::CameraHighValueOf3Frames ()
 {
   WaitForOneFrame ();
@@ -2559,7 +2517,6 @@ kkuint16 CameraAcquisitionPleora::CameraHighValueOf3Frames ()
 
   return  (Max (hv1, hv2, hv3));
 }  /* CameraHighValueOf3Frames */
-
 
 
 
@@ -2595,8 +2552,6 @@ bool  CameraAcquisitionPleora::DigitalGainIsMaxed ()
 
 
 
-
-
 void  CameraAcquisitionPleora::WaitForOneFrame ()
 {
   kkint64  lastNextFrameSeqNum = frameBuffer->NextFrameSeqNum ();
@@ -2609,7 +2564,6 @@ void  CameraAcquisitionPleora::WaitForOneFrame ()
     osSleepMiliSecs (20);
   }
 }  /* WaitForOneFrame */
-
 
 
 
@@ -2661,9 +2615,6 @@ void  CameraAcquisitionPleora::MakeDigitalGainRequest (kkint32  _gain)
 
 
 
-
-
-
 void  CameraAcquisitionPleora::RaiseAnalogGainUntilSaturated2 (float  increments)
 {
   // AnalogGain saturation occurs when the high values no longer increase as you increase Analog Gain.
@@ -2697,7 +2648,6 @@ void  CameraAcquisitionPleora::RaiseAnalogGainUntilSaturated2 (float  increments
     }
   }
 }  /* RaiseAnalogGainUntilSaturated2 */
-
 
 
 
@@ -2738,7 +2688,6 @@ void    CameraAcquisitionPleora::SetAnalogGainToFirstHighInRange (float  analogG
 
 
 
-
 void  CameraAcquisitionPleora::RaiseDigitalGainUntilSaturated (kkint32  increments)
 {
   log.Level (40) << "CameraAcquisitionPleora::RaiseDigitalGainUntilSaturated [" << increments << "]." << endl;
@@ -2767,7 +2716,6 @@ void  CameraAcquisitionPleora::RaiseDigitalGainUntilSaturated (kkint32  incremen
 
 
 
-
 void  CameraAcquisitionPleora::RaiseDigitalGainUntilAtLeastHighValue (int  minHighValue)
 {
   log.Level (40) << "CameraAcquisitionPleora::RaiseDigitalGainUntilAtLeastHighValue   MinHighValue[" << minHighValue << "]." << endl;
@@ -2791,8 +2739,6 @@ void  CameraAcquisitionPleora::RaiseDigitalGainUntilAtLeastHighValue (int  minHi
   }
 
 }  /* RaiseDigitalGainUntilAtLeastHighValue */
-
-
 
 
 
@@ -2882,8 +2828,6 @@ void  CameraAcquisitionPleora::PerformAutoGainProcedureOld ()
 
 
 
-
-
 void  CameraAcquisitionPleora::AnalogGainBinarySearch (kkuint16 threshholdSaturationValue)
 {
   log.Level (20) << "CameraAcquisitionPleora::AnalogGainBinarySearch    " << endl;
@@ -2913,8 +2857,6 @@ void  CameraAcquisitionPleora::AnalogGainBinarySearch (kkuint16 threshholdSatura
 
   log.Level (20) << "CameraAcquisitionPleora::AnalogGainBinarySearch   Done   AnalogGain[" << agAnalogGain << "]" << endl;
 }   /* AnalogGainBinarySearch */
-
-
 
 
 
@@ -3018,8 +2960,7 @@ void  CameraAcquisitionPleora::PerformAutoGainProcedure ()
   //    b. Determine Crop Settings.
   //
   // 2) Perform Binary Search for Analog-Gain value that is just below "
-
-
+  
   agAnalogGain  = Min (10000.0f, analogGainMax);
   agDigitalGain = 2000;
 
@@ -3041,9 +2982,3 @@ void  CameraAcquisitionPleora::PerformAutoGainProcedure ()
 
   Manager ()->SampleLastFrameBeforeFlatField (sampleBeforeFlatField);
 }  /* PerformAutoGainProcedure */
-
-
-
-
-
-

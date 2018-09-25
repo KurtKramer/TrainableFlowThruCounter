@@ -47,19 +47,19 @@ namespace LarcosCounterUnManaged
                                             kkint32&        _estSize,
                                             KKStr&          _errorMessage,
                                             RunLog&         _runLog
-                                           );
+                                           ) override;
 
 
     virtual  LarcosFeatureVectorListPtr  LoadFile (const KKStr&      _fileName,
                                                    FileDescConstPtr  _fileDesc,
                                                    MLClassList&      _classes, 
                                                    std::istream&     _in,
-                                                   kkint32           _maxCount,    // Maximum # images to load.
+                                                   OptionUInt32      _maxCount,    // Maximum # images to load.
                                                    VolConstBool&     _cancelFlag,
                                                    bool&             _changesMade,
                                                    KKStr&            _errorMessage,
                                                    RunLog&           _log
-                                                  );
+                                                  )  override;
 
 
     virtual  void   SaveFile (FeatureVectorList&    _data,
@@ -71,7 +71,7 @@ namespace LarcosCounterUnManaged
                               bool&                 _successful,
                               KKStr&                _errorMessage,
                               RunLog&               _log
-                             );
+                             )  override;
 
 
     static  FeatureFileIOKKPtr  Driver () {return driver;}

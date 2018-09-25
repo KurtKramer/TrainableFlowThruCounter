@@ -61,6 +61,7 @@ StatusSnapshotManaged::~StatusSnapshotManaged ()
 }
 
 
+
 void  StatusSnapshotManaged::CleanUpMemory ()
 {
 }
