@@ -491,7 +491,7 @@ void  ShrimpLengthComputer::ProcessImage (RasterPtr  origImage,
       {
         demoImage = origImage->ToColor ();
 
-        for  (kkint32 x = 1;  x < centerPoints->QueueSize ();  ++x)
+        for  (kkuint32 x = 1;  x < centerPoints->QueueSize ();  ++x)
         {
           PointPtr p1 = centerPoints->IdxToPtr (x - 1);
           PointPtr p2 = centerPoints->IdxToPtr (x);

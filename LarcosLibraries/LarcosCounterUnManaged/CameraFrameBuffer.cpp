@@ -35,8 +35,8 @@ using  namespace  LarcosCounterUnManaged;
 
 CameraFrameBuffer::CameraFrameBuffer (LarcosCounterManagerPtr _manager,
                                       const KKStr&            _name,        /* Name of buffer, must be unique */
-                                      kkint32                 _bufferSize,
-                                      kkint32                 _maxNumOfBuffers,
+                                      kkuint32                _bufferSize,
+                                      kkuint32                _maxNumOfBuffers,
                                       kkint32                 _frameHeight,
                                       kkint32                 _frameWidth,
                                       bool                    _dataIsToBeCounted,
@@ -244,9 +244,9 @@ void  CameraFrameBuffer::ThrowOutOldestOccupiedBuffer ()
 
 
 
-void  CameraFrameBuffer::IncreaseBufferSize (kkint32 numNewFrameBuffers)
+void  CameraFrameBuffer::IncreaseBufferSize (kkuint32 numNewFrameBuffers)
 {
-  for  (kkint32 x = 0;  x < numNewFrameBuffers;  ++x)
+  for  (kkuint32 x = 0;  x < numNewFrameBuffers;  ++x)
   {
     CameraFramePtr  frame = new CameraFrame (frameHeight, frameWidth);
     frame->Processed            (false);

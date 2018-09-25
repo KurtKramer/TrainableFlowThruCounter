@@ -11,8 +11,6 @@
 #include <fstream>
 #include <map>
 #include <vector>
-
-
 #include "MemoryDebug.h"
 
 
@@ -23,6 +21,7 @@ using namespace std;
 #include "KKStr.h"
 #include "MorphOpStretcher.h"
 #include "MsgQueue.h"
+#include "Option.h"
 #include "OSservices.h"
 using namespace  KKB;
 
@@ -675,24 +674,21 @@ using namespace  KKLSC;
 
 
 
-
-
-
 bool  OkToRenameFile (const KKStr&  fn)
 {
-  kkint32 idx = fn.Find ("_2013");
+  auto idx = fn.Find ("_2013");
   if  (idx < 0)
     idx = fn.Find ("_2012");
 
   if  (idx < 0)  return false;
 
-  KKStr  part1 = fn.SubStrPart (0, idx - 1);
+  KKStr  part1 = fn.SubStrSeg (0, idx);
   KKStr  rest = fn.SubStrPart (idx + 1);
 
   if  (rest[8] != '-')
     return false;
 
-  KKStr  dateStr = rest.SubStrPart (0, 7);
+  KKStr  dateStr = rest.SubStrSeg (0, 8);
   rest = rest.SubStrPart (9);
 
   if  (rest.SubStrPart (6) == ".lsc")
@@ -701,7 +697,7 @@ bool  OkToRenameFile (const KKStr&  fn)
   if  (rest[6] != '_')
     return false;
 
-  KKStr  timeStr = rest.SubStrPart (0, 5);
+  KKStr  timeStr = rest.SubStrSeg (0, 6);
   rest = rest.SubStrPart (7);
 
   if  (isdigit (rest[0])  &&  isdigit (rest[1])  &&  (rest.SubStrPart (2) == ".lsc"))

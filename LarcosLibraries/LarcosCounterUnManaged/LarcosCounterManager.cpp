@@ -285,7 +285,6 @@ void  LarcosCounterManager::Initialize ()
 
 
 
-
 KKStr  LarcosCounterManager::LarcosVersionNumber ()
 {
 /*  KKStr  dateStr = __DATE__;
@@ -578,7 +577,7 @@ KKStr  LarcosCounterManager::GetNextControlNumber ()
 
     kkint32  lastSeqNum = lastControlNumber.SubStrPart (x).ToInt32 ();
 
-    KKStr  firstPart = lastControlNumber.SubStrPart (0, x - 1);
+    KKStr  firstPart = lastControlNumber.SubStrSeg (0, x);
     if  (firstPart.LastChar () == '_')
       firstPart.ChopLastChar ();
 
@@ -878,7 +877,7 @@ void  LarcosCounterManager::BuildDestScannerFileName (bool playingBackExistingFi
     KKStr  srcFileRootName = osGetRootName (srcScannerFileName);
     destScannerFileDir = osGetPathPartOfFile (srcScannerFileName);
     KKStr  baseRootName = srcFileRootName;
-    if  (baseRootName.Find (controlNum, 0) < 0)
+    if  (!baseRootName.Find (controlNum, 0))
       baseRootName << "_" << controlNum;
 
     kkint32  seqNum = 0;
@@ -926,8 +925,6 @@ void  LarcosCounterManager::BuildDestScannerFileName (bool playingBackExistingFi
 
 
 
-
-
 void  LarcosCounterManager::AddHeaderFields ()
 {
   if  (operatingParameters->DataIsToBeRecorded ())
@@ -938,7 +935,9 @@ void  LarcosCounterManager::AddHeaderFields ()
   }
 
   sessionParameters->DateTimeRecorded (osGetLocalDateTime ());
-  sessionParameters->HostName (osGetHostName ());
+
+  auto hostName = osGetHostName ();
+  sessionParameters->HostName (hostName.value_or ("Failed to retrieve HostName"));
 
   sessionParameters->AddToHeaderFields (headerFields);
   operatingParameters->AddToHeaderFields (headerFields);
@@ -1038,7 +1037,6 @@ void  LarcosCounterManager::ValidateTrainingModel (const KKStr&  trainingModelNa
     config = NULL;
   }
 }  /* ValidateTrainingModel */
-
 
 
 
@@ -1205,7 +1203,6 @@ void  LarcosCounterManager::StartRecordingAndOrCounting (bool&   _successful,
 
 
 
-
 void  LarcosCounterManager::RecordButtonPressed 
                       (SessionParametersPtr     _sessionParameters,
                        OperatingParametersPtr   _operatingParameters,
@@ -1286,8 +1283,6 @@ void  LarcosCounterManager::RecordButtonPressed
 
   goalie->EndBlock ();
 }  /* RecordButtonPressed */
-
-
 
 
 
@@ -1547,7 +1542,6 @@ void  LarcosCounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileNa
 
 
 
-
 void  LarcosCounterManager::PlayBackButtonPressed 
                       (const KKStr&           _srcScannerFileName,
                        SessionParametersPtr   _sessionParameters,
@@ -1630,7 +1624,6 @@ void  LarcosCounterManager::PlayBackButtonPressed
 
 
 
-
 bool  LarcosCounterManager::OkToPressStop (KKStr&  errMsg)
 {
   bool  okToPressStop = false;
@@ -1644,7 +1637,6 @@ bool  LarcosCounterManager::OkToPressStop (KKStr&  errMsg)
   {
     errMsg = "Larcos is still starting up;  wait for it to stop before pressing 'Stop'";
   }
-
 
   {
     switch  (curState)
@@ -1688,7 +1680,6 @@ bool  LarcosCounterManager::OkToPressStop (KKStr&  errMsg)
 
 
 
-
 void  LarcosCounterManager::StopButtonPressed (bool    _stopImmediately,
                                                bool&   _successful,
                                                KKStr&  _errMsg
@@ -1709,7 +1700,6 @@ void  LarcosCounterManager::StopButtonPressed (bool    _stopImmediately,
 
   goalie->EndBlock ();
 }  /* StopButtonPressed */
-
 
 
 
@@ -1853,7 +1843,6 @@ void  LarcosCounterManager::CloseOutCountingAndOrRecording (VolConstBool&  termi
 
 
 
-
 void  LarcosCounterManager::DeleteAllStoppedThreads ()
 {
   runLog->Level (40) << "LarcosCounterManager::DeleteAllStoppedThreads." << endl;
@@ -1915,7 +1904,6 @@ void  LarcosCounterManager::DeleteAllStoppedThreads ()
 
 
 
-
 void  LarcosCounterManager::WaitForAllButCameraThreadsToStop (kkint32  maxSecsToWait,
                                                               bool&  allThreadsStopped
                                                              )
@@ -1969,11 +1957,11 @@ void  LarcosCounterManager::ShutdownOneThread (CameraThreadPtr  t)
 }
 
 
+
 void  LarcosCounterManager::ShutDownCameraAutoGainThread ()
 {
   ShutdownOneThread (cameraAutoGainThread);
 }  /* ShutDownCameraAutoGainThread */
-
 
 
 
@@ -1988,7 +1976,6 @@ void  LarcosCounterManager::ShutDownSnapshotThread ()
 {
   ShutdownOneThread (snapshotThread);
 }  /* ShutDownSnapshotThread */
-
 
 
 
@@ -2145,7 +2132,6 @@ void  LarcosCounterManager::DeleteLogicalFrameProcessorThreads ()
 
 
 
-
 void  LarcosCounterManager::DeleteConnectButtonThread ()
 {
   DeleteOneThread ((CameraThreadPtr&)connectButtonThread);
@@ -2171,6 +2157,7 @@ void  LarcosCounterManager::DeleteStopButtonThread ()
 {
   DeleteOneThread ((CameraThreadPtr&)stopButtonThread);
 }
+
 
 
 //  Will stay in a loop until all threads that this object controls are stopped.
@@ -2250,13 +2237,12 @@ void  LarcosCounterManager::TerminateAndDeleteAllButConnectButtonThread ()
   DeleteLogicalFrameProcessorThreads ();
   DeleteCameraAutoGainThread         ();
   DeleteDiskWriterThread             ();
-  DeleteAcquisitionThread              ();
+  DeleteAcquisitionThread            ();
   DeleteReportWriterThread           ();
   DeleteStartButtonThread            ();
   DeletePlayBackButtonThread         ();
   DeleteStopButtonThread             ();
 }  /* TerminateAndDeleteAllButConnectButtonThread */
-
 
 
 
@@ -2286,8 +2272,6 @@ void   LarcosCounterManager::DeleteAllThreads ()
   stopButtonThread          = NULL;
   connectButtonThread       = NULL;
 }  /* DeleteAllThreads */
-
-
 
 
 
@@ -2353,7 +2337,6 @@ void  LarcosCounterManager::StartCameraDiskWriterThread (bool&  _successful)
 
 
 
-
 void  LarcosCounterManager::StartReportWriterThread (bool&  _successful)
 {
   _successful = false;
@@ -2383,7 +2366,6 @@ void  LarcosCounterManager::StartReportWriterThread (bool&  _successful)
 
 
 
-
 void  LarcosCounterManager::StartSnapshotThread (bool&  _successful)
 {
   _successful = false;
@@ -2400,7 +2382,6 @@ void  LarcosCounterManager::StartSnapshotThread (bool&  _successful)
   snapshotThread->Start (ThreadPriority::Normal, _successful);
   allThreads->PushOnBack (snapshotThread);
 }
-
 
 
 
@@ -2511,12 +2492,14 @@ void  LarcosCounterManager::HeaderFieldsClear ()
 }
 
 
+
 void  LarcosCounterManager::AddHeaderField (const KKStr&  _fieldName,
                                             const KKStr&  _fieldValue
                                            )
 {
   headerFields->Add (_fieldName, _fieldValue);
 }
+
 
 
 void  LarcosCounterManager::AddHeaderField (const KKStr&  _fieldName,
@@ -2527,12 +2510,14 @@ void  LarcosCounterManager::AddHeaderField (const KKStr&  _fieldName,
 }
 
 
+
 void  LarcosCounterManager::AddHeaderField (const KKStr&  _fieldName,
                                             kkint32       _fieldValue
                                            )
 {
   headerFields->Add (_fieldName, _fieldValue);
 }
+
 
 
 void  LarcosCounterManager::AddHeaderField (const KKStr&  _fieldName,
@@ -2543,6 +2528,7 @@ void  LarcosCounterManager::AddHeaderField (const KKStr&  _fieldName,
 }
 
 
+
 void  LarcosCounterManager::AddHeaderField (const KKStr&  _fieldName,
                                             float         _fieldValue
                                            )
@@ -2551,12 +2537,14 @@ void  LarcosCounterManager::AddHeaderField (const KKStr&  _fieldName,
 }
 
 
+
 void  LarcosCounterManager::AddHeaderField (const KKStr&  _fieldName,
                                             double        _fieldValue
                                            )
 {
   headerFields->Add (_fieldName, _fieldValue);
 }
+
 
 
 void  LarcosCounterManager::AddMessageToCurrentScannerFile (const KKStr&  msg)
@@ -2574,6 +2562,7 @@ VectorUcharPtr  LarcosCounterManager::CameraHighPoints ()
   VectorUcharPtr  cameraHighs = cameraFrameBuffer->CameraHighPoints ();
   return  cameraHighs;
 }
+
 
 
 VectorUcharPtr  LarcosCounterManager::CameraHighPointsFromLastNSampleLines (kkint32 n)  const
@@ -2620,6 +2609,7 @@ KKStr  LarcosCounterManager::CameraSerialNum ()
   else  
     return KKStr::EmptyStr ();
 }
+
 
 
 KKStr  LarcosCounterManager::CameraMacAddress ()
@@ -2692,6 +2682,7 @@ void  LarcosCounterManager::AddSecondaryMsg (const KKStr&  msg)
 }
 
 
+
 /**
  *@brief  retrieves run time variables that would typically be displayed allowing technician to see what is going on.
  *@param[out]  stat's
@@ -2735,7 +2726,6 @@ void  LarcosCounterManager::GetStats (LarcosCounterStats&  stats)
 
 
 
-
 void  LarcosCounterManager::GetSessionParameters (SessionParameters&  _sessionParameters)
 {
   _sessionParameters.Assign (*sessionParameters);
@@ -2747,6 +2737,7 @@ void  LarcosCounterManager::GetOperatingParameters (OperatingParameters&  _opera
 {
   _operatingParameters.Assign (*operatingParameters);
 }
+
 
 
 void  LarcosCounterManager::GetDefaultOperatingParameters (OperatingParameters&  _defaultOperatingParameters)
@@ -2791,9 +2782,6 @@ bool  LarcosCounterManager::GenerateFinaleReport ()
 
 
 
-
-
-
 int  LarcosCounterManager::FrameProcessorsCount () const
 {
   if  (frameProcessors)
@@ -2801,6 +2789,7 @@ int  LarcosCounterManager::FrameProcessorsCount () const
   else
     return 0;
 }
+
 
 
 bool  LarcosCounterManager::LogicalFrameBuilderRunning ()
@@ -2819,6 +2808,7 @@ const KKStr&  LarcosCounterManager::ControlNum ()
 }
 
 
+
 const KKStr&  LarcosCounterManager::Description () const
 {
   if  (sessionParameters == NULL)
@@ -2826,6 +2816,7 @@ const KKStr&  LarcosCounterManager::Description () const
   else
     return sessionParameters->SessionDescription ();
 }
+
 
 
 bool  LarcosCounterManager::EmbeddedFlowMeter () const
@@ -2837,6 +2828,7 @@ bool  LarcosCounterManager::EmbeddedFlowMeter () const
 }
 
 
+
 const KKStr&  LarcosCounterManager::TrainingModelName () const
 {
   if  (sessionParameters == NULL)
@@ -2846,16 +2838,19 @@ const KKStr&  LarcosCounterManager::TrainingModelName () const
 }
 
 
+
 bool  LarcosCounterManager::DiskWritingThreadRunning ()  const
 {
   return  ((diskWriterThread != NULL)  &&  (diskWriterThread->Status () == ThreadStatus::Running));
 }
 
 
+
 bool  LarcosCounterManager::CameraAutoGainThreadRunning ()  const
 {
   return  ((cameraAutoGainThread != NULL)  &&  (cameraAutoGainThread->Status () == ThreadStatus::Running));
 }
+
 
 
 bool  LarcosCounterManager::CameraFrameBufferEmpty ()
@@ -2869,6 +2864,7 @@ bool  LarcosCounterManager::CameraFrameBufferEmpty ()
   }
   return  true;
 }
+
 
 
 bool  LarcosCounterManager::LogicalFrameBuffersAreEmpty ()
@@ -2931,7 +2927,6 @@ void  LarcosCounterManager::StartNewScannerFile (ScannerFileEntryPtr  _scannerFi
 
 
 
-
 void  LarcosCounterManager::StartingToReadNewScannerFile (ScannerFileEntryPtr  _scannerFileEntry)
 {
   if  (!operatingParameters->DataIsToBeRecorded ())
@@ -2942,7 +2937,6 @@ void  LarcosCounterManager::StartingToReadNewScannerFile (ScannerFileEntryPtr  _
       cameraFrameBuffer->StartNewScannerFile (_scannerFileEntry);
   }
 }
-
 
 
 
@@ -2964,7 +2958,6 @@ void  LarcosCounterManager::ComputeLastFramesMinScanLines ()
 
 
 
-
 void  LarcosCounterManager::SetLiveVideoDimensions (kkint32  _liveVideoHeight,
                                                     kkint32  _liveVideoWidth
                                                    )
@@ -2973,7 +2966,6 @@ void  LarcosCounterManager::SetLiveVideoDimensions (kkint32  _liveVideoHeight,
   liveVideoWidth  = _liveVideoWidth;
   ComputeLastFramesMinScanLines ();
 }
-
 
 
 
@@ -2986,7 +2978,6 @@ RasterPtr  LarcosCounterManager::SnapShotLatestFrame ()
   goalie->EndBlock ();
   return  lastVideoFrame;
 }  /* SnapShotLatestFrame */
-
 
 
 
@@ -3192,7 +3183,6 @@ void  LarcosCounterManager::RequestedSensitivityMode (const KKStr&  _requestedSe
 
 
 
-
 void   LarcosCounterManager::SampleLastFrameBeforeFlatField (bool _sampleLastFrameBeforeFlatField)
 {
   sampleLastFrameBeforeFlatField = _sampleLastFrameBeforeFlatField;
@@ -3368,7 +3358,6 @@ bool   LarcosCounterManager::WeAreConnectingToCamera ()  const
 
 
 
-
 void  LarcosCounterManager::SetOperatingParameters (const OperatingParametersPtr  _operatingParameters)
 {
   operatingParameters->Assign (*_operatingParameters);
@@ -3457,8 +3446,6 @@ void  LarcosCounterManager::SetTrainingModel (const KKStr&            _trainingM
 
 
 
-
-
 void  LarcosCounterManager::SaveConfiguration ()
 {
   goalie->StartBlock ();
@@ -3500,7 +3487,6 @@ void  LarcosCounterManager::SaveConfiguration ()
   goalie->EndBlock ();
   return;
 }  /* SaveConfiguration */
-
 
 
 

@@ -10,7 +10,7 @@
 #include <queue>
 #include <map>
 #include <vector>
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
 #include <windows.h>
 #endif
 #include "MemoryDebug.h"
@@ -27,6 +27,7 @@ using namespace KKB;
 
 #include "ScannerFile.h"
 using namespace  KKLSC;
+
 
 #include "CameraAcquisitionSimulator.h"
 #include "CameraFrame.h"
@@ -64,7 +65,6 @@ CameraAcquisitionSimulator::CameraAcquisitionSimulator
   AllocateDynamicMemory ();
   playingBackRealTime = _playingBackRealTime;
 }
-
 
 
 
@@ -163,8 +163,6 @@ void  CameraAcquisitionSimulator::OpenNextScannerFile ()
 
 
 
-
-
 void  CameraAcquisitionSimulator::GetNextFrame2 (uchar*  buffer,
                                                  bool&   eof
                                                 )
@@ -232,7 +230,6 @@ void  CameraAcquisitionSimulator::GetNextFrame2 (uchar*  buffer,
 
 
 
-
 void  CameraAcquisitionSimulator::ComplementDataBlock (void*  block,
                                                        kkint32  blockSize
                                                       )
@@ -291,7 +288,6 @@ void  CameraAcquisitionSimulator::Run ()
         embeddedFlowMeterDataPresent = true;
     }
   }
-
 
   Status (ThreadStatus::Running);
 
@@ -448,9 +444,6 @@ void  CameraAcquisitionSimulator::Run ()
 
   return;
 }  /* Run */
-
-
-
 
 
 

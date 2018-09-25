@@ -16,6 +16,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+
 #include "Blob.h"
 #include "ConvexHull.h"
 #include "KKBaseTypes.h"
@@ -30,6 +31,7 @@ using namespace KKB;
 #include "FileDesc.h"
 using namespace  KKMLL;
 
+
 #include "LarcosFVProducer.h"
 
 #include "FeatureFileIOKK.h"
@@ -37,9 +39,7 @@ using namespace  KKMLL;
 #include "LarcosTrainingConfiguration.h"
 using  namespace  LarcosCounterUnManaged;
 
-
-
-kkint16  LarcosFVProducer::maxNumOfFeatures      = 56;
+kkuint32  LarcosFVProducer::maxNumOfFeatures     = 56;
 
 kkint16  LarcosFVProducer::SizeIndex             = 0;
 kkint16  LarcosFVProducer::Moment1Index          = 1;
@@ -172,10 +172,6 @@ const  KKStr  LarcosFVProducer::featureNames[] =
 
 
 
-
-
-
-
 LarcosFVProducer::LarcosFVProducer (FactoryFVProducerPtr  factory):
     FeatureVectorProducer ("LarcosFVProducer",
                            factory
@@ -192,7 +188,6 @@ LarcosFVProducer::LarcosFVProducer (FactoryFVProducerPtr  factory):
   workRaster2Area = new uchar[totPixsForMorphOps];
   workRaster3Area = new uchar[totPixsForMorphOps];
 }
-
 
 
 
@@ -263,7 +258,6 @@ void  LarcosFVProducer::ReductionByMultiple (kkint32        multiple,
     srcRow += multiple;
   }
 }  /* ReductionByMultiple */
-
 
 
 
@@ -416,8 +410,8 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
 
   if  (areaBeforeReduction < 20)
   {
-    for  (kkint32 tp = 0;  tp < maxNumOfFeatures;  tp++)
-      featureData[tp] = 9999999;
+    for  (kkuint32 tp = 0;  tp < maxNumOfFeatures;  tp++)
+      featureData[tp] = FLT_MAX;
     return fv;
   }
   
@@ -548,7 +542,6 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
     featureData[WeighedMoment0Index] = weighedSizeBeforeReduction  * priorReductionFactor;
   }
 
-
   if ((area > convexf)  &&  (convexf > 0))
      featureData[TransparancyConvexHullIndex] = 1.0;
   else 
@@ -643,11 +636,11 @@ LarcosFeatureVectorPtr  LarcosFVProducer::ComputeFeatureVector (const Raster&   
 
 
 
-
 const type_info*   LarcosFVProducer::FeatureVectorTypeId () const
 {
   return  &(typeid (LarcosFeatureVector));
 }
+
 
 
 const type_info*  LarcosFVProducer::FeatureVectorListTypeId () const
@@ -676,7 +669,7 @@ FileDescConstPtr  LarcosFVProducer::DefineFileDescStatic ()
   {
     bool  alreadyExists = false;
     FileDescPtr  tempFileDesc = new KKMLL::FileDesc ();
-    for  (kkint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
+    for  (kkuint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
     {
       tempFileDesc->AddAAttribute (featureNames[fieldNum], AttributeType::Numeric, alreadyExists);
     }
@@ -693,14 +686,10 @@ FileDescConstPtr  LarcosFVProducer::DefineFileDescStatic ()
 
 
 
-
-FeatureVectorListPtr  LarcosFVProducer::ManufacturFeatureVectorList (bool owner) const
+FeatureVectorListPtr  LarcosFVProducer::ManufacturFeatureVectorList (bool  owner) const
 {
   return  new LarcosFeatureVectorList (FileDesc (), owner);
 }
-
-
-
 
 
 
@@ -721,6 +710,7 @@ FeatureFileIOPtr  LarcosFVProducerFactory::DefaultFeatureFileIO ()  const
 {
   return  FeatureFileIOKK::Driver ();
 }
+
 
 
 const type_info*  LarcosFVProducerFactory::FeatureVectorTypeId ()  const  
@@ -758,8 +748,6 @@ TrainingConfiguration2Ptr  LarcosFVProducerFactory::ManufacturTrainingConfigurat
 
 
 
-
-
 LarcosFeatureVectorListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
                                                                                   RunLog&  runLog
                                                                                  )
@@ -771,7 +759,6 @@ LarcosFeatureVectorListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList
 
 
 LarcosFVProducerFactory*  LarcosFVProducerFactory::factory = Factory (NULL);
-
 
 
 
@@ -788,4 +775,3 @@ LarcosFVProducerFactory*  LarcosFVProducerFactory::Factory (RunLog*  runLog)
 
   return  factory;
 }
-

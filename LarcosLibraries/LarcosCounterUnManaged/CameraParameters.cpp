@@ -9,7 +9,7 @@
 #include <fstream>
 #include <queue>
 #include <vector>
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
 #include <windows.h>
 #endif
 #include "MemoryDebug.h"
@@ -44,7 +44,6 @@ KKStr   interfaceDefaultGateway;
 
 
 
-
 CameraParameters::CameraParameters ():
    analogGain              (0.0),
    deviceVendorName        (),
@@ -65,6 +64,7 @@ CameraParameters::CameraParameters ():
 
 {
 }
+
 
 
 CameraParameters::~CameraParameters ()
