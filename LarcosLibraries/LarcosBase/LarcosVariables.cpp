@@ -46,7 +46,7 @@ KKStr  LarcosVariables::LarcosHomeDir ()
     return  larcosHomeDir;
 
   // We will first try and get directory from the LarcosHomeDir environment variable.
-  KKStrPtr homeDir = osGetEnvVariable ("LarcosHomeDir");
+  KKStrPtr homeDir = osGetEnvVariable ("ZoisHomeDir");
   if  (homeDir != NULL)
   {
     larcosHomeDir = *homeDir;
