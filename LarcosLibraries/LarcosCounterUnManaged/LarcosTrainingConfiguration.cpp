@@ -25,8 +25,8 @@ using namespace  KKB;
 #include "TrainingConfiguration2.h"
 using namespace  KKMLL;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 #include "LarcosTrainingConfiguration.h"
 #include "LarcosFVProducer.h"
@@ -186,9 +186,9 @@ LarcosTrainingConfigurationPtr  LarcosTrainingConfiguration::CreateFromDirectory
 
   KKStr  directoryConfigFileName = osGetRootNameOfDirectory (_subDir);
   if  (directoryConfigFileName.Empty ())
-    directoryConfigFileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + "Root.cfg";
+    directoryConfigFileName = osAddSlash (CounterVariables::TrainingModelsDir ()) + "Root.cfg";
   else
-    directoryConfigFileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + directoryConfigFileName + ".cfg";
+    directoryConfigFileName = osAddSlash (CounterVariables::TrainingModelsDir ()) + directoryConfigFileName + ".cfg";
 
   LarcosTrainingConfigurationPtr  config = NULL;
 

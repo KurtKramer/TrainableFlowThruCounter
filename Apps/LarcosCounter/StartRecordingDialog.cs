@@ -150,7 +150,7 @@ namespace LarcosCounter
     /// <param name="_initialSessionParametrs"></param>
     /// <param name="_initialOperatingParameters"></param>
     /// <param name="_playingBack"></param>
-    /// <param name="_runLog">Messages written to this RunLog instance will be sent to the log-file in "${LarcosHomeDir}\LoggingFiles\LarcosCounter"
+    /// <param name="_runLog">Messages written to this RunLog instance will be sent to the log-file in "${CounterHomeDir}\LoggingFiles\LarcosCounter"
     /// and appear in the dialog panel.</param>
     public StartRecordingDialog (LarcosCounterManagerWrapper  _cameraManager,
                                  UmiSessionParameters         _initialSessionParametrs,

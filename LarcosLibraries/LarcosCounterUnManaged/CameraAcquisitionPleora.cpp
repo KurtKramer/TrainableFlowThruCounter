@@ -38,8 +38,8 @@ using namespace KKB;
 using namespace  KKLSC;
 
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 
 #include "CameraAcquisitionPleora.h"
@@ -1813,7 +1813,7 @@ CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _m
   const PvDeviceInfoGEV*  pvDeviceInfoGEV = NULL;
 
   RunLog  runLog (_msgQueue);
-  runLog.SetLevel (LarcosVariables::DebugLevel ());
+  runLog.SetLevel (CounterVariables::DebugLevel ());
   runLog.Level (40) << "CameraAcquisitionPleora::GetCameraList" << endl;
 
   PvSystem  pvSystem;
@@ -2119,7 +2119,7 @@ CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromSerialNumber
            )
 {
   RunLog  runLog (_msgQueue);
-  runLog.SetLevel (LarcosVariables::DebugLevel ());
+  runLog.SetLevel (CounterVariables::DebugLevel ());
 
   runLog.Level (20) << "CameraAcquisitionPleora::CreateFromSerialNumber   serialNumber :" << _serialNumber << endl;
 
@@ -2155,7 +2155,7 @@ CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromMacAddress
            )
 {
   RunLog  runLog (_msgQueue);
-  runLog.SetLevel (LarcosVariables::DebugLevel ());
+  runLog.SetLevel (CounterVariables::DebugLevel ());
 
   runLog.Level (20) << "CameraAcquisitionPleora::CreateFromMacAddress   MacAddress :" << _macAddress << endl;
   return new  CameraAcquisitionPleora (_manager,
@@ -2179,7 +2179,7 @@ CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromCameraParameters
                )
 {
   RunLog  runLog (_msgQueue);
-  runLog.SetLevel (LarcosVariables::DebugLevel ());
+  runLog.SetLevel (CounterVariables::DebugLevel ());
 
   runLog.Level (20) << "CameraAcquisitionPleora::CreateFromCameraParameters   MacAddress :" << _cameraParameters->MacAddress () << endl;
 
@@ -2395,7 +2395,7 @@ void  CameraAcquisitionPleora::PrintDeviceParameters (const KKStr&          subN
   if  (!lDeviceParams)
     return;
 
-  KKStr  fileName = osAddSlash (LarcosVariables::TempDir ()) + "CameraParametrs_" + subName + ".txt";
+  KKStr  fileName = osAddSlash (CounterVariables::TempDir ()) + "CameraParametrs_" + subName + ".txt";
 
   ofstream  outFile (fileName.Str ());
 

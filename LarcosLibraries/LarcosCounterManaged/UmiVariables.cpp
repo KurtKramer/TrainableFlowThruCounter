@@ -17,8 +17,8 @@
 using namespace KKB;
 
 
-#include "LarcosVariables.h"
-using  namespace  LarcosBase;
+#include "CounterVariables.h"
+using  namespace  CounterBase;
 
 
 #include "UmiOSservices.h"
@@ -40,23 +40,23 @@ UmiVariables::UmiVariables (void)
 
 
 
-void  UmiVariables::SetLarcosHomeDir ()
+void  UmiVariables::SetCounterHomeDir ()
 {
-  LarcosVariables::SetLarcosHomeDir ();
+  CounterVariables::SetCounterHomeDir ();
 }
 
 
 
-void  UmiVariables::SetLarcosHomeDir (String^  _larcosHomeDir)
+void  UmiVariables::SetCounterHomeDir (String^  _counterHomeDir)
 {
-  LarcosVariables::SetLarcosHomeDir (UmiKKStr::SystemStringToKKStr (_larcosHomeDir));
+  CounterVariables::SetCounterHomeDir (UmiKKStr::SystemStringToKKStr (_counterHomeDir));
 }
 
 
 
-String^  UmiVariables::LarcosHomeDir ()
+String^  UmiVariables::CounterHomeDir ()
 {
-  String^  result = UmiKKStr::KKStrToSystenStr (LarcosVariables::LarcosHomeDir ());
+  String^  result = UmiKKStr::KKStrToSystenStr (CounterVariables::CounterHomeDir ());
   return  result;
 }
 
@@ -64,42 +64,42 @@ String^  UmiVariables::LarcosHomeDir ()
 
 String^  UmiVariables::ConfigurationDir ()
 {
-  return  UmiKKStr::KKStrToSystenStr (LarcosVariables::ConfigurationDir ());
+  return  UmiKKStr::KKStrToSystenStr (CounterVariables::ConfigurationDir ());
 }
 
 
 
 String^  UmiVariables::CmdLineProgDir ()
 {
-  return  UmiKKStr::KKStrToSystenStr (LarcosVariables::CmdLineProgDir ());
+  return  UmiKKStr::KKStrToSystenStr (CounterVariables::CmdLineProgDir ());
 }
 
 
 
 String^  UmiVariables::DataFilesRootDir ()
 {
-  return  UmiKKStr::KKStrToSystenStr (LarcosVariables::DataFilesRootDir ());
+  return  UmiKKStr::KKStrToSystenStr (CounterVariables::DataFilesRootDir ());
 }
 
 
 
 String^  UmiVariables::ReportDir ()
 {
-  return  UmiKKStr::KKStrToSystenStr (LarcosVariables::ReportDir ());
+  return  UmiKKStr::KKStrToSystenStr (CounterVariables::ReportDir ());
 }
 
 
 
 String^  UmiVariables::ScannerFilesDefaultDir ()
 {
-  return  UmiKKStr::KKStrToSystenStr (LarcosVariables::ScannerFilesDefaultDir ());
+  return  UmiKKStr::KKStrToSystenStr (CounterVariables::ScannerFilesDefaultDir ());
 }
 
 
 
 String^  UmiVariables::TempDir ()
 {
-  return  UmiKKStr::KKStrToSystenStr (LarcosVariables::TempDir ());
+  return  UmiKKStr::KKStrToSystenStr (CounterVariables::TempDir ());
 }
 
 
@@ -107,12 +107,12 @@ String^  UmiVariables::TempDir ()
 /* Directory where logging files can be written to. */
 String^  UmiVariables::LoggingDir ()
 {
-  return  UmiKKStr::KKStrToSystenStr (LarcosVariables::LoggingDir ());
+  return  UmiKKStr::KKStrToSystenStr (CounterVariables::LoggingDir ());
 }
 
 
 
 String^  UmiVariables::TrainingModelsDir ()
 {
-  return  UmiKKStr::KKStrToSystenStr (LarcosVariables::TrainingModelsDir ());
+  return  UmiKKStr::KKStrToSystenStr (CounterVariables::TrainingModelsDir ());
 }

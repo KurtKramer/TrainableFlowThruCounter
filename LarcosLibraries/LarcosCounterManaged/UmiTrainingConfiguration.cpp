@@ -22,8 +22,8 @@ using namespace KKB;
 #include "TrainingConfiguration2.h"
 using namespace  KKMLL;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 #include "OperatingParameters.h"
 
@@ -104,7 +104,7 @@ UmiTrainingConfiguration::UmiTrainingConfiguration (DirectoryInfo^            di
   bool   successful = false;
 
   KKStr  modelNameKKStr = osGetRootNameOfDirectory (dirName) + ".cfg";
-  KKStr  configFileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + modelNameKKStr;
+  KKStr  configFileName = osAddSlash (CounterVariables::TrainingModelsDir ()) + modelNameKKStr;
     
   delete  classes;  classes = NULL;
 

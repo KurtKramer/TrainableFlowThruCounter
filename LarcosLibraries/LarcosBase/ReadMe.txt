@@ -1,5 +1,5 @@
 ========================================================================
-    STATIC LIBRARY : LarcosBase Project Overview
+    STATIC LIBRARY : CounterBase Project Overview
 ========================================================================
 
 Author:   Kurt Kramer

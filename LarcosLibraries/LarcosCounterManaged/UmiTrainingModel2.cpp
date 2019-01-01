@@ -32,8 +32,8 @@ using namespace KKB;
 #include "TrainingConfiguration2.h"
 using namespace KKMLL;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 
 //#include "PostLarvaeFVProducer.h"
@@ -203,7 +203,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^      _umiRunLog,
 
   CreateRunLog ();
 
-  KKStr  configFileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + modelNameKKStr;
+  KKStr  configFileName = osAddSlash (CounterVariables::TrainingModelsDir ()) + modelNameKKStr;
 
   FileDescConstPtr fd = LarcosFVProducer::DefineFileDescStatic ();
 
@@ -338,7 +338,7 @@ void  UmiTrainingModel2::CreateRunLog ()
       while  (fileNameAlreadyUsed);
 
     runLog = new RunLog (UmiKKStr::SystemStringToKKStr (runLogFileName).Str ());
-    runLog->SetLevel (LarcosVariables::DebugLevel ());
+    runLog->SetLevel (CounterVariables::DebugLevel ());
   }
 }  /* CreateRunLog */
 
@@ -383,7 +383,7 @@ String^  UmiTrainingModel2::RootDirExpanded::get ()
   if  (configToUse)
     return UmiKKStr::KKStrToSystenStr (configToUse->RootDirExpanded ());
   else
-    return  UmiOSservices::AddSlash (UmiVariables::LarcosHomeDir ()) + UmiOSservices::GetRootName (modelName);
+    return  UmiOSservices::AddSlash (UmiVariables::CounterHomeDir ()) + UmiOSservices::GetRootName (modelName);
 }
 
 
@@ -393,7 +393,7 @@ void  UmiTrainingModel2::SaveConfiguration ()
   LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   KKStr  fileName = configToUse->FileName ();
   if  (fileName.Empty ())
-    fileName = osAddSlash (LarcosVariables::TrainingModelsDir ()) + UmiKKStr::SystemStringToKKStr (modelName);
+    fileName = osAddSlash (CounterVariables::TrainingModelsDir ()) + UmiKKStr::SystemStringToKKStr (modelName);
 
   configToUse->Save (fileName);
 }  /* SaveConfiguration*/
@@ -1333,7 +1333,7 @@ String^  UmiTrainingModel2::DirectoryPathForClass (UmiClass^  mlClass)
 
 array<String^>^  UmiTrainingModel2::GetListOfTrainingModels ()
 {
-  KKStr searchSpec = osAddSlash (LarcosVariables::TrainingModelsDir ()) + "*.cfg";
+  KKStr searchSpec = osAddSlash (CounterVariables::TrainingModelsDir ()) + "*.cfg";
   KKStrListPtr   fileNames = osGetListOfFiles (searchSpec);
   if  (fileNames == NULL)
     return  nullptr;

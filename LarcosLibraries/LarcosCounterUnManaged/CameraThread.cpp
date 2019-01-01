@@ -20,8 +20,8 @@ using namespace std;
 using namespace KKB;
 
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase ;
+#include "CounterVariables.h"
+using namespace  CounterBase ;
 
 
 #include "CameraThread.h"
@@ -38,7 +38,7 @@ CameraThread::CameraThread (LarcosCounterManagerPtr _manager,
     log       (_msgQueue),
     manager   (_manager)
 {
-  log.SetLevel (LarcosVariables::DebugLevel ());
+  log.SetLevel (CounterVariables::DebugLevel ());
 }
 
 

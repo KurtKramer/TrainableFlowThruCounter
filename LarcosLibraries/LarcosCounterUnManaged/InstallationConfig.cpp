@@ -23,8 +23,8 @@ using namespace KKB;
 #include "ScannerHeaderFields.h"
 using namespace  KKLSC;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 
 
@@ -192,7 +192,7 @@ void  InstallationConfig::Assign (const InstallationConfig&   config)
 
 
 
-KKStr  InstallationConfig::installationDirPath = osAddSlash (LarcosVariables::ConfigurationDir ()) + "Installations";
+KKStr  InstallationConfig::installationDirPath = osAddSlash (CounterVariables::ConfigurationDir ()) + "Installations";
 
 
 KKStr  InstallationConfig::InstallationDirPath ()

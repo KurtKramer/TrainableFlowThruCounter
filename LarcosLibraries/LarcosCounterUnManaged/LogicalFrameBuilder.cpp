@@ -28,8 +28,8 @@ using namespace KKB;
 #include "ScannerFileEntry.h"
 using  namespace  KKLSC;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 #include "LogicalFrameBuilder.h"
 

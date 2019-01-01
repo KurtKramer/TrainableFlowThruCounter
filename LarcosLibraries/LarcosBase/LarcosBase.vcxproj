@@ -148,10 +148,10 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="LarcosVariables.cpp" />
+    <ClCompile Include="CounterVariables.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LarcosVariables.h" />
+    <ClInclude Include="CounterVariables.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

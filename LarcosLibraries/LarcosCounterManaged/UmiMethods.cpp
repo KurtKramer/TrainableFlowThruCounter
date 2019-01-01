@@ -16,8 +16,8 @@
 #include "KKBaseTypes.h"
 using namespace KKB;
 
-#include "LarcosVariables.h"
-using namespace LarcosBase;
+#include "CounterVariables.h"
+using namespace CounterBase;
 
 #include "UmiMethods.h"
 #include "UmiKKStr.h"
@@ -85,7 +85,7 @@ KKB::DateTime   UmiMethods::DateTimeSystemToKKU (System::DateTime   dt)
 
 kkint32  UmiMethods::DebugLevel ()
 {
-  return  LarcosVariables::DebugLevel ();
+  return  CounterVariables::DebugLevel ();
 }
 
 

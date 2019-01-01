@@ -24,8 +24,8 @@
 using namespace  KKB;
 
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 
 #include "CameraParametersManaged.h"
@@ -53,7 +53,7 @@ LarcosCounterManagerWrapper::LarcosCounterManagerWrapper ():
     msgQueue                   (),
     saveDebugImages            (false)
 {
-  LarcosBase::LarcosVariables::SetLarcosHomeDir ();
+  CounterBase::CounterVariables::SetCounterHomeDir ();
 
   loggedMsgs = new MsgQueue ("LarcosCounterManagerWrapper::LoggedMsgs");
   msgQueue = new MsgQueue ("LarcosCounterManagerWrapper");
@@ -240,7 +240,7 @@ CameraParametersManaged^  LarcosCounterManagerWrapper::PromptForCamera (UmiMsgQu
     throw gcnew Exception ("LarcosCounterManagerWrapper::PromptForCamera    msgQueue == NULL");
 
   RunLog  runLog (msgQueue->MsgQueue ());
-  runLog.SetLevel (LarcosVariables::DebugLevel ());
+  runLog.SetLevel (CounterVariables::DebugLevel ());
 
   CameraParametersPtr  parameters = LarcosCounterManager::PromptForCamera (runLog);
   if  (parameters)

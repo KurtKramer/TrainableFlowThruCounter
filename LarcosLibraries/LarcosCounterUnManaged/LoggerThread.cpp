@@ -23,8 +23,8 @@ using namespace KKB;
 #include "Variables.h"
 using namespace  KKLSC;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 #include "LarcosCounterManager.h"
 #include "LoggerThread.h"
@@ -48,7 +48,7 @@ LoggerThread::LoggerThread (MsgQueuePtr  _msgQueue,
     weOwnLoggedMsgs = true;
   }
 
-  KKStr logFileDir = osAddSlash (LarcosVariables::LoggingDir ()) + "LarcosCounter";
+  KKStr logFileDir = osAddSlash (CounterVariables::LoggingDir ()) + "LarcosCounter";
   osCreateDirectoryPath (logFileDir);
   DateTime now = osGetLocalDateTime ();
   logFileName = osAddSlash (logFileDir) + "LarcosCounter_" + now.Date ().YYYYMMDD () + "-" + now.Time ().HHMMSS () + ".txt";

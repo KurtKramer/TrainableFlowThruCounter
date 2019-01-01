@@ -4,7 +4,6 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 using namespace  KKB;
@@ -12,122 +11,124 @@ using namespace  KKB;
 #include "Variables.h"
 using namespace  KKLSC;
 
-
 #include "KKMLVariables.h"
 using namespace  KKMLL;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 
 
-LarcosVariables::LarcosVariables ()
+CounterVariables::CounterVariables ()
 {
 }
 
 
 
-LarcosVariables::~LarcosVariables ()
+CounterVariables::~CounterVariables ()
 {
 }
 
 
 
-KKStr  LarcosVariables::larcosHomeDir = "";
-
-
-kkint32  LarcosVariables::debugLevel = -1;
+KKStr  CounterVariables::counterHomeDir = "";
 
 
 
-KKStr  LarcosVariables::LarcosHomeDir ()
+kkint32  CounterVariables::debugLevel = -1;
+
+
+
+KKStr  CounterVariables::CounterHomeDir ()
 {
-  if  (!larcosHomeDir.Empty ())
-    return  larcosHomeDir;
+  if  (!counterHomeDir.Empty ())
+    return  counterHomeDir;
 
-  // We will first try and get directory from the LarcosHomeDir environment variable.
-  KKStrPtr homeDir = osGetEnvVariable ("ZoisHomeDir");
+  // We will first try and get directory from the CounterHomeDir environment variable.
+  KKStrPtr homeDir = osGetEnvVariable ("LarcosHomeDir");
   if  (homeDir != NULL)
   {
-    larcosHomeDir = *homeDir;
+    counterHomeDir = *homeDir;
     delete  homeDir;
     homeDir = NULL;
   }
 
-  if  (larcosHomeDir.Empty ())
+  if  (counterHomeDir.Empty ())
   {
     #if  defined(KKOS_WINDOWS)
-       larcosHomeDir = "C:\\Larcos";
-       cout << endl << "larcosHomeDir" << "\t" << larcosHomeDir << endl << endl;
+       counterHomeDir = "C:\\Larcos";
+       cout << endl << "counterHomeDir" << "\t" << counterHomeDir << endl << endl;
     #else
-       larcosHomeDir = "/Larcos";
+       counterHomeDir = "/Larcos";
     #endif
   }
 
-  return  larcosHomeDir; 
-}  /* LarcosHomeDir */
+  return  counterHomeDir; 
+}  /* CounterHomeDir */
 
 
 
-KKStr  LarcosVariables::ScannerFilesDefaultDir ()
+KKStr  CounterVariables::ScannerFilesDefaultDir ()
 {
-  return osAddSlash (LarcosHomeDir ()) + "ScannerFiles";
+  return osAddSlash (CounterHomeDir ()) + "ScannerFiles";
 }  /* ScannerFilesDefaultDir */
 
 
 
-KKStr  LarcosVariables::TempDir ()
+KKStr  CounterVariables::TempDir ()
 {
-  return  osAddSlash (LarcosHomeDir ()) + "Temp";
+  return  osAddSlash (CounterHomeDir ()) + "Temp";
 }
 
 
-void   LarcosVariables::SetLarcosHomeDir ()
+
+void   CounterVariables::SetCounterHomeDir ()
 {
   // When this method is called the caller wants to set the Larcos home directory to the default location.
-  // so we set 'larcosHomeDir' to a empty string and then call the method 'LarcosHomeDir' which will initialize
-  // 'larcosHomeDir' to the default directory.
-  larcosHomeDir = "";
-  LarcosHomeDir ();
-  KKMLVariables::SetMachineLearninigHomeDir (osAddSlash (LarcosHomeDir ()) + "Classifier");
-  KKLSC::Variables::SetHomeDir (LarcosHomeDir ());
+  // so we set 'counterHomeDir' to a empty string and then call the method 'CounterHomeDir' which will initialize
+  // 'counterHomeDir' to the default directory.
+  counterHomeDir = "";
+  CounterHomeDir ();
+  KKMLVariables::SetMachineLearninigHomeDir (osAddSlash (CounterHomeDir ()) + "Classifier");
+  KKLSC::Variables::SetHomeDir (CounterHomeDir ());
 }
 
 
 
-void   LarcosVariables::SetLarcosHomeDir (const KKStr&  _larcosHomeDir)
+void   CounterVariables::SetCounterHomeDir (const KKStr&  _counterHomeDir)
 {
-  larcosHomeDir = _larcosHomeDir;
-  KKMLVariables::SetMachineLearninigHomeDir (osAddSlash (LarcosHomeDir ()) + "Classifier");
-  KKLSC::Variables::SetHomeDir (LarcosHomeDir ());
+  counterHomeDir = _counterHomeDir;
+  KKMLVariables::SetMachineLearninigHomeDir (osAddSlash (CounterHomeDir ()) + "Classifier");
+  KKLSC::Variables::SetHomeDir (CounterHomeDir ());
 }
 
 
 
 /* Directory where logging files can be written to. */
-KKStr  LarcosVariables::LoggingDir ()
+KKStr  CounterVariables::LoggingDir ()
 {
-  return osAddSlash (LarcosHomeDir ()) + "LoggingFiles";
+  return osAddSlash (CounterHomeDir ()) + "LoggingFiles";
 }
 
 
-KKStr  LarcosVariables::CmdLineProgDir ()
+
+KKStr  CounterVariables::CmdLineProgDir ()
 {
-  KKStr  s = osAddSlash (LarcosHomeDir ()) + "exe";
+  KKStr  s = osAddSlash (CounterHomeDir ()) + "exe";
   return s;
 }
 
 
 
-KKStr  LarcosVariables::ConfigurationDir ()
+KKStr  CounterVariables::ConfigurationDir ()
 {
-  KKStr  configDir = osAddSlash (osAddSlash (LarcosHomeDir ()) + "Configurations");
+  KKStr  configDir = osAddSlash (osAddSlash (CounterHomeDir ()) + "Configurations");
   return  configDir;
 }
 
 
 
-kkint32  LarcosVariables::DebugLevel ()
+kkint32  CounterVariables::DebugLevel ()
 {
   if  (debugLevel < 0)
   {
@@ -148,31 +149,30 @@ kkint32  LarcosVariables::DebugLevel ()
 
 
 
-KKStr  LarcosVariables::DataFilesRootDir ()
+KKStr  CounterVariables::DataFilesRootDir ()
 {
-  KKStr  dataFilesRootDir = osAddSlash (osAddSlash (LarcosHomeDir ()) + "Configurations");
+  KKStr  dataFilesRootDir = osAddSlash (osAddSlash (CounterHomeDir ()) + "Configurations");
   return  dataFilesRootDir;
 }
 
 
 
-KKStr  LarcosVariables::ReportDir ()
+KKStr  CounterVariables::ReportDir ()
 {
-  KKStr  reportDir = osAddSlash (osAddSlash (LarcosHomeDir ()) + "Reports");
+  KKStr  reportDir = osAddSlash (osAddSlash (CounterHomeDir ()) + "Reports");
   return  reportDir;
 }
 
 
 
-
-KKStr  LarcosVariables::TrainingLibrariesDir ()
+KKStr  CounterVariables::TrainingLibrariesDir ()
 {
   return  KKMLVariables::TrainingLibrariesDir ();
 }
 
 
 
-KKStr  LarcosVariables::TrainingModelsDir ()
+KKStr  CounterVariables::TrainingModelsDir ()
 {
   return  KKMLVariables::TrainingModelsDir ();
 }

@@ -17,11 +17,11 @@ namespace LarcosCounter
     static void Main()
     {
       SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
-      //UmiMethods.StartMemoryLeakDetection ();
+      UmiMethods.StartMemoryLeakDetection ();
 
-      LarcosCounterManaged.UmiVariables.SetLarcosHomeDir ();  // Will set the application frame work variables to there default values.
-                                                              // Will set to value pointed to by environment variable "LarcosHomeDir".  If
-                                                              // this variable is not defined will then default to "C:\Larcos".
+      LarcosCounterManaged.UmiVariables.SetCounterHomeDir ();  // Will set the application frame work variables to there default values.
+                                                               // Will set to value pointed to by environment variable "CounterHomeDir". If
+                                                               // this variable is not defined will then default to "C:\Larcos".
 
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);

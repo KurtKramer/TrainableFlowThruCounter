@@ -15,15 +15,15 @@ using namespace std;
 #include "OSservices.h"
 using namespace KKB;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 #include "SessionLogger.h"
 using  namespace  LarcosCounterUnManaged;
 
 
-KKStr  SessionLogger::lastSessionIdFileName  = KKB::osAddSlash (LarcosVariables::ConfigurationDir ()) + "LastSessionId.txt";
-KKStr  SessionLogger::sessionLogFileName     = KKB::osAddSlash (LarcosVariables::LoggingDir       ()) + "SessionLog.txt";
+KKStr  SessionLogger::lastSessionIdFileName  = KKB::osAddSlash (CounterVariables::ConfigurationDir ()) + "LastSessionId.txt";
+KKStr  SessionLogger::sessionLogFileName     = KKB::osAddSlash (CounterVariables::LoggingDir       ()) + "SessionLog.txt";
 
 
 kkint32  SessionLogger::GetNextSessionId ()

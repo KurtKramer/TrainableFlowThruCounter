@@ -16,8 +16,8 @@
 #include "KKBaseTypes.h"
 using namespace  KKB;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 
 using namespace  System::Diagnostics;
@@ -41,7 +41,7 @@ UmiRunLog::UmiRunLog ():
   weOwnRunLog (false)
 {
   runLog = new RunLog ();
-  runLog->SetLevel (LarcosVariables::DebugLevel ());
+  runLog->SetLevel (CounterVariables::DebugLevel ());
   weOwnRunLog = true;
 }
 
@@ -54,7 +54,7 @@ UmiRunLog::UmiRunLog (String^  logFileName):
 {
   KKStr s = UmiKKStr::SystemStringToKKStr (logFileName);
   runLog = new RunLog (s.Str ());
-  runLog->SetLevel (LarcosVariables::DebugLevel ());
+  runLog->SetLevel (CounterVariables::DebugLevel ());
   weOwnRunLog = true;
 }
 
@@ -66,7 +66,7 @@ UmiRunLog::UmiRunLog (MsgQueuePtr  _msgQueue):
   weOwnRunLog (false)
 {
   runLog = new RunLog (_msgQueue);
-  runLog->SetLevel (LarcosVariables::DebugLevel ());
+  runLog->SetLevel (CounterVariables::DebugLevel ());
   weOwnRunLog = true;
 }
 

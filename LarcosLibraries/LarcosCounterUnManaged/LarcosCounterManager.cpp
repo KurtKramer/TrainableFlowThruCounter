@@ -40,8 +40,8 @@ using namespace  KKLSC;
 #include "LarcosFVProducer.h"
 using namespace KKMLL;
 
-#include "LarcosVariables.h"
-using namespace  LarcosBase;
+#include "CounterVariables.h"
+using namespace  CounterBase;
 
 
 #include "LarcosCounterManager.h"
@@ -217,11 +217,11 @@ LarcosCounterManager::LarcosCounterManager (MsgQueuePtr  _msgQueue,
 {
   ValidateLarcosInstallation ();
 
-  configurationFileName = osAddSlash (LarcosVariables::ConfigurationDir ()) + "LarcosCounterManager.txt";
+  configurationFileName = osAddSlash (CounterVariables::ConfigurationDir ()) + "LarcosCounterManager.txt";
 
   loggerThread = LoggerThread::CreateAndStartInstance (msgQueue, loggedMsgs, "LoggerThread");
   runLog = new RunLog (msgQueue);
-  runLog->SetLevel (LarcosVariables::DebugLevel ());
+  runLog->SetLevel (CounterVariables::DebugLevel ());
   runLog->Level (40) << "LarcosCounterManager::LarcosCounterManager   MaxNumThreads: " << _maxNumOfThreads << endl;
 
   allThreads                 = new CameraThreadList (true);
@@ -364,11 +364,11 @@ void  LarcosCounterManager::CleanUpMemory ()
 
 void  LarcosCounterManager::ValidateLarcosInstallation ()
 {
-  if  (!osValidDirectory (LarcosVariables::LarcosHomeDir ()))
-    osCreateDirectoryPath (LarcosVariables::LarcosHomeDir ());
+  if  (!osValidDirectory (CounterVariables::CounterHomeDir ()))
+    osCreateDirectoryPath (CounterVariables::CounterHomeDir ());
 
-  if  (!osValidDirectory (LarcosVariables::ConfigurationDir ()))
-    osCreateDirectoryPath (LarcosVariables::ConfigurationDir ());
+  if  (!osValidDirectory (CounterVariables::ConfigurationDir ()))
+    osCreateDirectoryPath (CounterVariables::ConfigurationDir ());
 
   bool  successful = false;
 
@@ -910,7 +910,7 @@ void  LarcosCounterManager::BuildDestScannerFileName (bool playingBackExistingFi
   else
   {
     // Recording new scanner file.
-    destScannerFileDir      = osAddSlash (LarcosVariables::ScannerFilesDefaultDir ()) + dateStr + "_" + controlNum;
+    destScannerFileDir      = osAddSlash (CounterVariables::ScannerFilesDefaultDir ()) + dateStr + "_" + controlNum;
     destScannerFileRootName = controlNum + "_" + dt.Date ().YYYYMMDD () + "-" + dt.Time ().HHMMSS ();
     destScannerFileName     = osAddSlash (destScannerFileDir) + destScannerFileRootName + ".lsc";
     particlesDirName        = osAddSlash (destScannerFileDir) + destScannerFileRootName;
@@ -1046,7 +1046,7 @@ void  LarcosCounterManager::StartRecordingAndOrCounting (bool&   _successful,
 {
   goalie->StartBlock ();
 
-  if  (LarcosVariables::DebugLevel () >= 40)
+  if  (CounterVariables::DebugLevel () >= 40)
     runLog->Level (40) << "LarcosCounterManager::StartRecordingAndOrCounting "      << endl
                        << "  trainingModelName      : " << TrainingModelName ()     << endl
                        << "  controlNum             : " << ControlNum ()            << endl
@@ -1214,7 +1214,7 @@ void  LarcosCounterManager::RecordButtonPressed
   
   _operatingParameters->PlayingBack (false);
 
-  if  (LarcosVariables::DebugLevel () >= 40)
+  if  (CounterVariables::DebugLevel () >= 40)
   {
     runLog->Level (40) << "LarcosCounterManager::RecordButtonPressed  "      << endl
                        << "  trainingModelName      : " << TrainingModelName ()     << endl
@@ -1295,7 +1295,7 @@ void  LarcosCounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileNa
 
   operatingParameters->PlayingBack (true);
 
-  if  (LarcosVariables::DebugLevel () >= 40)
+  if  (CounterVariables::DebugLevel () >= 40)
   {
     runLog->Level (40) << "LarcosCounterManager::PlayBackScannerFile  "      << endl
                        << "  srcScannerFileName     : " << _srcScannerFileName      << endl
@@ -1555,7 +1555,7 @@ void  LarcosCounterManager::PlayBackButtonPressed
 
   _operatingParameters->PlayingBack (false);
 
-  if  (LarcosVariables::DebugLevel () >= 40)
+  if  (CounterVariables::DebugLevel () >= 40)
   {
     runLog->Level (40) << "LarcosCounterManager::PlayBackButtonPressed  "       << endl
                        << "  srcScannerFileName     : " << _srcScannerFileName  << endl
