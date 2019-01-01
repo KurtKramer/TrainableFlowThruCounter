@@ -8,17 +8,17 @@ using System.Text;
 using System.Windows.Forms;
 
 //using  UnManagedInterface;
-using  LarcosCounterManaged;
+using  CounterManaged;
 
 namespace LarcosCounter
 {
   public partial class CameraPreView : Form
   {
-    private  LarcosCounterManagerWrapper  cameraManager = null;
+    private  CounterManagerWrapper  cameraManager = null;
     private  int                          oldHeight = 0;
     private  int                          oldWidth  = 0;
 
-    public CameraPreView (LarcosCounterManagerWrapper  _cameraManager)
+    public CameraPreView (CounterManagerWrapper  _cameraManager)
     {
       cameraManager = _cameraManager;
       InitializeComponent();

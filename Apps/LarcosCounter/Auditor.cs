@@ -9,15 +9,15 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-using LarcosCounterManaged;
-using LarcosManagedRoutines;
+using CounterManaged;
+using CounterManagedRoutines;
 
 
 namespace LarcosCounter
 { 
   public partial class Auditor : Form
   {
-    private  LarcosCounterManagerWrapper  cameraManager     = null;
+    private  CounterManagerWrapper  cameraManager     = null;
     private  int                          autoScrollRate    = 0;
     private  int                          erosionStructSize = -1;
     private  int                          timerTicCount     = 0;
@@ -59,7 +59,7 @@ namespace LarcosCounter
     public bool RunPlayBack  {get {return runPlayBack;}}
 
     
-    public  Auditor (LarcosCounterManagerWrapper  _cameraManager,
+    public  Auditor (CounterManagerWrapper  _cameraManager,
                      String                       _scannerFileName,
                      bool                         _saveDebugImages,
                      UmiRunLog                    _runLog
@@ -186,7 +186,7 @@ namespace LarcosCounter
           ScannerFilePanel.SetCropColumns (scannerFileCropLeft, scannerFileCropRight);
       }
 
-      if  (cameraManager.OperatingMode () == LarcosOperatingModes.Advanced)
+      if  (cameraManager.OperatingMode () == CounterOperatingModes.Advanced)
       {
         ValidateByClassButton.Visible = true;
         ValidateByClassButton.Enabled = true;

@@ -8,7 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
 
 
-using LarcosCounterManaged;
+using CounterManaged;
 
 
 
@@ -16,7 +16,7 @@ namespace LarcosCounter
 {
   public  class FinaleReportDataSource
   {
-    public  FinaleReportDataSource  (LarcosCounterManagerWrapper _cameraManager,
+    public  FinaleReportDataSource  (CounterManagerWrapper _cameraManager,
                                      UmiSessionParameters        _sessionParameters,
                                      UmiOperatingParameters      _operatingParameters,
                                      int                         _count,
@@ -51,7 +51,7 @@ namespace LarcosCounter
     public  DateTime  DateTimeRecorded    {get  {return sessionParameters.DateTimeRecorded;}}
     public  String    Destination         {get  {return sessionParameters.Destination;}}
     public  String    PersonInCharge      {get  {return sessionParameters.PersonInCharge;}}
-    public  String    LarcosVersionNum    {get  {return cameraManager.LarcosVersionNumber ();}}
+    public  String    LarcosVersionNum    {get  {return cameraManager.CounterVersionNumber ();}}
     public  String    SessionDescription  {get  {return sessionParameters.SessionDescription;}}
     public  float     ScanRate            {get  {return operatingParameters.RequestedScanRate;}}
     public  int       SessionId           {get  {return sessionParameters.SessionId;}}
@@ -82,7 +82,7 @@ namespace LarcosCounter
       }
     }
 
-    private  LarcosCounterManagerWrapper cameraManager       = null;
+    private  CounterManagerWrapper cameraManager       = null;
     private  int                         count               = 0;
     private  int                         sampleSize          = 0;
     private  float                       sizeMean            = 0.0f;

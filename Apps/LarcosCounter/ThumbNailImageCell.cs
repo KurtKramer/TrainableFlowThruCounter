@@ -4,8 +4,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-using LarcosCounterManaged;
-using LarcosManagedRoutines;
+using CounterManaged;
+using CounterManagedRoutines;
 
 
 namespace LarcosCounter

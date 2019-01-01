@@ -3,7 +3,7 @@ using System.Collections.Generic;
 //using System.Linq;
 using System.Windows.Forms;
 
-using LarcosCounterManaged;
+using CounterManaged;
 
 
 namespace LarcosCounter
@@ -19,7 +19,7 @@ namespace LarcosCounter
       SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
       UmiMethods.StartMemoryLeakDetection ();
 
-      LarcosCounterManaged.UmiVariables.SetCounterHomeDir ();  // Will set the application frame work variables to there default values.
+      CounterManaged.UmiVariables.SetCounterHomeDir ();  // Will set the application frame work variables to there default values.
                                                                // Will set to value pointed to by environment variable "CounterHomeDir". If
                                                                // this variable is not defined will then default to "C:\Larcos".
 

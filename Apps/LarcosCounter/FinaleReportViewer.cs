@@ -12,7 +12,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 //using Microsoft.Reporting.WinForms;
 
-using  LarcosCounterManaged;
+using  CounterManaged;
 
 
 
@@ -23,14 +23,14 @@ namespace LarcosCounter
   public partial class FinaleReportViewer : Form
   {
 
-    private  LarcosCounterManagerWrapper  cameraManager    = null;
+    private  CounterManagerWrapper  cameraManager    = null;
     private  FinaleReportDataSource       reportDataSource = null;
 
     private  int  oldHeight = 0;
     private  int  oldWidth  = 0;
 
 
-    public  FinaleReportViewer (LarcosCounterManagerWrapper  _cameraManager,
+    public  FinaleReportViewer (CounterManagerWrapper  _cameraManager,
                                 FinaleReportDataSource       _reportDataSource
                                )
     {

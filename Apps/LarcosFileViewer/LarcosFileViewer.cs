@@ -11,8 +11,8 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-using LarcosCounterManaged;
-using LarcosManagedRoutines;
+using CounterManaged;
+using CounterManagedRoutines;
 
 
 

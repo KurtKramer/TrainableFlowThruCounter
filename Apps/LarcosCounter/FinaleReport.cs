@@ -12,8 +12,8 @@ using System.IO;
 
 //using Microsoft.Reporting.WinForms;
 
-using LarcosCounterManaged;
-using LarcosManagedRoutines;
+using CounterManaged;
+using CounterManagedRoutines;
 
 
 namespace LarcosCounter
@@ -54,7 +54,7 @@ namespace LarcosCounter
     private  List<int>     sizeHistogram  = null;
     private  List<float>   countHistogram = null;
 
-    private  LarcosCounterManagerWrapper  cameraManager = null;
+    private  CounterManagerWrapper  cameraManager = null;
 
     private  FinaleReportDataSource  reportDataSource = null;
 
@@ -68,7 +68,7 @@ namespace LarcosCounter
 
 
 
-    public FinaleReport (LarcosCounterManagerWrapper  _cameraManager,
+    public FinaleReport (CounterManagerWrapper  _cameraManager,
                          String                       _scannerFileName,
                          bool                         _autoSaveReport,
                          bool                         _saveDebugImages,

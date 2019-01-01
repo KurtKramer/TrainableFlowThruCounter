@@ -6,8 +6,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
 
-using LarcosCounterManaged;
-using LarcosManagedRoutines;
+using CounterManaged;
+using CounterManagedRoutines;
 
 
  

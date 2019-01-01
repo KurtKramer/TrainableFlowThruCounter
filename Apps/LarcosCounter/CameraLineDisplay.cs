@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 
 //using UnManagedInterface;
-using LarcosCounterManaged;
+using CounterManaged;
 
 
 namespace LarcosCounter
@@ -17,7 +17,7 @@ namespace LarcosCounter
   public partial class  CameraLineDisplay : Form
   {
     bool                         autoRefresh      = false;
-    LarcosCounterManagerWrapper  cameraManager    = null;
+    CounterManagerWrapper  cameraManager    = null;
     private  byte[]              cameraData       = null;
     private  byte[]              cameraDataPrev1  = null;
     private  byte[]              cameraDataPrev2  = null;
@@ -37,7 +37,7 @@ namespace LarcosCounter
 
 
 
-    public  CameraLineDisplay (LarcosCounterManagerWrapper  _cameraManager)
+    public  CameraLineDisplay (CounterManagerWrapper  _cameraManager)
     {
       cameraManager = _cameraManager;
 

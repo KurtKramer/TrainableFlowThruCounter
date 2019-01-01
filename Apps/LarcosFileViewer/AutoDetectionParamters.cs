@@ -7,10 +7,10 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
-using  LarcosManagedRoutines;
+using  CounterManagedRoutines;
 
 
-using LarcosCounterManaged;
+using CounterManaged;
 
 
 namespace LarcosFileViewer

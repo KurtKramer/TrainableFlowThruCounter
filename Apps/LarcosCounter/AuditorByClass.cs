@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using LarcosCounterManaged;
-using LarcosManagedRoutines;
+using CounterManaged;
+using CounterManagedRoutines;
 
 namespace LarcosCounter
 {
   public partial class AuditorByClass : Form
   {
     private  int                          backgroundPixelTH              = 31;    
-    private  LarcosCounterManagerWrapper  cameraManager                  = null;
+    private  CounterManagerWrapper  cameraManager                  = null;
     private  UmiClassList                 classesInParticleList          = null;
     private  UmiClassList                 classesInTrainingModel         = null;
     private  UmiClassList                 classesAvailableForSelection   = null;
@@ -74,7 +74,7 @@ namespace LarcosCounter
     /// <param name="_cameraManager"></param>
     /// <param name="_scannerFile">Scanner File that we are auditing;  before calling this constructor the 
     /// loading of Particles must have been completed.</param>
-    public AuditorByClass (LarcosCounterManagerWrapper  _cameraManager,
+    public AuditorByClass (CounterManagerWrapper  _cameraManager,
                            UmiScannerFileBuffered       _scannerFile,
                            UmiOperatingParameters       _opParametersToExtractParticles,
                            bool                         _saveDebugImages,

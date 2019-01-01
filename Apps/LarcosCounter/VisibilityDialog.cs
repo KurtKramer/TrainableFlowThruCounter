@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using LarcosManagedRoutines;
-using LarcosCounterManaged;
+using CounterManagedRoutines;
+using CounterManaged;
 
 namespace LarcosCounter
 {
@@ -17,13 +17,13 @@ namespace LarcosCounter
     private  int  lastHeight = 0;
     private  int  lastWidth  = 0;
 
-    private  LarcosCounterManagerWrapper   cameraManager = null;
+    private  CounterManagerWrapper   cameraManager = null;
 
     public  float  GetRequestedAnalogGain  ()  {return  cameraLine.GetRequestedAnalogGain  ();}
     public  int    GetRequestedDigitalGain ()  {return  cameraLine.GetRequestedDigitalGain ();}
 
 
-    public VisibilityDialog (LarcosCounterManagerWrapper  _cameraManager)
+    public VisibilityDialog (CounterManagerWrapper  _cameraManager)
     {
       InitializeComponent ();
       cameraManager = _cameraManager;

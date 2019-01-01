@@ -25,8 +25,8 @@ using namespace std;
 #include "OSservices.h"
 using namespace  KKB;
 
-#include "LarcosCounterManager.h"
-using namespace   LarcosCounterUnManaged;
+#include "CounterManager.h"
+using namespace   CounterUnManaged;
 
 #include  "HistogramSize.h"
 
@@ -942,7 +942,7 @@ void  ScannerFileCharacteristics_ProcessDirTree (const KKStr&  baseDir,
 #include "OperatingParameters.h"
 #include "SessionParameters.h"
 
-using namespace LarcosCounterUnManaged;
+using namespace CounterUnManaged;
 
 class  Region
 {
@@ -1030,89 +1030,6 @@ vector<Region>  BuildRegionList  (const  StartStopPointList&  list)
 void  CombineScannerFiles ()
 {
   RunLog  runLog;
-
-  /*
-  char*  scannerFiles[] = {
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_dense1\\dense1_20131121-101703.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh-test\\sh-gsh-test_20131121-094029.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_test2\\test2_20131121-095915.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_test3\\test3_20131121-101026.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                      NULL
-                    };
-  */
-  /*
-  char*  scannerFiles[] = {
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                      NULL
-                    };
-
-
-  KKStr  outFileName = "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21-SIS-PL-HighdensityLongRun\\2013-11-21-SIS-PL-HighdensityLongRun.lsc";
-*/
-
-/*
-  char*  scannerFiles[] = {
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203101106_TrackB3_Run1.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203104424_TrackB3_Run2.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203104424_TrackB3_Run2_000.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203104424_TrackB3_Run2_001.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203115957_TrackC3_Run2.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203121522_TrackC3_Run3.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203141137_TrackD3_Run1.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203142620_TrackD3_Run2.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203151240_TrackD3_Run3.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203161055_TrackA3_Run1.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203162615_TrackA3_Run2.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203164608_TrackA3_Run3.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203170302_TrackA3_Run4.lsc",
-                     NULL
-                    };
-
-
-  KKStr  outFileName = "C:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM_LargeShrimp\\TAM-12G-Shrimp.lsc";
-*/
 
 
   char*  scannerFiles[] = {
@@ -1430,7 +1347,7 @@ void  main (int  argc,  char** argv)
     MsgQueuePtr  msgQueue = new MsgQueue ("Test1");
     MsgQueuePtr  msgQueue2 = new MsgQueue ("Test2");
 
-    LarcosCounterManager*  manager = new LarcosCounterManager (msgQueue, msgQueue2, 4);
+    CounterManager*  manager = new CounterManager (msgQueue, msgQueue2, 4);
   }
 
   {

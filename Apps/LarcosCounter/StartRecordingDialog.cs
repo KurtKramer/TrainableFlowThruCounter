@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using LarcosManagedRoutines;
-using LarcosCounterManaged;
+using CounterManagedRoutines;
+using CounterManaged;
 
 
 
@@ -18,7 +18,7 @@ namespace LarcosCounter
   {
     private  bool  startRecording  = false;
     private  bool  cancelRequested = false;
-    private  LarcosCounterManagerWrapper  cameraManager = null;
+    private  CounterManagerWrapper  cameraManager = null;
     private  bool  errorsFound = true;
 
     private  AdvancedParameters  advParameters = null;
@@ -28,7 +28,7 @@ namespace LarcosCounter
     private  UmiSessionParameters    initialSessionParametrs    = null;
     private  UmiOperatingParameters  initialOperatingParameters = null;
 
-    private  LarcosTrainingModelListManaged  trainModels = null;
+    private  CounterTrainingModelListManaged  trainModels = null;
 
     private  String  lastTrainingModelName = "";
 
@@ -73,9 +73,9 @@ namespace LarcosCounter
 
       if  (trainModels == null)
       {
-        trainModels = LarcosTrainingModelListManaged.BuildFromTrainigModelDir ();
+        trainModels = CounterTrainingModelListManaged.BuildFromTrainigModelDir ();
         if  (trainModels == null)
-          trainModels = new LarcosTrainingModelListManaged ();
+          trainModels = new CounterTrainingModelListManaged ();
       }
 
       subject.DataSource = trainModels.GetListOfSubjects ();
@@ -146,13 +146,13 @@ namespace LarcosCounter
     /// Constructor for 'StartRecordingDialog' dialog class.  This dialog box prompts the user for required parameters 
     /// need to perform a counting session.  It is to be used for both reco9rding and Playback sessions.
     /// </summary>
-    /// <param name="_cameraManager">Reference to LarcosCounterManager instance.</param>
+    /// <param name="_cameraManager">Reference to CounterManager instance.</param>
     /// <param name="_initialSessionParametrs"></param>
     /// <param name="_initialOperatingParameters"></param>
     /// <param name="_playingBack"></param>
     /// <param name="_runLog">Messages written to this RunLog instance will be sent to the log-file in "${CounterHomeDir}\LoggingFiles\LarcosCounter"
     /// and appear in the dialog panel.</param>
-    public StartRecordingDialog (LarcosCounterManagerWrapper  _cameraManager,
+    public StartRecordingDialog (CounterManagerWrapper  _cameraManager,
                                  UmiSessionParameters         _initialSessionParametrs,
                                  UmiOperatingParameters       _initialOperatingParameters,
                                  bool                         _playingBack,
@@ -209,7 +209,7 @@ namespace LarcosCounter
 
       TrainingModelName = initialSessionParametrs.TrainingModelName;
 
-      if  (cameraManager.OperatingMode () == LarcosOperatingModes.Advanced)
+      if  (cameraManager.OperatingMode () == CounterOperatingModes.Advanced)
       {
         AdvancedOptionsButton.Enabled     = true;
         AdvancedOptionsButton.Visible     = true;

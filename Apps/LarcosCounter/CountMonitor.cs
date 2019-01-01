@@ -10,9 +10,9 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 
-using LarcosManagedRoutines;
+using CounterManagedRoutines;
 using LarcosControls;
-using LarcosCounterManaged;
+using CounterManaged;
 
 
 
@@ -20,9 +20,9 @@ namespace LarcosCounter
 {
   public partial class LarcosCounter : Form
   {
-    private  LarcosCounterManagerWrapper  cameraManager = null;
+    private  CounterManagerWrapper  cameraManager = null;
 
-    private  LarcosCounterState  curState = LarcosCounterState._NULL;
+    private  CounterState  curState = CounterState._NULL;
 
     private  String  configFileName = UmiOSservices.AddSlash (UmiVariables.ConfigurationDir ()) + "LarcosCounter.txt";
 
@@ -74,7 +74,7 @@ namespace LarcosCounter
       lastHeight = Height;
       lastWidth  = Width;
 
-      cameraManager = new LarcosCounterManagerWrapper ();
+      cameraManager = new CounterManagerWrapper ();
       cameraManager.Initialize ();
       cameraManager.SaveDebugImages (saveDebugImages);
 
@@ -116,8 +116,8 @@ namespace LarcosCounter
 
     private void  LarcosCounter_Load (object sender, EventArgs e)
     {
-      Text = "K-Square Counter    version: " + cameraManager.LarcosVersionNumber ();
-      if  (cameraManager.OperatingMode () == LarcosOperatingModes.Advanced)
+      Text = "K-Square Counter    version: " + cameraManager.CounterVersionNumber ();
+      if  (cameraManager.OperatingMode () == CounterOperatingModes.Advanced)
       {
         SampleBeforeFlatField.Visible    = true;
         SampleBeforeFlatField.Enabled    = true;
@@ -215,7 +215,7 @@ namespace LarcosCounter
       if  (cropRight < rightMostCol)
         liveVideoContextMenu.MenuItems.Add ("Release RightCrop", new EventHandler (ReleaseRightCrop));
 
-      if  (cameraManager.OperatingMode () == LarcosOperatingModes.Advanced)
+      if  (cameraManager.OperatingMode () == CounterOperatingModes.Advanced)
         liveVideoContextMenu.MenuItems.Add ("Display Temporal Camera-Line", new EventHandler (DisplayTemporalCameraLine));
       
       liveVideoFrame.ContextMenu = liveVideoContextMenu;
@@ -464,8 +464,8 @@ namespace LarcosCounter
       DisableAllControls ();
       switch  (curState)
       {
-        case  LarcosCounterState._NULL:
-        case  LarcosCounterState.Stopped:
+        case  CounterState._NULL:
+        case  CounterState.Stopped:
         {
           ConnectToCameraButton.Enabled          = true;
           AuditButton.Enabled                    = true;
@@ -478,13 +478,13 @@ namespace LarcosCounter
           break;
         }
 
-        case  LarcosCounterState.Stopping:
+        case  CounterState.Stopping:
         {
           // Until we stopped all the counting threads there is nothing the user can do.
           break;
         }
 
-        case  LarcosCounterState.Connected:
+        case  CounterState.Connected:
         {
           AuditButton.Enabled                   = true;
           PlayBackProgress.Visible              = false;
@@ -497,22 +497,22 @@ namespace LarcosCounter
           break;
         }
 
-        case  LarcosCounterState.Connecting:
+        case  CounterState.Connecting:
         {
           // Until the connection attempt is done there is nothing that the user can do.
           break;
         }
 
-        case  LarcosCounterState.Starting:
-        case  LarcosCounterState.BuildingClassifier:
+        case  CounterState.Starting:
+        case  CounterState.BuildingClassifier:
         {
           RecordButton.Text = "Stop";
           RecordButton.Enabled = true;
           break;
         }
 
-        case  LarcosCounterState.PlayingBack:
-        case  LarcosCounterState.Running:
+        case  CounterState.PlayingBack:
+        case  CounterState.Running:
         {
           FlowRateFactor.Enabled      = true;
           MinSizeThreshold.Enabled    = true;
@@ -521,7 +521,7 @@ namespace LarcosCounter
           SnapshotInterval2.Enabled   = true;
           PlayingBackRealTime.Enabled = true;
 
-          if  (curState == LarcosCounterState.PlayingBack)
+          if  (curState == CounterState.PlayingBack)
           {
             PlayBackProgress.Enabled = true;
             PlayBackProgress.Visible = true;
@@ -543,7 +543,7 @@ namespace LarcosCounter
 
     private  void  UpdateControlsForCurrentOperatingMode ()
     {
-      if  (cameraManager.OperatingMode () == LarcosOperatingModes.User)
+      if  (cameraManager.OperatingMode () == CounterOperatingModes.User)
       {
         if  (TabDisplayed.TabPages.Contains (statsTab))
           TabDisplayed.TabPages.Remove (statsTab);
@@ -604,7 +604,7 @@ namespace LarcosCounter
       if  (cameraManager == null)  
         return;
 
-      LarcosCounterStatsManaged  stats = cameraManager.GetStats ();
+      CounterStatsManaged  stats = cameraManager.GetStats ();
       
       LostPackets.Text                     = stats.TotalLostPackets.ToString                ("##,###,##0");
       PhysicalSeqNumsSkipped.Text          = stats.PhysicalSeqNumsSkipped.ToString          ("##,###,##0");
@@ -647,7 +647,7 @@ namespace LarcosCounter
 
     private void  UpdatePlayBackProgress ()
     {
-      if  (curState == LarcosCounterState.PlayingBack)
+      if  (curState == CounterState.PlayingBack)
       {
         Int64  totalBytesToRead = cameraManager.TotalBytesToRead ();
         Int64  totalBytesRead   = cameraManager.TotalBytesRead ();
@@ -849,7 +849,7 @@ namespace LarcosCounter
 
 
     private  int                 ticks = 0;
-    private  LarcosCounterState  lastState = LarcosCounterState._NULL;
+    private  CounterState  lastState = CounterState._NULL;
 
     private void RunLogTimer_Tick(object sender, EventArgs e)
     {
@@ -859,7 +859,7 @@ namespace LarcosCounter
         SetEnableDisable ();
         lastState = curState;
 
-        if  (curState == LarcosCounterState.Stopped)
+        if  (curState == CounterState.Stopped)
         {
           if  (runLogTimerCallCountingStop)
             CountingStop ();
@@ -890,7 +890,7 @@ namespace LarcosCounter
 
           if  ((ticks % 5) == 0)
           {
-            if  (curState == LarcosCounterState.PlayingBack)
+            if  (curState == CounterState.PlayingBack)
               UpdatePlayBackProgress ();
            
             if  ((ticks % 40) == 0)
@@ -933,12 +933,12 @@ namespace LarcosCounter
       if  (e.CloseReason == CloseReason.UserClosing)
       {
         runLog.WriteLn  (10, "User Exiting Window   CurrentState :" + curState.ToString ());
-        if  ((curState == LarcosCounterState.Starting)           ||
-             (curState == LarcosCounterState.BuildingClassifier) ||
-             (curState == LarcosCounterState.PlayingBack)        ||
-             (curState == LarcosCounterState.Running)            ||
-             (curState == LarcosCounterState.DroppedFrames)      ||
-             (curState == LarcosCounterState.Stopping)
+        if  ((curState == CounterState.Starting)           ||
+             (curState == CounterState.BuildingClassifier) ||
+             (curState == CounterState.PlayingBack)        ||
+             (curState == CounterState.Running)            ||
+             (curState == CounterState.DroppedFrames)      ||
+             (curState == CounterState.Stopping)
             )
         {
           runLog.WriteLn  (10, "Because we are still processing user required to approve exit of application.");
@@ -976,7 +976,7 @@ namespace LarcosCounter
         cameraPreviewWindow = null;
       }
 
-      if  (cameraManager.OperatingMode () == LarcosOperatingModes.Advanced)
+      if  (cameraManager.OperatingMode () == CounterOperatingModes.Advanced)
       {
         cameraPreviewWindow = new CameraPreView (cameraManager);
         cameraPreviewWindow.Show ();
@@ -1008,7 +1008,7 @@ namespace LarcosCounter
         return;
       }
 
-      else if  (curState == LarcosCounterState.Connected)
+      else if  (curState == CounterState.Connected)
       {
         runLog.WriteLn  (10, "Starting new session.");
         bool  successful = false;
@@ -1277,7 +1277,7 @@ namespace LarcosCounter
 
     private void ThroughPutDataToDisplay_SelectedIndexChanged (object sender, EventArgs e)
     {
-      if  (cameraManager.OperatingMode () != LarcosOperatingModes.Advanced)
+      if  (cameraManager.OperatingMode () != CounterOperatingModes.Advanced)
       {
         throughPutField = StatusSnapshotManaged.FieldIdx.Count;
       }
@@ -1345,7 +1345,7 @@ namespace LarcosCounter
     {
       runLog.WriteLn (10, "AuditButton_Click");
       curState = cameraManager.CurState ();
-      if  ((curState != LarcosCounterState.Stopped)   &&  (curState != LarcosCounterState.Connected))
+      if  ((curState != CounterState.Stopped)   &&  (curState != CounterState.Connected))
       {
         MessageBox.Show (this, "You must be in the Stopped or Connected mode to Audit and existing scanner file.", "Audit a Scanner File", MessageBoxButtons.OK);
         return;
@@ -1450,8 +1450,8 @@ namespace LarcosCounter
 
       cameraManager.SnapshotInterval ((int)SnapshotInterval2.Value);
 
-      if  ((cameraManager.CurState () == LarcosCounterState.Running)  ||
-           (cameraManager.CurState () == LarcosCounterState.PlayingBack)
+      if  ((cameraManager.CurState () == CounterState.Running)  ||
+           (cameraManager.CurState () == CounterState.PlayingBack)
           )
         UpdateThrouputChartData ();
     }

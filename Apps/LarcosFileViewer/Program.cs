@@ -16,7 +16,7 @@ namespace LarcosFileViewer
     {
       //UmiMethods.StartMemoryLeakDetection ();
 
-      LarcosCounterManaged.UmiVariables.SetCounterHomeDir ();  // Will set the application frame work variables to there default values.
+      CounterManaged.UmiVariables.SetCounterHomeDir ();  // Will set the application frame work variables to there default values.
                                                                // Will set to value pointed to by environment variable "CounterHomeDir".  If
                                                                // this variable is not defined will then default to "C:\Larcos".
 

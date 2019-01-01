@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using LarcosManagedRoutines;
-using LarcosCounterManaged;
+using CounterManagedRoutines;
+using CounterManaged;
 
 
 namespace LarcosCounter

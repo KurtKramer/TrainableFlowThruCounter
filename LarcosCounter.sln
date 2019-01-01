@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KKLibraries", "KKLibraries", "{9D49F2A8-1521-4B9B-8418-63C14D364A83}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LarcosLiraries", "LarcosLiraries", "{76B400CB-458B-4EB0-BB06-E6C6EF98F966}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CounterLibraries", "CounterLibraries", "{76B400CB-458B-4EB0-BB06-E6C6EF98F966}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OutsidePackages", "OutsidePackages", "{E60957D3-05FE-4AFF-94CD-BE3D26C5457F}"
 EndProject
@@ -37,12 +37,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LarcosFileViewer", "Apps\La
 		{69108ADE-3BF7-4329-BFC2-9AB5FA70923D} = {69108ADE-3BF7-4329-BFC2-9AB5FA70923D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LarcosCounterUnManaged", "LarcosLibraries\LarcosCounterUnManaged\LarcosCounterUnManaged.vcxproj", "{DA361848-46CB-481C-98E1-8D1206422DDC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CounterUnManaged", "CounterLibraries\CounterUnManaged\CounterUnManaged.vcxproj", "{DA361848-46CB-481C-98E1-8D1206422DDC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5B5EC7AE-BB81-4032-B510-3693221BC716} = {5B5EC7AE-BB81-4032-B510-3693221BC716}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LarcosCounterManaged", "LarcosLibraries\LarcosCounterManaged\LarcosCounterManaged.vcxproj", "{69108ADE-3BF7-4329-BFC2-9AB5FA70923D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CounterManaged", "CounterLibraries\CounterManaged\CounterManaged.vcxproj", "{69108ADE-3BF7-4329-BFC2-9AB5FA70923D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EDA94C7F-B7B2-48DC-833D-A4948F00A7A2} = {EDA94C7F-B7B2-48DC-833D-A4948F00A7A2}
 		{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11} = {D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}
@@ -50,7 +50,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LarcosCounterManaged", "Lar
 		{5B5EC7AE-BB81-4032-B510-3693221BC716} = {5B5EC7AE-BB81-4032-B510-3693221BC716}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LarcosBase", "LarcosLibraries\LarcosBase\LarcosBase.vcxproj", "{76C41245-C049-43AC-AD3A-DB674C25144D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CounterBase", "CounterLibraries\CounterBase\CounterBase.vcxproj", "{76C41245-C049-43AC-AD3A-DB674C25144D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DiversifyFlowRateTrainingLibrary", "Apps\DiversifyFlowRateTrainingLibrary\DiversifyFlowRateTrainingLibrary.vcxproj", "{DD769250-4A8F-4D82-B0ED-B89EA0042D55}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -60,8 +60,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DiversifyFlowRateTrainingLi
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HistogramSize", "Apps\HistogramSize\HistogramSize.vcxproj", "{EE22E31F-4EB4-461B-950E-9B0FB40F13CB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EDA94C7F-B7B2-48DC-833D-A4948F00A7A2} = {EDA94C7F-B7B2-48DC-833D-A4948F00A7A2}
+		{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11} = {D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LarcosControls", "LarcosLibraries\LarcosControls\LarcosControls.csproj", "{221BBCA9-12F3-447D-AC47-D0248B10F833}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CounterControls", "CounterLibraries\CounterControls\CounterControls.csproj", "{221BBCA9-12F3-447D-AC47-D0248B10F833}"
 	ProjectSection(ProjectDependencies) = postProject
 		{69108ADE-3BF7-4329-BFC2-9AB5FA70923D} = {69108ADE-3BF7-4329-BFC2-9AB5FA70923D}
 	EndProjectSection
@@ -88,7 +92,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKMachineLearning", "..\KSq
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KKControls", "..\KSquareLibraries\KKControls\KKControls.csproj", "{3404FEA2-61A5-4102-9280-729AC235A031}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LarcosManagedRoutines", "LarcosLibraries\LarcosManagedRoutines\LarcosManagedRoutines.csproj", "{D6AFBB16-C907-4944-AA25-BE9E00D97980}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CounterManagedRoutines", "CounterLibraries\CounterManagedRoutines\CounterManagedRoutines.csproj", "{D6AFBB16-C907-4944-AA25-BE9E00D97980}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib-1.2.11", "..\OutsidePackages\zlib-1.2.11\zlib-1.2.11.vcxproj", "{5B5EC7AE-BB81-4032-B510-3693221BC716}"
 EndProject
@@ -109,7 +113,6 @@ Global
 		{5E728263-A886-4E65-9DE2-1A5A59B6BB37}.Debug|x64.Build.0 = Debug|x64
 		{5E728263-A886-4E65-9DE2-1A5A59B6BB37}.Release|x64.ActiveCfg = Release|x64
 		{5E728263-A886-4E65-9DE2-1A5A59B6BB37}.Release|x64.Build.0 = Release|x64
-
 		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.Debug|x64.ActiveCfg = Debug|x64
 		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.Debug|x64.Build.0 = Debug|x64
 		{DA81759E-70DD-496E-8D93-E41B1BD938BC}.Release|x64.ActiveCfg = Release|x64
@@ -133,6 +136,7 @@ Global
 		{DD769250-4A8F-4D82-B0ED-B89EA0042D55}.Debug|x64.ActiveCfg = Debug|x64
 		{DD769250-4A8F-4D82-B0ED-B89EA0042D55}.Release|x64.ActiveCfg = Release|x64
 		{EE22E31F-4EB4-461B-950E-9B0FB40F13CB}.Debug|x64.ActiveCfg = Debug|x64
+		{EE22E31F-4EB4-461B-950E-9B0FB40F13CB}.Debug|x64.Build.0 = Debug|x64
 		{EE22E31F-4EB4-461B-950E-9B0FB40F13CB}.Release|x64.ActiveCfg = Release|x64
 		{221BBCA9-12F3-447D-AC47-D0248B10F833}.Debug|x64.ActiveCfg = Debug|x64
 		{221BBCA9-12F3-447D-AC47-D0248B10F833}.Debug|x64.Build.0 = Debug|x64

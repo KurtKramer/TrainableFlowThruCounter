@@ -8,7 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
 
 
-using LarcosCounterManaged;
+using CounterManaged;
 
 
 

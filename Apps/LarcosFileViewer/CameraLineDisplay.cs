@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 
-using LarcosCounterManaged;
+using CounterManaged;
 
 namespace LarcosFileViewer
 {
