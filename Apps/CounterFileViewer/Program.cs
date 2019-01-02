@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 
 
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
   static class Program
   {
@@ -82,32 +82,32 @@ namespace LarcosFileViewer
       {
         try
         {
-          Application.Run (new LarcosFileViewer ());
+          Application.Run (new CounterFileViewer ());
         }
 
         catch  (FileNotFoundException  e0)
         {
-          MessageBox.Show ("FileNotFoundException FileName [" + e0.FileName + "] Starting LarcosFileViewer" + "\n\n" + 
+          MessageBox.Show ("FileNotFoundException FileName [" + e0.FileName + "] Starting CounterFileViewer" + "\n\n" + 
                            e0.StackTrace
                           );
         }
         catch  (FileLoadException  e3)
         {
-          MessageBox.Show ("FileLoadException FileName [" + e3.FileName + "] Starting LarcosFileViewer" + "\n\n" + 
+          MessageBox.Show ("FileLoadException FileName [" + e3.FileName + "] Starting CounterFileViewer" + "\n\n" + 
                            e3.Message  + "\n\n" +
                            e3.StackTrace
                           );
         }
         catch  (EntryPointNotFoundException  e1)
         {
-          MessageBox.Show ("EntryPointNotFoundException Starting LarcosFileViewer" + "\n\n" + 
+          MessageBox.Show ("EntryPointNotFoundException Starting CounterFileViewer" + "\n\n" + 
                            e1.ToString () + "\n\n"  +
                            e1.Message
                           );
         }
         catch  (Exception e2)
         {
-          MessageBox.Show ("Exception Starting LarcosFileViewer" + "\n\n" + 
+          MessageBox.Show ("Exception Starting CounterFileViewer" + "\n\n" + 
                            e2.ToString () + "\n\n"  +
                            e2.StackTrace
                           );
@@ -117,31 +117,31 @@ namespace LarcosFileViewer
       {
         try
         {
-          Application.Run (new LarcosFileViewer (fileName));
+          Application.Run (new CounterFileViewer (fileName));
         }
         catch  (FileNotFoundException  e0)
         {
-          MessageBox.Show ("FileNotFoundException FileName [" + e0.FileName + "] Starting LarcosFileViewer" + "\n\n" + 
+          MessageBox.Show ("FileNotFoundException FileName [" + e0.FileName + "] Starting CounterFileViewer" + "\n\n" + 
                            e0.StackTrace
                           );
         }
         catch  (FileLoadException  e3)
         {
-          MessageBox.Show ("FileLoadException FileName [" + e3.FileName + "] Starting LarcosFileViewer" + "\n\n" + 
+          MessageBox.Show ("FileLoadException FileName [" + e3.FileName + "] Starting CounterFileViewer" + "\n\n" + 
                            e3.Message  + "\n\n" +
                            e3.StackTrace
                           );
         }
         catch  (EntryPointNotFoundException  e1)
         {
-          MessageBox.Show ("EntryPointNotFoundException Starting LarcosFileViewer" + "\n\n" + 
+          MessageBox.Show ("EntryPointNotFoundException Starting CounterFileViewer" + "\n\n" + 
                            e1.ToString () + "\n\n"  +
                            e1.Message
                           );
         }
         catch  (Exception e2)
         {
-          MessageBox.Show ("Exception Starting LarcosFileViewer" + "\n\n" + 
+          MessageBox.Show ("Exception Starting CounterFileViewer" + "\n\n" + 
                            e2.ToString () + "\n\n"  +
                            e2.StackTrace
                           );

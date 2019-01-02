@@ -16,9 +16,9 @@ using CounterManagedRoutines;
 
 
 
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
-  public partial class LarcosFileViewer : Form
+  public partial class CounterFileViewer : Form
   {
     private  int  zed = 0;
        
@@ -31,7 +31,7 @@ namespace LarcosFileViewer
     private  UmiScannerFileBuffered      file                  = null;
     private  string                      lastFileOpenedName    = "";
     private  string                      scannerFileName       = "";
-    private  LarcosFileViewerParameters  parameters            = null;
+    private  CounterFileViewerParameters parameters            = null;
 
     private  ArrayList                   imageEditors          = null;
     
@@ -40,7 +40,7 @@ namespace LarcosFileViewer
     private  string                      initialFileName       = null; 
     private  string                      windowTitle           = "";    // When not empty will replace Window Title.
 
-    private  string                      LarcosFileViewerConfigFileName = "";
+    private  string                      CounterFileViewerConfigFileName = "";
 
     private  UmiRunLog                   runLog                = new UmiRunLog();
 
@@ -57,12 +57,12 @@ namespace LarcosFileViewer
     }
 
 
-    public  LarcosFileViewer ()
+    public  CounterFileViewer ()
     {
       SplashScreen sc = new SplashScreen ();
       sc.Show (this);
 
-      LarcosFileViewerConfigFileName = UmiOSservices.AddSlash (UmiVariables.ConfigurationDir ()) + "LarcosFileViewer.txt";
+      CounterFileViewerConfigFileName = UmiOSservices.AddSlash (UmiVariables.ConfigurationDir ()) + "CounterFileViewer.txt";
 
       try
       {
@@ -88,12 +88,12 @@ namespace LarcosFileViewer
 
 
 
-    public LarcosFileViewer (string  fileName)
+    public CounterFileViewer (string  fileName)
     {
       SplashScreen sc = new SplashScreen ();
       sc.Show (this);
 
-      LarcosFileViewerConfigFileName = UmiOSservices.AddSlash (UmiVariables.ConfigurationDir ()) + "LarcosFileViewer.txt";
+      CounterFileViewerConfigFileName = UmiOSservices.AddSlash (UmiVariables.ConfigurationDir ()) + "CounterFileViewer.txt";
       initialFileName = fileName;
       InitializeComponent ();
       Initialization ();
@@ -101,12 +101,12 @@ namespace LarcosFileViewer
 
 
 
-    public LarcosFileViewer (Stream  stream,
-                             string  _windowTitle,
-                             string  _scannerFileName
-                            )
+    public CounterFileViewer (Stream  stream,
+                              string  _windowTitle,
+                              string  _scannerFileName
+                             )
     {
-      LarcosFileViewerConfigFileName = UmiOSservices.AddSlash (UmiVariables.ConfigurationDir ()) + "LarcosFileViewer.txt";
+      CounterFileViewerConfigFileName = UmiOSservices.AddSlash (UmiVariables.ConfigurationDir ()) + "CounterFileViewer.txt";
       windowTitle     = _windowTitle;
       scannerFileName = _scannerFileName;
       
@@ -123,23 +123,23 @@ namespace LarcosFileViewer
       oldWidth  = Width;
       oldHeight = Height;
 
-      parameters = new LarcosFileViewerParameters (ScannerPanel);
+      parameters = new CounterFileViewerParameters (ScannerPanel);
       imageEditors = new ArrayList ();
       
       rightMargin = this.Width - FileName.Right;
 
-      LoadLarcosFileViewerConfiuration ();
+      LoadCounterFileViewerConfiuration ();
     }  /* Initialization */
 
 
 
-    private  void  LoadLarcosFileViewerConfiuration ()
+    private  void  LoadCounterFileViewerConfiuration ()
     {
       StreamReader f = null;
 
       try
       {
-        f = new StreamReader (LarcosFileViewerConfigFileName);
+        f = new StreamReader (CounterFileViewerConfigFileName);
       }
       catch (Exception)
       {
@@ -174,16 +174,16 @@ namespace LarcosFileViewer
 				initialFileName = lastFileOpenedName;
 
       f.Close();
-    }  /* LoadLarcosFileViewerConfiuration */
+    }  /* LoadCounterFileViewerConfiuration */
 
 
     
-    private  void  SaveLarcosFileViewerConfiguration ()
+    private  void  SaveCounterFileViewerConfiguration ()
     {
       StreamWriter w = null;
       try
       {
-        w = new StreamWriter (LarcosFileViewerConfigFileName);
+        w = new StreamWriter (CounterFileViewerConfigFileName);
       }
       catch (Exception e)
       {
@@ -191,7 +191,7 @@ namespace LarcosFileViewer
         return;
       }
 
-      w.WriteLine ("// LarcosFileViewer Configuration");
+      w.WriteLine ("// CounterFileViewer Configuration");
       w.WriteLine ("// DateTime" + "\t" + DateTime.Now.ToString());
       w.WriteLine ("//");
       w.WriteLine ("//");
@@ -222,7 +222,7 @@ namespace LarcosFileViewer
         scannerFileName = fileName;
         InitializeForNewDataFile (fileName);
         lastFileOpenedName = fileName;
-        SaveLarcosFileViewerConfiguration ();
+        SaveCounterFileViewerConfiguration ();
       }
     }  /* SetScannerFileName */
 
@@ -472,7 +472,7 @@ namespace LarcosFileViewer
 
 
 
-    private void LarcosFileViewer_Load (object sender, EventArgs e)
+    private void CounterFileViewer_Load (object sender, EventArgs e)
     {
       StatusUpdateTimer.Enabled = true;
       
@@ -482,7 +482,7 @@ namespace LarcosFileViewer
       }
       
       autoDetect.Checked = parameters.ExtractBlobs ();
-    }  /* LarcosFileViewer_Load */
+    }  /* CounterFileViewer_Load */
 
 
 
@@ -546,7 +546,7 @@ namespace LarcosFileViewer
 
 
 
-    private void LarcosFileViewer_SizeChanged(object sender, EventArgs e)
+    private void CounterFileViewer_SizeChanged(object sender, EventArgs e)
     {
       UpdateScreenForNewSize();
     }
@@ -683,7 +683,7 @@ namespace LarcosFileViewer
 
 
     
-    private void LarcosFileViewer_KeyDown (object sender, KeyEventArgs e)
+    private void CounterFileViewer_KeyDown (object sender, KeyEventArgs e)
     {
       Keys k = e.KeyCode;
 
@@ -712,6 +712,7 @@ namespace LarcosFileViewer
     }
 
 
+
     private  void  ProcessGotoScanLine ()
     {
       GoToScanLinePrompt  gotoPrompt = new GoToScanLinePrompt ((int)file.LargestKnownScanLine());
@@ -736,6 +737,7 @@ namespace LarcosFileViewer
         definingRectangle = true;
       }
     }
+
 
 
     private void ScannerPanel_MouseDoubleClick (object sender, MouseEventArgs e)
@@ -832,6 +834,7 @@ namespace LarcosFileViewer
     }
 
 
+
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
       if  (file != null)
@@ -845,11 +848,11 @@ namespace LarcosFileViewer
     
     
 
-    private void LarcosFileViewer_FormClosing (object sender, FormClosingEventArgs e)
+    private void CounterFileViewer_FormClosing (object sender, FormClosingEventArgs e)
     {
       if  (file != null)
         file.FrameBytesOffsetsUpdateThreadTerminate();
-      SaveLarcosFileViewerConfiguration ();
+      SaveCounterFileViewerConfiguration ();
 
       DisposeExistingDataStructures ();
       
@@ -921,6 +924,7 @@ namespace LarcosFileViewer
     }
 
 
+
     private void autoDetect_CheckedChanged (object sender, EventArgs e)
     {
       parameters.ExtractBlobs (autoDetect.Checked);
@@ -928,13 +932,10 @@ namespace LarcosFileViewer
 
 
 
-
-
     public  void  CancelLoadingModels ()
     {
       ActiveTrainingLibraries.CancelLoads ();
     }  /* CancelLoadingModels */
-
 
 
 
@@ -946,7 +947,6 @@ namespace LarcosFileViewer
 
 
 
-
     private void colorize_CheckedChanged(object sender, EventArgs e)
     {
       if  (parameters.Colorize != colorize.Checked)
@@ -955,6 +955,7 @@ namespace LarcosFileViewer
         parameters.PaintWholePanel ();
       }
     }
+
 
 
     private void headerInfoToolStripMenuItem_Click (object sender, EventArgs e)
@@ -999,5 +1000,5 @@ namespace LarcosFileViewer
         return;
     }
 
-  }  /* LarcosFileViewer */
+  }  /* CounterFileViewer */
 }

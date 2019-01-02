@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
   public partial class SplashScreen : Form
   {

@@ -13,14 +13,14 @@ using  CounterManagedRoutines;
 using CounterManaged;
 
 
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
   public partial class AutoDetectionParamters : Form
   {
     private  string             activeTrainingModel1Name = null;
     private  string             activeTrainingModel2Name = null;
     private  int                blobMinSize             = 0;
-    private  LarcosFileViewer  viewer = null;
+    private  CounterFileViewer  viewer = null;
        
 
     public  bool  RebuildTrainingLibrary1  {get {return  rebuildTrainingLibrary1.Checked;}  set  {rebuildTrainingLibrary1.Checked = value;}}
@@ -28,7 +28,7 @@ namespace LarcosFileViewer
 
 
 
-    public AutoDetectionParamters (LarcosFileViewer  _viewer)
+    public AutoDetectionParamters (CounterFileViewer  _viewer)
     {
       viewer = _viewer;
       InitializeComponent();

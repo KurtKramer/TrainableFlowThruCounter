@@ -10,7 +10,7 @@ using CounterManaged;
 
 
 
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
   public partial class HeaderFields :Form
   {
@@ -65,5 +65,5 @@ namespace LarcosFileViewer
 
 
 
-}  /* LarcosFileViewer */
+}  /* CounterFileViewer */
 

@@ -1,6 +1,6 @@
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
-  partial class LarcosFileViewer
+  partial class CounterFileViewer
   {
     /// <summary>
     /// Required designer variable.
@@ -396,7 +396,7 @@ namespace LarcosFileViewer
       this.groundTruth.UseCompatibleTextRendering = true;
       this.groundTruth.UseVisualStyleBackColor = true;
       // 
-      // LarcosFileViewer
+      // CounterFileViewer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -422,12 +422,12 @@ namespace LarcosFileViewer
       this.KeyPreview = true;
       this.MainMenuStrip = this.menuStrip1;
       this.MinimumSize = new System.Drawing.Size(662, 747);
-      this.Name = "LarcosFileViewer";
+      this.Name = "CounterFileViewer";
       this.Text = "K-Square File Viewer";
-      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LarcosFileViewer_FormClosing);
-      this.Load += new System.EventHandler(this.LarcosFileViewer_Load);
-      this.SizeChanged += new System.EventHandler(this.LarcosFileViewer_SizeChanged);
-      this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LarcosFileViewer_KeyDown);
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CounterFileViewer_FormClosing);
+      this.Load += new System.EventHandler(this.CounterFileViewer_Load);
+      this.SizeChanged += new System.EventHandler(this.CounterFileViewer_SizeChanged);
+      this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CounterFileViewer_KeyDown);
       this.menuStrip1.ResumeLayout(false);
       this.menuStrip1.PerformLayout();
       this.ScrollingPannel.ResumeLayout(false);

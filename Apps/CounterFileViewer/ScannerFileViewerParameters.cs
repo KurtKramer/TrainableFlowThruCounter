@@ -11,10 +11,10 @@ using CounterManagedRoutines;
 
 
  
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
 
-  public  class  LarcosFileViewerParameters 
+  public  class  CounterFileViewerParameters 
   {
     private  Panel       panel    = null;
     private  Graphics    panelDC  = null;
@@ -83,7 +83,7 @@ namespace LarcosFileViewer
 
 
 
-    public  LarcosFileViewerParameters (Panel  _panel)
+    public  CounterFileViewerParameters (Panel  _panel)
     {
       panel = _panel;
       panel.MouseClick += new MouseEventHandler (MonitorMouseClick);
@@ -136,7 +136,6 @@ namespace LarcosFileViewer
 
       backGroundColor = Color.FromArgb (255, 255, 255);
     }  /* BuildPenValues */
-
 
 
 
@@ -298,7 +297,6 @@ namespace LarcosFileViewer
 
     
 
-
     public  void  SetScannerFile (UmiScannerFileBuffered   _scannerFile)
     {
       scannerFile = _scannerFile;
@@ -317,7 +315,6 @@ namespace LarcosFileViewer
 
       ComputeParameters ();
     }  /* SetScannerFile */
-
 
 
   
@@ -381,7 +378,6 @@ namespace LarcosFileViewer
         }
       }
     }  /* PaintARow */
-
 
 
     
@@ -516,7 +512,6 @@ namespace LarcosFileViewer
 
 
 
-
     public  void  ClearBobs ()
     {
       if  (blobs != null)
@@ -525,7 +520,6 @@ namespace LarcosFileViewer
         blobs = null;
       }
     }  /* ClearBobs */
-
 
 
 
@@ -551,7 +545,6 @@ namespace LarcosFileViewer
         PaintRectangle (bufferDC, Color.Red, b);
       }
     }  /* ExtractBlobsFromCurrentScreen */
-
 
 
 
@@ -596,7 +589,6 @@ namespace LarcosFileViewer
       
       return true;
     }  /* ScrollUp */
-
 
 
 
@@ -685,6 +677,7 @@ namespace LarcosFileViewer
     }
 
 
+
     public  UmiRaster  GetRasterForParticle (UmiParticleEntry pe)
     {
       if  (pe == null)
@@ -743,7 +736,6 @@ namespace LarcosFileViewer
 
 
 
-
     public  void  PaintFromBuffer ()
     {
       if  (buffer == null)
@@ -786,9 +778,9 @@ namespace LarcosFileViewer
       g.DrawLine (p, colRight, rowBot, colLeft,  rowBot);
       g.DrawLine (p, colLeft,  rowBot, colLeft,  rowTop);
     }  /* PaintRectangle */
-                    
+
     
-                 
+
     private  void  DisplayAllParticles (Graphics  g)
     {
       if  (particlesOnCurrentScreen == null)
@@ -825,7 +817,6 @@ namespace LarcosFileViewer
       g.DrawLine (p, colRight, rowBot, colLeft,  rowBot);
       g.DrawLine (p, colLeft,  rowBot, colLeft,  rowTop);
     }  /* PaintParticle */
-                                         
 
 
 
@@ -906,8 +897,7 @@ namespace LarcosFileViewer
     }   /* ExtractImageFromScanner */                                
                          
     
-    
-    
+        
     private  void  SetUpScannerPanelContectMenu ()
     {
       scannerPanelContextMenu = new ContextMenu ();
@@ -930,7 +920,6 @@ namespace LarcosFileViewer
 
 
 
-
     private  void  ReleaseLeftCrop (object sender, System.EventArgs e)
     {
       if  (scannerFile != null)
@@ -940,7 +929,6 @@ namespace LarcosFileViewer
         PaintWholePanel ();
       }
     } /* ReleaseLeftCrop */
-
 
 
 
@@ -968,7 +956,6 @@ namespace LarcosFileViewer
 
 
 
-
     private  void  ReleaseRightCrop (object sender, System.EventArgs e)
     {
       if  (scannerFile != null)
@@ -978,7 +965,6 @@ namespace LarcosFileViewer
         PaintWholePanel ();
       }
     } /* ReleaseLeftCrop */
-
 
 
 
@@ -992,6 +978,7 @@ namespace LarcosFileViewer
       TemporalDisplay  td = new TemporalDisplay (raster, col, cropColumnLeft, cropColumnRight, true);
       td.ShowDialog (panel);
     }
+
 
 
     private  void  SetRightCrop (object sender, System.EventArgs e)
@@ -1018,9 +1005,6 @@ namespace LarcosFileViewer
 
 
 
-
-
-
     private  void  MonitorMouseClick (object  sender, MouseEventArgs mea)
     {
       if  (mea.Button == MouseButtons.Right)
@@ -1030,5 +1014,5 @@ namespace LarcosFileViewer
       }
     }
 
-  }  /* LarcosFileViewerParameters */
+  }  /* CounterFileViewerParameters */
 }

@@ -1,4 +1,4 @@
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
   partial class CameraLineDisplay
   {

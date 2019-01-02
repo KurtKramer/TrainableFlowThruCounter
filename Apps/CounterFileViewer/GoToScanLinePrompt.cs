@@ -11,7 +11,7 @@ using CounterManaged;
 using CounterManagedRoutines;
 
 
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
   public partial class GoToScanLinePrompt : Form
   {

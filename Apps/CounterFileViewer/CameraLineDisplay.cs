@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 using CounterManaged;
 
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
   public partial class  CameraLineDisplay : Form
   {

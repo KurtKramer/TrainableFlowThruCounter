@@ -8,11 +8,11 @@ using System.Windows.Forms;
 
 using CounterManaged;
 
-namespace LarcosFileViewer
+namespace CounterFileViewer
 {
   public partial class TrainingModelStatus : Form
   {
-    private  LarcosFileViewer  viewer = null;
+    private  CounterFileViewer viewer = null;
     private  UmiRunLog         runLog = null;
     private  int               lastLineCount = 0;
     private  bool              closeForm = false;
@@ -20,9 +20,8 @@ namespace LarcosFileViewer
 
 
 
-
-    public TrainingModelStatus(UmiRunLog       _runLog,
-                               LarcosFileViewer  _viewer
+    public TrainingModelStatus(UmiRunLog          _runLog,
+                               CounterFileViewer  _viewer
                               )
     {
       runLog   = _runLog;
@@ -45,6 +44,7 @@ namespace LarcosFileViewer
     }
 
 
+
     private void CancelButton_Click(object sender, EventArgs e)
     {
       DialogResult  dr =  MessageBox.Show ("Cancel Training Model Load", "Training Model Load", MessageBoxButtons.YesNo);
@@ -54,6 +54,8 @@ namespace LarcosFileViewer
         CancelLoadButton.Enabled = false;
       }
     }
+
+
 
     private void timer1_Tick (object sender, EventArgs e)
     {
