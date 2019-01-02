@@ -27,9 +27,6 @@
     <ClCompile Include="CounterManagerWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CounterState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CounterStatsManaged.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -141,6 +138,9 @@
     <ClCompile Include="UnManagedInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UmiCounterState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">
@@ -160,9 +160,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CounterManagerWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CounterState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CounterStatsManaged.h">
@@ -278,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="UnManagedInterface.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UmiCounterState.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

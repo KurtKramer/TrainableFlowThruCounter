@@ -41,14 +41,13 @@ namespace CounterUnManaged
   class  CounterFeatureVector:  public  FeatureVector 
   {
   public:
-    typedef  CounterFeatureVector*  LarcosFeatureVectorPtr;
+    typedef  CounterFeatureVector*  CounterFeatureVectorPtr;
     typedef  KKB::uchar  uchar;
 
     CounterFeatureVector (kkint32  _numOfFeatures);
 
     CounterFeatureVector (const CounterFeatureVector&  _fv);
-
-
+    
 
     /**
      *@brief  Smart copy constructor that will detect the underlying type of the source instance.
@@ -67,18 +66,18 @@ namespace CounterUnManaged
 
     virtual  ~CounterFeatureVector ();
 
-    virtual  LarcosFeatureVectorPtr  Duplicate ()  const;
+    virtual  CounterFeatureVectorPtr  Duplicate ()  const;
 
 
     // Access Methods.
-    void  CentroidCol      (float    _centroidCol)      {centroidCol      = _centroidCol;}
-    void  CentroidRow      (float    _centroidRow)      {centroidRow      = _centroidRow;}
-    void  NumOfEdgePixels  (kkint32  _numOfEdgePixels)  {numOfEdgePixels  = _numOfEdgePixels;}
+    void  CentroidCol      (float    _centroidCol)     noexcept {centroidCol      = _centroidCol;}
+    void  CentroidRow      (float    _centroidRow)     noexcept {centroidRow      = _centroidRow;}
+    void  NumOfEdgePixels  (kkint32  _numOfEdgePixels) noexcept {numOfEdgePixels  = _numOfEdgePixels;}
 
 
-    float   CentroidCol      () const  {return  centroidCol;}    // Centroid with respect to image
-    float   CentroidRow      () const  {return  centroidRow;}    //  ""    ""    ""    ""    ""
-    kkint32 NumOfEdgePixels  () const  {return  numOfEdgePixels;}
+    float   CentroidCol      () const noexcept {return  centroidCol;}    // Centroid with respect to image
+    float   CentroidRow      () const noexcept {return  centroidRow;}    //  ""    ""    ""    ""    ""
+    kkint32 NumOfEdgePixels  () const noexcept {return  numOfEdgePixels;}
 
 
   private:
@@ -91,20 +90,20 @@ namespace CounterUnManaged
   };  /* CounterFeatureVector */
 
 
-  typedef  CounterFeatureVector::LarcosFeatureVectorPtr  LarcosFeatureVectorPtr;
+  typedef  CounterFeatureVector::CounterFeatureVectorPtr  CounterFeatureVectorPtr;
 
-#define  _LarcosFeatureVector_Defined_
+#define  _CounterFeatureVector_Defined_
 
 
 
-  class  LarcosFeatureVectorList:  public FeatureVectorList
+  class  CounterFeatureVectorList:  public FeatureVectorList
   {
   public: 
-    typedef  LarcosFeatureVectorList*  LarcosFeatureVectorListPtr;
+    typedef  CounterFeatureVectorList*  CounterFeatureVectorListPtr;
 
-    LarcosFeatureVectorList (FileDescConstPtr  _fileDesc,
-                             bool              _owner
-                            );
+    CounterFeatureVectorList (FileDescConstPtr  _fileDesc,
+                              bool              _owner
+                             );
 
   private:
     /**
@@ -112,7 +111,7 @@ namespace CounterUnManaged
      *        'examples' owns its entries, then new duplicate entries will be created, and will 
      *        own them otherwise will only get pointers to existing instances in 'examples'.
      */
-    LarcosFeatureVectorList (const LarcosFeatureVectorList&  examples);
+    CounterFeatureVectorList (const CounterFeatureVectorList&  examples);
 
 
   public:
@@ -132,9 +131,9 @@ namespace CounterUnManaged
      *                        and this new list will own them and if 'false' will just point to
      *                        the existing instances and not own the.
      */
-    LarcosFeatureVectorList (const LarcosFeatureVectorList&  _examples,
-                             bool                            _owner
-                            );
+    CounterFeatureVectorList (const CounterFeatureVectorList&  _examples,
+                              bool                             _owner
+                             );
 
 
     /**
@@ -155,9 +154,9 @@ namespace CounterUnManaged
      *                        and this new list will own them and if 'false' will just point to
      *                        the existing instances and not own the.
      */
-    LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList,
-                             bool                      _owner
-                            );
+    CounterFeatureVectorList (const FeatureVectorList&  featureVectorList,
+                              bool                      _owner
+                             );
 
 
     /**
@@ -175,12 +174,12 @@ namespace CounterUnManaged
      *@param[in] _fileName  Name of file to contain the extracted feature data.  Will be of the Raw format.
      *@param[in] _log       Log file to write messages to.
      */
-    LarcosFeatureVectorList (FactoryFVProducerPtr  _fvProducerFactory,
-                             MLClassPtr            _mlClass,
-                             KKStr                 _dirName,
-                             KKStr                 _fileName,
-                             RunLog&               _log
-                            );
+    CounterFeatureVectorList (FactoryFVProducerPtr  _fvProducerFactory,
+                              MLClassPtr            _mlClass,
+                              KKStr                 _dirName,
+                              KKStr                 _fileName,
+                              RunLog&               _log
+                             );
 
 
 
@@ -194,9 +193,9 @@ namespace CounterUnManaged
      *@param[in] _mlClasses  List of classes that we are interested in.
      *@param[in] _examples        Source examples that we want to scan.
      */
-    LarcosFeatureVectorList (MLClassList&              _mlClasses,
-                             LarcosFeatureVectorList&  _examples
-                           );
+    CounterFeatureVectorList (MLClassList&               _mlClasses,
+                              CounterFeatureVectorList&  _examples
+                             );
 
 
     /**
@@ -215,71 +214,69 @@ namespace CounterUnManaged
         |  the log.
     @endcode
     */
-    LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList);
+    CounterFeatureVectorList (const FeatureVectorList&  featureVectorList);
 
 
 
 
-    virtual  ~LarcosFeatureVectorList ();
+    virtual  ~CounterFeatureVectorList ();
 
 
-    void                   AddQueue (LarcosFeatureVectorList&  imagesToAdd);
+    void  AddQueue (CounterFeatureVectorList&  imagesToAdd);
 
-    LarcosFeatureVectorPtr       BackOfQueue ();
+    CounterFeatureVectorPtr       BackOfQueue ();
 
-    LarcosFeatureVectorPtr       BinarySearchByName (const KKStr&  _imageFileName)  const;
+    CounterFeatureVectorPtr       BinarySearchByName (const KKStr&  _imageFileName)  const;
 
     /***@brief  Creates a duplicate of list using the same container. */
     virtual
-    LarcosFeatureVectorListPtr   Duplicate (bool _owner)  const;
+    CounterFeatureVectorListPtr   Duplicate (bool _owner)  const;
 
-    LarcosFeatureVectorListPtr   DuplicateListAndContents ()  const;
+    CounterFeatureVectorListPtr   DuplicateListAndContents ()  const;
 
-    LarcosFeatureVectorListPtr   ExtractDuplicatesByRootImageFileName ();
+    CounterFeatureVectorListPtr   ExtractDuplicatesByRootImageFileName ();
 
-    LarcosFeatureVectorListPtr   ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
-                                                              kkint32     _maxToExtract = -1,
-                                                              float       _minSize      = -1.0f
-                                                             )  const;
+    CounterFeatureVectorListPtr   ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
+                                                                 kkint32     _maxToExtract = -1,
+                                                                 float       _minSize      = -1.0f
+                                                                )  const;
 
+    CounterFeatureVectorPtr       IdxToPtr (kkint32 idx) const;
 
-    LarcosFeatureVectorPtr       IdxToPtr (kkint32 idx) const;
+    CounterFeatureVectorPtr       LookUpByImageFileName (const KKStr&  _imageFileName)  const;
 
-    LarcosFeatureVectorPtr       LookUpByImageFileName (const KKStr&  _imageFileName)  const;
-
-    LarcosFeatureVectorPtr       LookUpByRootName (const KKStr&  _rootName);
-
-
+    CounterFeatureVectorPtr       LookUpByRootName (const KKStr&  _rootName);
+    
     /**@brief Creates an instance of a Empty FeatureVectorList. */
     virtual
-    LarcosFeatureVectorListPtr   ManufactureEmptyList (bool _owner)  const;
+    CounterFeatureVectorListPtr   ManufactureEmptyList (bool _owner)  const;
 
 
     /**
-     *@brief  Using list of ImageFileNames in a file('fileName') create a new LarcosFeatureVectorList instance 
+     *@brief  Using list of ImageFileNames in a file('fileName') create a new CounterFeatureVectorList instance 
      * with examples in order based off contents of file. If error occurs will return NULL.
      */
-    LarcosFeatureVectorListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName,
-                                                           RunLog&       log);
+    CounterFeatureVectorListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName,
+                                                            RunLog&       log);
 
-    LarcosFeatureVectorPtr       PopFromBack ();
+    CounterFeatureVectorPtr       PopFromBack ();
 
-    void                         RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
-                                                                         const KKStr&          rootDir,
-                                                                         bool&                 successful,
-                                                                         RunLog&               log
-                                                                        );
+    void                          RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
+                                                                          const KKStr&          rootDir,
+                                                                          bool&                 successful,
+                                                                          RunLog&               log
+                                                                         );
 
-    LarcosFeatureVectorListPtr   StratifyAmoungstClasses (kkint32  numOfFolds,
-                                                          RunLog&  log
-                                                         );
+    CounterFeatureVectorListPtr   StratifyAmoungstClasses (kkint32  numOfFolds,
+                                                           RunLog&  log
+                                                          );
 
 
-    LarcosFeatureVectorListPtr   StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                          kkint32         maxImagesPerClass,
-                                                          kkint32         numOfFolds,
-                                                          RunLog&         log
-                                                         );
+    CounterFeatureVectorListPtr   StratifyAmoungstClasses (MLClassListPtr  mlClasses,
+                                                           kkint32         maxImagesPerClass,
+                                                           kkint32         numOfFolds,
+                                                           RunLog&         log
+                                                          );
 
 
     class  const_iterator
@@ -288,87 +285,86 @@ namespace CounterUnManaged
       FeatureVectorList::const_iterator  idx;
     
     public:
-      const_iterator ():
+      const_iterator () noexcept :
           idx ()
       {
       }
 
 
-      const_iterator (const const_iterator&  ivConst_Iterator):
+      const_iterator (const const_iterator&  ivConst_Iterator) noexcept :
           idx (ivConst_Iterator.idx)
       {
       }
 
 
-      const_iterator (const FeatureVectorList::const_iterator&  fvConst_Iterator):
+      const_iterator (const FeatureVectorList::const_iterator&  fvConst_Iterator) noexcept :
           idx (fvConst_Iterator)
       {
       }
 
 
-      const_iterator (const FeatureVectorList::iterator&  fvIterator):
+      const_iterator (const FeatureVectorList::iterator&  fvIterator) noexcept :
           idx (fvIterator)
       {
       }
 
 
-      const LarcosFeatureVectorPtr  operator*()
+      const CounterFeatureVectorPtr  operator*()
       {
-        return  (const LarcosFeatureVectorPtr)*idx;
+        return  (const CounterFeatureVectorPtr)*idx;
       }
+      
 
-
-      const_iterator&   operator= (const const_iterator&  right)
+      const_iterator&   operator= (const const_iterator&  right) noexcept
       {
         idx = right.idx;
         return  *this;
       }
 
-
-
-      const_iterator&   operator= (const FeatureVectorList::iterator&  right)  
-      {
-        idx = right;
-        return *this;
-      }
-
-
-      const_iterator&   operator= (const FeatureVectorList::const_iterator&  right)  
+      
+      const_iterator&   operator= (const FeatureVectorList::iterator&  right) noexcept
       {
         idx = right;
         return *this;
       }
 
       
+      const_iterator&   operator= (const FeatureVectorList::const_iterator&  right) noexcept
+      {
+        idx = right;
+        return *this;
+      }
+      
+
       bool  operator!= (const const_iterator&  right)  const
       {
         return  idx != right.idx;
       }
-
+      
 
       bool  operator!= (const FeatureVectorList::iterator&  right)  const
       {
         return  idx != (FeatureVectorList::const_iterator)right;
       }
 
-
+      
       bool  operator!= (const FeatureVectorList::const_iterator&  right)  const
       {
         return  idx != right;
       }
-
+      
 
       bool  operator== (const const_iterator&  right)  const
       {
         return  idx == right.idx;
       }
 
-
+      
       bool  operator== (const FeatureVectorList::iterator&  right)  const
       {
         return  (idx == right);
       }
-
+      
 
       const_iterator&   operator++ (int x)
       {
@@ -379,37 +375,35 @@ namespace CounterUnManaged
 
 
 
-
-
     class  iterator
     {
     private:
       FeatureVectorList::iterator  idx;
     
     public:
-      iterator ():
+      iterator () noexcept :
           idx ()
       {
       }
 
-      iterator (const iterator&  idx):
+      iterator (const iterator&  idx) noexcept :
           idx (idx.idx)
       {
       }
 
 
-      iterator (const FeatureVectorList::iterator&  idx):
+      iterator (const FeatureVectorList::iterator&  idx) noexcept :
           idx (idx)
       {
       }
 
 
-      LarcosFeatureVectorPtr  operator*()
+      CounterFeatureVectorPtr  operator*()
       {
-        return  (LarcosFeatureVectorPtr)*idx;
+        return  (CounterFeatureVectorPtr)*idx;
       }
 
-      iterator&   operator= (const iterator&  right)
+      iterator&   operator= (const iterator&  right) noexcept
       {
         idx = right.idx;
         return  *this;
@@ -442,12 +436,12 @@ namespace CounterUnManaged
 
 
 
-  };  /* LarcosFeatureVectorList */
+  };  /* CounterFeatureVectorList */
 
 
-  typedef  LarcosFeatureVectorList::LarcosFeatureVectorListPtr  LarcosFeatureVectorListPtr;
+  typedef  CounterFeatureVectorList::CounterFeatureVectorListPtr  CounterFeatureVectorListPtr;
 
-#define  _LarcosFeatureVectorList_Defined_
+#define  _CounterFeatureVectorList_Defined_
 
 
 }  /* namespace CounterUnManaged */

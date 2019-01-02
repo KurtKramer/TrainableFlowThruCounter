@@ -189,9 +189,9 @@ UmiInstallationConfig^  CounterManagerWrapper::Installation (UmiRunLog^  runLog)
 
 
 
-CounterState  CounterManagerWrapper::CurState ()  
+UmiCounterState  CounterManagerWrapper::CurState ()  
 {
-  return  (CounterState)(counterManager->CurState ());
+  return  (UmiCounterState)(counterManager->CurState ());
 }
 
 

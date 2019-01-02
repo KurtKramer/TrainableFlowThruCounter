@@ -246,7 +246,7 @@ FileDescConstPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
 
 
 
-LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
+CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
                                                        FileDescConstPtr  _fileDesc,
                                                        MLClassList&      _classes, 
                                                        istream&          _in,
@@ -301,7 +301,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
 
   VectorInt   indirectionTable = CreateIndirectionTable (fields, numOfFeatures);
 
-  LarcosFeatureVectorListPtr  examples = new LarcosFeatureVectorList (_fileDesc, true);
+  CounterFeatureVectorListPtr  examples = new CounterFeatureVectorList (_fileDesc, true);
 
   examples->Version (version);
 
@@ -340,7 +340,7 @@ LarcosFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileNa
     {
       // We have an example.
       fieldNum  = 0;
-      LarcosFeatureVectorPtr  example = new CounterFeatureVector (numOfFeatures);
+      CounterFeatureVectorPtr  example = new CounterFeatureVector (numOfFeatures);
       example->Version (version);
 
       while  ((!eol)  &&  (!eof))
@@ -519,26 +519,26 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
                                   RunLog&               _log
                                  )
 {
-  LarcosFeatureVectorListPtr  examples  = NULL;
+  CounterFeatureVectorListPtr  examples  = NULL;
 
   _numExamplesWritten = 0;
 
   bool  weOwnImages = false;
 
   const type_info& _dataTI     = typeid(_data);
-  const type_info& _larcosFVTI = typeid(LarcosFeatureVectorList);
+  const type_info& _larcosFVTI = typeid(CounterFeatureVectorList);
 
   const type_info* _dataTIPtr    =  &(typeid(_data));
-  const type_info* _larcosFVTIPtr = &(typeid(LarcosFeatureVectorList));
+  const type_info* _larcosFVTIPtr = &(typeid(CounterFeatureVectorList));
 
-  if  (typeid (_data) == typeid (LarcosFeatureVectorList))
+  if  (typeid (_data) == typeid (CounterFeatureVectorList))
   {
-    examples = dynamic_cast<LarcosFeatureVectorListPtr>(&_data);
+    examples = dynamic_cast<CounterFeatureVectorListPtr>(&_data);
   }
   else
   {
     weOwnImages = true;
-    examples = new LarcosFeatureVectorList (_data, true);
+    examples = new CounterFeatureVectorList (_data, true);
     examples->Version (_data.Version ());
   }
 
@@ -549,7 +549,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
   kkint32  fileVersionNum = examples->Version ();
   if  (fileVersionNum < 1)
   {
-    fileVersionNum = _LarcosFVProducer_VersionNum_;
+    fileVersionNum = _CounterFVProducer_VersionNum_;
     examples->Version (fileVersionNum);
   }
 
@@ -602,7 +602,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
 
   {
     // Write out the actual examples.
-    LarcosFeatureVectorPtr   example = NULL;
+    CounterFeatureVectorPtr   example = NULL;
     for  (kkint32 idx = 0; idx < (kkint32)examples->size (); idx++)
     {
       example = examples->IdxToPtr (idx);

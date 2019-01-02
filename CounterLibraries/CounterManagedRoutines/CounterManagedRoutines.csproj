@@ -205,7 +205,7 @@
       <Project>{3404fea2-61a5-4102-9280-729ac235a031}</Project>
       <Name>KKControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CounterLibraries\CounterManaged\CounterManaged.vcxproj">
+    <ProjectReference Include="..\CounterManaged\CounterManaged.vcxproj">
       <Project>{69108ade-3bf7-4329-bfc2-9ab5fa70923d}</Project>
       <Name>CounterManaged</Name>
     </ProjectReference>

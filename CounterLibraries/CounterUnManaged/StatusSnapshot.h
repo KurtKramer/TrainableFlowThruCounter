@@ -27,7 +27,7 @@ namespace CounterUnManaged
 
 
   /**
-   *@brief  Stores a snapshot of LarcosCounter dynamic data such as Flow-rate, Shrimp/Min, Particles/Min Logical-Frame-Processors In use, etc.
+   *@brief  Stores a snapshot of CounterApplication dynamic data such as Flow-rate, Shrimp/Min, Particles/Min Logical-Frame-Processors In use, etc.
    *@details  CounterManager will maintain a historical status of each session.  This will be done by taking a snapshot
    * of current status at specified intervals.<p>
    * Note that all accumulator variables (count, particles, logicalFramesOnQueue, ... etc) are for a single time interval!

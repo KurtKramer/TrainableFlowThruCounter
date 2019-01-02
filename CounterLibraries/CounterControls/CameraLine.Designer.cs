@@ -1,4 +1,4 @@
-﻿namespace LarcosControls
+﻿namespace CounterControls
 {
   partial class CameraLine
   {

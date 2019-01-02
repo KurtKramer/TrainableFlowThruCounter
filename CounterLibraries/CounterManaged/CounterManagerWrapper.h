@@ -44,7 +44,7 @@ namespace CounterManaged
 
   /**
    *@brief  This is a dot-net wrapper class for the unmanaged class 'CounterManager'.  
-   *@details A ".net" application such as "LarcosCounter" would create a single instance of this class
+   *@details A ".net" application such as "CounterApplication" would create a single instance of this class
    * and communicate to it thru the methods defined below. Ex: to start a recording session it would 
    * call the method 'RecordButtonPressed' and then proceed to call in a time event 'CurState', 'GetStats',
    * and 'GetAllLoggedMsgs' for display to the screen.
@@ -75,7 +75,7 @@ namespace CounterManaged
 
     UmiCounterOperatingModes  OperatingMode ();
 
-    CounterState  CurState ();
+    UmiCounterState  CurState ();
 
     ///<summary>
     ///Returns a copy of the Current InstallationConufig that CounterCameraManager instance is operating under.

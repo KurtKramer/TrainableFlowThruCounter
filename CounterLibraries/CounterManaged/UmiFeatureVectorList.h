@@ -26,7 +26,7 @@ namespace CounterManaged
   public:
     UmiFeatureVectorList ();
 
-    UmiFeatureVectorList (LarcosFeatureVectorList&  examples);   /**< Will take ownership of "examples"  contents. */
+    UmiFeatureVectorList (CounterFeatureVectorList&  examples);   /**< Will take ownership of "examples"  contents. */
 
     UmiFeatureVectorList (FeatureVectorList&  examples);  /**< Will take ownership of "examples"  contents  and reduce it to an empty list.
                                                            * will convert contents into instances of 'PostLarvaeFV'.  If current contents 

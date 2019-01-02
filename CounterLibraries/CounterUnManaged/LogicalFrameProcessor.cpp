@@ -650,7 +650,7 @@ void  LogicalFrameProcessor::LoadClassifer ()
 
     factoryFvProducer = trainer->FvFactoryProducer ();
     if  (!factoryFvProducer)
-      factoryFvProducer = LarcosFVProducerFactory::Factory (&log);
+      factoryFvProducer = CounterFVProducerFactory::Factory (&log);
     fvProducer = factoryFvProducer->ManufactureInstance (log);
   }
 }  /* LoadClassifer */

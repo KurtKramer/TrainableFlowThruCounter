@@ -1,5 +1,5 @@
-#if  !defined(_LARCOSFVPRODUCER_)
-#define  _LARCOSFVPRODUCER_
+#if  !defined(_COUNTERFVPRODUCER_)
+#define  _COUNTERFVPRODUCER_
 
 #include "KKBaseTypes.h"
 #include "Raster.h"
@@ -14,7 +14,7 @@ using namespace  KKMLL;
 #include "CounterFeatureVector.h"
 
 
-#define _LarcosFVProducer_VersionNum_  341
+#define _CounterFVProducer_VersionNum_  341
 
 namespace CounterUnManaged
 {
@@ -26,7 +26,7 @@ namespace CounterUnManaged
     virtual ~CounterFVProducer ();
 
 
-    virtual  LarcosFeatureVectorPtr  ComputeFeatureVector (const Raster&     srcImage,
+    virtual  CounterFeatureVectorPtr  ComputeFeatureVector (const Raster&     srcImage,
                                                            const MLClassPtr  knownClass,
                                                            RasterListPtr     intermediateImages,
                                                            float             priorReductionFactor,
@@ -46,7 +46,7 @@ namespace CounterUnManaged
 
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool owner) const;
 
-    virtual  kkint16  Version ()  const {return _LarcosFVProducer_VersionNum_;}
+    virtual  kkint16  Version ()  const {return _CounterFVProducer_VersionNum_;}
 
     static   kkuint32  MaxNumOfFeatures  ()  {return maxNumOfFeatures;}
 
@@ -159,23 +159,23 @@ namespace CounterUnManaged
 
   };  /* CounterFVProducer */
 
-  typedef  CounterFVProducer*  LarcosFVProducerPtr;
+  typedef  CounterFVProducer*  CounterFVProducerPtr;
 
-#define  _LarcosFVProducer_Defined_
+#define  _CounterFVProducer_Defined_
 
 
 
-  class  LarcosFVProducerFactory:  public  FactoryFVProducer
+  class  CounterFVProducerFactory:  public  FactoryFVProducer
   {
-    typedef  LarcosFVProducerFactory*  LarcosFVProducerFactoryPtr;
+    typedef  CounterFVProducerFactory*  CounterFVProducerFactoryPtr;
 
-    LarcosFVProducerFactory ();
+    CounterFVProducerFactory ();
 
   protected:
     /**
      *@brief  A Factory can never be deleted until the application terminates; the atexit method will perform the deletes.
      */
-    virtual ~LarcosFVProducerFactory ();
+    virtual ~CounterFVProducerFactory ();
 
   public:
 
@@ -187,16 +187,16 @@ namespace CounterUnManaged
 
     virtual  FileDescConstPtr  FileDesc ()  const;
 
-    virtual  LarcosFVProducerPtr  ManufactureInstance (RunLog&  runLog);
+    virtual  CounterFVProducerPtr  ManufactureInstance (RunLog&  runLog);
 
 
     /**
-     *@brief Manufactures a instance of a 'LarcosFeatureVectorList' class that will own its contents.
+     *@brief Manufactures a instance of a 'CounterFeatureVectorList' class that will own its contents.
      */
-    virtual  LarcosFeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
-                                                                      RunLog&  runLog
-                                                                     )
-                                                                     const;
+    virtual  CounterFeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
+                                                                       RunLog&  runLog
+                                                                      )
+                                                                      const;
 
 
     /**
@@ -206,22 +206,22 @@ namespace CounterUnManaged
 
 
     /**
-     *@brief  Returns instance of "LarcosFVProducerFactory"  that is registered with "FactoryFVProducer::RegisterFactory".
+     *@brief  Returns instance of "CounterFVProducerFactory"  that is registered with "FactoryFVProducer::RegisterFactory".
      *@details If instance does not exist yet out will create an instance and register it.
      */
-    static  LarcosFVProducerFactory*  Factory (RunLog*  runLog);
+    static  CounterFVProducerFactory*  Factory (RunLog*  runLog);
 
 
   private:
     /**
-     *@brief  This instance of 'LarcosFVProducerFactory'  will be registered with "FactoryFVProducer::RegisterFactory".
+     *@brief  This instance of 'CounterFVProducerFactory'  will be registered with "FactoryFVProducer::RegisterFactory".
      *@details  It will deleted by the "FactoryFVProducer::FinaleCleanUp" upon application shutdown.
      */
-    static  LarcosFVProducerFactory*  factory;
+    static  CounterFVProducerFactory*  factory;
 
-  };  /* LarcosFVProducerFactory */
+  };  /* CounterFVProducerFactory */
 
-#define  _LarcosFVProducerFactory_Defined_
+#define  _CounterFVProducerFactory_Defined_
 
 
 }  /* CounterUnManaged */

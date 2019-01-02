@@ -151,7 +151,7 @@ namespace CounterManagedRoutines
     
     private void  InitializeScreenFields ()
     {
-      if  (cameraManager.OperatingMode () == CounterOperatingModes.User)
+      if  (cameraManager.OperatingMode () == UmiCounterOperatingModes.User)
       {
         AddNewClassButtom.Enabled = false;
         AddNewClassButtom.Visible = false;

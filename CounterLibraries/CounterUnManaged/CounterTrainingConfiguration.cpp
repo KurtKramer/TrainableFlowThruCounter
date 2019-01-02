@@ -46,7 +46,7 @@ CounterTrainingConfiguration::CounterTrainingConfiguration (MLClassListPtr      
                                                           OperatingParametersPtr  _initialOperatingParameters,
                                                           RunLog&                 _log
                                                          ):
-  TrainingConfiguration2 (_mlClasses, LarcosFVProducerFactory::Factory (&_log), _parameterStr, _log),
+  TrainingConfiguration2 (_mlClasses, CounterFVProducerFactory::Factory (&_log), _parameterStr, _log),
   operatingParms (NULL)
 {
   if  (_initialOperatingParameters)
@@ -104,7 +104,7 @@ CounterTrainingConfigurationPtr  CounterTrainingConfiguration::Duplicate ()  con
 
 FactoryFVProducerPtr   CounterTrainingConfiguration::DefaultFeatureVectorProducer (RunLog&  runLog)  const
 {
-  return LarcosFVProducerFactory::Factory (&runLog);
+  return CounterFVProducerFactory::Factory (&runLog);
 }
 
 

@@ -131,8 +131,6 @@ CounterManager::CounterOperatingModes  CounterManager::CounterOperatingModeFromS
 
 
 
-
-
 CounterManager::CounterManager (MsgQueuePtr  _msgQueue,
                                             MsgQueuePtr  _loggedMsgs,
                                             int          _maxNumOfThreads
@@ -235,7 +233,7 @@ CounterManager::CounterManager (MsgQueuePtr  _msgQueue,
   CreateGoalie ();
 }
 
- 
+
 
 CounterManager::~CounterManager ()
 {
@@ -243,7 +241,6 @@ CounterManager::~CounterManager ()
   runLog->Level (40) << "CounterManager::~CounterManager" << endl;
   CleanUpMemory ();
 }
-
 
 
 
@@ -308,7 +305,6 @@ KKStr  CounterManager::CounterVersionNumber ()
 
 
 
-
 void  CounterManager::CleanUpMemory ()
 {
   if  (allThreads)
@@ -359,8 +355,6 @@ void  CounterManager::CleanUpMemory ()
 
 
 
-
-
 void  CounterManager::ValidateCounterInstallation ()
 {
   if  (!osValidDirectory (CounterVariables::CounterHomeDir ()))
@@ -377,7 +371,6 @@ void  CounterManager::ValidateCounterInstallation ()
   if  (!successful)
     installation->Save (runLog);
 }  /* ValidateCounterInstallation */
-
 
 
 
@@ -553,7 +546,6 @@ void   CounterManager::ControlNumValidityCheck (const KKStr&  controlNum,
 
 
 
-
 KKStr  CounterManager::GetNextControlNumber ()
 {
   KKStr  nextControlNumber;
@@ -588,11 +580,10 @@ KKStr  CounterManager::GetNextControlNumber ()
 
 
 
-
 void  CounterManager::ValidateCommonParameters (SessionParametersPtr    _sessionParameters,
-                                                      OperatingParametersPtr  _operatingParameters,
-                                                      KKStr&                  _errMsg
-                                                     )
+                                                OperatingParametersPtr  _operatingParameters,
+                                                KKStr&                  _errMsg
+                                               )
 {
   _operatingParameters->ValidateParameters (_errMsg);
 
@@ -621,6 +612,7 @@ CameraParametersListPtr  CounterManager::GetCameraList (MsgQueuePtr  _msgQueue)
 {
   return  CameraAcquisitionPleora::GetCameraList (_msgQueue);
 }
+
 
 
 CameraParametersPtr  CounterManager::PromptForCamera (RunLog&  runLog)
@@ -679,11 +671,9 @@ bool  CounterManager::IsRunning () const
 
 
 
-
-
 void  CounterManager::AutoGainButtonPressed (bool&   _successful,
-                                                   KKStr&  _errMsg
-                                                  )
+                                             KKStr&  _errMsg
+                                            )
 {
   runLog->Level (40) << "CounterManager::AutoGainButtonPressed" << endl;
   goalie->StartBlock ();
@@ -736,7 +726,6 @@ void  CounterManager::ConnectButtonPressed ()
   }
   goalie->EndBlock ();
 }
-
 
 
 
@@ -952,9 +941,9 @@ void  CounterManager::AddHeaderFields ()
 
 
 void  CounterManager::ValidateTrainingModel (const KKStr&  trainingModelName,
-                                                   bool&         successful,
-                                                   KKStr&        errMsg
-                                                  )
+                                             bool&         successful,
+                                             KKStr&        errMsg
+                                            )
 
 {
   runLog->Level (10) << "CounterManager::ValidateTrainingModel  Model: " + trainingModelName << endl;
@@ -1286,9 +1275,9 @@ void  CounterManager::RecordButtonPressed
 
 
 void  CounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileName,
-                                                 bool&         _successful,
-                                                 KKStr&        _errMsg
-                                                )
+                                           bool&         _successful,
+                                           KKStr&        _errMsg
+                                          )
 {
   goalie->StartBlock ();
 

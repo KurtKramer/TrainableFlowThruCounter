@@ -313,14 +313,14 @@ void  CounterFVProducer::BinarizeImageByThreshold (uchar          lower,
 
 
 
-LarcosFeatureVectorPtr  CounterFVProducer::ComputeFeatureVector (const Raster&     srcImage,
+CounterFeatureVectorPtr  CounterFVProducer::ComputeFeatureVector (const Raster&     srcImage,
                                                                 const MLClassPtr  knownClass,
                                                                 RasterListPtr     intermediateImages,
                                                                 float             priorReductionFactor,
                                                                 RunLog&           runLog
                                                                )
 {
-  LarcosFeatureVectorPtr  fv = new CounterFeatureVector (maxNumOfFeatures);
+  CounterFeatureVectorPtr  fv = new CounterFeatureVector (maxNumOfFeatures);
   fv->MLClass (knownClass);
   float*  featureData = fv->FeatureDataAlter ();
 
@@ -645,7 +645,7 @@ const type_info*   CounterFVProducer::FeatureVectorTypeId () const
 
 const type_info*  CounterFVProducer::FeatureVectorListTypeId () const
 {
-  return  &(typeid (LarcosFeatureVectorList));
+  return  &(typeid (CounterFeatureVectorList));
 }
 
 
@@ -673,7 +673,7 @@ FileDescConstPtr  CounterFVProducer::DefineFileDescStatic ()
     {
       tempFileDesc->AddAAttribute (featureNames[fieldNum], AttributeType::Numeric, alreadyExists);
     }
-    tempFileDesc->Version (_LarcosFVProducer_VersionNum_);
+    tempFileDesc->Version (_CounterFVProducer_VersionNum_);
 
     existingFileDesc = FileDesc::GetExistingFileDesc (tempFileDesc);
     tempFileDesc = NULL;
@@ -688,87 +688,87 @@ FileDescConstPtr  CounterFVProducer::DefineFileDescStatic ()
 
 FeatureVectorListPtr  CounterFVProducer::ManufacturFeatureVectorList (bool  owner) const
 {
-  return  new LarcosFeatureVectorList (FileDesc (), owner);
+  return  new CounterFeatureVectorList (FileDesc (), owner);
 }
 
 
 
-LarcosFVProducerFactory::LarcosFVProducerFactory ():
-   FactoryFVProducer("LarcosFVProducerFactory", "CounterFeatureVector", "CounterFeatureVector")
+CounterFVProducerFactory::CounterFVProducerFactory ():
+   FactoryFVProducer("CounterFVProducerFactory", "CounterFeatureVector", "CounterFeatureVector")
 {
 }
 
 
 
-LarcosFVProducerFactory::~LarcosFVProducerFactory ()
+CounterFVProducerFactory::~CounterFVProducerFactory ()
 {
 }
 
 
 
-FeatureFileIOPtr  LarcosFVProducerFactory::DefaultFeatureFileIO ()  const
+FeatureFileIOPtr  CounterFVProducerFactory::DefaultFeatureFileIO ()  const
 {
   return  FeatureFileIOKK::Driver ();
 }
 
 
 
-const type_info*  LarcosFVProducerFactory::FeatureVectorTypeId ()  const  
+const type_info*  CounterFVProducerFactory::FeatureVectorTypeId ()  const  
 {
   return  &typeid (CounterFeatureVector);
 }
 
 
 
-const type_info*  LarcosFVProducerFactory::FeatureVectorListTypeId  () const  
+const type_info*  CounterFVProducerFactory::FeatureVectorListTypeId  () const  
 {
-  return  &typeid (LarcosFeatureVectorList);
+  return  &typeid (CounterFeatureVectorList);
 }
 
 
 
-FileDescConstPtr  LarcosFVProducerFactory::FileDesc ()  const
+FileDescConstPtr  CounterFVProducerFactory::FileDesc ()  const
 {
   return  CounterFVProducer::DefineFileDescStatic ();
 }
 
 
 
-LarcosFVProducerPtr  LarcosFVProducerFactory::ManufactureInstance (RunLog&  runLog)
+CounterFVProducerPtr  CounterFVProducerFactory::ManufactureInstance (RunLog&  runLog)
 {
   return new CounterFVProducer (this);
 } /* ManufactureInstance */
 
 
 
-TrainingConfiguration2Ptr  LarcosFVProducerFactory::ManufacturTrainingConfiguration ()  const
+TrainingConfiguration2Ptr  CounterFVProducerFactory::ManufacturTrainingConfiguration ()  const
 {
   return  new CounterTrainingConfiguration ();
 }
 
 
 
-LarcosFeatureVectorListPtr  LarcosFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
+CounterFeatureVectorListPtr  CounterFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
                                                                                   RunLog&  runLog
                                                                                  )
                                                                                  const
 {
-  return new LarcosFeatureVectorList (CounterFVProducer::DefineFileDescStatic (), owner);
+  return new CounterFeatureVectorList (CounterFVProducer::DefineFileDescStatic (), owner);
 }
 
 
 
-LarcosFVProducerFactory*  LarcosFVProducerFactory::factory = Factory (NULL);
+CounterFVProducerFactory*  CounterFVProducerFactory::factory = Factory (NULL);
 
 
 
-LarcosFVProducerFactory*  LarcosFVProducerFactory::Factory (RunLog*  runLog)
+CounterFVProducerFactory*  CounterFVProducerFactory::Factory (RunLog*  runLog)
 {
   GlobalGoalKeeper::StartBlock ();
 
   if  (factory == NULL)
   {
-    factory = new LarcosFVProducerFactory ();
+    factory = new CounterFVProducerFactory ();
     FactoryFVProducer::RegisterFactory (factory, runLog);
   }
   GlobalGoalKeeper::EndBlock ();

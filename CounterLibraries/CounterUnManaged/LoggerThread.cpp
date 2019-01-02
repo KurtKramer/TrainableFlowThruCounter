@@ -48,7 +48,7 @@ LoggerThread::LoggerThread (MsgQueuePtr  _msgQueue,
     weOwnLoggedMsgs = true;
   }
 
-  KKStr logFileDir = osAddSlash (CounterVariables::LoggingDir ()) + "LarcosCounter";
+  KKStr logFileDir = osAddSlash (CounterVariables::LoggingDir ()) + "CounterApplication";
   osCreateDirectoryPath (logFileDir);
   DateTime now = osGetLocalDateTime ();
   logFileName = osAddSlash (logFileDir) + "LarcosCounter_" + now.Date ().YYYYMMDD () + "-" + now.Time ().HHMMSS () + ".txt";

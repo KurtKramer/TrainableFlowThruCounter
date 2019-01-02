@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using CounterManaged;
 
 
-namespace LarcosControls
+namespace CounterControls
 {
   public partial class CameraLine : UserControl
   {
@@ -721,7 +721,7 @@ namespace LarcosControls
     {
       CameraLineDisplay_SizeChanged (sender, e);
 
-      if  ((cameraManager == null)  ||  (cameraManager.OperatingMode () == CounterOperatingModes.Advanced))
+      if  ((cameraManager == null)  ||  (cameraManager.OperatingMode () == UmiCounterOperatingModes.Advanced))
         SetVisibilityOfAdvancedControls (true);
       else
         SetVisibilityOfAdvancedControls (false);

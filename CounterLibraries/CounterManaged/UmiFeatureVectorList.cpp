@@ -59,7 +59,7 @@ UmiFeatureVectorList::UmiFeatureVectorList ():
 
 
 
-UmiFeatureVectorList::UmiFeatureVectorList (LarcosFeatureVectorList&  examples): // Will take ownership of "examples"  contents.
+UmiFeatureVectorList::UmiFeatureVectorList (CounterFeatureVectorList&  examples): // Will take ownership of "examples"  contents.
   cancelFlag            (new bool (false)),
   classes               (NULL),
   numExamplesWritten    (NULL),

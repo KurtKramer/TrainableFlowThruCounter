@@ -47,7 +47,7 @@ UmiFeatureVector::UmiFeatureVector (UmiFeatureVector^  umiFeatureVector):
     features (NULL),
     mlClass (nullptr)
 {
-  features    = new CounterFeatureVector (*(umiFeatureVector->Features ()));
+  features = new CounterFeatureVector (*(umiFeatureVector->Features ()));
   mlClass  = UmiClassList::GetUniqueClass (features->MLClass ());
 
   GC::AddMemoryPressure (MemPreasPerFV);
@@ -75,7 +75,7 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
   RasterListPtr  tempIntermediateImages = NULL;
   if  (intermediateImages != nullptr)
     tempIntermediateImages = new RasterList (true);
-  LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
+  CounterFVProducerPtr fvp = CounterFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
   features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), tempIntermediateImages, 1.0, log->Log ());
 
   if  (saveDebugImages)
@@ -131,7 +131,7 @@ UmiFeatureVector::UmiFeatureVector (System::Array^   raster,
   }
   if  (imageFileName != nullptr)
     r->FileName (UmiKKStr::SystemStringToKKStr (imageFileName));
-  LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
+  CounterFVProducerPtr fvp = CounterFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
   features = fvp->ComputeFeatureVector (*r, mlClass->UnmanagedImageClass (), NULL, 1.0f, log->Log ());
   delete  fvp;  fvp = NULL;
   delete  r;    r   = NULL;
@@ -166,7 +166,7 @@ UmiFeatureVector::UmiFeatureVector (String^         _imageFileName,
   RasterListPtr  tempIntermediateImages = NULL;
   if  (_intermediateImages != nullptr)
     tempIntermediateImages = new RasterList (true);
-  LarcosFVProducerPtr fvp = LarcosFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
+  CounterFVProducerPtr fvp = CounterFVProducerFactory::Factory (&(log->Log ()))->ManufactureInstance (log->Log ());
   features = fvp->ComputeFeatureVectorFromImage (UmiKKStr::SystemStringToKKStr (_imageFileName), mlClass->UnmanagedImageClass (), tempIntermediateImages, log->Log ());
   UmiRasterList::CopyOverIntermediateImages (tempIntermediateImages, _intermediateImages);
 
@@ -197,7 +197,6 @@ void  UmiFeatureVector::CleanUpUnmanagedResources ()
   delete  features;  features = NULL;
   GC::RemoveMemoryPressure (MemPreasPerFV);
 }
-
 
 
 
@@ -270,7 +269,6 @@ bool   UmiFeatureVector::Validated::get ()
 
 
 
-
 void  UmiFeatureVector::MLClass::set (UmiClass^  umiClass)
 {
   if  (umiClass == nullptr)
@@ -283,8 +281,6 @@ void  UmiFeatureVector::MLClass::set (UmiClass^  umiClass)
 
 
 
-
-
 void  UmiFeatureVector::ExampleFileName::set (String^ _imageFileName)
 {
   if  (!features)
@@ -292,7 +288,6 @@ void  UmiFeatureVector::ExampleFileName::set (String^ _imageFileName)
 
   features->ExampleFileName (UmiKKStr::SystemStringToKKStr (_imageFileName));
 }
-
 
 
 
@@ -359,11 +354,10 @@ ParsedImageFileName^  UmiFeatureVector::ParseImageFileName (System::String^  _fu
 
 
 
-
-void  UmiFeatureVector::ParseImageFileName (String^   _fullFileName,
-                                            String^%  _scannerFileName,
-                                            kkuint32%     _scanLine,
-                                            kkuint32%     _scanCol
+void  UmiFeatureVector::ParseImageFileName (String^    _fullFileName,
+                                            String^%   _scannerFileName,
+                                            kkuint32%  _scanLine,
+                                            kkuint32%  _scanCol
                                            )
 {
   KKStr  fullFileName = UmiKKStr::SystemStringToKKStr (_fullFileName);
@@ -378,7 +372,3 @@ void  UmiFeatureVector::ParseImageFileName (String^   _fullFileName,
   _scanLine = scanLine;
   _scanCol  = scanCol;
 }  /* ParseImageFileName */
-
-
-
-

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using CounterManaged;
 using CounterManagedRoutines;
 
-namespace LarcosControls
+namespace CounterControls
 {
   public partial class ScannerFileViewerPanel : UserControl
   {
@@ -60,7 +60,7 @@ namespace LarcosControls
 
     private  UmiParticleEntryList   particlesOnCurrentScreen = null;
 
-    private  CounterManagerWrapper     cameraManager = null;
+    private  CounterManagerWrapper  cameraManager = null;
 
     private  UmiRunLog              runLog = null;
 
@@ -105,16 +105,19 @@ namespace LarcosControls
     }
 
 
+
     public  int  DisplayRowToScanLineRow (int displayRow)
     {
       return (int)(0.5f + (float)displayRow * Ratio ());
     }
 
 
+
     public  int  ScanLineRowToDispalyRow (int scanLineRow)
     {
       return (int)(0.5f + (float)scanLineRow / Ratio ());
     }
+
 
 
     public ScannerFileViewerPanel ()
@@ -140,6 +143,7 @@ namespace LarcosControls
     }
 
 
+
     private  void  BuildCountFont ()
     {
       // A panel height of 400 pixels would get a "Courier New" font size of 10. We will scale 
@@ -147,6 +151,7 @@ namespace LarcosControls
       float  fontSize = panel.Height * 10.0f / 400.0f;
       countFont = new Font ("Courier New", fontSize, FontStyle.Bold);
     }
+
 
 
     private void BuildPenValues ()
@@ -181,6 +186,7 @@ namespace LarcosControls
     }  /* SuspendLayout */
 
 
+
     new void ResumeLayout ()
     {
       if (suspendLevel <= 0)
@@ -192,6 +198,7 @@ namespace LarcosControls
         base.ResumeLayout ();
       }
     }  /* ResumeLayout */
+
 
 
     new void  ResumeLayout (bool perFormLayout)
@@ -341,8 +348,7 @@ namespace LarcosControls
       SetNewDisplayScanRowLeft (newDisplayRowTop);
     }  /* ComputeParameters */
 
-
-
+    
 
     public void SetNewDisplayScanRowLeft (Int32 _displayScanRowLeft)
     {
@@ -364,10 +370,9 @@ namespace LarcosControls
 
 
 
-
-    public void SetScannerFile (CounterManagerWrapper _cameraManager,
-                                UmiScannerFileBuffered      _scannerFile,
-                                String                      _trainingModelName
+    public void SetScannerFile (CounterManagerWrapper   _cameraManager,
+                                UmiScannerFileBuffered  _scannerFile,
+                                String                  _trainingModelName
                                )
     {
       cameraManager     = _cameraManager;
@@ -391,7 +396,6 @@ namespace LarcosControls
 
       ComputeParameters ();
     }  /* SetScannerFile */
-
 
 
 
@@ -605,7 +609,6 @@ namespace LarcosControls
 
 
 
-
     public void ClearBobs ()
     {
       if (blobs != null)
@@ -614,8 +617,6 @@ namespace LarcosControls
         blobs = null;
       }
     }  /* ClearBobs */
-
-
 
 
 
@@ -765,7 +766,6 @@ namespace LarcosControls
 
 
 
-
     public  UmiRaster  GetRasterForParticle (UmiParticleEntry pe)
     {
       return  scannerFile.GetRasterForParticle (pe);
@@ -791,7 +791,6 @@ namespace LarcosControls
 
 
 
-
     public void  PaintFromBuffer ()
     {
       if (buffer == null)
@@ -813,7 +812,6 @@ namespace LarcosControls
           PaintRectangle (panelDC, Color.Red, b);
       }
     }  /* PaintAllBlobs */
-
 
 
 
@@ -853,6 +851,7 @@ namespace LarcosControls
       Graphics g = panel.CreateGraphics ();
       PaintParticle (g, pe);
     }
+
 
 
     private  void  PaintParticle (Graphics          g,
@@ -896,7 +895,6 @@ namespace LarcosControls
       }
 
     }  /* PaintParticle */
-
 
 
 
@@ -970,6 +968,7 @@ namespace LarcosControls
     }   /* ExtractImageFromScanner */
 
 
+
     private  void  SetUpScannerPanelContectMenu ()
     {
       scannerPanelContextMenu = new ContextMenu ();
@@ -993,6 +992,7 @@ namespace LarcosControls
 
       panel.ContextMenu = scannerPanelContextMenu;
     }
+
 
 
     private  void  ScannerPanelContectMenuPopupEvent (System.Object sender, System.EventArgs e)
@@ -1037,6 +1037,7 @@ namespace LarcosControls
     }
 
 
+
     private  void  SetStartCountingPoint (object sender, System.EventArgs e)
     {
       if  (scannerFile == null)
@@ -1051,6 +1052,7 @@ namespace LarcosControls
     }
 
 
+
     private  void  SetStopCountingPoint (object sender, System.EventArgs e)
     {
       Int32  stopScanLine = (int)(0.5f + (displayScanRowLeft + rightMouseCol) * Ratio ());
@@ -1060,6 +1062,7 @@ namespace LarcosControls
       OnStopPointAdded (stopScanLine);
       OnStartStopPointChange (stopScanLine);
     }
+
 
 
     private  void  RemoveCountingPoint (object sender, System.EventArgs e)
@@ -1098,7 +1101,6 @@ namespace LarcosControls
 
 
 
-
     private void SetLeftCrop (object sender, System.EventArgs e)
     {
       if (scannerFile != null)
@@ -1121,7 +1123,6 @@ namespace LarcosControls
         OnCropSettingsChanged ();
       }
     } /* SetLeftCrop */
-
 
 
 
@@ -1234,8 +1235,8 @@ namespace LarcosControls
         OnParticleSelected (pe);
     }  /* panel_MouseDoubleClick */
 
-    
-    
+
+
     private void MonitorMouseClick (object sender, MouseEventArgs mea)
     {
       if  (mea.Button == MouseButtons.Right)
@@ -1244,6 +1245,7 @@ namespace LarcosControls
         rightMouseRow = (Int32)mea.Y;
       }
     }
+
 
 
     private void OnSizeChanged (object sender, EventArgs e)
@@ -1320,6 +1322,7 @@ namespace LarcosControls
     public delegate void  ParticleSelectedHandler      (object sender, ParticleSelectedEventArgs e);
 
 
+
     [Category ("Action")]
     [Description ("Occurs when user double clicks on particle.")]
     public event  ParticleSelectedHandler  ParticleSelected;
@@ -1329,6 +1332,7 @@ namespace LarcosControls
       if  (ParticleSelected != null)
         ParticleSelected (this, new ParticleSelectedEventArgs (particleEntry));  // Notify Subscribers
     }
+
 
 
     [Category ("Action")]

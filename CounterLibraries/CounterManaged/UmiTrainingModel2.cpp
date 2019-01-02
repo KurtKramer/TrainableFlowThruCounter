@@ -102,7 +102,7 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^       _umiRunLog,
 
   osRunAsABackGroundProcess ();
 
-  //factoryFVProducer =  LarcosFVProducerFactory::Factory (runLog);
+  //factoryFVProducer =  CounterFVProducerFactory::Factory (runLog);
 }
 
 
@@ -742,7 +742,7 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
 
   PostLarvaeFVResetDarkSpotCounts ();
 
-  FactoryFVProducer*  fvProducerFactory = LarcosFVProducerFactory::Factory (runLog);
+  FactoryFVProducer*  fvProducerFactory = CounterFVProducerFactory::Factory (runLog);
   FileDescConstPtr fd = fvProducerFactory->FileDesc ();
 
   KKB::KKStr  configFileName = UmiKKStr::SystemStringToKKStr (modelName);
@@ -828,7 +828,7 @@ UmiPredictionList^   UmiTrainingModel2::BinaryProbailitiesForClass (UmiClass^  l
 
 UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (UmiFeatureVector^  umiFeatureVector)
 {
-  LarcosFeatureVectorPtr  unKnownExample = new CounterFeatureVector (*(umiFeatureVector->Features ()));
+  CounterFeatureVectorPtr  unKnownExample = new CounterFeatureVector (*(umiFeatureVector->Features ()));
   int  numClasses = classes->QueueSize ();
 
   try

@@ -50,7 +50,7 @@ namespace CounterUnManaged
                                            ) override;
 
 
-    virtual  LarcosFeatureVectorListPtr  LoadFile (const KKStr&      _fileName,
+    virtual  CounterFeatureVectorListPtr  LoadFile (const KKStr&      _fileName,
                                                    FileDescConstPtr  _fileDesc,
                                                    MLClassList&      _classes, 
                                                    std::istream&     _in,

@@ -1,9 +1,7 @@
 #include "FirstIncludes.h"
-
 #include <ctype.h>
 #include <math.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -11,11 +9,8 @@
 #include <vector>
 #include <string.h>
 #include <typeinfo>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
-
 
 #include "KKBaseTypes.h"
 #include "Blob.h"
@@ -31,7 +26,6 @@ using namespace  std;
 #include "KKStr.h"
 using namespace  KKB;
 
-
 #include "FactoryFVProducer.h"
 #include "FeatureNumList.h"
 #include "FeatureFileIO.h"
@@ -45,9 +39,6 @@ using namespace  KKMLL;
 #include "CounterFeatureVector.h"
 using namespace  CounterUnManaged;
                       
-
-
-
 
 
 CounterFeatureVector::CounterFeatureVector (kkint32  _numOfFeatures):
@@ -101,7 +92,7 @@ CounterFeatureVector::~CounterFeatureVector ()
 
 
 
-LarcosFeatureVectorPtr  CounterFeatureVector::Duplicate ()  const
+CounterFeatureVectorPtr  CounterFeatureVector::Duplicate ()  const
 {
   return new CounterFeatureVector (*this);
 }
@@ -109,7 +100,7 @@ LarcosFeatureVectorPtr  CounterFeatureVector::Duplicate ()  const
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (FileDescConstPtr  _fileDesc,
+CounterFeatureVectorList::CounterFeatureVectorList (FileDescConstPtr  _fileDesc,
                                                   bool              _owner
                                                  ):
     FeatureVectorList (_fileDesc, _owner)
@@ -120,7 +111,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (FileDescConstPtr  _fileDesc,
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (FactoryFVProducerPtr  _fvProducerFactory,
+CounterFeatureVectorList::CounterFeatureVectorList (FactoryFVProducerPtr  _fvProducerFactory,
                                                   MLClassPtr            _mlClass,
                                                   KKStr                 _dirName,
                                                   KKStr                 _fileName,
@@ -136,13 +127,13 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (FactoryFVProducerPtr  _fvProdu
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (const LarcosFeatureVectorList&  examples):
+CounterFeatureVectorList::CounterFeatureVectorList (const CounterFeatureVectorList&  examples):
    FeatureVectorList (examples.FileDesc (), examples.Owner ())
 {
   const_iterator  idx;
   for  (idx = examples.begin ();  idx != examples.end ();  idx++)
   {
-    const LarcosFeatureVectorPtr  imageExample = *idx;
+    const CounterFeatureVectorPtr  imageExample = *idx;
     if  (Owner ())
       PushOnBack (new CounterFeatureVector (*imageExample));
     else
@@ -153,7 +144,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const LarcosFeatureVectorList&
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (const LarcosFeatureVectorList&  examples,
+CounterFeatureVectorList::CounterFeatureVectorList (const CounterFeatureVectorList&  examples,
                                                   bool                           _owner
                                                  ):
 
@@ -162,7 +153,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const LarcosFeatureVectorList&
   const_iterator  idx;
   for  (idx = examples.begin ();  idx != examples.end ();  idx++)
   {
-    const LarcosFeatureVectorPtr  imageExample = *idx;
+    const CounterFeatureVectorPtr  imageExample = *idx;
     if  (Owner ())
       PushOnBack (new CounterFeatureVector (*imageExample));
     else
@@ -171,15 +162,15 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const LarcosFeatureVectorList&
 }
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList,
+CounterFeatureVectorList::CounterFeatureVectorList (const FeatureVectorList&  featureVectorList,
                                                   bool                      _owner
                                                  ):
 
   FeatureVectorList (featureVectorList.FileDesc (), _owner)
 {
-  if  (typeid (featureVectorList) == typeid (LarcosFeatureVectorList))
+  if  (typeid (featureVectorList) == typeid (CounterFeatureVectorList))
   {
-    const LarcosFeatureVectorList&  examples = dynamic_cast<const LarcosFeatureVectorList&> (featureVectorList);
+    const CounterFeatureVectorList&  examples = dynamic_cast<const CounterFeatureVectorList&> (featureVectorList);
   }
 
 
@@ -197,7 +188,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
       // else
       //   | info that is particular to a 'CounterFeatureVector' object will be set to
       //   | default values.
-      LarcosFeatureVectorPtr  example = new CounterFeatureVector (*featureVector);
+      CounterFeatureVectorPtr  example = new CounterFeatureVector (*featureVector);
       PushOnBack (example);
     }
   }
@@ -212,14 +203,14 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
       FeatureVectorPtr featureVector = *idx;
       if  (typeid (*featureVector) == typeid (CounterFeatureVector))
       {
-        LarcosFeatureVectorPtr example = dynamic_cast<LarcosFeatureVectorPtr>(featureVector);
+        CounterFeatureVectorPtr example = dynamic_cast<CounterFeatureVectorPtr>(featureVector);
         PushOnBack (example);
       }
       else
       {
         // ****    ERROR  ****
         KKStr  errMsg;
-        errMsg << "LarcosFeatureVectorList   ***ERROR***   One Elements not a 'CounterFeatureVector'  type  FileName[" << featureVector->ExampleFileName () << "]";
+        errMsg << "CounterFeatureVectorList   ***ERROR***   One Elements not a 'CounterFeatureVector'  type  FileName[" << featureVector->ExampleFileName () << "]";
         cerr << endl << errMsg << endl << endl;
         throw KKException (errMsg);
       }
@@ -236,8 +227,8 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
 //* The subset will consist of the examples who's mlClass is one of the     *
 //* ones in mlClasses.                                                    *
 //****************************************************************************
-LarcosFeatureVectorList::LarcosFeatureVectorList (MLClassList&              _mlClasses,
-                                                  LarcosFeatureVectorList&  _examples
+CounterFeatureVectorList::CounterFeatureVectorList (MLClassList&              _mlClasses,
+                                                  CounterFeatureVectorList&  _examples
                                                  ):
   FeatureVectorList (_mlClasses, _examples)
   
@@ -247,14 +238,14 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (MLClassList&              _mlC
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList):
+CounterFeatureVectorList::CounterFeatureVectorList (const FeatureVectorList&  featureVectorList):
   FeatureVectorList (featureVectorList.FileDesc (),
                      featureVectorList.Owner ()
                     )
 {
-  if  (typeid (featureVectorList) == typeid (LarcosFeatureVectorList))
+  if  (typeid (featureVectorList) == typeid (CounterFeatureVectorList))
   {
-    const LarcosFeatureVectorList&  examples = dynamic_cast<const LarcosFeatureVectorList&> (featureVectorList);
+    const CounterFeatureVectorList&  examples = dynamic_cast<const CounterFeatureVectorList&> (featureVectorList);
   }
 
 
@@ -272,7 +263,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
       // else
       //   | info that is particular to a 'CounterFeatureVector' object will be set to
       //   | default values.
-      LarcosFeatureVectorPtr  example = new CounterFeatureVector (*featureVector);
+      CounterFeatureVectorPtr  example = new CounterFeatureVector (*featureVector);
       PushOnBack (example);
     }
   }
@@ -287,14 +278,14 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
       FeatureVectorPtr featureVector = *idx;
       if  (typeid (*featureVector) == typeid (CounterFeatureVector))
       {
-        LarcosFeatureVectorPtr example = dynamic_cast<LarcosFeatureVectorPtr>(featureVector);
+        CounterFeatureVectorPtr example = dynamic_cast<CounterFeatureVectorPtr>(featureVector);
         PushOnBack (example);
       }
       else
       {
         // ****    ERROR  ****
         KKStr  errMsg;
-        errMsg << "LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList)   ***ERROR***   "
+        errMsg << "CounterFeatureVectorList (const FeatureVectorList&  featureVectorList)   ***ERROR***   "
              << "One element not a 'CounterFeatureVector' type can not recast:  FileName[" << featureVector->ExampleFileName () << "]";
         cerr << endl << errMsg << endl << endl;
         throw KKException (errMsg);
@@ -307,7 +298,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
 
 
 
-LarcosFeatureVectorList::~LarcosFeatureVectorList ()
+CounterFeatureVectorList::~CounterFeatureVectorList ()
 {
 }
 
@@ -317,26 +308,26 @@ LarcosFeatureVectorList::~LarcosFeatureVectorList ()
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::IdxToPtr (kkint32 idx)  const
+CounterFeatureVectorPtr  CounterFeatureVectorList::IdxToPtr (kkint32 idx)  const
 {
-  return  (LarcosFeatureVectorPtr)FeatureVectorList::IdxToPtr (idx);
+  return  (CounterFeatureVectorPtr)FeatureVectorList::IdxToPtr (idx);
 }  /* IdxToPtr */
 
 
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::BackOfQueue ()
+CounterFeatureVectorPtr  CounterFeatureVectorList::BackOfQueue ()
 {
   if  (size () < 1)
     return NULL;
 
   FeatureVectorPtr  fv = back ();
   if  (typeid (*fv) == typeid (CounterFeatureVector))
-    return  dynamic_cast<LarcosFeatureVectorPtr> (fv);
+    return  dynamic_cast<CounterFeatureVectorPtr> (fv);
 
   cerr << endl 
-       << "LarcosFeatureVectorList::BackOfQueue ()   ***ERROR***   Entry at back of Queue is not a 'CounterFeatureVector' object." << endl
+       << "CounterFeatureVectorList::BackOfQueue ()   ***ERROR***   Entry at back of Queue is not a 'CounterFeatureVector' object." << endl
        << endl;
 
   return NULL;
@@ -345,7 +336,7 @@ LarcosFeatureVectorPtr  LarcosFeatureVectorList::BackOfQueue ()
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::PopFromBack ()
+CounterFeatureVectorPtr  CounterFeatureVectorList::PopFromBack ()
 {
   if  (size () < 1)  return NULL;
 
@@ -353,18 +344,18 @@ LarcosFeatureVectorPtr  LarcosFeatureVectorList::PopFromBack ()
   if  (typeid (*fv) == typeid (CounterFeatureVector))
   {
     cerr << endl
-         << "LarcosFeatureVectorList::BackOfQueue ()   ***ERROR***   Entry popped from back of Queue is not a 'CounterFeatureVector' object." << endl
+         << "CounterFeatureVectorList::BackOfQueue ()   ***ERROR***   Entry popped from back of Queue is not a 'CounterFeatureVector' object." << endl
          << endl;
     return NULL;
   }
 
-  return  dynamic_cast<LarcosFeatureVectorPtr> (FeatureVectorList::PopFromBack ());
+  return  dynamic_cast<CounterFeatureVectorPtr> (FeatureVectorList::PopFromBack ());
 }  /* PopFromBack */
 
 
 
 
-void  LarcosFeatureVectorList::AddQueue (LarcosFeatureVectorList&  imagesToAdd)
+void  CounterFeatureVectorList::AddQueue (CounterFeatureVectorList&  imagesToAdd)
 {
   FeatureVectorList::AddQueue (imagesToAdd);
 }  /* AddQueue */
@@ -372,24 +363,24 @@ void  LarcosFeatureVectorList::AddQueue (LarcosFeatureVectorList&  imagesToAdd)
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::BinarySearchByName (const KKStr&  _imageFileName)  const
+CounterFeatureVectorPtr  CounterFeatureVectorList::BinarySearchByName (const KKStr&  _imageFileName)  const
 {
-  return  (LarcosFeatureVectorPtr)FeatureVectorList::BinarySearchByName (_imageFileName);
+  return  (CounterFeatureVectorPtr)FeatureVectorList::BinarySearchByName (_imageFileName);
 }  /* BinarySearchByName */
 
 
 
 
-LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ManufactureEmptyList (bool _owner)  const
+CounterFeatureVectorListPtr   CounterFeatureVectorList::ManufactureEmptyList (bool _owner)  const
 {
-  return new LarcosFeatureVectorList (FileDesc (), _owner);
+  return new CounterFeatureVectorList (FileDesc (), _owner);
 }
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
+CounterFeatureVectorPtr  CounterFeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 {
-  return  (LarcosFeatureVectorPtr)FeatureVectorList::LookUpByRootName (_rootName);
+  return  (CounterFeatureVectorPtr)FeatureVectorList::LookUpByRootName (_rootName);
 }  /* LookUpByRootName */
 
 
@@ -397,22 +388,22 @@ LarcosFeatureVectorPtr  LarcosFeatureVectorList::LookUpByRootName (const KKStr& 
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::LookUpByImageFileName (const KKStr&  _imageFileName)  const
+CounterFeatureVectorPtr  CounterFeatureVectorList::LookUpByImageFileName (const KKStr&  _imageFileName)  const
 {
-  return  (LarcosFeatureVectorPtr)FeatureVectorList::LookUpByImageFileName (_imageFileName);
+  return  (CounterFeatureVectorPtr)FeatureVectorList::LookUpByImageFileName (_imageFileName);
 }  /* LookUpByImageFileName */
 
 
 
 
 
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName,
+CounterFeatureVectorListPtr  CounterFeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName,
                                                                                RunLog&       log
                                                                               )
 {
   FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (fileName, log);
   examples->Owner (false);
-  LarcosFeatureVectorListPtr  orderedImages = new LarcosFeatureVectorList (*examples);
+  CounterFeatureVectorListPtr  orderedImages = new CounterFeatureVectorList (*examples);
   delete  examples;
   return  orderedImages;
 }  /* OrderUsingNamesFromAFile */
@@ -422,7 +413,7 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::OrderUsingNamesFromAFile (c
 
 
 
-void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProducerFactory,
+void   CounterFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProducerFactory,
                                                    KKStr                 _dirName, 
                                                    KKStr                 _fileName, 
                                                    MLClassPtr            _mlClass,
@@ -479,35 +470,35 @@ void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProd
     if  (!featureVector)
     {
       KKStr  msg (100);
-      msg << "LarcosFeatureVectorList::FeatureExtraction   ***ERROR***   Could not Allocate CounterFeatureVector object" << endl
+      msg << "CounterFeatureVectorList::FeatureExtraction   ***ERROR***   Could not Allocate CounterFeatureVector object" << endl
           << "for FileName[" << fullFileName << "].";
       _log.Level (-1) << endl << msg << endl << endl;
     }
     else
     {
-      LarcosFeatureVectorPtr  larcosFeatureVector = NULL;
+      CounterFeatureVectorPtr  counterFeatureVector = NULL;
       if  (typeid(*featureVector) == typeid(CounterFeatureVector))
       {
-        larcosFeatureVector = dynamic_cast<LarcosFeatureVectorPtr>(featureVector);
+        counterFeatureVector = dynamic_cast<CounterFeatureVectorPtr>(featureVector);
         featureVector = NULL;
       }
       else
       {
-        larcosFeatureVector = new CounterFeatureVector (*featureVector);
+        counterFeatureVector = new CounterFeatureVector (*featureVector);
         delete  featureVector;
         featureVector = NULL;
       }
 
-      larcosFeatureVector->ExampleFileName (*imageFileName);
-      _log.Level (30) << larcosFeatureVector->ExampleFileName () << "  " << larcosFeatureVector->OrigSize () << endl;
-      PushOnBack (larcosFeatureVector);
+      counterFeatureVector->ExampleFileName (*imageFileName);
+      _log.Level (30) << counterFeatureVector->ExampleFileName () << "  " << counterFeatureVector->OrigSize () << endl;
+      PushOnBack (counterFeatureVector);
       count++;
     }
   }
 
   delete  fvProducer;  fvProducer = NULL;
 
-  Version (_LarcosFVProducer_VersionNum_);
+  Version (_CounterFVProducer_VersionNum_);
 
   kkuint32  numExamplesWritten = 0;
 
@@ -527,9 +518,9 @@ void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProd
 
 
 
-LarcosFeatureVectorListPtr   LarcosFeatureVectorList::Duplicate (bool _owner)  const
+CounterFeatureVectorListPtr   CounterFeatureVectorList::Duplicate (bool _owner)  const
 {
-  return new LarcosFeatureVectorList (*this, _owner);
+  return new CounterFeatureVectorList (*this, _owner);
 }  /* Duplicate */
 
 
@@ -539,13 +530,13 @@ LarcosFeatureVectorListPtr   LarcosFeatureVectorList::Duplicate (bool _owner)  c
  * @brief  Creates a duplicate of list and also duplicates it contents.
  * @return Duplicated list with hard copy of its contents.
  */
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::DuplicateListAndContents ()  const
+CounterFeatureVectorListPtr  CounterFeatureVectorList::DuplicateListAndContents ()  const
 {
-  LarcosFeatureVectorListPtr  copyiedList = new LarcosFeatureVectorList (FileDesc (), true);
+  CounterFeatureVectorListPtr  copyiedList = new CounterFeatureVectorList (FileDesc (), true);
 
   for  (kkuint32 idx = 0;  idx < QueueSize ();  idx++)
   {
-    LarcosFeatureVectorPtr  curImage = (LarcosFeatureVectorPtr)IdxToPtr (idx);
+    CounterFeatureVectorPtr  curImage = (CounterFeatureVectorPtr)IdxToPtr (idx);
     copyiedList->PushOnBack (new CounterFeatureVector (*curImage));
   }
   
@@ -556,14 +547,11 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::DuplicateListAndContents ()
 
 
 
-
-
-
-void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
-                                                                       const KKStr&          rootDir,
-                                                                       bool&                 successful,
-                                                                       RunLog&               log
-                                                                      )
+void  CounterFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
+                                                                        const KKStr&          rootDir,
+                                                                        bool&                 successful,
+                                                                        RunLog&               log
+                                                                       )
 {
   log.Level (20) << "RecalcFeatureValuesFromImagesInDirTree   RootDir[" << rootDir << "]." << endl;
 
@@ -588,7 +576,7 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
   KKStrConstPtr  dirPath = NULL;
 
   iterator  idx;
-  LarcosFeatureVectorPtr  example = NULL;
+  CounterFeatureVectorPtr  example = NULL;
 
   for  (idx = begin ();   idx != end ();  idx++)
   {
@@ -609,7 +597,7 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
     if  (!validFile)
     {
       delete  raster;  raster = NULL;
-      log.Level (-1) << "LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree   ***ERROR***  Unable to load image: " << fullFileName << endl << endl;
+      log.Level (-1) << "CounterFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree   ***ERROR***  Unable to load image: " << fullFileName << endl << endl;
     }
     else
     {
@@ -626,7 +614,7 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
 
         if  (typeid(*fv) == typeid(CounterFeatureVector))
         {
-          LarcosFeatureVectorPtr  lfv = dynamic_cast<LarcosFeatureVectorPtr>(fv);
+          CounterFeatureVectorPtr  lfv = dynamic_cast<CounterFeatureVectorPtr>(fv);
           example->CentroidCol (lfv->CentroidCol ());
           example->CentroidRow (lfv->CentroidRow ());
           example->NumOfEdgePixels (lfv->NumOfEdgePixels ());
@@ -647,10 +635,10 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
 
 
 
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::ExtractDuplicatesByRootImageFileName ()
+CounterFeatureVectorListPtr  CounterFeatureVectorList::ExtractDuplicatesByRootImageFileName ()
 {
   FeatureVectorListPtr  duplicateFeatureVectorObjects = FeatureVectorList::ExtractDuplicatesByRootImageFileName ();
-  LarcosFeatureVectorListPtr  duplicateImageFeaturesObjects = new LarcosFeatureVectorList (*duplicateFeatureVectorObjects);
+  CounterFeatureVectorListPtr  duplicateImageFeaturesObjects = new CounterFeatureVectorList (*duplicateFeatureVectorObjects);
   duplicateFeatureVectorObjects->Owner (false);
   delete  duplicateFeatureVectorObjects;  duplicateFeatureVectorObjects = NULL;
   return  duplicateImageFeaturesObjects;
@@ -661,13 +649,13 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::ExtractDuplicatesByRootImag
 
 
 
-LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
+CounterFeatureVectorListPtr   CounterFeatureVectorList::ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
                                                                                    kkint32     _maxToExtract,
                                                                                    float       _minSize
                                                                                   )  const
 {
   FeatureVectorListPtr  featureVectorList = FeatureVectorList::ExtractExamplesForAGivenClass (_mlClass, _maxToExtract, _minSize);
-  LarcosFeatureVectorListPtr  imageFeaturesList = new LarcosFeatureVectorList (*featureVectorList);
+  CounterFeatureVectorListPtr  imageFeaturesList = new CounterFeatureVectorList (*featureVectorList);
   featureVectorList->Owner (false);
   delete  featureVectorList;  featureVectorList = NULL;
   return  imageFeaturesList;
@@ -675,14 +663,14 @@ LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ExtractExamplesForAGivenCl
 
 
 
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::StratifyAmoungstClasses (kkint32  numOfFolds, 
+CounterFeatureVectorListPtr  CounterFeatureVectorList::StratifyAmoungstClasses (kkint32  numOfFolds, 
                                                                               RunLog&  log
                                                                              )
 {
   MLClassListPtr  classes = ExtractListOfClasses ();
 
   FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (classes, -1, numOfFolds, log);
-  LarcosFeatureVectorListPtr  stratifiedImagefeatures  = new LarcosFeatureVectorList (*stratifiedFeatureVectors);
+  CounterFeatureVectorListPtr  stratifiedImagefeatures  = new CounterFeatureVectorList (*stratifiedFeatureVectors);
   
   stratifiedFeatureVectors->Owner (false);
 
@@ -694,14 +682,14 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::StratifyAmoungstClasses (kk
 
 
 
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
+CounterFeatureVectorListPtr  CounterFeatureVectorList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                                               kkint32         maxImagesPerClass,
                                                                               kkint32         numOfFolds,
                                                                               RunLog&         log
                                                                              )
 {
   FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (mlClasses, maxImagesPerClass, numOfFolds, log);
-  LarcosFeatureVectorListPtr  stratifiedImagefeatures  = new LarcosFeatureVectorList (*stratifiedFeatureVectors);
+  CounterFeatureVectorListPtr  stratifiedImagefeatures  = new CounterFeatureVectorList (*stratifiedFeatureVectors);
   stratifiedFeatureVectors->Owner (false);
   delete stratifiedFeatureVectors;  stratifiedFeatureVectors = NULL;
   return  stratifiedImagefeatures;
