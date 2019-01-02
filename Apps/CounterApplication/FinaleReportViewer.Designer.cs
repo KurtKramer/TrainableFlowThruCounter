@@ -54,7 +54,7 @@
       this.reportViewer1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       reportDataSource1.Name = "FinaleReportDataSource";
       reportDataSource1.Value = this.FinaleReportDataSourceBindingSource;
-      reportDataSource2.Name = "Counter_FinaleReportChartDataSource";
+      reportDataSource2.Name = "CounterApplication_FinaleReportChartDataSource";
       reportDataSource2.Value = this.chartsBindingSource;
       this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
       this.reportViewer1.LocalReport.DataSources.Add(reportDataSource2);

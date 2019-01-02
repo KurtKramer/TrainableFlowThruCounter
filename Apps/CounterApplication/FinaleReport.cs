@@ -22,32 +22,32 @@ namespace CounterApplication
   {
     private  UmiParticleEntryList         particles       = null;
     private  UmiRunLog                    runLog          = null;
-    private  String                       scannerFileName = "";
+    private  string                       scannerFileName = "";
     private  UmiScannerFile               scannerFile     = null;
 
     private  UmiSessionParameters         sessionParameters   = new UmiSessionParameters ();
     private  UmiOperatingParameters       operatingParameters = new UmiOperatingParameters ();
 
-    private  String    sessionDescription = "";
-    private  String    controlNum         = "";
+    private  string    sessionDescription = "";
+    private  string    controlNum         = "";
     private  float     scanRate           = 20000.0f;
     private  DateTime  dateTimeRecorded;
     private  int       totalCount         = 0;
     private  int       totalRecordTime    = 0;
-    private  String    trainingModelName  = "";
+    private  string    trainingModelName  = "";
 
     private  int       sampleSize  = 0;
     private  float     sizeMean    = 0.0f;
     private  float     sizeStdDev  = 0.0f;
 
 
-    private  String    configFileName     = "";
+    private  string    configFileName     = "";
     private  bool      formIsMaximized    = false;
 
     private  int  heightLast = 0;
     private  int  widthLast  = 0;
 
-    private  String  lastDirectorySavedTo = "";
+    private  string  lastDirectorySavedTo = "";
 
     private  bool    autoSaveReport = false;
 
@@ -69,10 +69,10 @@ namespace CounterApplication
 
 
     public FinaleReport (CounterManagerWrapper  _cameraManager,
-                         String                       _scannerFileName,
-                         bool                         _autoSaveReport,
-                         bool                         _saveDebugImages,
-                         UmiRunLog                    _runLog
+                         string                 _scannerFileName,
+                         bool                   _autoSaveReport,
+                         bool                   _saveDebugImages,
+                         UmiRunLog              _runLog
                         )
     {
       cameraManager = _cameraManager;
@@ -97,7 +97,7 @@ namespace CounterApplication
 
       LoadConfigurationFile ();
 
-      String  scannerFileComments = "";
+      string  scannerFileComments = "";
 
       sessionDescription  = "";
       controlNum          = "";
@@ -219,7 +219,7 @@ namespace CounterApplication
       int  savedHeight = 0;
       bool screenWasMaximized = false;
 
-      String  nextLine = null;
+      string  nextLine = null;
 
       while  (true)
       {
@@ -232,12 +232,12 @@ namespace CounterApplication
         if  ((nextLine.Length < 3)  ||  (nextLine.Substring (0, 2) == "//"))
           continue;
 
-        String[] fields = nextLine.Split ('\t');
+        string[] fields = nextLine.Split ('\t');
         if  (fields.Length < 2)
           continue;
 
-        String  fieldName  = fields[0];
-        String  fieldValue = fields[1];
+        string  fieldName  = fields[0];
+        string  fieldValue = fields[1];
 
         switch  (fieldName)
         { 
@@ -388,7 +388,7 @@ namespace CounterApplication
       for  (int idx = 0;  idx < sizeHistogram.Count;  ++idx)
       {
         DataPoint dp = new DataPoint (idx, sizeHistogram[idx]);
-        String spLabel = "";
+        string spLabel = "";
         if  (sizeInterval == 1.0f)
         {
           spLabel = (idx * sizeInterval).ToString ();
@@ -461,7 +461,7 @@ namespace CounterApplication
 
 
 
-    private  String  SecondsToTimeStr (int  secs)
+    private  string  SecondsToTimeStr (int  secs)
     {
       int  hours = secs / 3600;
       secs = secs % 3600;
@@ -585,12 +585,12 @@ namespace CounterApplication
 
     private  void  AutoSaveReport ()
     {
-      String  reportDir = UmiOSservices.AddSlash (UmiVariables.ReportDir ()) + "SessionReports";
+      string  reportDir = UmiOSservices.AddSlash (UmiVariables.ReportDir ()) + "SessionReports";
       UmiOSservices.CreateDirectoryPath (reportDir);
 
       int  seqNum = 0;
       bool  uniqueNameFound = false;
-      String  reportName = "";
+      string  reportName = "";
       while  (!uniqueNameFound)
       {
         reportName = UmiOSservices.AddSlash (reportDir) + UmiOSservices.GetRootName (scannerFileName) + "_" + seqNum.ToString ("000") + ".pdf";
@@ -603,7 +603,7 @@ namespace CounterApplication
 
 
 
-    private  void  SaveRepordAsPDF (String  fileName,
+    private  void  SaveRepordAsPDF (string  fileName,
                                     bool    aknowledgeSuccessfulSave
                                    )
     {
@@ -654,10 +654,10 @@ namespace CounterApplication
         chartsBindingSource.DataSource = chartSource;
         reportViewer1.RefreshReport ();
 
-        String mimeType = String.Empty;
-        String encoding = String.Empty;
-        String fileExt  = String.Empty;
-        String[] streams = null;
+        string mimeType = string.Empty;
+        string encoding = string.Empty;
+        string fileExt  = string.Empty;
+        string[] streams = null;
         Microsoft.Reporting.WinForms.Warning[] warnings = null;
         renderedReport = reportViewer1.LocalReport.Render ("PDF", null, out mimeType, out encoding, out fileExt, out streams, out warnings);
       }
@@ -716,7 +716,7 @@ namespace CounterApplication
 
     private void SavePDFButton_Click (object sender, EventArgs e)
     {
-      if  (String.IsNullOrEmpty (lastDirectorySavedTo))
+      if  (string.IsNullOrEmpty (lastDirectorySavedTo))
       {
         lastDirectorySavedTo = UmiOSservices.AddSlash (UmiVariables.ReportDir ()) + "SessionReports";
         UmiOSservices.CreateDirectoryPath (lastDirectorySavedTo);
