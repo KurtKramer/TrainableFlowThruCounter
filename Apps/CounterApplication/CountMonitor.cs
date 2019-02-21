@@ -107,7 +107,8 @@ namespace CounterApplication
         Width  = startUpWidth;
       }
 
-      cameraLine.SetCameraManager (cameraManager);
+      if  (cameraLine != null)
+        cameraLine.SetCameraManager (cameraManager);
 
       SetUpToolTips ();
     }
@@ -1199,8 +1200,11 @@ namespace CounterApplication
       ThroughputChart.Width  += deltaWidth;
       ThroughputChart.ChartAreas[0].AxisX.ScaleView.Size = ThroughputChart.Width / 50;
 
-      cameraLine.Height += deltaHeight;
-      cameraLine.Width  += deltaWidth;
+      if  (cameraLine != null)
+      {
+        cameraLine.Height += deltaHeight;
+        cameraLine.Width += deltaWidth;
+      }
 
       lastHeight = Height;
       lastWidth  = Width;
