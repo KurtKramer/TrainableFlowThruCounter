@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <StartupObject>LarcosCounter.Program</StartupObject>
-    <ApplicationIcon>zois_icon.ico</ApplicationIcon>
+    <ApplicationIcon>LarcosLogoSmall.ico</ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>

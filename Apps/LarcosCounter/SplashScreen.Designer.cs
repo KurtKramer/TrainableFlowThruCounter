@@ -53,7 +53,7 @@
       // 
       // pictureBox2
       // 
-      this.pictureBox2.Image = global::LarcosCounter.Properties.Resources.ZOIS_Logo;
+      this.pictureBox2.Image = global::LarcosCounter.Properties.Resources.LarcosLogoMedium;
       this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
       this.pictureBox2.Location = new System.Drawing.Point(3, 3);
       this.pictureBox2.Name = "pictureBox2";
