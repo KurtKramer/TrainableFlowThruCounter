@@ -24,5 +24,10 @@ namespace LarcosFileViewer
       if  (ticks > 30)
         this.Close ();
     }
+
+    private void pictureBox1_Click(object sender, EventArgs e)
+    {
+
+    }
   }
 }
