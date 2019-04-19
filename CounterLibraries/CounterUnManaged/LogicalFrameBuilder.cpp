@@ -16,7 +16,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "Blob.h"
 #include "ImageIO.h"
@@ -147,13 +146,13 @@ kkMemSize LogicalFrameBuilder::MemoryConsumedEstimated ()
 
 
 
-
 void  LogicalFrameBuilder::GetStats (CounterStats&  larcosCameraStats) const
 {
   larcosCameraStats.LogicalFramesCreated    (logicalFramesCreated);
   larcosCameraStats.LogicalFramesDropped    (logicalFramesDropped);
   larcosCameraStats.PhysicalFramesProcessed (physicalFramesProcessed);
 }
+
 
 
 void  LogicalFrameBuilder::CropSettings (kkint32  _cropLeft,
@@ -189,7 +188,6 @@ CameraFramePtr  LogicalFrameBuilder::GetNextFrame ()
 
   return  frame;
 }  /* GetNextFrame */
-
 
 
 
@@ -341,7 +339,6 @@ void  LogicalFrameBuilder::AddFrameToScanLineArea (CameraFramePtr f)
 
 
 
-
 void  LogicalFrameBuilder::FindLastScanLineToProcess ()
 {
   kkint32 oneForthRow = scanLinesAllocated / 4;
@@ -434,8 +431,6 @@ void  LogicalFrameBuilder::PlaceRasterDataIntoLogicalFrameList (ScannerFileEntry
 
 
 
-
-
 void  LogicalFrameBuilder::MoveOutProcessedScanLines ()
 {
   // 'scanLines' represent the working set of scanLines being processed,  but in the global sense of
@@ -477,7 +472,6 @@ void  LogicalFrameBuilder::MoveOutProcessedScanLines ()
     memset (scanLines[nextRowToUse], 0, linesNeedingToBeBlankedOut * frameWidth);
   }
 }  /* MoveOutProcessedScanLines */
-
 
 
 
@@ -530,7 +524,6 @@ void  LogicalFrameBuilder::ProcessDroppedFrames ()
   log.Level (10) << "LogicalFrameBuilder::ProcessDroppedFrames   Exiting" << endl;
 
 }  /* ProcessDroppedFrames */
-
 
 
 
@@ -588,8 +581,6 @@ void  LogicalFrameBuilder::LoadLogicalFrame (ScannerFilePtr        sf,
   logicalFrames->QueueFrameForProcessing (frame);
   delete[]  colCount;
 }  /* LoadLogicalFrame */
-
-
 
 
 

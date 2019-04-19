@@ -21,10 +21,8 @@ using namespace  CounterBase;
 #include "SessionLogger.h"
 using  namespace  CounterUnManaged;
 
-
 KKStr  SessionLogger::lastSessionIdFileName  = KKB::osAddSlash (CounterVariables::ConfigurationDir ()) + "LastSessionId.txt";
 KKStr  SessionLogger::sessionLogFileName     = KKB::osAddSlash (CounterVariables::LoggingDir       ()) + "SessionLog.txt";
-
 
 kkint32  SessionLogger::GetNextSessionId ()
 {
@@ -94,7 +92,6 @@ kkint32  SessionLogger::GetLastSessionId ()
 
 
 
-
 void  SessionLogger::AddSessionEntry (SessionParametersPtr    sessionParameters,
                                       OperatingParametersPtr  operatorParameters
                                      )
@@ -112,7 +109,3 @@ void  SessionLogger::AddSessionEntry (SessionParametersPtr    sessionParameters,
 
   GlobalGoalKeeper::EndBlock ();
 }  /* AddSessionEntry */
-
-
-
-

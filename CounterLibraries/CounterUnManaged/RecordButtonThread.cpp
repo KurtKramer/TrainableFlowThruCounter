@@ -71,7 +71,6 @@ void  RecordButtonThread::Run ()
 
 
 
-
 void  RecordButtonThread::ResetCounts ()
 {
 }

@@ -14,7 +14,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "MsgQueue.h"
 #include "OSservices.h"
@@ -99,6 +98,7 @@ KKStrListPtr  LoggerThread::GetAllLoggedMsgs ()
 }
 
 
+
 KKStrPtr  LoggerThread::GetNextLoggedMsg ()
 {
   if  (loggedMsgs)
@@ -106,6 +106,7 @@ KKStrPtr  LoggerThread::GetNextLoggedMsg ()
   else
     return NULL;
 }
+
 
 
 void  LoggerThread::ProcessMsgQueue ()
@@ -148,7 +149,6 @@ void  LoggerThread::Run ()
   Status (ThreadStatus::Stopping);
   return;
 }  /* Run */
-
 
 
 

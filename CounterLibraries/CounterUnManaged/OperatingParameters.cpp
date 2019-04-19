@@ -10,13 +10,11 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "GlobalGoalKeeper.h"
 #include "Configuration.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 using namespace KKB;
-
 
 #include "ScannerFile.h"
 using namespace  KKLSC;
@@ -104,7 +102,6 @@ KKStrConstPtr OperatingParameters::GetSettingValue (const CounterTrainingConfigu
 
 
 
-
 void  OperatingParameters::UpdateFromConfiguration (const CounterTrainingConfiguration&  c)
 {
   UpdateFromConfigurationUchar      (c, "BackGroundPixelTH",        backGroundPixelTH);
@@ -144,6 +141,7 @@ void  OperatingParameters::Assign (const OperatingParameters& stats)
   requestedSensitivityMode = stats.requestedSensitivityMode;
   requestedScanRate        = stats.requestedScanRate;
 }
+
 
 
 void  OperatingParameters::AddToHeaderFields (ScannerHeaderFieldsPtr  headerFields)
@@ -221,7 +219,6 @@ void  OperatingParameters::UpdateFromScannerFile (ScannerFilePtr  sf)
   requestedScanRate        = GetScannerFileValueFloat (sf, "RequestedScanRate",        requestedScanRate );
 }  /* UpdateFromScannerFile */
  
-
 
 
 void  OperatingParameters::UpdateFromDataField (const KKStr&  fieldName,
@@ -466,7 +463,6 @@ void  OperatingParameters::ReadXML (istream&  i)
   delete  restOfLine;
   restOfLine = NULL;
 }  /*   ReadXML  */
-
 
 
 

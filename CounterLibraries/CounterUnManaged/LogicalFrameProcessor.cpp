@@ -33,7 +33,6 @@ using namespace  KKLSC;
 #include "TrainingProcess2.h"
 using  namespace KKMLL;
 
-
 #include "LogicalFrameProcessor.h"
 
 #include "CameraFrame.h"
@@ -51,7 +50,6 @@ using  namespace  CounterUnManaged;
 typedef  LogicalFrameProcessor::BlobIdType  BlobIdType;
 
 volatile  GoalKeeperPtr  LogicalFrameProcessor::classifierBuildBlocker = NULL;
-
 
 
 
@@ -103,7 +101,6 @@ public:
 
 
 
-
 class  LogicalFrameProcessor::BlobList
 {
 public:
@@ -133,6 +130,7 @@ public:
     delete[] blobList;
     blobList = NULL;
   }
+
 
 
   kkMemSize  MemoryConsumedEstimated ()
@@ -166,6 +164,7 @@ public:
   }
 
 
+
   void  Reset ()
   {
     nextBlobId = 0;
@@ -173,6 +172,7 @@ public:
     blobsInUse = 0;
     largestKnownRow = 0;
   }
+
 
 
   BlobPtr  NextAvailableBlob (BlobIdType**  blobIds)
@@ -289,6 +289,7 @@ public:
   }
 
 
+
   /** @brief  Merges the smaller blob into the larger blob.   */
   BlobPtr  MergeBlobIds (BlobIdType    blob1Id,
                          BlobIdType    blob2Id,
@@ -361,8 +362,6 @@ private:
 
 
 
-
-
 LogicalFrameProcessor::LogicalFrameProcessor 
                                 (CounterManagerPtr _manager,
                                  const KKStr&            _classifierName,
@@ -431,9 +430,7 @@ LogicalFrameProcessor::LogicalFrameProcessor
     workLines                  (NULL),
 
     saveDebugImages            (false)
-
-
-{
+ {
   log.Level (10) << ThreadName () << "::LogicalFrameProcessor" << endl;
   particlesDirName   = osAddSlash (particlesDirName);
   stretcher = new MorphOpStretcher (flowRateRatio, 1.0f);
@@ -657,7 +654,6 @@ void  LogicalFrameProcessor::LoadClassifer ()
 
 
 
-
 // This thread will include counting.
 void  LogicalFrameProcessor::Run ()
 {
@@ -719,7 +715,6 @@ void  LogicalFrameProcessor::TerminateFlagChanged ()
 {
   CameraThread::TerminateFlagChanged ();
 }
-
 
 
 
@@ -870,7 +865,6 @@ void  LogicalFrameProcessor::ProcessFrame ()
 
 
 
-
 void  LogicalFrameProcessor::AnalyseParticleStraightCount (RasterPtr  particle,
                                                            kkint32    scanRow,
                                                            kkint32    scanCol,
@@ -937,8 +931,6 @@ void  LogicalFrameProcessor::AnalyseParticlePostLarvae (RasterPtr  particle,
 
   UpdateCounts (particleSize, (float)countThisParticle);
 }  /* AnalyseParticlePostLarvae */
-
-
 
 
 
@@ -1054,7 +1046,6 @@ void  LogicalFrameProcessor::AddParticleEntry (kkint32          scanRow,
 
 
 
-
 void  LogicalFrameProcessor::SaveParticle (RasterPtr   particle,
                                            kkint32     countThisParticle,
                                            MLClassPtr  mlClass,
@@ -1096,15 +1087,12 @@ void  LogicalFrameProcessor::SaveParticle (RasterPtr   particle,
 
 
 
-
 void  LogicalFrameProcessor::UpdateCounts (kkint32  size,
                                            float  numCounted
                                           )
 {
   particlesCounted += (kkint32)(numCounted + 0.5f);
 }
-
-
 
 
 
@@ -1141,7 +1129,6 @@ BlobIdType  LogicalFrameProcessor::NearestNeighborUpperLeft (kkint32  row,
 
 
 
-
 BlobIdType  LogicalFrameProcessor::NearestNeighborUpperRight (kkint32  row,
                                                               kkint32  col
                                                              )
@@ -1169,8 +1156,6 @@ BlobIdType  LogicalFrameProcessor::NearestNeighborUpperRight (kkint32  row,
   return  nearestBlobId;
 }  /* NearestNeighborUpperRight */
    
-
-
 
 
 void   LogicalFrameProcessor::ExtractBlobs (uchar*  rowsArea,
@@ -1288,7 +1273,6 @@ void   LogicalFrameProcessor::ExtractBlobs (uchar*  rowsArea,
 
   return ;
 }  /* ExtractBlobs */
-
 
 
 
@@ -1428,7 +1412,6 @@ RasterPtr  LogicalFrameProcessor::ExtractABlob2 (uchar*         rowsArea,
 
 
 
-
 void  LogicalFrameProcessor::ErodeImage (uchar**  srcRaster,
                                          uchar*   destRasterArea,
                                          uchar**  destRaster,
@@ -1486,7 +1469,6 @@ void  LogicalFrameProcessor::ErodeImage (uchar**  srcRaster,
 
 
 
-
 void  LogicalFrameProcessor::ResetCounts ()
 {
   logicalFramesProcessed     = 0;
@@ -1494,7 +1476,6 @@ void  LogicalFrameProcessor::ResetCounts ()
   particlesCounted           = 0;
   particlesWaitingProcessing = 0;
 }
-
 
 
 
@@ -1553,6 +1534,7 @@ void  LogicalFrameProcessorList::GetStats (CounterStats&  larcosCameraStats) con
 
   return;
 }  /* GetStats */
+
 
 
 void  LogicalFrameProcessorList::ShutdownThreads ()

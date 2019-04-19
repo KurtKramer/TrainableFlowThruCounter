@@ -55,7 +55,6 @@ const KKStr&  StatusSnapshot::SnapShotFieldIdxToStr (FieldIdx i)
 
 
 
-
 StatusSnapshot::FieldIdx  StatusSnapshot::SnapShotFieldIdxFromStr (const KKStr&  s)
 {
   int  x = 0;
@@ -68,7 +67,6 @@ StatusSnapshot::FieldIdx  StatusSnapshot::SnapShotFieldIdxFromStr (const KKStr& 
 
   return  FieldIdx::Null;
 }
-
 
 
 
@@ -90,7 +88,6 @@ StatusSnapshot::StatusSnapshot ():
   flowRate                        (0.0f)
 {
 }
-
 
 
 
@@ -164,7 +161,6 @@ kkMemSize  StatusSnapshot::MemoryConsumedEstimated ()  const
 
 
 
-
 void  StatusSnapshot::Assign (const StatusSnapshot&  _entry)
 {
   timeStamp                       = _entry.timeStamp;
@@ -209,7 +205,6 @@ void  StatusSnapshot::Assign (const CounterStats&  _lastEntry,
 
 
 
-
 void  StatusSnapshot::UpdateTimeStamp ()
 {
   timeStamp = osGetLocalDateTime ();
@@ -234,8 +229,6 @@ StatusSnapshotList::StatusSnapshotList (const StatusSnapshotList&  _list):
 StatusSnapshotList::~StatusSnapshotList ()
 {
 }
-
-
 
 
 
@@ -314,7 +307,6 @@ StatusSnapshotListPtr  StatusSnapshotBuffer::Retrieve (KKB::DateTime  rangeStart
 
 
 
-
 const StatusSnapshotPtr  StatusSnapshotBuffer::LastEntry ()
 {
   StatusSnapshotPtr  result = NULL;
@@ -325,9 +317,3 @@ const StatusSnapshotPtr  StatusSnapshotBuffer::LastEntry ()
   goalie->EndBlock ();
   return  result;
 }  /* LastEntry */
-
-
-
-
-
-

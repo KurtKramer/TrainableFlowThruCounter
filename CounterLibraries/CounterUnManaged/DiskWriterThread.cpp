@@ -101,6 +101,7 @@ kkMemSize  DiskWriterThread::MemoryConsumedEstimated ()
 }
 
 
+
 void  DiskWriterThread::GetStats (CounterStats&  stats)  const
 {
   bytesWrittenAllSegs = bytesWrittenCompletedSegs + bytesWritten;
@@ -116,7 +117,6 @@ bool  DiskWriterThread::WeAreRecordingToDisk ()
 {
   return ((Status () == ThreadStatus::Running)  &&  (DiskStatus () == DiskWritingStatus::Recording));
 }  /* WeAreRecordingToDisk */
-
 
 
 
@@ -197,8 +197,7 @@ void  DiskWriterThread::Run ()
     Status (ThreadStatus::Stopping);
     return;
   }
-
-
+  
   ScannerFilePtr  scannerFile = NULL;
   scannerFileSize = 0;
 
@@ -372,12 +371,12 @@ void  DiskWriterThread::Run ()
 
 
 
-
 void  DiskWriterThread::AddMessageToCurrentScannerFile (const KKStr&  msg)
 {
   msgsAreQueued = true;
   msgs->AddMsg (msg);
 }
+
 
 
 void  DiskWriterThread::ResetCounts ()

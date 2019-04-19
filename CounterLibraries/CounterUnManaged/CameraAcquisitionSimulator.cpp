@@ -16,7 +16,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "GoalKeeper.h"
 #include "OSservices.h"
@@ -24,10 +23,8 @@ using namespace std;
 #include "RunLog.h"
 using namespace KKB;
 
-
 #include "ScannerFile.h"
 using namespace  KKLSC;
-
 
 #include "CameraAcquisitionSimulator.h"
 #include "CameraFrame.h"

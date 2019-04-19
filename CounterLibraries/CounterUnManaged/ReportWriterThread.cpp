@@ -83,6 +83,7 @@ kkMemSize  ReportWriterThread::MemoryConsumedEstimated ()
 }
 
 
+
 void  ReportWriterThread::GetStats (CounterStats&  stats)  const
 {
 }
@@ -108,6 +109,7 @@ void  ReportWriterThread::WriteHeader ()
 }
 
 
+
 void  ReportWriterThread::AddDataLine (const KKStr& lineName,
                                        const KKStr& lineValue
                                       )
@@ -116,6 +118,7 @@ void  ReportWriterThread::AddDataLine (const KKStr& lineName,
   *report << lineName << "\t" << lineValue << endl;
   particleEntryBuffer->EndBlock ();
 }
+
 
 
 void  ReportWriterThread::Run ()
@@ -163,10 +166,6 @@ void  ReportWriterThread::Run ()
 
   return;
 }  /* Run */
-
-
-
-
 
 
 

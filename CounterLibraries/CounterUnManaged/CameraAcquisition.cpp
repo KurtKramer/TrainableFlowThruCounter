@@ -39,8 +39,6 @@ using  namespace  CounterUnManaged;
 
 
 
-
-
 CommandEntry::CommandEntry (EntryTypes  _commandType,
                             float       _parameter
                            ):
@@ -150,11 +148,13 @@ CommandEntry::CommandEntry (EntryTypes    _commandType,
 }
 
 
+
 CommandEntryQueue::~CommandEntryQueue ()
 {
   GoalKeeper::Destroy (goalie);
   goalie = NULL;
 }
+
 
 
 void  CommandEntryQueue::AddScanRateCommand (float _scanRate)
@@ -163,10 +163,12 @@ void  CommandEntryQueue::AddScanRateCommand (float _scanRate)
 }
 
 
+
 void  CommandEntryQueue::AddAnalogGainCommand (float _analogGain)
 {
   PushOnBack (new CommandEntry (CommandEntry::EntryTypes::AnalogGain, _analogGain));
 }
+
 
 
 void  CommandEntryQueue::AddDigitalGainCommand (kkint32 _digitalGain)
@@ -182,10 +184,12 @@ void  CommandEntryQueue::AddSensitivityMode (const KKStr&  _sensitivityMode)
 }
 
 
+
 CommandEntryPtr  CommandEntryQueue::GetNextCommand ()
 {
   return  PopFromFront ();
 }
+
 
 
 void  CommandEntryQueue::PushOnBack (CommandEntryPtr  cmd)
@@ -197,12 +201,14 @@ void  CommandEntryQueue::PushOnBack (CommandEntryPtr  cmd)
 }
 
 
+
 void  CommandEntryQueue::PushOnFront (CommandEntryPtr  cmd)
 {
   goalie->StartBlock ();
   cmdQueue.PushOnBack (cmd);
   goalie->EndBlock ();
 }
+
 
 
 CommandEntryPtr  CommandEntryQueue::PopFromFront ()
@@ -217,14 +223,11 @@ CommandEntryPtr  CommandEntryQueue::PopFromFront ()
 
 
 
-
-
-
-CameraAcquisition::CameraAcquisition (CounterManagerPtr _manager,
-                                      CameraFrameBufferPtr    _frameBuffer,
-                                      FlowMeterTrackerPtr     _flowMeter,
-                                      MsgQueuePtr             _msgQueue,
-                                      const KKStr&            _threadName
+CameraAcquisition::CameraAcquisition (CounterManagerPtr    _manager,
+                                      CameraFrameBufferPtr _frameBuffer,
+                                      FlowMeterTrackerPtr  _flowMeter,
+                                      MsgQueuePtr          _msgQueue,
+                                      const KKStr&         _threadName
                                     ):
     CameraThread (_manager, _threadName, _msgQueue),
     cameraParams             (NULL),
@@ -254,8 +257,6 @@ CameraAcquisition::CameraAcquisition (CounterManagerPtr _manager,
   cameraParams = new CameraParameters ();
   commandQueue = new CommandEntryQueue ();
 }
-
-
 
 
 
@@ -296,14 +297,11 @@ CameraAcquisition::CameraAcquisition (CounterManagerPtr _manager,
 
 
 
-
-
 CameraAcquisition::~CameraAcquisition ()
 {
   delete  cameraParams;   cameraParams = NULL;
   delete  commandQueue;   commandQueue = NULL;
 }
-
 
 
 
@@ -327,15 +325,12 @@ kkMemSize CameraAcquisition::MemoryConsumedEstimated () const
 
 
 
-
 void  CameraAcquisition::FlowMeterCounterUpdate (kkuint32 scanLineNum,
                                                  kkuint32 counter
                                                 )
 {
   flowMeter->AddEntry (scanLineNum, counter);
 }
-
-
 
 
 
@@ -361,10 +356,12 @@ void  CameraAcquisition::AddAnalogGainCommand (float _analogGain)
 }
 
 
+
 void  CameraAcquisition::AddDigitalGainCommand (kkint32 _digitalGain)
 {
   commandQueue->AddDigitalGainCommand (_digitalGain);
 }
+
 
 
 void  CameraAcquisition::AddScanRateCommand (float _scanRate)
@@ -373,16 +370,19 @@ void  CameraAcquisition::AddScanRateCommand (float _scanRate)
 }
 
 
+
 void  CameraAcquisition::AddSensitivityModeCommand (const KKStr&  _sensitivityMode)
 {
   commandQueue->AddSensitivityMode (_sensitivityMode);
 }
 
 
+
 bool  CameraAcquisition::QueueActive () const
 {
   return commandQueue->QueueActive ();
 }
+
 
 
 CommandEntryPtr  CameraAcquisition::GetNextCommandEntry ()
@@ -401,6 +401,7 @@ const KKStr&  CameraAcquisition::SerialNumber ()  const
 }
 
 
+
 const KKStr&  CameraAcquisition::MacAddress ()  const
 {
   if  (cameraParams)
@@ -408,6 +409,7 @@ const KKStr&  CameraAcquisition::MacAddress ()  const
   else
     return  KKStr::EmptyStr ();
 }
+
 
 
 const KKStr&  CameraAcquisition::IpAddress ()  const
@@ -419,6 +421,7 @@ const KKStr&  CameraAcquisition::IpAddress ()  const
 }
 
 
+
 kkint32  CameraAcquisition::FrameHeight ()  const  
 {
   if  (cameraParams)
@@ -428,6 +431,7 @@ kkint32  CameraAcquisition::FrameHeight ()  const
 }
 
 
+
 kkint32  CameraAcquisition::FrameWidth ()  const
 {
   if  (cameraParams)
@@ -435,6 +439,7 @@ kkint32  CameraAcquisition::FrameWidth ()  const
   else
     return  0;
 }
+
 
 
 void  CameraAcquisition::FrameHeightWidth (kkint32  _frameHeight,
@@ -463,7 +468,6 @@ float  CameraAcquisition::ScanRate ()  const
   else
     return  0.0f;
 }
-
 
 
 
@@ -603,6 +607,7 @@ void  CameraAcquisition::Run ()
 }
 
 
+
 void  CameraAcquisition::ResetCounts ()
 {
   scanLinesRead          = 0;
@@ -610,5 +615,3 @@ void  CameraAcquisition::ResetCounts ()
   totalLostPackets       = 0;
   physicalSeqNumsSkipped = 0;
 }
-
-

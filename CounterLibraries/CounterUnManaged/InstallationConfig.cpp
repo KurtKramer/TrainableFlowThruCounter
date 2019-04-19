@@ -12,12 +12,10 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "KKStrParser.h"
 #include "OSservices.h"
 using namespace KKB;
-
 
 #include "ScannerFile.h"
 #include "ScannerHeaderFields.h"
@@ -25,8 +23,6 @@ using namespace  KKLSC;
 
 #include "CounterVariables.h"
 using namespace  CounterBase;
-
-
 
 #include "InstallationConfig.h"
 using  namespace  CounterUnManaged;
@@ -114,8 +110,6 @@ InstallationConfig::InstallationConfig (const KKB::KKStr&  _name,
 
 
 
-
-
 InstallationConfig::~InstallationConfig ()
 {
 }
@@ -128,6 +122,7 @@ const KKStr&  InstallationConfig::FlowMeterMethodStr () const
 }
 
 
+
 void  InstallationConfig::AddToHeaderFields (ScannerHeaderFieldsPtr  headerFields)
 {
   headerFields->Add ("Installation:Description",                 description);
@@ -138,9 +133,6 @@ void  InstallationConfig::AddToHeaderFields (ScannerHeaderFieldsPtr  headerField
   headerFields->Add ("Installation:CameraMacAddress",            cameraMacAddress);
   headerFields->Add ("Installation:Name",                        name);
 }
-
-
-
 
 
 
@@ -164,7 +156,6 @@ void  InstallationConfig::UpdateFromScannerFile (ScannerFilePtr  sf)
  
 
 
-
 bool  InstallationConfig::FlowMeterPresent () const
 {
   return  ((flowMeterMethod == FlowMeterMethods::Embedded));
@@ -172,11 +163,11 @@ bool  InstallationConfig::FlowMeterPresent () const
 
 
 
-
 kkMemSize  InstallationConfig::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this) + description.MemoryConsumedEstimated ()  + name.MemoryConsumedEstimated ();
 }
+
 
 
 void  InstallationConfig::Assign (const InstallationConfig&   config)
@@ -201,11 +192,11 @@ KKStr  InstallationConfig::InstallationDirPath ()
 }
 
 
+
 KKStr  InstallationConfig::DeriveFullFleName (const KKStr& _name)
 {
   return  osAddSlash (InstallationDirPath ()) + _name + ".cfg";
 }
-
 
 
 
@@ -256,14 +247,12 @@ void  InstallationConfig::WriteFieldValues (ostream&   o)  const
 
 
 
-
 void  InstallationConfig::WriteXML (ostream&  o)  const
 {
   o << "<InstallationConfig>"  << endl;
   WriteFieldValues (o);
   o << "</InstallationConfig>"  << endl;
 }  /* WriteXML */
-
 
 
 
@@ -290,11 +279,6 @@ void  InstallationConfig::ReadXML (istream&  i)
       UpdateFromDataField (fieldName, restOfLine, fieldFound);
   }
 }  /*   ReadXML  */
-
-
-
-
-
 
 
 
@@ -397,9 +381,11 @@ InstallationConfigList::InstallationConfigList (bool  _owner):
 }
 
 
+
 InstallationConfigList::~InstallationConfigList ()
 {
 }
+
 
  
 InstallationConfigListPtr  InstallationConfigList::GetListOfInstallationConfig (RunLog&  _log)

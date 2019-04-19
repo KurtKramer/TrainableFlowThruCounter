@@ -25,15 +25,12 @@ using namespace std;
 #include "KKStr.h"
 using namespace KKB;
 
-
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "CounterFeatureVector.h"
 #include "CounterFVProducer.h"
-
 using namespace KKMLL;
-           
-           
+                      
 #include "FeatureFileIOKK.h"
 using namespace CounterUnManaged;
            
@@ -64,6 +61,7 @@ FeatureFileIOKK::FeatureFileIOKK ():
 FeatureFileIOKK::~FeatureFileIOKK ()
 {
 }
+
 
 
 void  FeatureFileIOKK::Parse_FEATURE_DATA_FILE_Line (KKStr&   line,
@@ -97,7 +95,6 @@ void  FeatureFileIOKK::Parse_FEATURE_DATA_FILE_Line (KKStr&   line,
     field = line.ExtractToken (" ,\t\n\r").ToUpper ();
   }
 }  /* Parse_FEATURE_DATA_FILE_Line */
-
 
 
 
@@ -160,9 +157,6 @@ VectorInt  FeatureFileIOKK::CreateIndirectionTable (const VectorKKStr&  fields,
 
 
 
-
-
-
 FileDescConstPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
                                                 istream&        _in,
                                                 MLClassListPtr  _classes,
@@ -188,8 +182,7 @@ FileDescConstPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
     _errorMessage = "The first line must contain FEATURE_DATA_FILE.";
     return NULL;
   }
-
-
+  
   kkint32  version       = -1;
   kkint32  numOfFeatures = -1;
   kkint32  numOfExamples = -1;
@@ -244,9 +237,7 @@ FileDescConstPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
 
 
 
-
-
-CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
+CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&     _fileName,
                                                        FileDescConstPtr  _fileDesc,
                                                        MLClassList&      _classes, 
                                                        istream&          _in,
@@ -287,7 +278,6 @@ CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileN
     return  NULL;
   }
   
-
   // The second line will have a list of fields;  we will use this line to build
   // an indirection table.
   KKStr  fieldDescLine = osReadRestOfLine2 (_in, eof);
@@ -389,7 +379,6 @@ CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileN
           }
           break;
 
-
         case FieldTypes::ClassName: 
           className = field;
           if  (className.Empty ())
@@ -484,7 +473,6 @@ CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileN
 
 
 
-
 /**
  * @brief  Used to quickly locate Index in MLClassList object; needed by RawFile format.
  * @param[out] classIdx   Map template, from MLClass to Index in a MLClassList object.
@@ -504,7 +492,6 @@ kkint32  GetClassIdx (const map<MLClassPtr, kkint32>&  classIdx,
     return -1;
   return p->second;
 }  /* GetClassIdx */
-
 
 
 
@@ -648,5 +635,3 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
   return;
 
 }  /* SaveFile */
-
-

@@ -54,7 +54,6 @@ kkMemSize  StopButtonThread::MemoryConsumedEstimated ()
 
 
 
-
 void  StopButtonThread::Run ()
 {
   Status (ThreadStatus::Running);
@@ -66,7 +65,6 @@ void  StopButtonThread::Run ()
   Status (ThreadStatus::Stopping);
   return;
 }  /* Run */
-
 
 
 

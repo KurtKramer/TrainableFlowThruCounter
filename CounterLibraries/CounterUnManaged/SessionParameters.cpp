@@ -97,7 +97,6 @@ const KKStr&  SessionParameters::GetScannerFileValue (ScannerFilePtr  sf,
 
 
 
-
 void  SessionParameters::UpdateFromScannerFile (ScannerFilePtr  sf)
 {
   if  (sf == NULL)
@@ -138,7 +137,6 @@ void  SessionParameters::UpdateFromScannerFile (ScannerFilePtr  sf)
 
 }  /* UpdateFromScannerFile */
  
-
 
 
 void  SessionParameters::UpdateFromDataField (const KKStr&  fieldName,
@@ -277,4 +275,3 @@ void  SessionParameters::ReadXML (istream&  i)
     fieldName = osReadNextToken (i, "\t", eof, eol);
   }
 }  /* ReadXML */
-

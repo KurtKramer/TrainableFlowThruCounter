@@ -14,7 +14,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "ImageIO.h"
 #include "OSservices.h"
@@ -61,8 +60,6 @@ kkMemSize  StatusSnapshotThread::MemoryConsumedEstimated ()
 {
   return  sizeof (StatusSnapshotThread);
 }
-
-
 
 
 

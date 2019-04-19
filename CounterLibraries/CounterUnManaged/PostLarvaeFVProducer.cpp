@@ -15,18 +15,15 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "GlobalGoalKeeper.h"
 #include "Raster.h"
 #include "RunLog.h"
 using namespace KKB;
 
-
 #include "FactoryFVProducer.h"
 #include "FeatureVectorProducer.h"
 using namespace  KKMLL;
-
 
 #include "PostLarvaeFVProducer.h"
 

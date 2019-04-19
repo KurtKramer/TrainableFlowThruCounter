@@ -54,7 +54,6 @@ LogicalFrame::LogicalFrame (kkint32  _frameHeight,
 
 
 
-
 LogicalFrame::~LogicalFrame ()
 {
   CleanUpMemory ();
@@ -108,6 +107,7 @@ void  LogicalFrame::ReAllocateMemory (kkint32  _newFrameHeight,
 }
 
 
+
 const KKStr&  LogicalFrame::ScannerFileRootName () const  
 {
   if  (scannerFileEntry)
@@ -115,7 +115,6 @@ const KKStr&  LogicalFrame::ScannerFileRootName () const
   else
     return KKStr::EmptyStr ();
 }
-
 
 
 
@@ -149,8 +148,6 @@ void  LogicalFrame::AssignAFrame (LogicalFrameEntryPtr _logicalFrameEntry,
 
 
 
-
-
 LogicalFrameList::LogicalFrameList (kkint32 _maxNumFramesAllowed,
                                     kkint32 _frameHeight,
                                     kkint32 _frameWidth,
@@ -173,7 +170,6 @@ LogicalFrameList::LogicalFrameList (kkint32 _maxNumFramesAllowed,
    AllocateInitialFrames (_logger);
    goalKeeper->EndBlock ();
  }
-
 
 
 
@@ -256,14 +252,12 @@ void  LogicalFrameList::QueueFrameForProcessing (LogicalFramePtr  _frame)
 
 
 
-
 void  LogicalFrameList::FrameProcessed (LogicalFramePtr  _frame)
 {
   goalKeeper->StartBlock ();
   availableFrames.push (_frame);
   goalKeeper->EndBlock ();
 }  /* FrameProcessed */
-
 
 
 

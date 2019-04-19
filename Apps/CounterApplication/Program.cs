@@ -16,7 +16,7 @@ namespace CounterApplication
     [STAThread]
     static void Main()
     {
-      //SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
+      SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
       UmiMethods.StartMemoryLeakDetection ();
 
       CounterManaged.UmiVariables.SetCounterHomeDir ();  // Will set the application frame work variables to there default values.

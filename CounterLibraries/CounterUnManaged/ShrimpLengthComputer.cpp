@@ -116,7 +116,6 @@ Point  ShrimpLengthComputer::DerivePreRotatedPoint (kkint32 height,
 
 
 
-
 bool  ShrimpLengthComputer::OccludedImage (RasterPtr  i)
 {
   kkint32  tlRow;
@@ -244,7 +243,6 @@ float  ShrimpLengthComputer::CalcHeightWidthRatio (RasterPtr  i)
 
 
 
-
 int  ShrimpLengthComputer::ErodeBySize (Raster& i)
 {
   kkint32  numOfErosionsToDo = 1;
@@ -288,6 +286,7 @@ void  ShrimpLengthComputer::ErodeImageByStructSize (Raster& i)
   for (int x = 0;  x < erosionStructSize;  ++x)
     i.Erosion (MorphOp::MaskTypes::SQUARE3);
 }
+
 
 
 void  ShrimpLengthComputer::ProcessImage (RasterPtr  origImage,
@@ -504,7 +503,3 @@ void  ShrimpLengthComputer::ProcessImage (RasterPtr  origImage,
     }
   }
 }  /* ProcessImage */
-
-
-
-

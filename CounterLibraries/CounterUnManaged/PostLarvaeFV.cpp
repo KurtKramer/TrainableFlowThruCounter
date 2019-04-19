@@ -203,11 +203,13 @@ public:
 };  /* DarkSpotsStatsList */
 
 
+
 DarkSpotsStatsList*  darkSportStats001 = NULL;
 DarkSpotsStatsList*  darkSportStats010 = NULL;
 DarkSpotsStatsList*  darkSportStats050 = NULL;
 DarkSpotsStatsList*  darkSportStats100 = NULL;
 DarkSpotsStatsList*  darkSportStats500 = NULL;
+
 
 
 void  CounterUnManaged::PostLarvaeFVResetDarkSpotCounts ()
@@ -808,7 +810,6 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   if  (intermediateImages)
     SaveIntermediateImage (*wr2, "Opening3_" + StrFormatInt ((kkint32)areaOpen3, "ZZZZZZ0"), intermediateImages);
 
-
   raster->Erosion (wr1, MorphOp::MaskTypes::SQUARE5);
   wr1->Dilation (wr2, MorphOp::MaskTypes::SQUARE5);
   float  areaOpen5 = (float)(wr2->ForegroundPixelCount ());
@@ -1140,7 +1141,6 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)
   {
     const PostLarvaeFVList&  examples = dynamic_cast<const PostLarvaeFVList&> (featureVectorList);
   }
-
 
   if  (featureVectorList.Owner ())
   {

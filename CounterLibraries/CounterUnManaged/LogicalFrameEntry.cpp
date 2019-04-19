@@ -42,7 +42,6 @@ LogicalFrameEntry::LogicalFrameEntry ():
 
 
 
-
 LogicalFrameEntry::LogicalFrameEntry (const LogicalFrameEntry&  _entry):
     frameNum         (_entry.frameNum),
     height           (_entry.height),
@@ -127,6 +126,7 @@ void  LogicalFrameEntry::Assign (kkint32              _frameNum,
 }
 
 
+
 LogicalFrameEntryList::LogicalFrameEntryList (bool _owner):
    KKQueue<LogicalFrameEntry> (_owner)
 {
@@ -161,7 +161,6 @@ kkMemSize  LogicalFrameEntryList::MemoryConsumedEstimated ()  const
 
 
 
-
 LogicalFrameEntryQueue::LogicalFrameEntryQueue (bool           _owner,
                                                 const  KKStr&  _queueName
                                                ):
@@ -171,6 +170,7 @@ LogicalFrameEntryQueue::LogicalFrameEntryQueue (bool           _owner,
 {
   GoalKeeper::Create ("LogicalFrameEntryQueue_" + _queueName, goalie);
 }
+
 
 
 LogicalFrameEntryQueue::~LogicalFrameEntryQueue ()
@@ -188,6 +188,7 @@ LogicalFrameEntryQueue::~LogicalFrameEntryQueue ()
   GoalKeeper::Destroy (goalie);
   goalie = NULL;
 }
+
 
 
 kkMemSize  LogicalFrameEntryQueue::MemoryConsumedEstimated ()  const
@@ -238,5 +239,3 @@ kkint32  LogicalFrameEntryQueue::QueueSize ()  const
   goalie->EndBlock ();
   return  queueSize;
 }
-
-
