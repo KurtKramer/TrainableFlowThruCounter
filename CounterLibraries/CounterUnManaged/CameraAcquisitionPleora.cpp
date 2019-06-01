@@ -1842,9 +1842,9 @@ CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _m
 
     KKStr  interfaceDescription =  pvNetAdapter->GetDescription ().GetAscii ();
     KKStr  interfaceId          =  pvNetAdapter->GetUniqueID    ().GetAscii ();
-    KKStr  interfaceIpAddress   =  pvNetAdapter->GetIPAddress   (0).GetAscii ();
+    KKStr  interfaceIpAddress   =  pvNetAdapter->GetIPAddress   ().GetAscii ();
     KKStr  interfaceMacAddress  =  pvNetAdapter->GetMACAddress  ().GetAscii ();
-    KKStr  interfaceSubnetMask  =  pvNetAdapter->GetSubnetMask  (0).GetAscii ();
+    KKStr  interfaceSubnetMask  =  pvNetAdapter->GetSubnetMask  ().GetAscii ();
 
     uint32_t  deviceCount = pvInterface->GetDeviceCount ();
 
@@ -1935,9 +1935,9 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
     _runLog.Level (40) << "GetDeviceInfo   Checking Interface[" << interfaceDescription.GetAscii () << "]" << endl;
 
     PvString  interfaceId             = pvNetAdapter->GetUniqueID ();
-    KKStr     interfaceIpAddress      = pvNetAdapter->GetIPAddress (0).GetAscii ();
+    KKStr     interfaceIpAddress      = pvNetAdapter->GetIPAddress ().GetAscii ();
     KKStr     interfaceMacAddress     = pvNetAdapter->GetMACAddress ().GetAscii ();
-    PvString  interfaceSubnetMask     = pvNetAdapter->GetSubnetMask (0);
+    PvString  interfaceSubnetMask     = pvNetAdapter->GetSubnetMask ();
     PvString  interfaceDefaultGateway = pvNetAdapter->GetDefaultGateway ();
 
     uint32_t  deviceCount = pvInterface->GetDeviceCount ();
