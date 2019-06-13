@@ -513,10 +513,10 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
   bool  weOwnImages = false;
 
   const type_info& _dataTI     = typeid(_data);
-  const type_info& _larcosFVTI = typeid(CounterFeatureVectorList);
+  const type_info& _counterFVTI = typeid(CounterFeatureVectorList);
 
   const type_info* _dataTIPtr    =  &(typeid(_data));
-  const type_info* _larcosFVTIPtr = &(typeid(CounterFeatureVectorList));
+  const type_info* _counterFVTIPtr = &(typeid(CounterFeatureVectorList));
 
   if  (typeid (_data) == typeid (CounterFeatureVectorList))
   {

@@ -1,4 +1,4 @@
-/* InstallationConfig.cpp -- Represents a single Installation of Larcos
+/* InstallationConfig.cpp -- Represents a single Installation of Trainable Flow-Thru Counter.
  * Copyright (C) 2011-2013  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
@@ -60,7 +60,7 @@ InstallationConfig::FlowMeterMethods  InstallationConfig::FlowMeterMethodFromStr
 
 
 InstallationConfig::InstallationConfig (RunLog&  runLog):
-    CounterDataRec ("Installation", "LarcosInstallation"),
+    CounterDataRec ("Installation", "CouterInstallation"),
     description               (),
     flowMeterMethod           (FlowMeterMethods::Null),
     flowMeterTicsPerMeter     (0.0f),
@@ -77,7 +77,7 @@ InstallationConfig::InstallationConfig (RunLog&  runLog):
 InstallationConfig::InstallationConfig (const InstallationConfig&  _entry,
                                         RunLog&                    _runLog
                                        ):
-    CounterDataRec ("Installation", "LarcosInstallation"),
+    CounterDataRec ("Installation", "CounterInstallation"),
     description               (_entry.description),
     flowMeterMethod           (_entry.flowMeterMethod),
     flowMeterTicsPerMeter     (_entry.flowMeterTicsPerMeter),
@@ -95,7 +95,7 @@ InstallationConfig::InstallationConfig (const KKB::KKStr&  _name,
                                         bool&              _successful,
                                         RunLog&            _log
                                        ):
-    CounterDataRec ("Installation", "LarcosInstallation"),
+    CounterDataRec ("Installation", "CounterInstallation"),
     description               (),
     flowMeterMethod           (FlowMeterMethods::Null),
     flowMeterTicsPerMeter     (0.0f),

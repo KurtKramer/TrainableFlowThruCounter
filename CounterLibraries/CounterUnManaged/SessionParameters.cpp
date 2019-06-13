@@ -1,5 +1,5 @@
-/* SessionParameters.cpp -- Represents a Snapshot of stats being maintained by the Larcos Camera Manager.
- * Copyright (C) 2011-2014  Kurt Kramer
+/* SessionParameters.cpp --
+ * Copyright (C) 2011-2019  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
 #include "FirstIncludes.h"

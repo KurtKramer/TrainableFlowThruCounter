@@ -1,5 +1,5 @@
-/* CameraThread.h -- Base class fir all other LarcosManager threads.
- * Copyright (C) 2011-2013  Kurt Kramer
+/* CameraThread.h -- Base class for all other CounterManager threads.
+ * Copyright (C) 2011-2019  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
 #if  !defined(_CAMERAPATHREAD_)
@@ -24,7 +24,7 @@ namespace  CounterUnManaged
   /**
    *@brief  Base class for all Thread specific classes used by the CounterApplication.
    *@details  This is a abstract class that is a specialization of the general purpose 
-   * class "KKTHread".  It contains data fields  and methods specific to the Larcos Counter.  
+   * class "KKTHread".  It contains data fields  and methods specific to the Trainable Flow-Thru Counter.  
    * Each individual thread  in the CounterApplication will be managed by a instance of a class
    * that was derived from this class (CameraAcquisition, LogicalFrameBuilder, LogicalPrameProcessor,
    * ).
@@ -61,7 +61,7 @@ namespace  CounterUnManaged
 
 
     /**
-     *@brief  The LarcosCameraManager will call this method for all 'CameraThread' based instances 
+     *@brief  The CounterManager will call this method for all 'CameraThread' based instances 
      * one of the Crop Settings Change.
      */
     virtual
@@ -70,7 +70,7 @@ namespace  CounterUnManaged
                               );
 
     /**
-     *@brief  The LarcosCameraManager will call this method for all 'CameraThread' based instances whenever the 
+     *@brief  The CounterManager will call this method for all 'CameraThread' based instances whenever the 
      * acquisition thread detects a change in the scan-rate.
      *@details If a particular sub-classed object needs to know when the scan-rate changes it will overload
      * this method.

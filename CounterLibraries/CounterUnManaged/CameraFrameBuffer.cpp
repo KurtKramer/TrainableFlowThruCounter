@@ -34,14 +34,14 @@ using  namespace  CounterUnManaged;
 
 
 CameraFrameBuffer::CameraFrameBuffer (CounterManagerPtr _manager,
-                                      const KKStr&            _name,        /* Name of buffer, must be unique */
-                                      kkuint32                _bufferSize,
-                                      kkuint32                _maxNumOfBuffers,
-                                      kkint32                 _frameHeight,
-                                      kkint32                 _frameWidth,
-                                      bool                    _dataIsToBeCounted,
-                                      bool                    _dataIsToBeRecorded,
-                                      bool                    _sampleLastFrameBeforeFlatField
+                                      const KKStr&      _name,        /* Name of buffer, must be unique */
+                                      kkuint32          _bufferSize,
+                                      kkuint32          _maxNumOfBuffers,
+                                      kkint32           _frameHeight,
+                                      kkint32           _frameWidth,
+                                      bool              _dataIsToBeCounted,
+                                      bool              _dataIsToBeRecorded,
+                                      bool              _sampleLastFrameBeforeFlatField
                                      ):
 
     available                      (NULL),
@@ -281,11 +281,11 @@ kkint32 CameraFrameBuffer::NumWaitingToProcess () const
 
 
 
-void  CameraFrameBuffer::GetStats (CounterStats&  larcosCameraStats) const
+void  CameraFrameBuffer::GetStats (CounterStats&  cameraStats) const
 {
-  larcosCameraStats.PhysicalFramesWaitingToProcess (NumWaitingToProcess ());
-  larcosCameraStats.PhysicalFramesDropped          (physicalFramesDropped);
-  larcosCameraStats.WaitingToWriteToDisk           (NumWaitingToWriteToDisk ());
+  cameraStats.PhysicalFramesWaitingToProcess (NumWaitingToProcess ());
+  cameraStats.PhysicalFramesDropped          (physicalFramesDropped);
+  cameraStats.WaitingToWriteToDisk           (NumWaitingToWriteToDisk ());
 }
 
 

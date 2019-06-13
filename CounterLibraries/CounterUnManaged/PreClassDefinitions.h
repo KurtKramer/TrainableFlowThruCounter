@@ -103,7 +103,7 @@ namespace CounterUnManaged
   #endif
 
 
-  #if  !defined(_LARCOSCOUNTERSTATS_)
+  #if  !defined(_COUNTERSTATS_)
     class  CounterStats;
     typedef  CounterStats*  CounterStatsPtr;
   #endif

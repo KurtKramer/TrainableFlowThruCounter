@@ -58,34 +58,34 @@ namespace CounterUnManaged
 
     static
     CameraAcquisitionPleoraPtr  CreateFromSerialNumber 
-           (CounterManagerPtr _manager,
-            const KKStr             _serialNumber,
-            CameraFrameBufferPtr    _frameBuffer,
-            FlowMeterTrackerPtr     _flowMeter,
-            MsgQueuePtr             _msgQueue,
-            const KKStr&            _threadName
+           (CounterManagerPtr     _manager,
+            const KKStr           _serialNumber,
+            CameraFrameBufferPtr  _frameBuffer,
+            FlowMeterTrackerPtr   _flowMeter,
+            MsgQueuePtr           _msgQueue,
+            const KKStr&          _threadName
            );
 
 
     static
     CameraAcquisitionPleoraPtr  CreateFromMacAddress 
-           (CounterManagerPtr _manager,
-            const KKStr&            _macAddress,
-            CameraFrameBufferPtr    _frameBuffer,
-            FlowMeterTrackerPtr     _flowMeter,
-            MsgQueuePtr             _msgQueue,
-            const KKStr&            _threadName
+           (CounterManagerPtr     _manager,
+            const KKStr&          _macAddress,
+            CameraFrameBufferPtr  _frameBuffer,
+            FlowMeterTrackerPtr   _flowMeter,
+            MsgQueuePtr           _msgQueue,
+            const KKStr&          _threadName
            );
 
 
     static
     CameraAcquisitionPleoraPtr  CreateFromCameraParameters
-           (CounterManagerPtr _manager,
-            CameraParametersPtr     _cameraParameters,
-            CameraFrameBufferPtr    _frameBuffer,
-            FlowMeterTrackerPtr     _flowMeter,
-            MsgQueuePtr             _msgQueue,
-            const KKStr&            _threadName
+           (CounterManagerPtr     _manager,
+            CameraParametersPtr   _cameraParameters,
+            CameraFrameBufferPtr  _frameBuffer,
+            FlowMeterTrackerPtr   _flowMeter,
+            MsgQueuePtr           _msgQueue,
+            const KKStr&          _threadName
            );
 
 
@@ -102,20 +102,20 @@ namespace CounterUnManaged
     static
     KKStr  PromptForCameraMacAddress ();
 
-    CameraAcquisitionPleora (CounterManagerPtr _manager,
-                             const KKStr&            _macAddress,
-                             CameraFrameBufferPtr    _frameBuffer,
-                             FlowMeterTrackerPtr     _flowMeter,
-                             MsgQueuePtr             _msgQueue,
-                             const KKStr&            _threadName
+    CameraAcquisitionPleora (CounterManagerPtr     _manager,
+                             const KKStr&          _macAddress,
+                             CameraFrameBufferPtr  _frameBuffer,
+                             FlowMeterTrackerPtr   _flowMeter,
+                             MsgQueuePtr           _msgQueue,
+                             const KKStr&          _threadName
                             );
 
-    CameraAcquisitionPleora (CounterManagerPtr _manager,
-                             CameraParametersPtr     _cameraParams,
-                             CameraFrameBufferPtr    _frameBuffer,
-                             FlowMeterTrackerPtr     _flowMeter,
-                             MsgQueuePtr             _msgQueue,
-                             const KKStr&            _threadName
+    CameraAcquisitionPleora (CounterManagerPtr     _manager,
+                             CameraParametersPtr   _cameraParams,
+                             CameraFrameBufferPtr  _frameBuffer,
+                             FlowMeterTrackerPtr   _flowMeter,
+                             MsgQueuePtr           _msgQueue,
+                             const KKStr&          _threadName
                             );
 
 

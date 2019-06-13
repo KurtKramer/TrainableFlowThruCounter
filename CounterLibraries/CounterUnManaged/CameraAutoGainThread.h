@@ -64,11 +64,11 @@ namespace CounterUnManaged
   class CameraAutoGainThread: public  CameraThread
   {
   public:
-    CameraAutoGainThread (CounterManagerPtr _manager,
-                          MsgQueuePtr             _msgQueue,
-                          CameraAcquisitionPtr    _camera,
-                          CameraFrameBufferPtr    _cameraFrameBuffer,
-                          const KKStr&            _threadName
+    CameraAutoGainThread (CounterManagerPtr     _manager,
+                          MsgQueuePtr           _msgQueue,
+                          CameraAcquisitionPtr  _camera,
+                          CameraFrameBufferPtr  _cameraFrameBuffer,
+                          const KKStr&          _threadName
                          );
 
 

@@ -50,7 +50,7 @@ LoggerThread::LoggerThread (MsgQueuePtr  _msgQueue,
   KKStr logFileDir = osAddSlash (CounterVariables::LoggingDir ()) + "CounterApplication";
   osCreateDirectoryPath (logFileDir);
   DateTime now = osGetLocalDateTime ();
-  logFileName = osAddSlash (logFileDir) + "LarcosCounter_" + now.Date ().YYYYMMDD () + "-" + now.Time ().HHMMSS () + ".txt";
+  logFileName = osAddSlash (logFileDir) + "Counter_" + now.Date ().YYYYMMDD () + "-" + now.Time ().HHMMSS () + ".txt";
   logFile = new ofstream (logFileName.Str ());
 
   *logFile << "LoggerThread::LoggerThread    Logger File Created" << endl;

@@ -363,7 +363,7 @@ private:
 
 
 LogicalFrameProcessor::LogicalFrameProcessor 
-                                (CounterManagerPtr _manager,
+                                (CounterManagerPtr       _manager,
                                  const KKStr&            _classifierName,
                                  OperatingParametersPtr  _operatingParameters,
                                  RasterBufferPtr         _lastParticlesProcessed,
@@ -956,7 +956,7 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
     if  (saveDebugImages)
     {
       FileDescConstPtr  fd = fvProducer->FileDesc ();
-      KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";
+      KKStr  rootDir  = "C:\\Temp\\FeatureComputationDebugging\\";
       KKStr  rootName = osGetRootName (particle->FileName ());
       KKStr  fullFN = rootDir + rootName + ".bmp";
       KKB::SaveImageGrayscaleInverted8Bit (*particle, fullFN);
@@ -1506,7 +1506,7 @@ kkint32  LogicalFrameProcessorList::GetNumLogicalFrameProcessorsAvailable ()
 
 
 
-void  LogicalFrameProcessorList::GetStats (CounterStats&  larcosCameraStats) const
+void  LogicalFrameProcessorList::GetStats (CounterStats&  cameraStats) const
 {
   kkint32 logicalFrameProcessorsAvailable = 0;
   kkint32 logicalFramesProcessed         = 0;
@@ -1526,11 +1526,11 @@ void  LogicalFrameProcessorList::GetStats (CounterStats&  larcosCameraStats) con
       ++logicalFrameProcessorsAvailable;
   }
 
-  larcosCameraStats.LogicalFrameProcessorsAvailable (logicalFrameProcessorsAvailable);
-  larcosCameraStats.LogicalFramesProcessed          (logicalFramesProcessed);
-  larcosCameraStats.ParticlesExtracted              (particlesExtracted);
-  larcosCameraStats.ParticlesCounted                (particlesCounted);
-  larcosCameraStats.ParticlesWaitingProcessing      (particlesWaitingProcessing);
+  cameraStats.LogicalFrameProcessorsAvailable (logicalFrameProcessorsAvailable);
+  cameraStats.LogicalFramesProcessed          (logicalFramesProcessed);
+  cameraStats.ParticlesExtracted              (particlesExtracted);
+  cameraStats.ParticlesCounted                (particlesCounted);
+  cameraStats.ParticlesWaitingProcessing      (particlesWaitingProcessing);
 
   return;
 }  /* GetStats */

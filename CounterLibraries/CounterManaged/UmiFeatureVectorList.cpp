@@ -213,16 +213,16 @@ void  UmiFeatureVectorList::LoadInSubDirectoryTree
     return;
   }
 
-  PostLarvaeFVListPtr  larcosFeatureData = NULL;
+  PostLarvaeFVListPtr  counterFeatureData = NULL;
 
   if  (typeid (featureData) == typeid (PostLarvaeFVList))
   {
-    larcosFeatureData = dynamic_cast<PostLarvaeFVList*>(featureData);
+    counterFeatureData = dynamic_cast<PostLarvaeFVList*>(featureData);
     featureData= NULL;
   }
   else
   {
-    larcosFeatureData = new PostLarvaeFVList (*featureData, true);
+    counterFeatureData = new PostLarvaeFVList (*featureData, true);
     delete  featureData;
     featureData= NULL;
   }
@@ -231,14 +231,14 @@ void  UmiFeatureVectorList::LoadInSubDirectoryTree
                                // this container object "UmiFeatureVectorList".
 
   PostLarvaeFVList::iterator  idx;
-  for  (idx = larcosFeatureData->begin ();  idx != larcosFeatureData->end ();  idx++)
+  for  (idx = counterFeatureData->begin ();  idx != counterFeatureData->end ();  idx++)
   {
     PostLarvaeFVPtr fv = *idx;
     UmiFeatureVector^   pfv = gcnew UmiFeatureVector (fv);  // We just turned ownership of 'fv' over to 'UmiFeatureVectorList'
     Add (pfv);
   }
-  delete  larcosFeatureData;
-  larcosFeatureData = NULL;
+  delete  counterFeatureData;
+  counterFeatureData = NULL;
   return;
 }  /* LoadInSubDirectoryTree */
 

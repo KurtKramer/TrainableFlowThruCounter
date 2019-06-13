@@ -1,4 +1,4 @@
-/* OperatingParameters.cpp -- Represents the operating parameters used by Larcos; ex's:  BackGroundThreshold, FlowRateFactor.
+/* OperatingParameters.cpp -- Represents the operating parameters used by Counter; ex's:  BackGroundThreshold, FlowRateFactor.
  * Copyright (C) 2011-2013  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
@@ -20,7 +20,7 @@ using namespace  KKLSC;
 namespace CounterUnManaged
 {
 
-  #if  !defined(_LARCOSTRAININGCONFIGURATION_)
+  #if  !defined(_COUNTERTRAININGCONFIGURATION_)
     class  CounterTrainingConfiguration;
     typedef  CounterTrainingConfiguration*  CounterTrainingConfigurationPtr;
   #endif
@@ -83,7 +83,7 @@ namespace CounterUnManaged
 
     /**
      *@brief Updates member fields from header Fields in specified ScannerFile(sf).
-     *@details Earlier version of Larcos did not proceed Session Parameter fields with "SP:" prefix so if 
+     *@details Earlier version of Counter did not proceed Session Parameter fields with "SP:" prefix so if 
      * a given field is not found with the prefix will then try looking for field value without prefix.
      */
     virtual
@@ -148,7 +148,7 @@ namespace CounterUnManaged
 
     /**
      *@brief Will retrieve value of 'fieldName' fist as a SessionParameter field then as generic field value.
-     *@details  In earlier version of Larcos recorded each field in header with just name;  but later on we started to add
+     *@details  In earlier version of Counter recorded each field in header with just name;  but later on we started to add
      * prefix to denote section such as 'SP:' for Session Parameters.
      */
     const KKStr&  GetScannerFileValue (ScannerFilePtr  sf, 

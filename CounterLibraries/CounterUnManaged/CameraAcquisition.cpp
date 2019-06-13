@@ -260,7 +260,7 @@ CameraAcquisition::CameraAcquisition (CounterManagerPtr    _manager,
 
 
 
-CameraAcquisition::CameraAcquisition (CounterManagerPtr _manager,
+CameraAcquisition::CameraAcquisition (CounterManagerPtr       _manager,
                                       CameraParametersPtr     _cameraParams,
                                       CameraFrameBufferPtr    _frameBuffer,
                                       FlowMeterTrackerPtr     _flowMeter,
@@ -488,18 +488,18 @@ float  CameraAcquisition::ComputeFlowRateFromFlowRateRatio ()  const
 
 
 
-void  CameraAcquisition::GetStats (CounterStats&  larcosCameraStats) const
+void  CameraAcquisition::GetStats (CounterStats&  counterStats) const
 {
-  larcosCameraStats.CurAnalogGain          (curAnalogGain);
-  larcosCameraStats.CurDigitalGain         (curDigitalGain);
-  larcosCameraStats.CurSensitivity         (curSensitivityMode);
-  larcosCameraStats.PhysicalFramesRead     (physicalFramesRead);
-  larcosCameraStats.FrameRate              (frameRate);
-  larcosCameraStats.CameraTemparature      (cameraTemparature);
-  larcosCameraStats.TotalLostPackets       (totalLostPackets);
-  larcosCameraStats.ScanRate               (curScanRate);
-  larcosCameraStats.PhysicalSeqNumsSkipped (physicalSeqNumsSkipped);
-  larcosCameraStats.ScanLinesRead          (scanLinesRead);
+  counterStats.CurAnalogGain          (curAnalogGain);
+  counterStats.CurDigitalGain         (curDigitalGain);
+  counterStats.CurSensitivity         (curSensitivityMode);
+  counterStats.PhysicalFramesRead     (physicalFramesRead);
+  counterStats.FrameRate              (frameRate);
+  counterStats.CameraTemparature      (cameraTemparature);
+  counterStats.TotalLostPackets       (totalLostPackets);
+  counterStats.ScanRate               (curScanRate);
+  counterStats.PhysicalSeqNumsSkipped (physicalSeqNumsSkipped);
+  counterStats.ScanLinesRead          (scanLinesRead);
 }
 
 

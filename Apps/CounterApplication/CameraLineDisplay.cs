@@ -17,7 +17,7 @@ namespace CounterApplication
   public partial class  CameraLineDisplay : Form
   {
     bool                         autoRefresh      = false;
-    CounterManagerWrapper  cameraManager    = null;
+    CounterManagerWrapper        cameraManager    = null;
     private  byte[]              cameraData       = null;
     private  byte[]              cameraDataPrev1  = null;
     private  byte[]              cameraDataPrev2  = null;

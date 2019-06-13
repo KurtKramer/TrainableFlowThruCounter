@@ -539,7 +539,7 @@ namespace CounterApplication
       {
         // Looks like user has pressed the Maximized button.  We have to trap it here because
         // the ResizeEnd event does not trap when form is Maximized.
-        //LarcosCommanderFormResized ();
+        //sCommanderFormResized ();
         FinaleReport_Resize (sender, e);
         formIsMaximized = true;
       }
@@ -551,7 +551,7 @@ namespace CounterApplication
           // We normally trap the ResizeEnd event; but when the form was already maximized and the user
           // presses the button to un-maximize. the ResizeEnd does not trap that.  So we check to 
           // see if the form was already maximize. If so then we resized the form.
-          //LarcosCommanderFormResized ();
+          //CommanderFormResized ();
           FinaleReport_Resize (sender, e);
           formIsMaximized = false;
         }
@@ -629,9 +629,9 @@ namespace CounterApplication
         chartsBindingSource.DataSource = FinaleReportDataSourceBindingSource;
 
         reportViewer1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-        reportDataSource1.Name = "FinaleReportDataSource";
+        reportDataSource1.Name  = "FinaleReportDataSource";
         reportDataSource1.Value = FinaleReportDataSourceBindingSource;
-        reportDataSource2.Name = "Counter_FinaleReportChartDataSource";
+        reportDataSource2.Name  = "Counter_FinaleReportChartDataSource";
         reportDataSource2.Value = chartsBindingSource;
         reportViewer1.LocalReport.DataSources.Add (reportDataSource1);
         reportViewer1.LocalReport.DataSources.Add (reportDataSource2);

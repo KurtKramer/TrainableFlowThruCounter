@@ -1,5 +1,5 @@
-/* InstallationConfig.h -- Represents a single Installation of Larcos
- * Copyright (C) 2011-2013  Kurt Kramer
+/* InstallationConfig.h -- Represents a single Installation of Trainable Flow-Thru
+ * Copyright (C) 2011-2019  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
 #if  !defined(_INSTALLATIONCONFIG_)
@@ -89,7 +89,7 @@ namespace CounterUnManaged
 
     /**
      *@brief Updates member fields from header Fields in specified ScannerFile(sf).
-     *@details Earlier version of Larcos did not proceed Session Parameter fields with "SP:" prefix so if 
+     *@details Earlier version of Counter did not process Session Parameter fields with "SP:" prefix so if 
      * a given field is not found with the prefix will then try looking for field value without prefix.
      */
     virtual

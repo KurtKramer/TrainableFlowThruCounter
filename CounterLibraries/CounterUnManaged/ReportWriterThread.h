@@ -36,7 +36,7 @@ namespace CounterUnManaged
      *@param[in] _msgQueue
      *@param[in] _threadName
      */
-    ReportWriterThread (CounterManagerPtr      _manager,
+    ReportWriterThread (CounterManagerPtr            _manager,
                         ParticleEntryBufferPtr       _particleEntryBuffer,
                         const KKStr&                 _initialScannerFileName,
                         const SessionParametersPtr   _sessionParameters,

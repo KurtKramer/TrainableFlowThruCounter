@@ -1648,9 +1648,9 @@
       this.MinimumSize = new System.Drawing.Size(1000, 762);
       this.Name = "CounterApplication";
       this.Text = "K-Square Flow-Thru Counter";
-      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LarcosCounter_FormClosing);
-      this.Load += new System.EventHandler(this.LarcosCounter_Load);
-      this.SizeChanged += new System.EventHandler(this.LarcosCounter_SizeChanged);
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Counter_FormClosing);
+      this.Load += new System.EventHandler(this.Counter_Load);
+      this.SizeChanged += new System.EventHandler(this.Counter_SizeChanged);
       this.StatsPannel.ResumeLayout(false);
       this.StatsPannel.PerformLayout();
       this.TabDisplayed.ResumeLayout(false);

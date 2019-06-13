@@ -1,4 +1,4 @@
-/* OperatingParameters.cpp -- Represents the operating parameters used by Larcos; ex's:  BackGroundThreshold, FlowRateFactor.
+/* OperatingParameters.cpp -- Represents the operating parameters used by Trainable Flow-Thru; ex's:  BackGroundThreshold, FlowRateFactor.
  * Copyright (C) 2011-2013  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
@@ -26,7 +26,7 @@ using  namespace  CounterUnManaged;
 
 
 OperatingParameters::OperatingParameters ():
-     CounterDataRec ("OP", "LarcosOperatingParameters"),
+     CounterDataRec ("OP", "CounterOperatingParameters"),
      backGroundPixelTH        (31),
      connectedComponentDist   (1),
      dataIsToBeCounted        (true),
@@ -94,9 +94,9 @@ KKStrConstPtr OperatingParameters::GetSettingValue (const CounterTrainingConfigu
                                                    )
 {
   kkint32  lineNum = -1;
-  KKStrConstPtr  x = c.SettingValue ("LarcosOperatingParameters", fieldName, lineNum);
+  KKStrConstPtr  x = c.SettingValue ("CounterOperatingParameters", fieldName, lineNum);
   if  (x == NULL)
-    x = c.SettingValue ("Larcos", fieldName, lineNum);
+    x = c.SettingValue ("Counter", fieldName, lineNum);
   return x;
 }
 
@@ -343,7 +343,7 @@ void  OperatingParameters::WriteFieldValues (ostream&   o)  const
 
 void  OperatingParameters::WriteConfigSection (ostream&  o)  const
 {
-  o << "[LarcosOperatingParameters]" << endl;
+  o << "[CounterOperatingParameters]" << endl;
 
   o << "BackGroundPixelTH = "      << (int)backGroundPixelTH           << endl;
   o << "ConnectedComponentDist = " << connectedComponentDist           << endl;

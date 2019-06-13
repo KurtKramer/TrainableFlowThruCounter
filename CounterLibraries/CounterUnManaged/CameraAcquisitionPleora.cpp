@@ -68,7 +68,7 @@ using  namespace  CounterUnManaged;
 
 
 CameraAcquisitionPleora::CameraAcquisitionPleora 
-                                     (CounterManagerPtr _manager,
+                                     (CounterManagerPtr       _manager,
                                       const KKStr&            _macAddress,
                                       CameraFrameBufferPtr    _frameBuffer,
                                       FlowMeterTrackerPtr     _flowMeter,
@@ -129,7 +129,7 @@ CameraAcquisitionPleora::CameraAcquisitionPleora
 
 
 CameraAcquisitionPleora::CameraAcquisitionPleora 
-                                     (CounterManagerPtr _manager,
+                                     (CounterManagerPtr       _manager,
                                       CameraParametersPtr     _cameraParams,
                                       CameraFrameBufferPtr    _frameBuffer,
                                       FlowMeterTrackerPtr     _flowMeter,
@@ -2110,12 +2110,12 @@ CameraParametersPtr  CameraAcquisitionPleora::GetCameraParameters (const KKStr& 
 
 
 CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromSerialNumber 
-           (CounterManagerPtr _manager,
-            const KKStr             _serialNumber,
-            CameraFrameBufferPtr    _frameBuffer,
-            FlowMeterTrackerPtr     _flowMeter,
-            MsgQueuePtr             _msgQueue,
-            const KKStr&            _threadName
+           (CounterManagerPtr    _manager,
+            const KKStr          _serialNumber,
+            CameraFrameBufferPtr _frameBuffer,
+            FlowMeterTrackerPtr  _flowMeter,
+            MsgQueuePtr          _msgQueue,
+            const KKStr&         _threadName
            )
 {
   RunLog  runLog (_msgQueue);
@@ -2146,12 +2146,12 @@ CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromSerialNumber
 
 
 CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromMacAddress 
-           (CounterManagerPtr _manager,
-            const KKStr&            _macAddress,
-            CameraFrameBufferPtr    _frameBuffer,
-            FlowMeterTrackerPtr     _flowMeter,
-            MsgQueuePtr             _msgQueue,
-            const KKStr&            _threadName
+           (CounterManagerPtr     _manager,
+            const KKStr&          _macAddress,
+            CameraFrameBufferPtr  _frameBuffer,
+            FlowMeterTrackerPtr   _flowMeter,
+            MsgQueuePtr           _msgQueue,
+            const KKStr&          _threadName
            )
 {
   RunLog  runLog (_msgQueue);
@@ -2170,12 +2170,12 @@ CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromMacAddress
 
 
 CameraAcquisitionPleoraPtr  CameraAcquisitionPleora::CreateFromCameraParameters
-               (CounterManagerPtr _manager,
-                CameraParametersPtr     _cameraParameters,
-                CameraFrameBufferPtr    _frameBuffer,
-                FlowMeterTrackerPtr     _flowMeter,
-                MsgQueuePtr             _msgQueue,
-                const KKStr&            _threadName
+               (CounterManagerPtr     _manager,
+                CameraParametersPtr   _cameraParameters,
+                CameraFrameBufferPtr  _frameBuffer,
+                FlowMeterTrackerPtr   _flowMeter,
+                MsgQueuePtr           _msgQueue,
+                const KKStr&          _threadName
                )
 {
   RunLog  runLog (_msgQueue);

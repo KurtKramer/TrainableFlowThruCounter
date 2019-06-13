@@ -4,8 +4,8 @@
  */
 
 
-#if  !defined(_LARCOSCOUNTERSTATS_)
-#define  _LARCOSCOUNTERSTATS_
+#if  !defined(_COUNTERSTATS_)
+#define  _COUNTERSTATS_
 
 #include "KKBaseTypes.h"
 #include "KKStr.h"
@@ -13,7 +13,7 @@
 
 namespace CounterUnManaged
 {
-  /** @brief  Used to communicate current LARCOS status.*/
+  /** @brief  Used to communicate current couinter status.*/
   class CounterStats
   {
   public:

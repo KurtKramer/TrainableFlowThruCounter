@@ -1,4 +1,4 @@
-/* CounterDataRec.cpp -- Represents the operating parameters used by Larcos; ex's:  BackGroundThreshold, FlowRateFactor.
+/* CounterDataRec.cpp -- Represents the operating parameters used by Couter; ex's:  BackGroundThreshold, FlowRateFactor.
  * Copyright (C) 2011-2013  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
@@ -35,9 +35,9 @@ CounterDataRec::CounterDataRec (const KKStr&   _scannerFilePrefix,
 }
 
 
-CounterDataRec::CounterDataRec (const CounterDataRec&   _larcosDataRec):
-    scannerFilePrefix (_larcosDataRec.scannerFilePrefix),
-    sectionName       (_larcosDataRec.sectionName)
+CounterDataRec::CounterDataRec (const CounterDataRec&   _counterDataRec):
+    scannerFilePrefix (_counterDataRec.scannerFilePrefix),
+    sectionName       (_counterDataRec.sectionName)
 {
 }
 

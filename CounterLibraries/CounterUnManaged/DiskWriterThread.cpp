@@ -36,14 +36,14 @@ using  namespace  CounterUnManaged;
 
 
 
-DiskWriterThread::DiskWriterThread (CounterManagerPtr  _manager,
-                                    CameraFrameBufferPtr     _cameraBuffer,
-                                    MsgQueuePtr              _msgQueue,
-                                    const KKStr&             _scannerFileName,
-                                    ScannerFile::Format      _format,
-                                    kkint32                  _frameHeight,
-                                    kkint32                  _frameWidth,
-                                    const KKStr&             _threadName
+DiskWriterThread::DiskWriterThread (CounterManagerPtr     _manager,
+                                    CameraFrameBufferPtr  _cameraBuffer,
+                                    MsgQueuePtr           _msgQueue,
+                                    const KKStr&          _scannerFileName,
+                                    ScannerFile::Format   _format,
+                                    kkint32               _frameHeight,
+                                    kkint32               _frameWidth,
+                                    const KKStr&          _threadName
                                    ):
     CameraThread (_manager, _threadName, _msgQueue),
     bytesWritten              (0),

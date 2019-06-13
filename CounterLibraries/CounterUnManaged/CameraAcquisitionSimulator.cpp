@@ -37,13 +37,13 @@ using  namespace  CounterUnManaged;
 
 
 CameraAcquisitionSimulator::CameraAcquisitionSimulator 
-                                 (CounterManagerPtr _manager,
-                                  bool                    _playingBackRealTime,
-                                  CameraFrameBufferPtr    _frameBuffer,
-                                  const KKStr&            _fileName,
-                                  FlowMeterTrackerPtr     _flowMeter,
-                                  MsgQueuePtr             _msgQueue,
-                                  const KKStr&            _threadName
+                                 (CounterManagerPtr     _manager,
+                                  bool                  _playingBackRealTime,
+                                  CameraFrameBufferPtr  _frameBuffer,
+                                  const KKStr&          _fileName,
+                                  FlowMeterTrackerPtr   _flowMeter,
+                                  MsgQueuePtr           _msgQueue,
+                                  const KKStr&          _threadName
                                  ):
 
    CameraAcquisition (_manager, _frameBuffer, _flowMeter, _msgQueue, _threadName),

@@ -42,7 +42,7 @@ namespace CounterUnManaged
                    };
      
 
-    LogicalFrameProcessor (CounterManagerPtr _manager,
+    LogicalFrameProcessor (CounterManagerPtr       _manager,
                            const KKStr&            _classifierName,
                            OperatingParametersPtr  _operatingParameters,
                            RasterBufferPtr         _lastParticlesProcessed,
@@ -286,7 +286,7 @@ namespace CounterUnManaged
 
     kkint32  GetNumLogicalFrameProcessorsAvailable ();
 
-    void  GetStats (CounterStats&  larcosCameraStats)  const;
+    void  GetStats (CounterStats&  cameraStats)  const;
 
     void  ShutdownThreads ();
 

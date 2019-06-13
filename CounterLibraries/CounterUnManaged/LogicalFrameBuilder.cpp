@@ -146,11 +146,11 @@ kkMemSize LogicalFrameBuilder::MemoryConsumedEstimated ()
 
 
 
-void  LogicalFrameBuilder::GetStats (CounterStats&  larcosCameraStats) const
+void  LogicalFrameBuilder::GetStats (CounterStats&  stats) const
 {
-  larcosCameraStats.LogicalFramesCreated    (logicalFramesCreated);
-  larcosCameraStats.LogicalFramesDropped    (logicalFramesDropped);
-  larcosCameraStats.PhysicalFramesProcessed (physicalFramesProcessed);
+  stats.LogicalFramesCreated    (logicalFramesCreated);
+  stats.LogicalFramesDropped    (logicalFramesDropped);
+  stats.PhysicalFramesProcessed (physicalFramesProcessed);
 }
 
 

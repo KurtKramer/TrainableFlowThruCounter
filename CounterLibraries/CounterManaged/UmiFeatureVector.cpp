@@ -82,7 +82,7 @@ UmiFeatureVector::UmiFeatureVector (UmiRaster^       raster,
   {
     try {
       FileDescConstPtr  fd = fvp->FileDesc ();
-      KKStr  rootDir  = "C:\\Temp\\LarcosFeatureComputationDebugging\\";
+      KKStr  rootDir  = "C:\\Temp\\CounterFeatureComputationDebugging\\";
       KKStr  rootName = osGetRootName (UmiKKStr::SystemStringToKKStr (imageFileName)) + "_ScannerFile";
       KKStr  fullFN = rootDir + rootName + ".bmp";
       KKB::SaveImageGrayscaleInverted8Bit (*r, fullFN);

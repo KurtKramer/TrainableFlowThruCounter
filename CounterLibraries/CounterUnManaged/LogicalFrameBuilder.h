@@ -40,7 +40,7 @@ namespace CounterUnManaged
   typedef  CameraFrame*  CameraFramePtr;
   #endif
 
-  #if  !defined(_LARCOSCOUNTERSTATS_)
+  #if  !defined(_COUNTERSTATS_)
     class  CounterStats;
     typedef  CounterStats*  CounterStatsPtr;
   #endif
@@ -59,7 +59,7 @@ namespace CounterUnManaged
   class LogicalFrameBuilder:  public  CameraThread
   {
   public:
-    LogicalFrameBuilder (CounterManagerPtr   _manager,
+    LogicalFrameBuilder (CounterManagerPtr         _manager,
                          CameraFrameBufferPtr      _cameraBuffer,
                          LogicalFrameListPtr       _logicalFrames,
                          LogicalFrameEntryListPtr  _logicalFrameEntries,
@@ -134,14 +134,14 @@ namespace CounterUnManaged
 
     kkint32                   cropLeft;
     kkint32                   cropRight;
-    bool                      dontDropFrames;            /**< Indicates that we can not drop logical frames; this would occur when we are *
-                                                          * performing a play-back and 'playingBackRealTime' is set false.
-                                                          */
+    bool                      dontDropFrames;              /**< Indicates that we can not drop logical frames; this would occur when we are *
+                                                            * performing a play-back and 'playingBackRealTime' is set false.
+                                                            */
     kkint64                   frameSeqNumLast;
-    kkint32                   lastScanLineToProcess;     /**< Points to a break in ScanLines; the idea is we do not want to split an image. */
+    kkint32                   lastScanLineToProcess;       /**< Points to a break in ScanLines; the idea is we do not want to split an image. */
     kkint32                   lastScanLineWithNoPixels;
     kkint32                   minSizeThreshold;
-    kkint32                   nextRowToUse;              /**< Next row in 'scanLines' to add next frame to.       */
+    kkint32                   nextRowToUse;                /**< Next row in 'scanLines' to add next frame to.       */
     ushort*                   pixelsOnScanLine;
     float*                    flowRateOnScanLine;
     float*                    flowRateRatioOnScanLine;

@@ -30,7 +30,7 @@ namespace CounterUnManaged
   typedef  CameraFrame*  CameraFramePtr;
   #endif
 
-  #if  !defined(_LARCOSCOUNTERSTATS_)
+  #if  !defined(_COUNTERSTATS_)
     class  CounterStats;
     typedef  CounterStats*  CounterStatsPtr;
   #endif
@@ -53,14 +53,14 @@ namespace CounterUnManaged
                     DroppingFrames
                    };
 
-    DiskWriterThread (CounterManagerPtr  _manager,
-                      CameraFrameBufferPtr     _cameraBuffer,
-                      MsgQueuePtr              _msgQueue,
-                      const KKStr&             _scannerFileName,
-                      ScannerFile::Format      _format,
-                      kkint32                  _frameWidth,
-                      kkint32                  _frameHeight,
-                      const KKStr&             _threadName
+    DiskWriterThread (CounterManagerPtr     _manager,
+                      CameraFrameBufferPtr  _cameraBuffer,
+                      MsgQueuePtr           _msgQueue,
+                      const KKStr&          _scannerFileName,
+                      ScannerFile::Format   _format,
+                      kkint32               _frameWidth,
+                      kkint32               _frameHeight,
+                      const KKStr&          _threadName
                      );
 
     virtual

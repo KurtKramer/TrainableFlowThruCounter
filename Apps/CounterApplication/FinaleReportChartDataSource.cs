@@ -25,9 +25,9 @@ namespace CounterApplication
     }
 
     public  byte[]    Chart         {get  {return chart;}}
-    public  String    ChartTitle    {get  {return chartTitle;}}
+    public  string    ChartTitle    {get  {return chartTitle;}}
 
     private  byte[]   chart       = null;
-    private  String   chartTitle  = null;
+    private  string   chartTitle  = null;
   }
 }

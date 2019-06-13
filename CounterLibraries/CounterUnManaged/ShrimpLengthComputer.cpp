@@ -28,9 +28,9 @@ using  namespace  CounterUnManaged;
 
 
 ShrimpLengthComputer::ShrimpLengthComputer (kkint32  _pixelsPerScanLine,
-                                            float  _imageChamberWidth,
+                                            float    _imageChamberWidth,
                                             kkint32  _erosionStructSize,
-                                            uchar  _backgroundPixelTH
+                                            uchar    _backgroundPixelTH
                                            ):
   backgroundPixelTH         (_backgroundPixelTH),
   centerPoints              (NULL),

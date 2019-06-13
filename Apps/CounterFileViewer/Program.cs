@@ -18,7 +18,7 @@ namespace CounterFileViewer
 
       CounterManaged.UmiVariables.SetCounterHomeDir ();  // Will set the application frame work variables to there default values.
                                                                // Will set to value pointed to by environment variable "CounterHomeDir".  If
-                                                               // this variable is not defined will then default to "C:\Larcos".
+                                                               // this variable is not defined will then default to "C:\\Counter".
 
       AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler
         ((sender, e) => 
