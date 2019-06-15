@@ -11,7 +11,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 
 using CounterManagedRoutines;
-using CounterControls;
 using CounterManaged;
 
 
