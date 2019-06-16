@@ -58,10 +58,10 @@ kkMemSize  CounterDataRec::MemoryConsumedEstimated ()  const
 
 
 KKStrConstPtr CounterDataRec::GetSettingValue (const CounterTrainingConfiguration&  c,
-                                              const KKStr&                        fieldName
-                                             )
+                                               const KKStr&                        fieldName
+                                              )
 {
-  kkint32  lineNum = -1;
+  OptionUInt32  lineNum = {};
   KKStrConstPtr  x = c.SettingValue (sectionName, fieldName, lineNum);
   return x;
 }

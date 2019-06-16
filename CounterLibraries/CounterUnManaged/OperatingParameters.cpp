@@ -93,7 +93,7 @@ KKStrConstPtr OperatingParameters::GetSettingValue (const CounterTrainingConfigu
                                                     const KKStr&                        fieldName
                                                    )
 {
-  kkint32  lineNum = -1;
+  OptionUInt32  lineNum = {};
   KKStrConstPtr  x = c.SettingValue ("LarcosOperatingParameters", fieldName, lineNum);
   if  (x == NULL)
     x = c.SettingValue ("Larcos", fieldName, lineNum);

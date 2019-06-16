@@ -288,7 +288,7 @@ String^   UmiTrainingConfiguration::GetSettingValue (String^ sectionName,
                                                      String^ settingName
                                                     )
 {
-  kkint32  lineNum = 0;
+  OptionUInt32  lineNum = {};
   KKStrConstPtr  value = config->SettingValue (UmiKKStr::SystemStringToKKStr (sectionName), UmiKKStr::SystemStringToKKStr (settingName), lineNum);
   if  (value == NULL)
     return nullptr;
@@ -309,7 +309,7 @@ Dictionary<String^,String^>^   UmiTrainingConfiguration::GetSettingValues (Strin
   kkuint32 settingNum = 0;
   do
   {
-    kkint32  lineNum = 0;
+    OptionUInt32  lineNum = {};
     KKStrConstPtr   settingValue = config->SettingValue (sectionNum.value (), settingNum, lineNum);
     if  (settingValue == NULL)
       break;

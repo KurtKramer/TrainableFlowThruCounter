@@ -798,17 +798,17 @@ void  UmiParticleEntryList::AddUpdateToReportFile (UmiParticleEntry^  pe)
 
   sw->WriteLine ("pe_update"
                  + "\t" + pe->ScannerFileRootName 
-                 + "\t" + pe->ScannerRow
-                 + "\t" + pe->ScannerCol
-                 + "\t" + pe->Height
-                 + "\t" + pe->Width
+                 + "\t" + pe->ScannerRow.ToString ()
+                 + "\t" + pe->ScannerCol.ToString ()
+                 + "\t" + pe->Height.ToString ()
+                 + "\t" + pe->Width.ToString ()
                  + "\t" + pe->PredClassName
-                 + "\t" + pe->Orientation
-                 + "\t" + pe->Length
-                 + "\t" + pe->FlowRateRatio
-                 + "\t" + pe->FlowRate
-                 + "\t" + pe->Probability
-                 + "\t" + pe->BreakTie
+                 + "\t" + pe->Orientation.ToString ()
+                 + "\t" + pe->Length.ToString ()
+                 + "\t" + pe->FlowRateRatio.ToString ()
+                 + "\t" + pe->FlowRate.ToString ()
+                 + "\t" + pe->Probability.ToString ()
+                 + "\t" + pe->BreakTie.ToString ()
                 );
   sw->Close ();
 }  /* AddUpdateToReportFile */
