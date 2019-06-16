@@ -27,7 +27,7 @@ namespace CounterApplication
     {
       InitializeComponent ();
       cameraManager = _cameraManager;
-      cameraLine.SetCameraManager (cameraManager);
+      cameraLine.SetCameraManager (/* cameraManager */ null);
     }
 
 

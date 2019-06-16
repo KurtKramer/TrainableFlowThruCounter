@@ -4,108 +4,13 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-//using CounterManaged;
+using CounterManaged;
 
 
 namespace CounterControls
 {
 
-  public enum  UmiCounterOperatingModes
-  {
-    Advanced = 0
-  }
-
-  public class CounterManagerWrapper
-  {
-    int cropLeft = 100;
-    int cropRight = 2000;
-    public bool EmbeddedFlowMeter() { return false; }
-    public float RequestedAnalogGain() { return 2.0f; }
-
-    public float RequestedDigitalGain      () { return 1000.0f; }
-    public string RequestedSensitivityMode () { return  "Low"; }
-
-    public int CropLeft  () { return cropLeft; }
-    public int CropRight () { return cropRight; }
-
-    public byte[] CameraHighPointsFromLastNSampleLines(int numSampleLines)
-    {
-      byte[] zed = new byte[2048];
-      for (int x = 0; x < 2048; ++x) zed[x] = 100;
-      return zed;
-    }
-
-
-    public void CropSettingsChanged(int cropLeft, int cropRight)
-    {
-      this.cropLeft = cropLeft;
-      this.cropRight = cropRight;
-    }
-
-
-    public void GetGainSettings(ref bool autoGainRunning, ref float analogGain, ref int digitalGain)
-    {
-      autoGainRunning = false;
-      analogGain = 1.0f;
-      digitalGain = 2000;
-      return;
-    }
-
-
-    public void RequestedAnalogGain (float Value)
-    {
-      return;
-    }
-  
-
-    public int RequestedDigitalGain (int  Value)
-    {
-      return 2000;
-    }
-
-
-    public UmiCounterOperatingModes OperatingMode() { return UmiCounterOperatingModes.Advanced; }
-
-
-    public bool CameraAutoGainThreadRunning() { return false; }
-
-
-    public bool CameraThreadRunning() { return true;  }
-
-
-    public void AutoGainButtonPressed(ref bool successful, ref string errMsg)
-    {
-      successful = true;
-      errMsg = "";
-    }
-
-
-    public void  RequestedSensitivityMode(string s)
-    {
-      return;
-    }
-  }
-
-
-
-
-  static public class UmiVariables
-  {
-    public static string LoggingDir() { return "D:\\Temp\\LoggingDir"; }
-    
-  }
-
-
-  static public class UmiOSservices
-  {
-
-    public static string AddSlash(string s) { return s + "\\";}
-
-    public static void CreateDirectory(string dir) { System.IO.Directory.CreateDirectory(dir); }
-  }
-
-
-  public partial class CameraLine : UserControl
+ public partial class CameraLine : UserControl
   {
     bool                   autoRefresh       = false;
     CounterManagerWrapper  cameraManager     = null;

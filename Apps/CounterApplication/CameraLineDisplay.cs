@@ -17,7 +17,7 @@ namespace CounterApplication
   public partial class  CameraLineDisplay : Form
   {
     bool                   autoRefresh      = false;
-    CounterManagerWrapper  cameraManager    = null;
+    CounterManaged.CounterManagerWrapper cameraManager    = null;
     private  byte[]        cameraData       = null;
     private  byte[]        cameraDataPrev1  = null;
     private  byte[]        cameraDataPrev2  = null;
@@ -37,7 +37,7 @@ namespace CounterApplication
 
 
 
-    public  CameraLineDisplay (CounterManagerWrapper  _cameraManager)
+    public  CameraLineDisplay (CounterManaged.CounterManagerWrapper _cameraManager)
     {
       cameraManager = _cameraManager;
 
@@ -471,9 +471,9 @@ namespace CounterApplication
       if  (chartBuff != null)
       {
         DateTime  d = DateTime.Now;
-        string logFileDir = UmiOSservices.AddSlash (UmiVariables.LoggingDir ()) + "CameraLines";
-        string logFileName = UmiOSservices.AddSlash (logFileDir) + "CameraLine_" + d.ToString ("yyyy-MM-dd_HHmmss") + ".jpg";
-        UmiOSservices.CreateDirectory (logFileDir);
+        string logFileDir = CounterManaged.UmiOSservices.AddSlash (CounterManaged.UmiVariables.LoggingDir ()) + "CameraLines";
+        string logFileName = CounterManaged.UmiOSservices.AddSlash (logFileDir) + "CameraLine_" + d.ToString ("yyyy-MM-dd_HHmmss") + ".jpg";
+        CounterManaged.UmiOSservices.CreateDirectory (logFileDir);
         chartBuff.Save (logFileName);
       }
     }  /* SaveImageInLogDirectory */

@@ -95,6 +95,7 @@
     <Compile Include="CameraLine.Designer.cs">
       <DependentUpon>CameraLine.cs</DependentUpon>
     </Compile>
+    <Compile Include="CounterManagerWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScannerFileViewerPanel.cs">
       <SubType>UserControl</SubType>
@@ -115,13 +116,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CounterManaged\CounterManaged.vcxproj">
-      <Project>{69108ade-3bf7-4329-bfc2-9ab5fa70923d}</Project>
-      <Name>CounterCounterManaged</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CounterManagedRoutines\CounterManagedRoutines.csproj">
       <Project>{d6afbb16-c907-4944-aa25-be9e00d97980}</Project>
       <Name>CounterManagedRoutines</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CounterManaged\CounterManaged.vcxproj">
+      <Project>{69108ade-3bf7-4329-bfc2-9ab5fa70923d}</Project>
+      <Name>CounterManaged</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

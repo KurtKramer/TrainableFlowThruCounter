@@ -45,17 +45,17 @@ namespace CounterApplication
     private  StatusSnapshotManaged.FieldIdx  throughPutField = StatusSnapshotManaged.FieldIdx.Count;
     private  String                          secondaryToDisplay = "Capacity";
 
-    private  TabPage         statsTabPage  = null;   ///< Points to the Tab page that contains Statistics; this way will be able to add and remove page as needed */
-    private  TabPage         dialogTabPage = null;
-    private  TabPage         defaultOperatingParametersPage = null;
+    private  TabPage        statsTabPage  = null;   ///< Points to the Tab page that contains Statistics; this way will be able to add and remove page as needed */
+    private  TabPage        dialogTabPage = null;
+    private  TabPage        defaultOperatingParametersPage = null;
 
-    private  CameraPreView   cameraPreviewWindow = null;
+    private  CameraPreView  cameraPreviewWindow = null;
 
-    private  ToolTip         toolTip = null;
+    private  ToolTip        toolTip = null;
 
-    private  bool            saveDebugImages = false;
+    private  bool           saveDebugImages = false;
 
-    private  UmiRunLog       runLog = null;  
+    private  UmiRunLog      runLog = null;  
 
 
     public  CounterApplication ()
@@ -233,13 +233,13 @@ namespace CounterApplication
     }
 
 
+
     private  void  ReleaseLeftCrop (object sender, System.EventArgs e)
     {
       CropLeft.Text = "0";
       cameraManager.CropLeft (0);
       SetUpLiveVideoFrameContectMenu ();
     } /* ReleaseLeftCrop */
-
 
 
 
@@ -268,13 +268,15 @@ namespace CounterApplication
     }
 
 
+
     private  void  ReleaseRightCrop (object sender, System.EventArgs e)
     {
       int  cropRight = cameraManager.FrameWidthInPixels () - 1;
       cameraManager.CropRight (cropRight);
       CropRight.Text = cropRight.ToString ();
       SetUpLiveVideoFrameContectMenu ();
-    } /* ReleaseLeftCrop */
+    } /* ReleaseRightCrop */
+
 
 
     private  void  DisplayTemporalCameraLine (object sender, System.EventArgs e)
@@ -299,7 +301,6 @@ namespace CounterApplication
       TemporalDisplay  td = new TemporalDisplay (rasterData, col, 0, width - 1, false);
       td.ShowDialog (this);
     }
-
 
 
 
@@ -459,6 +460,7 @@ namespace CounterApplication
     }
 
 
+
     void  SetEnableDisable ()
     {
       DisableAllControls ();
@@ -537,7 +539,6 @@ namespace CounterApplication
 
       resetControls = false;
     }  /* SetEnableDisable */
-
 
 
 
@@ -644,7 +645,6 @@ namespace CounterApplication
 
 
 
-
     private void  UpdatePlayBackProgress ()
     {
       if  (curState == UmiCounterState.PlayingBack)
@@ -660,7 +660,6 @@ namespace CounterApplication
       }
     }
     
-
 
 
     String    lastSecondaryMsg = "";
@@ -757,6 +756,7 @@ namespace CounterApplication
       CounterStatus.ForeColor = CounterStatus2.ForeColor;
       CounterStatus.BackColor = CounterStatus2.BackColor;
     }
+
 
 
     private  void  RefreshLiveVideo ()
@@ -1129,7 +1129,6 @@ namespace CounterApplication
 
 
 
-
     private void LogMsgs_VisibleChanged (object sender, EventArgs e)
     {
       if  (LogMsgs.Visible)
@@ -1151,7 +1150,6 @@ namespace CounterApplication
       runLog.WriteLn (10, "RequestedScanRate_ValueChanged  " + RequestedScanRate.Value.ToString ());
       cameraManager.RequestedScanRate ((float)RequestedScanRate.Value);
     }
-
 
 
 
@@ -1342,7 +1340,6 @@ namespace CounterApplication
 
 
 
-
     private void AuditButton_Click (object sender, EventArgs e)
     {
       runLog.WriteLn (10, "AuditButton_Click");
@@ -1469,4 +1466,3 @@ namespace CounterApplication
   }  /* CounterApplication */
 
 }  /* CounterApplication Name Space  */
-

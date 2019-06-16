@@ -17,38 +17,38 @@ namespace CounterApplication
 { 
   public partial class Auditor : Form
   {
-    private  CounterManagerWrapper  cameraManager     = null;
-    private  int                          autoScrollRate    = 0;
-    private  int                          erosionStructSize = -1;
-    private  int                          timerTicCount     = 0;
-    private  String                       scannerFileName   = "";
-    private  UmiShrimpLengthComputer      lengthComputer    = null;
-    private  UmiScannerFileBuffered       scannerFile       = null;
-    private  List<String>                 errorMessages     = new List<string> ();
-    private  bool                         scannerFileLoadThreadsStillRunning = false;
+    private  CounterManagerWrapper    cameraManager     = null;
+    private  int                      autoScrollRate    = 0;
+    private  int                      erosionStructSize = -1;
+    private  int                      timerTicCount     = 0;
+    private  String                   scannerFileName   = "";
+    private  UmiShrimpLengthComputer  lengthComputer    = null;
+    private  UmiScannerFileBuffered   scannerFile       = null;
+    private  List<String>             errorMessages     = new List<string> ();
+    private  bool                     scannerFileLoadThreadsStillRunning = false;
 
-    private  String[]                     plotOptions = {"Shrimp Count","Particle Count", "Bytes", "Flow Ratio", "Flow Rate"};
-    private  int                          plottingIntervalSecs = 5;
-    private  float                        scanRate = 20000.0f;
+    private  String[]                 plotOptions = {"Shrimp Count","Particle Count", "Bytes", "Flow Ratio", "Flow Rate"};
+    private  int                      plottingIntervalSecs = 5;
+    private  float                    scanRate = 20000.0f;
 
-    private  int                          oldWidth  = 0;
-    private  int                          oldHeight = 0;
+    private  int                      oldWidth  = 0;
+    private  int                      oldHeight = 0;
 
-    private  float                        pixelsPerMM = 23.6f;
+    private  float                    pixelsPerMM = 23.6f;
 
-    private  bool                         runPlayBack = false;
+    private  bool                     runPlayBack = false;
 
-    private  String                       trainingModelName = "";
-    private  bool                         trainingModelLoaded = false;
+    private  String                   trainingModelName = "";
+    private  bool                     trainingModelLoaded = false;
 
-    private  int                          scannerFileCropLeft = -1;
-    private  int                          scannerFileCropRight = -1;
+    private  int                      scannerFileCropLeft = -1;
+    private  int                      scannerFileCropRight = -1;
 
-    private  int                          backgroundPixelTH = 31;
+    private  int                      backgroundPixelTH = 31;
 
-    private  UmiOperatingParameters       opParametersToExtractParticles = null;
+    private  UmiOperatingParameters   opParametersToExtractParticles = null;
 
-    private  bool                         saveDebugImages;
+    private  bool                     saveDebugImages;
 
     
     enum   PlottingOptions  {ShrimpCount = 0, ParticleCount = 1, Bytes = 2, FlowRateRatio = 3, FlowRate = 4};
