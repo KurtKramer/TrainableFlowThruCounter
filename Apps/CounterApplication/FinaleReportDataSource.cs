@@ -82,15 +82,15 @@ namespace CounterApplication
       }
     }
 
-    private  CounterManagerWrapper       cameraManager       = null;
-    private  int                         count               = 0;
-    private  int                         sampleSize          = 0;
-    private  float                       sizeMean            = 0.0f;
-    private  float                       sizeStdDev          = 0.0f;
+    private  CounterManagerWrapper   cameraManager       = null;
+    private  int                     count               = 0;
+    private  int                     sampleSize          = 0;
+    private  float                   sizeMean            = 0.0f;
+    private  float                   sizeStdDev          = 0.0f;
 
-    private  UmiOperatingParameters      operatingParameters = null;
-    private  UmiSessionParameters        sessionParameters   = null;
-    private  byte[]                      sizeChart           = null;
-    private  byte[]                      temporalChart       = null;
+    private  UmiOperatingParameters  operatingParameters = null;
+    private  UmiSessionParameters    sessionParameters   = null;
+    private  byte[]                  sizeChart           = null;
+    private  byte[]                  temporalChart       = null;
   }
 }

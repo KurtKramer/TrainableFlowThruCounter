@@ -103,36 +103,6 @@ namespace CounterApplication.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LarcosLogoMedium {
-            get {
-                object obj = ResourceManager.GetObject("LarcosLogoMedium", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap LarcosLogoSmall {
-            get {
-                object obj = ResourceManager.GetObject("LarcosLogoSmall", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap LarcosLogoSmall2 {
-            get {
-                object obj = ResourceManager.GetObject("LarcosLogoSmall2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap SkipToNext {
             get {
                 object obj = ResourceManager.GetObject("SkipToNext", resourceCulture);

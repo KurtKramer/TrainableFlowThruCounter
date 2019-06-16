@@ -16,8 +16,6 @@ using  CounterManaged;
 
 
 
-
-
 namespace CounterApplication
 {
   public partial class FinaleReportViewer : Form

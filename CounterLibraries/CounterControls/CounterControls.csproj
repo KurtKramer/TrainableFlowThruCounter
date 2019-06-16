@@ -95,7 +95,6 @@
     <Compile Include="CameraLine.Designer.cs">
       <DependentUpon>CameraLine.cs</DependentUpon>
     </Compile>
-    <Compile Include="CounterManagerWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScannerFileViewerPanel.cs">
       <SubType>UserControl</SubType>

@@ -17,11 +17,20 @@ namespace CounterApplication
     static void Main()
     {
       //SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
+
+#if (DEBUG)
       UmiMethods.StartMemoryLeakDetection ();
+#endif
 
       CounterManaged.UmiVariables.SetCounterHomeDir ();  // Will set the application frame work variables to there default values.
-                                                         // Will set to value pointed to by environment variable "CounterHomeDir". If
-                                                         // this variable is not defined will then default to "C:\Counter".
+
+      var homeDir = CounterManaged.UmiVariables.CounterHomeDir();
+
+      if  (!System.IO.Directory.Exists(homeDir))
+      {
+        MessageBox.Show($"Home Directory {homeDir} does not exists!");
+        Application.Exit ();
+      }
 
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);

@@ -45,7 +45,7 @@ KKStr  CounterVariables::CounterHomeDir ()
     return  counterHomeDir;
 
   // We will first try and get directory from the CounterHomeDir environment variable.
-  KKStrPtr homeDir = osGetEnvVariable ("LarcosHomeDir");
+  KKStrPtr homeDir = osGetEnvVariable ("TFTCHomeDir");
   if  (homeDir != NULL)
   {
     counterHomeDir = *homeDir;
@@ -56,10 +56,10 @@ KKStr  CounterVariables::CounterHomeDir ()
   if  (counterHomeDir.Empty ())
   {
     #if  defined(KKOS_WINDOWS)
-       counterHomeDir = "C:\\Larcos";
+       counterHomeDir = "C:\\TFTCHome";
        cout << endl << "counterHomeDir" << "\t" << counterHomeDir << endl << endl;
     #else
-       counterHomeDir = "/Larcos";
+       counterHomeDir = "/TFTCHome";
     #endif
   }
 
@@ -84,8 +84,8 @@ KKStr  CounterVariables::TempDir ()
 
 void   CounterVariables::SetCounterHomeDir ()
 {
-  // When this method is called the caller wants to set the Larcos home directory to the default location.
-  // so we set 'counterHomeDir' to a empty string and then call the method 'CounterHomeDir' which will initialize
+  // When this method is called the caller wants to set the Counter home directory to the default location.
+  // so we set 'TFTCHomeDir' to a empty string and then call the method 'CounterHomeDir' which will initialize
   // 'counterHomeDir' to the default directory.
   counterHomeDir = "";
   CounterHomeDir ();
@@ -132,7 +132,7 @@ kkint32  CounterVariables::DebugLevel ()
 {
   if  (debugLevel < 0)
   {
-    KKStrPtr s = osGetEnvVariable ("LarcosDebugLevel");
+    KKStrPtr s = osGetEnvVariable ("CounterDebugLevel");
     if  (s)
     {
       debugLevel = s->ToInt32 ();

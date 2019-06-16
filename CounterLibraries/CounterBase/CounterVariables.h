@@ -1,12 +1,12 @@
-#if  !defined(_LARCOSVARIABLES_)
-#define  _LARCOSVARIABLES_
+#if  !defined(_COUNTERVARIABLES_)
+#define  _COUNTERVARIABLES_
 
 #include "KKStr.h"
 
 
 /**
  *@namespace CounterBase  CounterVariables.h
- *@brief Classes and structures that are needed to support LARCOS applications.
+ *@brief Classes and structures that are needed to support TFTC applications.
  *@details The only class in this namespcace is 'CounterVariables' it provides global 
  * information to all LARCIOS applications such as the Counter home directory.
  */
@@ -60,8 +60,8 @@ namespace  CounterBase
     /**
      *@brief  Set the Counter Home Directory to the default location.
      *@details When this method is called the caller wants to reset the Counter Home Directory to the default location.
-     *         If the Environment variable "CounterHomeDir" exists it will st it to its value otherwise it will be set 
-     *         to "C:\Larcos"  or  "/Larcos"  depending on the OS.
+     *         If the Environment variable "TFTCHomeDir" exists it will st it to its value otherwise it will be set 
+     *         to "C:\TFTCHome"  or  "/TFTCHome"  depending on the OS.
      */
     static  void   SetCounterHomeDir ();
 

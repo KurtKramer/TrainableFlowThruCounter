@@ -1061,6 +1061,7 @@
       // 
       // Visibility
       // 
+      this.Visibility.Controls.Add(this.cameraLine);
       this.Visibility.Location = new System.Drawing.Point(4, 29);
       this.Visibility.Name = "Visibility";
       this.Visibility.Padding = new System.Windows.Forms.Padding(3);
@@ -1068,6 +1069,16 @@
       this.Visibility.TabIndex = 6;
       this.Visibility.Text = "Visibility";
       this.Visibility.UseVisualStyleBackColor = true;
+      // 
+      // cameraLine
+      // 
+      this.cameraLine.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+      this.cameraLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.cameraLine.Location = new System.Drawing.Point(3, 3);
+      this.cameraLine.Name = "cameraLine";
+      this.cameraLine.RequestedSensitivityMode = "Low";
+      this.cameraLine.Size = new System.Drawing.Size(940, 450);
+      this.cameraLine.TabIndex = 0;
       // 
       // DefaultOperatingParametersTab
       // 
