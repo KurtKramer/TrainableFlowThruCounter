@@ -16,12 +16,12 @@ namespace CounterApplication
     [STAThread]
     static void Main()
     {
-      SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
+      //SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
       UmiMethods.StartMemoryLeakDetection ();
 
       CounterManaged.UmiVariables.SetCounterHomeDir ();  // Will set the application frame work variables to there default values.
                                                          // Will set to value pointed to by environment variable "CounterHomeDir". If
-                                                         // this variable is not defined will then default to "C:\Larcos".
+                                                         // this variable is not defined will then default to "C:\Counter".
 
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);

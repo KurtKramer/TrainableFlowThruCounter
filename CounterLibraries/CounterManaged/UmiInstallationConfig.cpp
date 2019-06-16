@@ -1,20 +1,16 @@
 #include "StdAfx.h"
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <ctype.h>
 #include <sstream>
 #include <vector>
 #include "MemoryDebug.h"
 
-
 #include "KKBaseTypes.h"
 using namespace KKB;
 
-
 #include "ScannerFile.h"
 using namespace  KKLSC;
-
 
 #include "InstallationConfig.h"
 using namespace  CounterUnManaged;

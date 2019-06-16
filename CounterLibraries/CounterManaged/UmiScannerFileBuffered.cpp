@@ -768,12 +768,12 @@ UmiRaster^  UmiScannerFileBuffered::GetRasterForParticleAsCounted (UmiParticleEn
     // This code is useful to make sure that we are re-producing the image for ImageViewer that we are using during LogicalFrameProcessing
     // Feature Computation.
     //
-    //String  origFileSubDir = "D:\\Larcos\\ScannerFiles\\2014-02-28_WalkingTreeFarms\\2014-02-28_WTF_006\\WTF_006_20140228-104439_00\\";
-    //String  origFileSubDir = "E:\\Larcos\\ScannerFiles\\2014-02-28_WalkingTreeFarms\\2014-02-28_WTF_006\\WTF_006_20140228-104439_00\\";
-    //String  origFileSubDir = "E:\\Larcos\\ScannerFiles\\2014-02-28_WalkingTreeFarms\\2014-02-28_WTF_006\\WTF_006_20140228-104439_03\\";
-    //String  origFileSubDir = "D:\\Larcos\\ScannerFiles\\2014-02-21_WalkingTreeFarms\\2014-02-21_WTF-_004\\WTF-_004_20140221-104418_00";
-    //String  origFileSubDir = "D:\\Larcos\\ScannerFiles\\2014-02-21_WalkingTreeFarms\\2014-02-21_WTF-_004\\WTF-_004_20140221-104418_01";
-    String^  origFileSubDir = "D:\\Larcos\\ScannerFiles\\2014-02-21_WalkingTreeFarms\\2014-02-21_WTF-_002\\WTF-_002_20140221-100939_01";
+    //String  origFileSubDir = "D:\\Counter\\ScannerFiles\\2014-02-28_WalkingTreeFarms\\2014-02-28_WTF_006\\WTF_006_20140228-104439_00\\";
+    //String  origFileSubDir = "E:\\Counter\\ScannerFiles\\2014-02-28_WalkingTreeFarms\\2014-02-28_WTF_006\\WTF_006_20140228-104439_00\\";
+    //String  origFileSubDir = "E:\\Counter\\ScannerFiles\\2014-02-28_WalkingTreeFarms\\2014-02-28_WTF_006\\WTF_006_20140228-104439_03\\";
+    //String  origFileSubDir = "D:\\Counter\\ScannerFiles\\2014-02-21_WalkingTreeFarms\\2014-02-21_WTF-_004\\WTF-_004_20140221-104418_00";
+    //String  origFileSubDir = "D:\\Counter\\ScannerFiles\\2014-02-21_WalkingTreeFarms\\2014-02-21_WTF-_004\\WTF-_004_20140221-104418_01";
+    String^  origFileSubDir = "D:\\Counter\\ScannerFiles\\2014-02-21_WalkingTreeFarms\\2014-02-21_WTF-_002\\WTF-_002_20140221-100939_01";
 
     String^   origFileDir = UmiOSservices::LookForFile (fileName, origFileSubDir);
 

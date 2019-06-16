@@ -1,5 +1,5 @@
-/* OperatingParameters.cpp -- Represents the operating parameters used by Larcos; ex's:  BackGroundThreshold, FlowRateFactor.
- * Copyright (C) 2011-2013  Kurt Kramer
+/* CounterScannerFileEntry.cpp -- Represents one scanner file entry; ex's:  BackGroundThreshold, FlowRateFactor.
+ * Copyright (C) 2011-2019  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
 #include "FirstIncludes.h"

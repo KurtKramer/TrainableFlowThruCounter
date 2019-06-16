@@ -74,7 +74,7 @@ namespace CounterUnManaged
 
     /**
      *@brief Updates member fields from header Fields in specified ScannerFile(sf).
-     *@details Earlier version of Larcos did not Precede Session Parameter fields with "SP:" prefix so if 
+     *@details Earlier version of Counter did not Precede Session Parameter fields with "SP:" prefix so if 
      * a given field is not found with the prefix will then try looking for field value without prefix.
      */
     virtual
@@ -121,7 +121,7 @@ namespace CounterUnManaged
      /**
       *@brief Will retrieve value of 'fieldName' fist as a SessionParameter field ("SP:") and if not found then as 
       * generic field value.
-      *@details  In earlier version of Larcos recorded each field in header with just field name;  but later on we started to add
+      *@details  In earlier version of Counter recorded each field in header with just field name;  but later on we started to add
       * prefix to denote section such as 'SP:' for Session Parameters.
       */
      virtual

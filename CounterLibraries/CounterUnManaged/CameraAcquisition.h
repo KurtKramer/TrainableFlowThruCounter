@@ -70,7 +70,7 @@ namespace CounterUnManaged
      */
     kkMemSize  MemoryConsumedEstimated () const;
 
-    virtual  void  GetStats (CounterStats&  stats)  const;
+    virtual  void  GetStats (CounterStats&  counterStats)  const;
 
 
     CameraParametersPtr  CameraParams                ()  const  {return cameraParams;}
@@ -102,7 +102,7 @@ namespace CounterUnManaged
 
 
     /**
-     *@brief  Called by 'LarcosCameraManager' whenever one of the Crop settings change.
+     *@brief  Called by 'CounterCameraManager' whenever one of the Crop settings change.
      */
     virtual
     void  CropSettingsChanged (kkint32  _cropLeft,
@@ -110,7 +110,7 @@ namespace CounterUnManaged
                               );
 
     /**
-     *@brief  Called by 'LarcosCameraManager' whenever ScanRate changes.
+     *@brief  Called by 'CounterCameraManager' whenever ScanRate changes.
      */
     virtual
     void   ScanRateChanged (float _newScanRate);

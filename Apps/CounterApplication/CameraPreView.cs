@@ -15,8 +15,8 @@ namespace CounterApplication
   public partial class CameraPreView : Form
   {
     private  CounterManagerWrapper  cameraManager = null;
-    private  int                          oldHeight = 0;
-    private  int                          oldWidth  = 0;
+    private  int                    oldHeight = 0;
+    private  int                    oldWidth  = 0;
 
     public CameraPreView (CounterManagerWrapper  _cameraManager)
     {
@@ -75,7 +75,7 @@ namespace CounterApplication
 
     private void ResetButton_Click(object sender, EventArgs e)
     {
-      DialogResult  dr = MessageBox.Show (this, "Do you want to reset the counter?", "Larcos Shrimp Counter", MessageBoxButtons.YesNo);
+      DialogResult  dr = MessageBox.Show (this, "Do you want to reset the counter?", "Trainable Flow-Thru Counter", MessageBoxButtons.YesNo);
       if  (dr == DialogResult.Yes)
         cameraManager.ResetCounts ();
     }

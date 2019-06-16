@@ -26,10 +26,10 @@ using  namespace  CounterUnManaged;
 
 
 
-PlayBackButtonThread::PlayBackButtonThread (CounterManagerPtr _manager,
-                                            const KKStr&            _srcScannerFileName,
-                                            MsgQueuePtr             _msgQueue,
-                                            const KKStr&            _threadName
+PlayBackButtonThread::PlayBackButtonThread (CounterManagerPtr  _manager,
+                                            const KKStr&       _srcScannerFileName,
+                                            MsgQueuePtr        _msgQueue,
+                                            const KKStr&       _threadName
                                            ):
     CameraThread (_manager, _threadName, _msgQueue),
     srcScannerFileName (_srcScannerFileName),

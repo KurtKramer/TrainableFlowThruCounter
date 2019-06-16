@@ -11,7 +11,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 
 using CounterManagedRoutines;
-using CounterControls;
 using CounterManaged;
 
 
@@ -95,7 +94,7 @@ namespace CounterApplication
       SetUpLiveVideoFrameContectMenu ();
       cameraManager.SetLiveVideoDimensions (liveVideoFrame.Height, liveVideoFrame.Width);
 
-      UpdateLarcosStatusDisplayNotRunning ();
+      UpdateCounterStatusDisplayNotRunning ();
 
       UpdateThrouputChartData ();
 
@@ -115,7 +114,7 @@ namespace CounterApplication
 
 
 
-    private void  LarcosCounter_Load (object sender, EventArgs e)
+    private void  Counter_Load (object sender, EventArgs e)
     {
       Text = "K-Square Counter    version: " + cameraManager.CounterVersionNumber ();
       if  (cameraManager.OperatingMode () == UmiCounterOperatingModes.Advanced)
@@ -512,8 +511,8 @@ namespace CounterApplication
           break;
         }
 
-        case UmiCounterState.PlayingBack:
-        case UmiCounterState.Running:
+        case  UmiCounterState.PlayingBack:
+        case  UmiCounterState.Running:
         {
           FlowRateFactor.Enabled      = true;
           MinSizeThreshold.Enabled    = true;
@@ -668,7 +667,7 @@ namespace CounterApplication
     int       lastSecondaryMsgBlanksInARow = 0;
     DateTime  lastSecondaryTimeStamp;
 
-    private  void  UpdateLarcosStatusDisplay ()
+    private  void  UpdateCounterStatusDisplay ()
     {
       if  (cameraManager == null)
         return;
@@ -747,11 +746,11 @@ namespace CounterApplication
       }
 
       Count.Text = cameraManager.ParticlesCounted ().ToString ("##,###,##0");
-    }  /* UpdateLarcosStatusDisplay*/
+    }  /* UpdateCounterStatusDisplay*/
     
 
 
-    private  void  UpdateLarcosStatusDisplayNotRunning ()
+    private  void  UpdateCounterStatusDisplayNotRunning ()
     {
       CounterStatus.Text = "";
       CounterStatus2.Text = "";
@@ -885,7 +884,7 @@ namespace CounterApplication
           if  (StatsPannel.Visible)
             UpdateStatusFields ();
 
-          UpdateLarcosStatusDisplay ();
+          UpdateCounterStatusDisplay ();
           RetrieveLoggingMessages ();
 
           if  ((ticks % 5) == 0)
@@ -906,7 +905,7 @@ namespace CounterApplication
 
 
 
-    private void LarcosCounter_FormClosed (object sender, FormClosedEventArgs e)
+    private void Counter_FormClosed (object sender, FormClosedEventArgs e)
     {
       cameraManager = null;
     }
@@ -924,11 +923,11 @@ namespace CounterApplication
 
 
 
-    private void LarcosCounter_FormClosing (object sender, FormClosingEventArgs e)
+    private void Counter_FormClosing (object sender, FormClosingEventArgs e)
     {
       curState = cameraManager.CurState ();
 
-      runLog.WriteLn  (10, "LarcosCounter_FormClosing");
+      runLog.WriteLn  (10, "Counter_FormClosing");
 
       if  (e.CloseReason == CloseReason.UserClosing)
       {
@@ -1156,7 +1155,7 @@ namespace CounterApplication
 
 
 
-    private void LarcosCounter_SizeChanged (object sender, EventArgs e)
+    private void  Counter_SizeChanged (object sender, EventArgs e)
     {
       int  deltaHeight = Height - lastHeight;
       int  deltaWidth  = Width  - lastWidth;
@@ -1167,8 +1166,8 @@ namespace CounterApplication
       FlowRate.Top               += deltaHeight;
       CameraTemparature.Top      += deltaHeight;
       CameraTemparatureLabel.Top += deltaHeight;
-      CounterStatus.Top           += deltaHeight;
-      CounterStatus2.Top          += deltaHeight;
+      CounterStatus.Top          += deltaHeight;
+      CounterStatus2.Top         += deltaHeight;
 
       Count.Top                  += deltaHeight;
       CountLabel.Top             += deltaHeight;
@@ -1178,8 +1177,8 @@ namespace CounterApplication
       Count.Left                 += deltaWidth;
       CountLabel.Left            += deltaWidth;
 
-      CounterStatus.Width         += deltaWidth;
-      CounterStatus2.Width        += deltaWidth;
+      CounterStatus.Width        += deltaWidth;
+      CounterStatus2.Width       += deltaWidth;
 
       TabDisplayed.Height        += deltaHeight;
       TabDisplayed.Width         += deltaWidth;
@@ -1210,7 +1209,7 @@ namespace CounterApplication
       lastWidth  = Width;
 
       cameraManager.SetLiveVideoDimensions (liveVideoFrame.Height, liveVideoFrame.Width);
-    }  /* LarcosCounter_SizeChanged */
+    }  /* Counter_SizeChanged */
 
 
 
@@ -1348,7 +1347,7 @@ namespace CounterApplication
     {
       runLog.WriteLn (10, "AuditButton_Click");
       curState = cameraManager.CurState ();
-      if  ((curState != UmiCounterState.Stopped)   &&  (curState != UmiCounterState.Connected))
+      if  ((curState != UmiCounterState.Stopped)  &&  (curState != UmiCounterState.Connected))
       {
         MessageBox.Show (this, "You must be in the Stopped or Connected mode to Audit and existing scanner file.", "Audit a Scanner File", MessageBoxButtons.OK);
         return;

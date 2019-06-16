@@ -37,7 +37,7 @@ namespace CounterUnManaged
   typedef  CameraFlatFieldCorrection*  CameraFlatFieldCorrectionPtr;
   #endif
 
-  #if  !defined(_LARCOSCOUNTERSTATS_)
+  #if  !defined(_COUNTERSTATS_)
     class  CounterStats;
     typedef  CounterStats*  CounterStatsPtr;
   #endif
@@ -81,14 +81,14 @@ namespace CounterUnManaged
     typedef  CameraFrameBuffer*  CameraFrameBufferPtr;
 
     CameraFrameBuffer (CounterManagerPtr _manager,
-                       const KKStr&            _name,
-                       kkuint32                _bufferSize,
-                       kkuint32                _maxNumOfBuffers,
-                       kkint32                 _frameHeight,
-                       kkint32                 _frameWidth,
-                       bool                    _dataIsToBeCounted,
-                       bool                    _dataIsToBeRecorded,
-                       bool                    _sampleLastFrameBeforeFlatField
+                       const KKStr&      _name,
+                       kkuint32          _bufferSize,
+                       kkuint32          _maxNumOfBuffers,
+                       kkint32           _frameHeight,
+                       kkint32           _frameWidth,
+                       bool              _dataIsToBeCounted,
+                       bool              _dataIsToBeRecorded,
+                       bool              _sampleLastFrameBeforeFlatField
                       );
 
     ~CameraFrameBuffer ();
@@ -107,7 +107,7 @@ namespace CounterUnManaged
     kkint32              PhysicalFramesDropped          () const {return physicalFramesDropped;}
     kkint32              SampleLastFrameBeforeFlatField () const {return sampleLastFrameBeforeFlatField;}
 
-    void  GetStats (CounterStats&  larcosCameraStats) const;
+    void  GetStats (CounterStats&  cameraStats) const;
 
 
     bool  FlatFieldEnabled  () const;
@@ -174,7 +174,7 @@ namespace CounterUnManaged
     VectorUcharPtr  LastFrameHighValuesScanLine()  const;
 
     /**
-     *@brief  The LarcosCameraManager  that owns this instance will call this method when the Acquisition Thread
+     *@brief  The CounterManager that owns this instance will call this method when the Acquisition Thread
      * informs it that the Scan-Rate has changed.
      */
     void   ScanRateChanged (float _newScanRate);

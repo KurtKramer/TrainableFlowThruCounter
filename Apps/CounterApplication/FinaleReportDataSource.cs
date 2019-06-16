@@ -51,7 +51,7 @@ namespace CounterApplication
     public  DateTime  DateTimeRecorded    {get  {return sessionParameters.DateTimeRecorded;}}
     public  String    Destination         {get  {return sessionParameters.Destination;}}
     public  String    PersonInCharge      {get  {return sessionParameters.PersonInCharge;}}
-    public  String    LarcosVersionNum    {get  {return cameraManager.CounterVersionNumber ();}}
+    public  String    CounterVersionNum   {get  {return cameraManager.CounterVersionNumber ();}}
     public  String    SessionDescription  {get  {return sessionParameters.SessionDescription;}}
     public  float     ScanRate            {get  {return operatingParameters.RequestedScanRate;}}
     public  int       SessionId           {get  {return sessionParameters.SessionId;}}
@@ -64,10 +64,10 @@ namespace CounterApplication
     {
       get
       {
-        Bitmap larcosLogo = global::CounterApplication.Properties.Resources.LarcosLogoSmall2;
-        MemoryStream larcosLogoStream = new MemoryStream ();
-        larcosLogo.Save (larcosLogoStream, System.Drawing.Imaging.ImageFormat.Bmp);
-        return  larcosLogoStream.ToArray ();
+        Bitmap counterLogo = global::CounterApplication.Properties.Resources.ZOIS_Logo_Small;
+        MemoryStream counterLogoStream = new MemoryStream ();
+        counterLogo.Save (counterLogoStream, System.Drawing.Imaging.ImageFormat.Bmp);
+        return  counterLogoStream.ToArray ();
       }
     }
 
@@ -82,7 +82,7 @@ namespace CounterApplication
       }
     }
 
-    private  CounterManagerWrapper cameraManager = null;
+    private  CounterManagerWrapper       cameraManager       = null;
     private  int                         count               = 0;
     private  int                         sampleSize          = 0;
     private  float                       sizeMean            = 0.0f;

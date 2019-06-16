@@ -362,7 +362,7 @@ void  CounterManagerWrapper::SetTrainingModel (String^                  _trainin
 
   // Assuming that the '_trainingModelName' is good and the respective configuration file contains
   // the parameters the "RequestedScanRate", "RequestedAnalogGain", and "RequestedDigitalGain" will
-  // be updated in 'larcosCameraManager'.
+  // be updated in 'CounterManager'.
   counterManager->SetTrainingModel 
         (SystemStringToKKStr (_trainingModelName),
          successful,

@@ -1,4 +1,4 @@
-/* CounterStats.cpp -- Represents a Snapshot of stats being maintained by the Larcos Camera Manager.
+/* CounterStats.cpp -- Represents a Snapshot of stats being maintained by the Counter Camera Manager.
  * Copyright (C) 2011-2013  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */

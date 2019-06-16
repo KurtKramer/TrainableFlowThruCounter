@@ -23,10 +23,10 @@ namespace CounterUnManaged
   public:
     typedef  ScannerFile::Format  ScannerFileFormat;
 
-    PlayBackButtonThread (CounterManagerPtr _manager,
-                          const KKStr&            _srcScannerFileName,
-                          MsgQueuePtr             _msgQueue,
-                          const KKStr&            _threadName
+    PlayBackButtonThread (CounterManagerPtr  _manager,
+                          const KKStr&       _srcScannerFileName,
+                          MsgQueuePtr        _msgQueue,
+                          const KKStr&       _threadName
                          );
 
     virtual

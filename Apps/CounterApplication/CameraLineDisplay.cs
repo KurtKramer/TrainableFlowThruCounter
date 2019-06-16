@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 
-//using UnManagedInterface;
+using CounterControls;
 using CounterManaged;
 
 
@@ -16,24 +16,24 @@ namespace CounterApplication
 {
   public partial class  CameraLineDisplay : Form
   {
-    bool                         autoRefresh      = false;
+    bool                   autoRefresh      = false;
     CounterManagerWrapper  cameraManager    = null;
-    private  byte[]              cameraData       = null;
-    private  byte[]              cameraDataPrev1  = null;
-    private  byte[]              cameraDataPrev2  = null;
-    private  int                 firstCameraCol   = 0;
-    private  int                 horzCoarsness    = 2;
-    private  int                 oldScallingRatio = 0;
-    private  float               vertCoarsness    = 2.0f;
+    private  byte[]        cameraData       = null;
+    private  byte[]        cameraDataPrev1  = null;
+    private  byte[]        cameraDataPrev2  = null;
+    private  int           firstCameraCol   = 0;
+    private  int           horzCoarsness    = 2;
+    private  int           oldScallingRatio = 0;
+    private  float         vertCoarsness    = 2.0f;
     
-    private  bool                weAreWaitingForCameraLineData = false;
+    private  bool          weAreWaitingForCameraLineData = false;
   
-    private  bool                errorLastTimeTryingToRetrieveData = false;
+    private  bool          errorLastTimeTryingToRetrieveData = false;
 
-    private  Bitmap              chartBuff   = null;
-    private  Graphics            chartBuffDC = null;
+    private  Bitmap        chartBuff   = null;
+    private  Graphics      chartBuffDC = null;
 
-    private  decimal             numSampleLines = 3;
+    private  decimal       numSampleLines = 3;
 
 
 

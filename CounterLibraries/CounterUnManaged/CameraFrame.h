@@ -87,7 +87,7 @@ namespace CounterUnManaged
                                                 */
 
     float                flowRateRatio;        /**< Computed Flow-Rate-Factor from 'FlowMeterTracker::FlowRateToRatio'; this value is only useful if there
-                                                * is a Flow-Meter connected to Larcos.  The initial version will transmit the FlowMeter counter valued as
+                                                * is a Flow-Meter connected to Counter. The initial version will transmit the FlowMeter counter valued as
                                                 * embedded data in the imagery; 1st 4 pixel columns in each scan-line.
                                                 */
 

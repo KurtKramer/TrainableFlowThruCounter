@@ -26,9 +26,9 @@ namespace CounterUnManaged
     typedef  ScannerFile::Format   ScannerFileFormat;
 
 
-    RecordButtonThread (CounterManagerPtr _manager,
-                        MsgQueuePtr             _msgQueue,
-                        const KKStr&            _threadName
+    RecordButtonThread (CounterManagerPtr  _manager,
+                        MsgQueuePtr        _msgQueue,
+                        const KKStr&       _threadName
                        );
 
     virtual

@@ -1,5 +1,5 @@
-#if  !defined(_LARCOSTRAININGCONFIGURATION_)
-#define  _LARCOSTRAININGCONFIGURATION_
+#if  !defined(_COUNTERTRAININGCONFIGURATION_)
+#define  _COUNTERTRAININGCONFIGURATION_
 
 #include "XmlStream.h"
 
@@ -20,8 +20,8 @@ namespace  CounterUnManaged
   {
   public:
     typedef  CounterTrainingConfiguration*  CounterTrainingConfigurationPtr;
-    typedef  CounterTrainingConfiguration const  LarcosTrainingConfigurationConst;
-    typedef  LarcosTrainingConfigurationConst  *  LarcosTrainingConfigurationConstPtr;
+    typedef  CounterTrainingConfiguration const  CounterTrainingConfigurationConst;
+    typedef  CounterTrainingConfigurationConst  *  CounterTrainingConfigurationConstPtr;
 
 
     CounterTrainingConfiguration ();
@@ -98,11 +98,11 @@ namespace  CounterUnManaged
   };  /* CounterTrainingConfiguration */
 
 
-  #define  _LarcosTrainingConfigurationDefined_
+  #define  _CounterTrainingConfigurationDefined_
 
   typedef  CounterTrainingConfiguration::CounterTrainingConfigurationPtr       CounterTrainingConfigurationPtr;
-  typedef  CounterTrainingConfiguration::LarcosTrainingConfigurationConst     LarcosTrainingConfigurationConst;
-  typedef  CounterTrainingConfiguration::LarcosTrainingConfigurationConstPtr  LarcosTrainingConfigurationConstPtr;
+  typedef  CounterTrainingConfiguration::CounterTrainingConfigurationConst     CounterTrainingConfigurationConst;
+  typedef  CounterTrainingConfiguration::CounterTrainingConfigurationConstPtr  CounterTrainingConfigurationConstPtr;
 
 
 

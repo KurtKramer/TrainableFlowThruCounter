@@ -62,10 +62,10 @@ namespace CounterUnManaged
     virtual void  Run ();
 
   private:
-    kkint32                   snapshotInterval;  /**< Number of seconds in between snapShots. */
-    StatusSnapshotBufferPtr   snapshotBuffer;
-    CounterStats        lastStats;
-    CounterStats        nextStats;
+    kkint32                  snapshotInterval;  /**< Number of seconds in between snapShots. */
+    StatusSnapshotBufferPtr  snapshotBuffer;
+    CounterStats             lastStats;
+    CounterStats             nextStats;
   };   /* StatusSnapshotThread */
 
   typedef  StatusSnapshotThread*  StatusSnapshotThreadPtr;

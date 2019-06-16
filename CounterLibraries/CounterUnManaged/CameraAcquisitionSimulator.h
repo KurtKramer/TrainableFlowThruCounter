@@ -35,13 +35,13 @@ namespace CounterUnManaged
   {
   public:
     CameraAcquisitionSimulator 
-                    (CounterManagerPtr _manager,
-                     bool                    _playingBackRealTime,
-                     CameraFrameBufferPtr    _frameBuffer,
-                     const KKStr&            _fileName,
-                     FlowMeterTrackerPtr     _flowMeter,
-                     MsgQueuePtr             _msgQueue,
-                     const KKStr&            _threadName
+                    (CounterManagerPtr     _manager,
+                     bool                  _playingBackRealTime,
+                     CameraFrameBufferPtr  _frameBuffer,
+                     const KKStr&          _fileName,
+                     FlowMeterTrackerPtr   _flowMeter,
+                     MsgQueuePtr           _msgQueue,
+                     const KKStr&          _threadName
                     );
 
     virtual
@@ -80,7 +80,7 @@ namespace CounterUnManaged
 
     KKStrList       scannerFilesToProcess;  /**<  List of scanner files that we need to process yet.  When we are done
                                               * processing one scanner file we will retrieve the next one by popping off
-                                              * its name from the front of 'scannerFilesToProcess'.   Because Larcos starts
+                                              * its name from the front of 'scannerFilesToProcess'.   Because Counter starts
                                               * a new ScannerFile at 1GBboundaries.  There can be several physical files
                                               * that represent one scanning session.
                                               */

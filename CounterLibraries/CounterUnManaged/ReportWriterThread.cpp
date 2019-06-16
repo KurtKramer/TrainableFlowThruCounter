@@ -34,7 +34,7 @@ using  namespace  CounterUnManaged;
 
 
 
-ReportWriterThread::ReportWriterThread (CounterManagerPtr      _manager,
+ReportWriterThread::ReportWriterThread (CounterManagerPtr            _manager,
                                         ParticleEntryBufferPtr       _particleEntryBuffer,
                                         const KKStr&                 _initialScannerFileName,
                                         const SessionParametersPtr   _sessionParameters,

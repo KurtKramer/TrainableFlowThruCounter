@@ -1,12 +1,12 @@
-#if  !defined(_LARCOSSCANNERFILEENTRY_)
-#define  _LARCOSSCANNERFILEENTRY_
+#if  !defined(_COUNTERSCANNERFILEENTRY_)
+#define  _COUNTERSCANNERFILEENTRY_
 
 
 /**
  *@class
- *@brief  A Larcos specific implementation of a ScannerFileEntry
+ *@brief  A Counter specific implementation of a ScannerFileEntry
  *@details  CReated this class to contain not only ScannerFile data but also data that 
- * is relevant to a Larcos ScannerFile such as SessionParaeters and OperatingParameters.
+ * is relevant to a Counter ScannerFile such as SessionParameters and OperatingParameters.
  * As of 2014-06-02 this class is not in use yet.  Initial creation is meant to provoke
  * ideas about what I want in it and how to manage instances of it.
  */

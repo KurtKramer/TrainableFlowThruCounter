@@ -28,9 +28,9 @@ namespace CounterUnManaged
     typedef  ShrimpLengthComputer*  ShrimpLengthComputerPtr;
 
     ShrimpLengthComputer (kkint32  _pixelsPerScanLine,
-                          float  _imageChamberWidth,
+                          float    _imageChamberWidth,
                           kkint32  _erosionStructSize,
-                          uchar  _backgroundPixelTH
+                          uchar    _backgroundPixelTH
                          );
 
     virtual

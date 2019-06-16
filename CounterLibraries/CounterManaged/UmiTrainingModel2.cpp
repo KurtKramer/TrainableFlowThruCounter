@@ -107,8 +107,6 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^       _umiRunLog,
 
 
 
-
-
 UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^                 _umiRunLog,
                                       UmiTrainingConfiguration^  _config
                                      ):
@@ -151,9 +149,6 @@ UmiTrainingModel2::UmiTrainingModel2 (UmiRunLog^                 _umiRunLog,
   config = new CounterTrainingConfiguration (*(_config->Config ()));
   factoryFVProducer =  config->FvFactoryProducer (_umiRunLog->Log ());
 }
-
-
-
 
 
 
@@ -319,7 +314,6 @@ void  UmiTrainingModel2::CleanUpUnmanagedResources ()
 
 
 
-
 void  UmiTrainingModel2::CreateRunLog ()
 {
   if  (runLog == NULL)
@@ -362,9 +356,6 @@ String^  UmiTrainingModel2::LastRunLogTextLine ()
 
 
 
-
-
-
 System::DateTime  UmiTrainingModel2::BuildDateTime::get ()
 {
   if  (!trainer)
@@ -375,11 +366,9 @@ System::DateTime  UmiTrainingModel2::BuildDateTime::get ()
 
 
 
-
-
 String^  UmiTrainingModel2::RootDirExpanded::get ()
 {
-  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
+  CounterTrainingConfigurationPtr  configToUse = GetConfigToUse ();
   if  (configToUse)
     return UmiKKStr::KKStrToSystenStr (configToUse->RootDirExpanded ());
   else
@@ -390,15 +379,13 @@ String^  UmiTrainingModel2::RootDirExpanded::get ()
 
 void  UmiTrainingModel2::SaveConfiguration ()
 {
-  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
+  CounterTrainingConfigurationPtr  configToUse = GetConfigToUse ();
   KKStr  fileName = configToUse->FileName ();
   if  (fileName.Empty ())
     fileName = osAddSlash (CounterVariables::TrainingModelsDir ()) + UmiKKStr::SystemStringToKKStr (modelName);
 
   configToUse->Save (fileName);
 }  /* SaveConfiguration*/
-
-
 
 
 
@@ -448,14 +435,12 @@ void  UmiTrainingModel2::PopulateCSharpClassList ()
 
 
 
-
-
 bool  UmiTrainingModel2::IncludesClass (UmiClass^  mlClass)
 {
   if  (mlClass == nullptr)
     return false;
 
-  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
+  CounterTrainingConfigurationPtr  configToUse = GetConfigToUse ();
   if  (!configToUse)
     return false;
 
@@ -463,8 +448,6 @@ bool  UmiTrainingModel2::IncludesClass (UmiClass^  mlClass)
   
   return  (!dirPath.Empty ());
 }  /* IncludesClass */
-
-
 
 
 
@@ -480,7 +463,6 @@ UmiClassList^  UmiTrainingModel2::ImageClasses ()
 
 
 
-
 UmiOperatingParameters^  UmiTrainingModel2::GetOperatingParameters ()
 {
   if  ((!config)  ||  (config->OperatingParms () == NULL))
@@ -488,7 +470,6 @@ UmiOperatingParameters^  UmiTrainingModel2::GetOperatingParameters ()
   else
     return gcnew UmiOperatingParameters (new OperatingParameters (*(config->OperatingParms ())));
 }
-
 
 
 
@@ -509,7 +490,6 @@ void  UmiTrainingModel2::LoadExistingModelOtherwiseBuild ()
     PopulateCSharpClassList ();
   }
 } /* LoadExistingModelOtherwiseBuild */
-
 
 
 
@@ -555,7 +535,6 @@ void  UmiTrainingModel2::LoadTrainingModelForGivenLevel (kkuint32 level)
     PopulateCSharpClassList ();
   }
 }  /* LoadTrainingModelForGivenLevel*/
-
 
 
 
@@ -734,8 +713,6 @@ void  UmiTrainingModel2::LoadTrainigLibrary (bool  forceRebuild)
 
 
 
-
-
 void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingData)
 {
   GC::Collect ();
@@ -792,7 +769,6 @@ void  UmiTrainingModel2::BuildTrainingModel (UmiFeatureVectorList^  umiTrainingD
 
 
 
-
 UmiPredictionList^   UmiTrainingModel2::BinaryProbailitiesForClass (UmiClass^  leftClass)
 {
   if  (!crossProbTable)
@@ -822,7 +798,6 @@ UmiPredictionList^   UmiTrainingModel2::BinaryProbailitiesForClass (UmiClass^  l
 
   return  predictions;
 }  /* BinaryProbailitiesForClass */
-
 
 
 
@@ -881,8 +856,6 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (UmiFeatureVector^ 
 
 
 
-
-
 UmiPrediction^  UmiTrainingModel2::PredictClass (UmiFeatureVector^  example)
 {
   FeatureVector  testExample (*(example->Features ()));  // We need a local copy; because the ClassifyImage function is going 
@@ -924,7 +897,6 @@ UmiPrediction^  UmiTrainingModel2::PredictClass (UmiFeatureVector^  example)
 
   return  prediction;
 }  /* PredictClass */
-
 
 
 
@@ -985,7 +957,6 @@ void  UmiTrainingModel2::PredictClass (UmiFeatureVector^  featureVector,
 
 
 
-
 void  UmiTrainingModel2::PredictClass (System::String^   imageFileName,
                                        System::Array^    raster,
                                        UmiPrediction^    prediction1,
@@ -1004,7 +975,6 @@ void  UmiTrainingModel2::PredictClass (System::String^   imageFileName,
   PredictClass (fv, prediction1, prediction2);
   return;
 }  /* PredictClass */
-
 
 
 
@@ -1151,8 +1121,6 @@ array<CounterManaged::ProbNamePair^>^
 
 
 
-
-
 array<CounterManaged::ProbNamePair^>^   
                      UmiTrainingModel2::FindWorstSupportVectors2 (UmiFeatureVector^  umiFeatureVector,
                                                                   int                numToFind,
@@ -1184,8 +1152,6 @@ array<CounterManaged::ProbNamePair^>^
 
   return  results;
 }  /* FindWorstSupportVectors2 */
-
-
 
 
 
@@ -1281,7 +1247,6 @@ Bitmap^  UmiTrainingModel2::BuildBitmapFromRasterData (uchar**  r,
 
 
 
-
 UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  imageFileName,
                                                               System::Array^   raster
                                                              )
@@ -1297,7 +1262,6 @@ UmiPredictionList^   UmiTrainingModel2::PredictProbabilities (System::String^  i
 
 
 
-
 String^   UmiTrainingModel2::RunLogFileName::get ()
 {
   if  (runLog != NULL)
@@ -1305,9 +1269,6 @@ String^   UmiTrainingModel2::RunLogFileName::get ()
   else
     return  String::Empty;
 }  /* RunLogFileName */
-
-
-
 
 
 
@@ -1320,14 +1281,13 @@ void  UmiTrainingModel2::CancelLoad ()   // Sets cancel flag to terminate loadin
 
 String^  UmiTrainingModel2::DirectoryPathForClass (UmiClass^  mlClass)
 {
-  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
+  CounterTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (configToUse == NULL)
     return nullptr;
 
   KKStr  dirPath = configToUse->DirectoryPathForClass (mlClass->UnmanagedImageClass ());
   return  UmiKKStr::KKStrToSystenStr (dirPath);
 }  /* DirectoryPathForClass */
-
 
 
 
@@ -1364,18 +1324,14 @@ array<String^>^  UmiTrainingModel2::GetListOfTrainingModels ()
 
 
 
-
-
-
 kkuint32  UmiTrainingModel2::NumHierarchialLevels::get ()
 {
-  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
+  CounterTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (configToUse)
     return  configToUse->NumHierarchialLevels ();
   else
     return 0;
 }
-
 
 
 
@@ -1414,7 +1370,7 @@ String^  UmiTrainingModel2::ParameterStr::get ()
 
   if  (parmStr.Empty ())
   {
-    LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
+    CounterTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
     if  ((configToUse)  &&  (configToUse->ModelParameters ()))
       parmStr = configToUse->ModelParameters ()->ToCmdLineStr ();
   }
@@ -1424,10 +1380,9 @@ String^  UmiTrainingModel2::ParameterStr::get ()
 
 
 
-
 String^  UmiTrainingModel2::ConfigFileName::get ()
 {
-  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
+  CounterTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (configToUse)
     return UmiKKStr::KKStrToSystenStr (configToUse->FileName ());
   else
@@ -1458,8 +1413,6 @@ void  UmiTrainingModel2::AddClass (UmiClass^  newClass)
 
 
 
-
-
 void  UmiTrainingModel2::AddImageToTrainingLibray (String^     imageFileName,
                                                    UmiRaster^  raster, 
                                                    UmiClass^   mlClass,
@@ -1472,7 +1425,7 @@ void  UmiTrainingModel2::AddImageToTrainingLibray (String^     imageFileName,
   if  (mlClass == nullptr)
     throw gcnew Exception ("No class provided;   \"mlClass == nullptr;\"  in method \"UmiTrainingModel2::AddImageToTrainingLibray\"");
 
-  LarcosTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
+  CounterTrainingConfigurationConstPtr  configToUse = GetConfigToUse ();
   if  (!configToUse)
     throw  gcnew Exception  ("No defined Configuration file available for ModelName[" + modelName + "]");
 

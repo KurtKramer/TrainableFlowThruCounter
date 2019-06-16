@@ -27,9 +27,9 @@ using  namespace  CounterUnManaged;
 
 
 
-RecordButtonThread::RecordButtonThread (CounterManagerPtr _manager,
-                                        MsgQueuePtr             _msgQueue,
-                                        const KKStr&            _threadName
+RecordButtonThread::RecordButtonThread (CounterManagerPtr  _manager,
+                                        MsgQueuePtr        _msgQueue,
+                                        const KKStr&       _threadName
                                        ):
     CameraThread (_manager, _threadName, _msgQueue),
     successful   (false),

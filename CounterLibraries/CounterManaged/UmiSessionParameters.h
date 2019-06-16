@@ -77,7 +77,7 @@ namespace CounterManaged
 
     /// <summary>
     /// Updates member fields from header Fields in specified ScannerFile(sf).
-    /// details Earlier version of Larcos did not proceed Session Parameter fields with "SP:" prefix so if 
+    /// details Earlier version of Counter did not proceed Session Parameter fields with "SP:" prefix so if 
     /// a given field is not found with the prefix will then try looking for field value without prefix.
     /// </summary>
     void  UpdateFromScannerFile (UmiScannerFile^ sf);
