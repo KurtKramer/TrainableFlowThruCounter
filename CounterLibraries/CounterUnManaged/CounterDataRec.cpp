@@ -26,13 +26,14 @@ using  namespace  CounterUnManaged;
 
 
 
-CounterDataRec::CounterDataRec (const KKStr&   _scannerFilePrefix,
-                              const KKStr&   _sectionName
-                             ):
+CounterDataRec::CounterDataRec (const KKStr&  _scannerFilePrefix,
+                                const KKStr&  _sectionName
+                               ):
     scannerFilePrefix (_scannerFilePrefix),
     sectionName       (_sectionName)
 {
 }
+
 
 
 CounterDataRec::CounterDataRec (const CounterDataRec&   _counterDataRec):
@@ -40,7 +41,6 @@ CounterDataRec::CounterDataRec (const CounterDataRec&   _counterDataRec):
     sectionName       (_counterDataRec.sectionName)
 {
 }
-
 
 
     
@@ -58,7 +58,7 @@ kkMemSize  CounterDataRec::MemoryConsumedEstimated ()  const
 
 
 KKStrConstPtr CounterDataRec::GetSettingValue (const CounterTrainingConfiguration&  c,
-                                               const KKStr&                        fieldName
+                                               const KKStr&                         fieldName
                                               )
 {
   OptionUInt32  lineNum = {};
@@ -69,9 +69,9 @@ KKStrConstPtr CounterDataRec::GetSettingValue (const CounterTrainingConfiguratio
 
 
 void  CounterDataRec::UpdateFromConfigurationUchar (const CounterTrainingConfiguration&  c,
-                                                   const KKStr&                        fieldName,
-                                                   uchar&                              fieldValue
-                                                  )
+                                                    const KKStr&                         fieldName,
+                                                    uchar&                               fieldValue
+                                                   )
 {
   KKStrConstPtr  x = GetSettingValue (c, fieldName);
   if  (x)
@@ -80,11 +80,10 @@ void  CounterDataRec::UpdateFromConfigurationUchar (const CounterTrainingConfigu
 
 
 
-
 void  CounterDataRec::UpdateFromConfigurationInt32 (const CounterTrainingConfiguration&  c,
-                                                   const KKStr&                        fieldName,
-                                                   kkint32&                            fieldValue
-                                                  )
+                                                    const KKStr&                         fieldName,
+                                                    kkint32&                             fieldValue
+                                                   )
 {
   KKStrConstPtr  x = GetSettingValue (c, fieldName);
   if  (x)
@@ -94,9 +93,9 @@ void  CounterDataRec::UpdateFromConfigurationInt32 (const CounterTrainingConfigu
 
 
 void  CounterDataRec::UpdateFromConfigurationFloat (const CounterTrainingConfiguration&  c,
-                                                   const KKStr&                        fieldName,
-                                                   float&                              fieldValue
-                                                  )
+                                                    const KKStr&                         fieldName,
+                                                    float&                               fieldValue
+                                                   )
 {
   KKStrConstPtr  x = GetSettingValue (c, fieldName);
   if  (x)
@@ -106,9 +105,9 @@ void  CounterDataRec::UpdateFromConfigurationFloat (const CounterTrainingConfigu
 
 
 void  CounterDataRec::UpdateFromConfigurationBool (const CounterTrainingConfiguration&  c,
-                                                  const KKStr&                        fieldName,
-                                                  bool&                               fieldValue
-                                                 )
+                                                   const KKStr&                         fieldName,
+                                                   bool&                                fieldValue
+                                                  )
 {
   KKStrConstPtr  x = GetSettingValue (c, fieldName);
   if  (x)
@@ -118,9 +117,9 @@ void  CounterDataRec::UpdateFromConfigurationBool (const CounterTrainingConfigur
 
 
 void  CounterDataRec::UpdateFromConfigurationKKStr (const CounterTrainingConfiguration&  c,
-                                                   const KKStr&                        fieldName,
-                                                   KKStr&                              fieldValue
-                                                  )
+                                                    const KKStr&                         fieldName,
+                                                    KKStr&                               fieldValue
+                                                   )
 {
   KKStrConstPtr  x = GetSettingValue (c, fieldName);
   if  (x)
@@ -129,11 +128,10 @@ void  CounterDataRec::UpdateFromConfigurationKKStr (const CounterTrainingConfigu
 
 
 
-
 void  CounterDataRec::UpdateFromConfigurationFileFormat (const CounterTrainingConfiguration&  c,
-                                                        const KKStr&                        fieldName,
-                                                        ScannerFile::Format&                fieldValue
-                                                       )
+                                                         const KKStr&                         fieldName,
+                                                         ScannerFile::Format&                 fieldValue
+                                                        )
 {
   KKStrConstPtr  x = GetSettingValue (c, fieldName);
   if  (x)
@@ -147,8 +145,8 @@ void  CounterDataRec::UpdateFromConfigurationFileFormat (const CounterTrainingCo
 
 
 const KKStr&  CounterDataRec::GetScannerFileValue (ScannerFilePtr  sf, 
-                                                  const KKStr&    fieldName
-                                                 )
+                                                   const KKStr&    fieldName
+                                                  )
 {
   KKStr  fullName = scannerFilePrefix + ":" + fieldName;
   const KKStr& fv1 = sf->GetValue (fullName);
@@ -164,11 +162,10 @@ const KKStr&  CounterDataRec::GetScannerFileValue (ScannerFilePtr  sf,
 
 
 
-
 DateTime  CounterDataRec::GetScannerFileValueDateTime (ScannerFilePtr  sf, 
-                                                      const KKStr&    fieldName,
-                                                      DateTime        defaultValue
-                                                     )
+                                                       const KKStr&    fieldName,
+                                                       DateTime        defaultValue
+                                                      )
 {
 
   const KKStr&  dateTimeStr = GetScannerFileValue (sf, fieldName);
@@ -180,11 +177,10 @@ DateTime  CounterDataRec::GetScannerFileValueDateTime (ScannerFilePtr  sf,
 
 
 
-
 kkint32  CounterDataRec::GetScannerFileValueInt32 (ScannerFilePtr  sf, 
-                                                const KKStr&    fieldName,
-                                                kkint32         curValue
-                                               )
+                                                   const KKStr&    fieldName,
+                                                   kkint32         curValue
+                                                  )
 {
   const KKStr&  fv1 = GetScannerFileValue (sf, fieldName);
   if  (!fv1.Empty ())
@@ -196,9 +192,9 @@ kkint32  CounterDataRec::GetScannerFileValueInt32 (ScannerFilePtr  sf,
 
 
 float  CounterDataRec::GetScannerFileValueFloat (ScannerFilePtr  sf, 
-                                                const KKStr&    fieldName,
-                                                float           curValue
-                                               )
+                                                 const KKStr&    fieldName,
+                                                 float           curValue
+                                                )
 {
   const KKStr&  fv1 = GetScannerFileValue (sf, fieldName);
   if  (!fv1.Empty ())
@@ -209,12 +205,10 @@ float  CounterDataRec::GetScannerFileValueFloat (ScannerFilePtr  sf,
 
 
 
-
-
 bool  CounterDataRec::GetScannerFileValueBool (ScannerFilePtr  sf, 
-                                              const KKStr&    fieldName,
-                                              bool            curValue
-                                             )
+                                               const KKStr&    fieldName,
+                                               bool            curValue
+                                              )
 {
   const KKStr&  fv1 = GetScannerFileValue (sf, fieldName);
   if  (!fv1.Empty ())
@@ -226,9 +220,9 @@ bool  CounterDataRec::GetScannerFileValueBool (ScannerFilePtr  sf,
 
 
 KKStr  CounterDataRec::GetScannerFileValueKKStr (ScannerFilePtr  sf, 
-                                                const KKStr&    fieldName,
-                                                KKStr           curValue
-                                               )
+                                                 const KKStr&    fieldName,
+                                                 KKStr           curValue
+                                                )
 {
   const KKStr&  fv1 = GetScannerFileValue (sf, fieldName);
   if  (!fv1.Empty ())
@@ -243,4 +237,3 @@ const char*  CounterDataRec::BoolToStr (bool b)  const
 {
   return  (b ? "True" : "False");
 }
-

@@ -57,9 +57,7 @@ namespace CounterManagedRoutines
       this.Name = "DisplayScsImages";
       this.Text = "DisplayScsImages";
       this.Load += new System.EventHandler(this.DisplayScsImages_Load);
-      this.SizeChanged += new System.EventHandler(this.DisplayLarcosImages_SizeChanged);
-      this.Resize += new System.EventHandler(this.DisplayLarcosImages_Resize);
-      this.ResizeEnd += new System.EventHandler(this.DisplayLarcosImages_ResizeEnd);
+      this.ResizeEnd += new System.EventHandler(this.DisplayScsImages_ResizeEnd);
       this.ResumeLayout(false);
 
     }

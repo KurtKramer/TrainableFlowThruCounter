@@ -3189,14 +3189,14 @@ void   CounterManager::SnapshotInterval (kkint32 _snapshotInterval)
 
 
 
-void  CounterManager::Status (KKStr&  statusMsg,
-                                    KKStr&  color,
-                                    KKStr&  secondaryMsg,
-                                    float&  analogGain,
-                                    kkint32&  digitalGain,
-                                    kkint32&  cameraTemparature,
-                                    float&  flowRate
-                                   )
+void  CounterManager::Status (KKStr&    statusMsg,
+                              KKStr&    color,
+                              KKStr&    secondaryMsg,
+                              float&    analogGain,
+                              kkint32&  digitalGain,
+                              kkint32&  cameraTemparature,
+                              float&    flowRate
+                             )
 {
   goalie->StartBlock ();
 
@@ -3362,9 +3362,9 @@ void  CounterManager::SetDefaultOperatingParameters (const OperatingParametersPt
 
 
 void  CounterManager::SetTrainingModel (const KKStr&            _trainingModelName,
-                                              bool&                   _successful,
-                                              OperatingParametersPtr  _opParms
-                                             )
+                                        bool&                   _successful,
+                                        OperatingParametersPtr  _opParms
+                                       )
 {
   goalie->StartBlock ();
 
@@ -3523,7 +3523,10 @@ void  CounterManager::ReadConfiguration ()
       if  (fieldName.EqualIgnoreCase ("<SessionParameters>"))
         sessionParameters->ReadXML (i);
 
-      else if  (fieldName.EqualIgnoreCase ("<OperatingParameters>"))
+      else if  
+        (fieldName.EqualIgnoreCase ("<OperatingParameters>")  || 
+         fieldName.EqualIgnoreCase ("<TFTCOperatingParameters>") ||
+         fieldName.EqualIgnoreCase ("<LarcosOperatingParameters>"))
         defaultOperatingParameters->ReadXML (i);
 
       else if  (fieldName.EqualIgnoreCase ("DropFolderToRemote"))

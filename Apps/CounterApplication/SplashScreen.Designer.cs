@@ -46,32 +46,29 @@
       // 
       this.panel1.BackColor = System.Drawing.Color.White;
       this.panel1.Controls.Add(this.pictureBox2);
-      this.panel1.Location = new System.Drawing.Point(16, 15);
-      this.panel1.Margin = new System.Windows.Forms.Padding(4);
+      this.panel1.Location = new System.Drawing.Point(12, 12);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(785, 463);
+      this.panel1.Size = new System.Drawing.Size(589, 376);
       this.panel1.TabIndex = 1;
       // 
       // pictureBox2
       // 
       this.pictureBox2.Image = global::CounterApplication.Properties.Resources.ZOIS_Logo;
       this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
-      this.pictureBox2.Location = new System.Drawing.Point(4, 4);
-      this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
+      this.pictureBox2.Location = new System.Drawing.Point(3, 3);
       this.pictureBox2.Name = "pictureBox2";
-      this.pictureBox2.Size = new System.Drawing.Size(777, 455);
+      this.pictureBox2.Size = new System.Drawing.Size(583, 370);
       this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
       this.pictureBox2.TabIndex = 1;
       this.pictureBox2.TabStop = false;
       // 
       // SplashScreen
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(823, 497);
+      this.ClientSize = new System.Drawing.Size(617, 404);
       this.Controls.Add(this.panel1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.Margin = new System.Windows.Forms.Padding(4);
       this.Name = "SplashScreen";
       this.Text = "K-Square Software";
       this.panel1.ResumeLayout(false);

@@ -140,7 +140,7 @@
       this.AutoGainButton.Size = new System.Drawing.Size (80, 65);
       this.AutoGainButton.TabIndex = 210;
       this.AutoGainButton.Text = "Auto Gain";
-      this.cameraLineToolTip.SetToolTip (this.AutoGainButton, "Press this button to have Larcos automatically set the gain settings.  Once this " +
+      this.cameraLineToolTip.SetToolTip (this.AutoGainButton, "Press this button to automatically set the gain settings.  Once this " +
               "procedure is started it \r\nwill take several seconds to complete.");
       this.AutoGainButton.UseVisualStyleBackColor = true;
       this.AutoGainButton.Click += new System.EventHandler (this.AutoGainButton_Click);

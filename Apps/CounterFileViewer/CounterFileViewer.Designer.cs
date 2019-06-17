@@ -29,6 +29,7 @@ namespace CounterFileViewer
     private void InitializeComponent ()
     {
       this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CounterFileViewer));
       this.ScannerPanel = new System.Windows.Forms.Panel();
       this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
       this.FileName = new System.Windows.Forms.TextBox();
@@ -419,11 +420,12 @@ namespace CounterFileViewer
       this.Controls.Add(this.ScannerPanel);
       this.Controls.Add(this.menuStrip1);
       this.Controls.Add(this.ScrollingPannel);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.KeyPreview = true;
       this.MainMenuStrip = this.menuStrip1;
       this.MinimumSize = new System.Drawing.Size(662, 747);
       this.Name = "CounterFileViewer";
-      this.Text = "K-Square File Viewer";
+      this.Text = "K-Square Flow-Thru File Viewer";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CounterFileViewer_FormClosing);
       this.Load += new System.EventHandler(this.CounterFileViewer_Load);
       this.SizeChanged += new System.EventHandler(this.CounterFileViewer_SizeChanged);

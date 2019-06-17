@@ -23,9 +23,9 @@ namespace CounterUnManaged
   public:
     typedef  ScannerFile::Format  ScannerFileFormat;
 
-    CounterDataRec (const KKStr&   _scannerFilePrefix,
-                   const KKStr&   _sectionName
-                  );
+    CounterDataRec (const KKStr&  _scannerFilePrefix,
+                    const KKStr&  _sectionName
+                   );
 
      CounterDataRec (const CounterDataRec&  _counterDataRec);
 
@@ -65,43 +65,43 @@ namespace CounterUnManaged
 
   protected:
     KKStrConstPtr GetSettingValue (const CounterTrainingConfiguration&  c,
-                                   const KKStr&                        fieldName
+                                   const KKStr&                         fieldName
                                   );
 
 
     void  UpdateFromConfigurationUchar (const CounterTrainingConfiguration&  c,
-                                        const KKStr&                        fieldName,
-                                        uchar&                              fieldValue
+                                        const KKStr&                         fieldName,
+                                        uchar&                               fieldValue
                                        );
 
 
     void  UpdateFromConfigurationInt32 (const CounterTrainingConfiguration&  c,
-                                        const KKStr&                        fieldName,
-                                        kkint32&                            fieldValue
+                                        const KKStr&                         fieldName,
+                                        kkint32&                             fieldValue
                                        );
 
 
     void  UpdateFromConfigurationFloat (const CounterTrainingConfiguration&  c,
-                                        const KKStr&                        fieldName,
-                                        float&                              fieldValue
+                                        const KKStr&                         fieldName,
+                                        float&                               fieldValue
                                        );
 
 
     void  UpdateFromConfigurationBool (const CounterTrainingConfiguration&  c,
-                                       const KKStr&                        fieldName,
-                                       bool&                               fieldValue
+                                       const KKStr&                         fieldName,
+                                       bool&                                fieldValue
                                       );
 
 
     void  UpdateFromConfigurationKKStr (const CounterTrainingConfiguration&  c,
-                                        const KKStr&                        fieldName,
-                                        KKStr&                              fieldValue
+                                        const KKStr&                         fieldName,
+                                        KKStr&                               fieldValue
                                        );
 
 
     void  UpdateFromConfigurationFileFormat (const CounterTrainingConfiguration&  c,
-                                             const KKStr&                        fieldName,
-                                             ScannerFile::Format&                fieldValue
+                                             const KKStr&                         fieldName,
+                                             ScannerFile::Format&                 fieldValue
                                             );
 
 
@@ -151,8 +151,8 @@ namespace CounterUnManaged
      const char*  BoolToStr (bool b)  const;
 
   private:
-    KKStr   scannerFilePrefix;
-    KKStr   sectionName;
+    KKStr  scannerFilePrefix;
+    KKStr  sectionName;
   };  /* CounterDataRec */
 
 }  /* CounterUnManaged */

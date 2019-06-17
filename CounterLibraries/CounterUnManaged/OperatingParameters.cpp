@@ -26,7 +26,7 @@ using  namespace  CounterUnManaged;
 
 
 OperatingParameters::OperatingParameters ():
-     CounterDataRec ("OP", "CounterOperatingParameters"),
+     CounterDataRec ("OP", "TFTCOperatingParameters"),
      backGroundPixelTH        (31),
      connectedComponentDist   (1),
      dataIsToBeCounted        (true),
@@ -90,11 +90,15 @@ const KKStr&  OperatingParameters::DestScannerFileFormatStr ()  const
 
 
 KKStrConstPtr OperatingParameters::GetSettingValue (const CounterTrainingConfiguration&  c,
-                                                    const KKStr&                        fieldName
+                                                    const KKStr&                         fieldName
                                                    )
 {
   OptionUInt32  lineNum = {};
-  KKStrConstPtr  x = c.SettingValue ("LarcosOperatingParameters", fieldName, lineNum);
+  KKStrConstPtr  x = c.SettingValue ("TFTCOperatingParameters", fieldName, lineNum);
+  if (!x)
+    x = c.SettingValue ("LarcosOperatingParameters", fieldName, lineNum);
+  if  (!x)
+    x = c.SettingValue ("TFTCOperatingParameters", fieldName, lineNum);
   if  (x == NULL)
     x = c.SettingValue ("Counter", fieldName, lineNum);
   return x;
@@ -343,7 +347,7 @@ void  OperatingParameters::WriteFieldValues (ostream&   o)  const
 
 void  OperatingParameters::WriteConfigSection (ostream&  o)  const
 {
-  o << "[CounterOperatingParameters]" << endl;
+  o << "[OperatingParameters]" << endl;
 
   o << "BackGroundPixelTH = "      << (int)backGroundPixelTH           << endl;
   o << "ConnectedComponentDist = " << connectedComponentDist           << endl;
