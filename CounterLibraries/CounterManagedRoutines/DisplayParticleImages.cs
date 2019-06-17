@@ -223,43 +223,32 @@ namespace CounterManagedRoutines
 
 
 
-    private void  DisplayLarcosImages_Resize (object sender, EventArgs e)
-    {
-    }
-
-
-
-
-    private void DisplayLarcosImages_SizeChanged(object sender, EventArgs e)
-    {
-    }
-
-
     private void ImageDisplayPanel_Paint(object sender, PaintEventArgs e)
     {
 
     }
 
-    private void DisplayLarcosImages_ResizeEnd(object sender, EventArgs e)
-    {
-      int  deltaWidth  = Width  - lastWidth;
-      int  deltaHeight = Height - lastHeight;
 
-      if  ((deltaHeight == 0)  &&  (deltaWidth == 0))
+    private void DisplayParticleImages_ResizeEnd(object sender, EventArgs e)
+    {
+      int deltaWidth = Width - lastWidth;
+      int deltaHeight = Height - lastHeight;
+
+      if ((deltaHeight == 0) && (deltaWidth == 0))
         return;
 
       ImageDisplayPanel.Height += deltaHeight;
-      ImageDisplayPanel.Width  += deltaWidth;
+      ImageDisplayPanel.Width += deltaWidth;
 
-      ImageDisplayPanel.Controls.Clear ();
+      ImageDisplayPanel.Controls.Clear();
 
-      foreach  (FlowLayoutPanel  flp  in  thumbNails)
+      foreach (FlowLayoutPanel flp in thumbNails)
       {
-        ImageDisplayPanel.Controls.Add (flp);
+        ImageDisplayPanel.Controls.Add(flp);
       }
 
       ImageDisplayPanel.AutoScroll = true;
-      ImageDisplayPanel.PerformLayout ();
-    } 
+      ImageDisplayPanel.PerformLayout();
+    }
   }
 }

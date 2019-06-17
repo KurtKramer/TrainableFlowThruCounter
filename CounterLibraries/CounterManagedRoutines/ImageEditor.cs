@@ -423,12 +423,12 @@ namespace CounterManagedRoutines
       byte[][]  largestRaster = bd.ExtractedBlobImage (largestBlob);
 
       UmiRunLog  runLog = new UmiRunLog ();
-      UmiRaster  larcosRaster = new UmiRaster (largestRaster);
+      UmiRaster  roiRaster = new UmiRaster (largestRaster);
 
       UmiPredictionList  trainLibrary1Predictions = null;
       UmiPredictionList  trainLibrary2Predictions = null;
 
-      ActiveTrainingLibraries.MakePredictions (larcosRaster,
+      ActiveTrainingLibraries.MakePredictions (roiRaster,
                                                imageFileName, 
                                                ref trainLibrary1Predictions, 
                                                ref trainLibrary2Predictions,
@@ -463,7 +463,7 @@ namespace CounterManagedRoutines
         }
       }
 
-      larcosRaster = null;
+      roiRaster = null;
 
       blobs.Dispose ();
       largestBlob.Dispose ();

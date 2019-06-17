@@ -359,8 +359,6 @@
     <None Include="GoBackward.bmp" />
     <None Include="KSquareLogo.png" />
     <Content Include="LarcosLogoSmall.ico" />
-    <None Include="Properties\DataSources\FinaleReportChartDataSource.datasource" />
-    <None Include="Properties\DataSources\FinaleReportDataSource.datasource" />
     <None Include="SkipToPrev.bmp" />
     <None Include="SkipToNext.bmp" />
     <None Include="Stop.bmp" />
@@ -370,7 +368,9 @@
   <ItemGroup>
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy $(OutsidePackages)\fftw-3.3.5-dll64\*.dll   $(TargetDir)</PostBuildEvent>

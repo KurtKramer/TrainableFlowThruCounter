@@ -1,7 +1,7 @@
 #include  "FirstIncludes.h"
 
 
-//-d E:\Larcos\ScannerFiles\2013-01-30_SIS-PL8-Run3\SIS-PL8-Run3_20130130-145605_SIS-PL8-Run3-1000_00\Shrimp_01
+//-d E:\TFTC\ScannerFiles\2013-01-30_SIS-PL8-Run3\SIS-PL8-Run3_20130130-145605_SIS-PL8-Run3-1000_00\Shrimp_01
 
 
 #include <stdlib.h>
@@ -150,7 +150,7 @@ bool  HistogramSize::ProcessCmdLineParameter (char   parmSwitchCode,
 }  /* ProcessCmdLineParameter */
 
 
-// -RootDir E:\Larcos\Classifier\TrainingLibraries\VaShrimp2.5g_Struct5_FR-Diversified
+// -RootDir E:\TFTC\Classifier\TrainingLibraries\VaShrimp2.5g_Struct5_FR-Diversified
 
 
 void   HistogramSize::DisplayCommandLineParameters ()
@@ -1033,20 +1033,20 @@ void  CombineScannerFiles ()
 
 
   char*  scannerFiles[] = {
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-//                     "F:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
-//                     "F:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
-//                     "F:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+//                     "F:\\TFTC\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
+//                     "F:\\TFTC\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
+//                     "F:\\TFTC\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
                      NULL
                     };
 
 
-  KKStr  outFileName = "F:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp-Dense-x6.lsc";
+  KKStr  outFileName = "F:\\TFTC\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp-Dense-x6.lsc";
 
 
 
@@ -1116,7 +1116,7 @@ void  CombineScannerFiles ()
         sp.AddToHeaderFields (out->HeaderFields ());
 
         bool   successful = false;
-        InstallationConfig  instalalationConfig ("D:\\Larcos\\Configurations\\Installations\\ModelA.cfg", successful, runLog);
+        InstallationConfig  instalalationConfig ("D:\\TFTC\\Configurations\\Installations\\ModelA.cfg", successful, runLog);
         if  (successful)
           instalalationConfig.AddToHeaderFields (out->HeaderFields ());
 
@@ -1313,7 +1313,7 @@ void  MergeInFlowRateData (const KKStr&  scannerFileName)
   delete  colCount;      colCount     = NULL;
   delete  lineBuff;      lineBuff     = NULL;
   delete  flowRateData;  flowRateData = NULL;
-  delete  in;            in = NULL;
+  delete  in;            in           = NULL;
 
 }  /* MergeInFlowRateData */
 
@@ -1321,23 +1321,13 @@ void  MergeInFlowRateData (const KKStr&  scannerFileName)
 
 void  MergeInFlowRateDataForAllFiles ()
 {
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM\\Larcos_FM_20140302-144248.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_001\\Larcos_FM_001_20140302-144525.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_002\\Larcos_FM_002_20140302-144942.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_003\\Larcos_FM_003_20140302-145652.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_004\\Larcos_FM_004_20140302-150009.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_005\\Larcos_FM_005_20140302-150241.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM\\Larcos_FM_20140302-144248.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_001\\Larcos_FM_001_20140302-144525.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_002\\Larcos_FM_002_20140302-144942.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_003\\Larcos_FM_003_20140302-145652.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_004\\Larcos_FM_004_20140302-150009.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_005\\Larcos_FM_005_20140302-150241.lsc");
 }  /* MergeInFlowRateDataForAllFiles */
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1399,10 +1389,10 @@ void  main (int  argc,  char** argv)
       << "Description"
       << endl;
 
-    ScannerFileCharacteristics_ProcessDirTree ("F:\\Larcos\\ScannerFiles\\2013-07-02_FGCU_ModelT", "", o);
-    ScannerFileCharacteristics_ProcessDirTree ("F:\\Larcos\\ScannerFiles\\2013-07-03_FGCU_ModelT", "", o);
-    ScannerFileCharacteristics_ProcessDirTree ("F:\\Larcos\\ScannerFiles\\2013-07-05_FGCU_ModelT", "", o);
-    //ScannerFileCharacteristics_ProcessDirTree ("E:\\Larcos\\ScannerFiles", "", o);
+    ScannerFileCharacteristics_ProcessDirTree ("F:\\TFTC\\ScannerFiles\\2013-07-02_FGCU_ModelT", "", o);
+    ScannerFileCharacteristics_ProcessDirTree ("F:\\TFTC\\ScannerFiles\\2013-07-03_FGCU_ModelT", "", o);
+    ScannerFileCharacteristics_ProcessDirTree ("F:\\TFTC\\ScannerFiles\\2013-07-05_FGCU_ModelT", "", o);
+    //ScannerFileCharacteristics_ProcessDirTree ("E:\\TFTC\\ScannerFiles", "", o);
     o.close ();
     exit (-1);
   }
@@ -1411,4 +1401,3 @@ void  main (int  argc,  char** argv)
   app.InitalizeApplication (argc, argv);
   app.ProcessDirectory ();
 }
-

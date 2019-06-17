@@ -94,13 +94,11 @@ KKStrConstPtr OperatingParameters::GetSettingValue (const CounterTrainingConfigu
                                                    )
 {
   OptionUInt32  lineNum = {};
-  KKStrConstPtr  x = c.SettingValue ("TFTCOperatingParameters", fieldName, lineNum);
+  KKStrConstPtr  x = c.SettingValue ("OperatingParameters", fieldName, lineNum);
+  if (!x)
+    x = c.SettingValue ("TFTCOperatingParameters", fieldName, lineNum);
   if (!x)
     x = c.SettingValue ("LarcosOperatingParameters", fieldName, lineNum);
-  if  (!x)
-    x = c.SettingValue ("TFTCOperatingParameters", fieldName, lineNum);
-  if  (x == NULL)
-    x = c.SettingValue ("Counter", fieldName, lineNum);
   return x;
 }
 

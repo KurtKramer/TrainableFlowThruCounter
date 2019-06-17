@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle ("Larcos Aquaculture Unmanaged Interface")]
+[assembly: AssemblyTitle ("TFTC Unmanaged Interface")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany ("Larcos Aquaculture")]
+[assembly: AssemblyCompany ("KSquare")]
 [assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright("Copyright © Larcos Aquaculture 2015")]
+[assembly: AssemblyCopyright("Copyright © KSquare 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

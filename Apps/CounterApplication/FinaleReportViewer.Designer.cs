@@ -32,28 +32,27 @@
       this.components = new System.ComponentModel.Container();
       Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
       Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
-      this.FinaleReportDataSourceBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.finaleReportDataSourceBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.chartsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
-      ((System.ComponentModel.ISupportInitialize)(this.FinaleReportDataSourceBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.finaleReportDataSourceBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.chartsBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
-      // FinaleReportDataSourceBindingSource
+      // finaleReportDataSourceBindingSource
       // 
-      this.FinaleReportDataSourceBindingSource.CurrentChanged += new System.EventHandler(this.FinaleReportDataSourceBindingSource_CurrentChanged);
+      this.finaleReportDataSourceBindingSource.CurrentChanged += new System.EventHandler(this.FinaleReportDataSourceBindingSource_CurrentChanged);
       // 
       // chartsBindingSource
       // 
-      this.chartsBindingSource.DataMember = "Charts";
-      this.chartsBindingSource.DataSource = this.FinaleReportDataSourceBindingSource;
+      this.chartsBindingSource.DataSource = this.finaleReportDataSourceBindingSource;
       this.chartsBindingSource.CurrentChanged += new System.EventHandler(this.chartsBindingSource_CurrentChanged);
       // 
       // reportViewer1
       // 
       this.reportViewer1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       reportDataSource1.Name = "FinaleReportDataSource";
-      reportDataSource1.Value = this.FinaleReportDataSourceBindingSource;
+      reportDataSource1.Value = this.finaleReportDataSourceBindingSource;
       reportDataSource2.Name = "CounterApplication_FinaleReportChartDataSource";
       reportDataSource2.Value = this.chartsBindingSource;
       this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
@@ -75,7 +74,7 @@
       this.Text = "FinaleReportViewer";
       this.Load += new System.EventHandler(this.FinaleReportViewer_Load);
       this.SizeChanged += new System.EventHandler(this.FinaleReportViewer_SizeChanged);
-      ((System.ComponentModel.ISupportInitialize)(this.FinaleReportDataSourceBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.finaleReportDataSourceBindingSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.chartsBindingSource)).EndInit();
       this.ResumeLayout(false);
 
@@ -83,7 +82,7 @@
 
     #endregion
 
-    private System.Windows.Forms.BindingSource FinaleReportDataSourceBindingSource;
+    private System.Windows.Forms.BindingSource finaleReportDataSourceBindingSource;
     private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
     private System.Windows.Forms.BindingSource chartsBindingSource;
   }

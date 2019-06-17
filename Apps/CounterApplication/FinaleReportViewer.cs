@@ -41,7 +41,7 @@ namespace CounterApplication
 
     private void FinaleReportViewer_Load (object sender, EventArgs e)
     {
-      FinaleReportDataSourceBindingSource.DataSource = reportDataSource;
+      finaleReportDataSourceBindingSource.DataSource = reportDataSource;
 
       List<FinaleReportChartDataSource>  chartSource = new List<FinaleReportChartDataSource> ();
       chartSource.Add (new FinaleReportChartDataSource ("Size Distribution", reportDataSource.SizeChart));

@@ -123,7 +123,7 @@ bool  ImportSipper4Images::ProcessCmdLineParameter (char   parmSwitchCode,
 }  /* ProcessCmdLineParameter */
 
 
-// -RootDir E:\Larcos\Classifier\TrainingLibraries\VaShrimp2.5g_Struct5_FR-Diversified
+// -RootDir E:\TFTC\Classifier\TrainingLibraries\VaShrimp2.5g_Struct5_FR-Diversified
 
 
 void   ImportSipper4Images::DisplayCommandLineParameters ()

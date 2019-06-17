@@ -30,6 +30,7 @@ namespace CounterApplication
       {
         MessageBox.Show($"Home Directory {homeDir} does not exists!");
         Application.Exit ();
+        return;
       }
 
       Application.EnableVisualStyles();
