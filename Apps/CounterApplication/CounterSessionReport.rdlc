@@ -659,7 +659,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>TFTC_FinaleReportChartDataSource</DataSetName>
+        <DataSetName>FinaleReportChartDataSource</DataSetName>
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
@@ -943,7 +943,7 @@
       </ConnectionProperties>
       <rd:DataSourceID>5999a6f5-9fc6-42d7-b903-aa41800eb5ab</rd:DataSourceID>
     </DataSource>
-    <DataSource Name="DummyDataSource">
+    <DataSource Name="FinaleReportChartDataSource">
       <ConnectionProperties>
         <DataProvider>SQL</DataProvider>
         <ConnectString />
@@ -954,7 +954,7 @@
   <DataSets>
     <DataSet Name="FinaleReportDataSource">
       <Query>
-        <DataSourceName>DummyDataSource</DataSourceName>
+        <DataSourceName>FinaleReportDataSource</DataSourceName>
         <CommandText />
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
@@ -1038,9 +1038,9 @@
         <rd:ObjectDataSourceType>CounterApplication.FinaleReportDataSource, CounterApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
-    <DataSet Name="TFTC_FinaleReportChartDataSource">
+    <DataSet Name="FinaleReportChartDataSource">
       <Query>
-        <DataSourceName>DummyDataSource</DataSourceName>
+        <DataSourceName>FinaleReportChartDataSource</DataSourceName>
         <CommandText />
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>

@@ -631,7 +631,7 @@ namespace CounterApplication
         reportViewer1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
         reportDataSource1.Name  = "FinaleReportDataSource";
         reportDataSource1.Value = FinaleReportDataSourceBindingSource;
-        reportDataSource2.Name  = "Counter_FinaleReportChartDataSource";
+        reportDataSource2.Name  = "FinaleReportChartDataSource";
         reportDataSource2.Value = chartsBindingSource;
         reportViewer1.LocalReport.DataSources.Add (reportDataSource1);
         reportViewer1.LocalReport.DataSources.Add (reportDataSource2);
