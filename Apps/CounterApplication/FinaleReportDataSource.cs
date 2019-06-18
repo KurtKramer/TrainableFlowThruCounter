@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
@@ -14,7 +13,7 @@ using CounterManaged;
 
 namespace CounterApplication
 {
-  public  class FinaleReportDataSource
+  public class FinaleReportDataSource
   {
     public  FinaleReportDataSource  (CounterManagerWrapper  _cameraManager,
                                      UmiSessionParameters   _sessionParameters,

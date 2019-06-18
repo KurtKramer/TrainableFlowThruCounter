@@ -45,7 +45,7 @@
       // 
       // chartsBindingSource
       // 
-      this.chartsBindingSource.DataSource = this.finaleReportDataSourceBindingSource;
+      //this.chartsBindingSource.DataSource = null // this.finaleReportDataSourceBindingSource;
       this.chartsBindingSource.CurrentChanged += new System.EventHandler(this.chartsBindingSource_CurrentChanged);
       // 
       // reportViewer1
