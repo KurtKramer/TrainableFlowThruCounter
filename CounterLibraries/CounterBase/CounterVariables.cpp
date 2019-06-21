@@ -57,11 +57,13 @@ KKStr  CounterVariables::CounterHomeDir ()
   {
     #if  defined(KKOS_WINDOWS)
        counterHomeDir = "C:\\TFTCHome";
-       cout << endl << "counterHomeDir" << "\t" << counterHomeDir << endl << endl;
     #else
        counterHomeDir = "/TFTCHome";
     #endif
+    cout << endl << "Environment variabkle 'TFTCHomeDir' not defined; defaulting to '" << counterHomeDir << "'." << endl << endl;
   }
+
+  cout << "Home directory set to: " << counterHomeDir << endl;
 
   return  counterHomeDir; 
 }  /* CounterHomeDir */

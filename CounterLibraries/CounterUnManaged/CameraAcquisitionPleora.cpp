@@ -25,6 +25,10 @@ using namespace std;
 #include <PvStreamGEV.h>
 //#include <PvStreamRaw.h>
 #include <PvSystem.h>
+#include <PvVersion.h>
+
+#define PvVersionMajor  VERSION_MAJOR
+
 
 #include "KKBaseTypes.h"
 #include "GoalKeeper.h"
@@ -1842,9 +1846,14 @@ CameraParametersListPtr  CameraAcquisitionPleora::GetCameraList (MsgQueuePtr  _m
 
     KKStr  interfaceDescription =  pvNetAdapter->GetDescription ().GetAscii ();
     KKStr  interfaceId          =  pvNetAdapter->GetUniqueID    ().GetAscii ();
-    KKStr  interfaceIpAddress   =  pvNetAdapter->GetIPAddress   (0).GetAscii ();
     KKStr  interfaceMacAddress  =  pvNetAdapter->GetMACAddress  ().GetAscii ();
-    KKStr  interfaceSubnetMask  =  pvNetAdapter->GetSubnetMask  (0).GetAscii ();
+#if  PvVersionMajor <= 4
+    KKStr  interfaceIpAddress = pvNetAdapter->GetIPAddress   ().GetAscii ();
+    KKStr  interfaceSubnetMask = pvNetAdapter->GetSubnetMask ().GetAscii ();
+#else
+    KKStr  interfaceIpAddress = pvNetAdapter->GetIPAddress   (0).GetAscii ();
+    KKStr  interfaceSubnetMask = pvNetAdapter->GetSubnetMask (0).GetAscii (); 
+#endif
 
     uint32_t  deviceCount = pvInterface->GetDeviceCount ();
 
@@ -1934,11 +1943,17 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
 
     _runLog.Level (40) << "GetDeviceInfo   Checking Interface[" << interfaceDescription.GetAscii () << "]" << endl;
 
-    PvString  interfaceId             = pvNetAdapter->GetUniqueID ();
-    KKStr     interfaceIpAddress      = pvNetAdapter->GetIPAddress (0).GetAscii ();
-    KKStr     interfaceMacAddress     = pvNetAdapter->GetMACAddress ().GetAscii ();
-    PvString  interfaceSubnetMask     = pvNetAdapter->GetSubnetMask (0);
+    PvString  interfaceId             = pvNetAdapter->GetUniqueID       ();
+    KKStr     interfaceMacAddress     = pvNetAdapter->GetMACAddress     ().GetAscii ();
     PvString  interfaceDefaultGateway = pvNetAdapter->GetDefaultGateway ();
+
+#if  PvVersionMajor <= 4
+    KKStr     interfaceIpAddress      = pvNetAdapter->GetIPAddress      ().GetAscii ();
+    PvString  interfaceSubnetMask     = pvNetAdapter->GetSubnetMask     ();
+#else
+    KKStr     interfaceIpAddress      = pvNetAdapter->GetIPAddress      (0).GetAscii ();
+    PvString  interfaceSubnetMask     = pvNetAdapter->GetSubnetMask     (0);
+#endif
 
     uint32_t  deviceCount = pvInterface->GetDeviceCount ();
 
