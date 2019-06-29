@@ -60,7 +60,7 @@ KKStr  CounterVariables::CounterHomeDir ()
     #else
        counterHomeDir = "/TFTCHome";
     #endif
-    cout << endl << "Environment variabkle 'TFTCHomeDir' not defined; defaulting to '" << counterHomeDir << "'." << endl << endl;
+    cout << endl << "Environment variable 'TFTCHomeDir' not defined; defaulting to '" << counterHomeDir << "'." << endl << endl;
   }
 
   cout << "Home directory set to: " << counterHomeDir << endl;

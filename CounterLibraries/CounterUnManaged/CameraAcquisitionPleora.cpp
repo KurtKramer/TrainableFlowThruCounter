@@ -2038,10 +2038,11 @@ CameraParametersPtr  CameraAcquisitionPleora::GetDeviceInfo (const KKStr& _keyVa
           }
 
           cp = new CameraParameters ();
-          cp->IpAddress (deviceIpAddress);
-          cp->MacAddress (deviceMacAddress);
+          cp->IpAddress               (deviceIpAddress);
+          cp->MacAddress              (deviceMacAddress);
           cp->InterfaceDefaultGateway (interfaceDefaultGateway.GetAscii ());
           cp->InterfaceSubnetMask     (interfaceSubnetMask.GetAscii ());
+
           CameraParametersPopulate (lDeviceParams, *cp, _runLog);
           lDeviceParams = NULL;
 
