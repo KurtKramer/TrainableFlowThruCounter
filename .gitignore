@@ -200,3 +200,7 @@ LarcosCounter.VC.db
 LarcosCounter.VC.db
 /.vs/LarcosCounter/v15
 .vs/LarcosCounter/DesignTimeBuild/.dtbcache
+.vs/TrainableFlowThruCounter/v15/Server/sqlite3/db.lock
+.vs/TrainableFlowThruCounter/v15/Server/sqlite3/storage.ide
+.vs/TrainableFlowThruCounter/v15/Server/sqlite3/storage.ide-shm
+.vs/TrainableFlowThruCounter/v15/Server/sqlite3/storage.ide-wal
