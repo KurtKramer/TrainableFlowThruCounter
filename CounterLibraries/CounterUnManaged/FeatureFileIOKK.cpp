@@ -346,7 +346,7 @@ CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&     _fileNa
           return NULL;
         }
       
-        switch  (indirectionTable[fieldNum])
+        switch  ((FieldTypes)indirectionTable[fieldNum])
         {
         case FieldTypes::FeatureData:
           firstChar = field.FirstChar ();
