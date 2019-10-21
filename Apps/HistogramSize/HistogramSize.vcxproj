@@ -95,7 +95,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;$(KSquareLibraries)\KKLineScanner;$(KSquareLibraries)\KKMachineLearning;$(SolutionDir)\LarcosLibraries\LarcosBase;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged;$(PUREGEV_ROOT)\Includes;$(PUREGEV_ROOT)\eBUS SDK\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;$(KSquareLibraries)\KKLineScanner;$(KSquareLibraries)\KKMachineLearning;$(SolutionDir)\CounterLibraries\CounterBase;$(SolutionDir)\CounterLibraries\CounterUnManaged;$(PUREGEV_ROOT)\Includes;$(PUREGEV_ROOT)\eBUS SDK\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;FFTW_AVAILABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -104,8 +104,8 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;zlib.lib;libfftw3-3.lib;libfftw3f-3.lib;Advapi32.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)\Libraries;$(SolutionDir)\Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;CounterBase.lib;CounterUnManaged.lib;zlib-1.2.11.lib;libfftw3-3.lib;libfftw3f-3.lib;Advapi32.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)\Libraries;$(SolutionDir)$(Platform)\$(Configuration)\;$(OutsidePackages)\fftw-3.3.5-dll64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -133,7 +133,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;$(KSquareLibraries)\KKLineScanner;$(KSquareLibraries)\KKMachineLearning;$(SolutionDir)\LarcosLibraries\LarcosBase;$(SolutionDir)\LarcosLibraries\LarcosCounterUnManaged;$(PUREGEV_ROOT)\Includes;$(PUREGEV_ROOT)\eBUS SDK\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;$(KSquareLibraries)\KKLineScanner;$(KSquareLibraries)\KKMachineLearning;$(SolutionDir)\CounterLibraries\CounterBase;$(SolutionDir)\CounterLibraries\CounterUnManaged;$(PUREGEV_ROOT)\Includes;$(PUREGEV_ROOT)\eBUS SDK\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;FFTW_AVAILABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -142,8 +142,8 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;LarcosBase.lib;LarcosCounterUnManaged.lib;zlib.lib;libfftw3-3.lib;libfftw3f-3.lib;Advapi32.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)\Libraries;$(SolutionDir)\Libraries\$(Configuration);$(OutsidePackages)\fftw-3.3.2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KKBase.lib;KKLineScanner.lib;KKMachineLearning.lib;CounterBase.lib;CounterUnManaged.lib;zlib-1.2.11.lib;libfftw3-3.lib;libfftw3f-3.lib;Advapi32.lib;USER32.LIB;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(PUREGEV_ROOT)\Libraries;$(SolutionDir)$(Platform)\$(Configuration)\;$(OutsidePackages)\fftw-3.3.5-dll64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -156,6 +156,15 @@
     <ClInclude Include="HistogramSize.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\KSquareLibraries\KKBase\KKBase.vcxproj">
+      <Project>{d9bb6d83-937e-40fd-bfc3-ff48d8a04d11}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\KSquareLibraries\KKMachineLearning\KKMachineLearning.vcxproj">
+      <Project>{eda94c7f-b7b2-48dc-833d-a4948f00a7a2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CounterLibraries\CounterUnManaged\CounterUnManaged.vcxproj">
+      <Project>{da361848-46cb-481c-98e1-8d1206422ddc}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\LarcosLibraries\LarcosBase\LarcosBase.vcxproj">
       <Project>{76c41245-c049-43ac-ad3a-db674c25144d}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

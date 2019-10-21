@@ -1,7 +1,7 @@
 #include  "FirstIncludes.h"
 
 
-//-d E:\Larcos\ScannerFiles\2013-01-30_SIS-PL8-Run3\SIS-PL8-Run3_20130130-145605_SIS-PL8-Run3-1000_00\Shrimp_01
+//-d E:\TFTC\ScannerFiles\2013-01-30_SIS-PL8-Run3\SIS-PL8-Run3_20130130-145605_SIS-PL8-Run3-1000_00\Shrimp_01
 
 
 #include <stdlib.h>
@@ -25,8 +25,8 @@ using namespace std;
 #include "OSservices.h"
 using namespace  KKB;
 
-#include "LarcosCounterManager.h"
-using namespace   LarcosCounterUnManaged;
+#include "CounterManager.h"
+using namespace   CounterUnManaged;
 
 #include  "HistogramSize.h"
 
@@ -150,7 +150,7 @@ bool  HistogramSize::ProcessCmdLineParameter (char   parmSwitchCode,
 }  /* ProcessCmdLineParameter */
 
 
-// -RootDir E:\Larcos\Classifier\TrainingLibraries\VaShrimp2.5g_Struct5_FR-Diversified
+// -RootDir E:\TFTC\Classifier\TrainingLibraries\VaShrimp2.5g_Struct5_FR-Diversified
 
 
 void   HistogramSize::DisplayCommandLineParameters ()
@@ -942,7 +942,7 @@ void  ScannerFileCharacteristics_ProcessDirTree (const KKStr&  baseDir,
 #include "OperatingParameters.h"
 #include "SessionParameters.h"
 
-using namespace LarcosCounterUnManaged;
+using namespace CounterUnManaged;
 
 class  Region
 {
@@ -1031,105 +1031,22 @@ void  CombineScannerFiles ()
 {
   RunLog  runLog;
 
-  /*
-  char*  scannerFiles[] = {
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_dense1\\dense1_20131121-101703.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh-test\\sh-gsh-test_20131121-094029.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_test2\\test2_20131121-095915.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_test3\\test3_20131121-101026.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                      NULL
-                    };
-  */
-  /*
-  char*  scannerFiles[] = {
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity3\\HighDensity3_20131121-113122.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_sh-gsh\\sh-gsh_20131121-094205.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity4\\HighDensity4_20131121-114413.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_HighDensity\\highdens_20131121-104222.lsc",
-                     "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21_Density2\\Density2_20131121-104854.lsc",
-                      NULL
-                    };
 
-
-  KKStr  outFileName = "F:\\Larcos\\ScannerFiles\\2013-11-20_FGCU_Vaki\\2013-11-21-SIS-PL-HighdensityLongRun\\2013-11-21-SIS-PL-HighdensityLongRun.lsc";
-*/
-
-/*
   char*  scannerFiles[] = {
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203101106_TrackB3_Run1.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203104424_TrackB3_Run2.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203104424_TrackB3_Run2_000.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203104424_TrackB3_Run2_001.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203115957_TrackC3_Run2.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203121522_TrackC3_Run3.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203141137_TrackD3_Run1.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203142620_TrackD3_Run2.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203151240_TrackD3_Run3.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203161055_TrackA3_Run1.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203162615_TrackA3_Run2.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203164608_TrackA3_Run3.lsc",
-                     "D:\\Larcos\\ScannerFiles\\2012-02-03_TX\\SCS_20120203170302_TrackA3_Run4.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+                     "C:\\TFTC\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
+//                     "F:\\TFTC\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
+//                     "F:\\TFTC\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
+//                     "F:\\TFTC\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
                      NULL
                     };
 
 
-  KKStr  outFileName = "C:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM_LargeShrimp\\TAM-12G-Shrimp.lsc";
-*/
-
-
-  char*  scannerFiles[] = {
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-                     "C:\\Larcos\\ScannerFiles\\TAM-12G-Shrimp-Dense.lsc",
-//                     "F:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
-//                     "F:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
-//                     "F:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp.lsc",
-                     NULL
-                    };
-
-
-  KKStr  outFileName = "F:\\Larcos\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp-Dense-x6.lsc";
+  KKStr  outFileName = "F:\\TFTC\\ScannerFiles\\2014-02-09_WAS-2014\\TAM-12G-Shrimp-Dense-x6.lsc";
 
 
 
@@ -1199,7 +1116,7 @@ void  CombineScannerFiles ()
         sp.AddToHeaderFields (out->HeaderFields ());
 
         bool   successful = false;
-        InstallationConfig  instalalationConfig ("D:\\Larcos\\Configurations\\Installations\\ModelA.cfg", successful, runLog);
+        InstallationConfig  instalalationConfig ("D:\\TFTC\\Configurations\\Installations\\ModelA.cfg", successful, runLog);
         if  (successful)
           instalalationConfig.AddToHeaderFields (out->HeaderFields ());
 
@@ -1396,7 +1313,7 @@ void  MergeInFlowRateData (const KKStr&  scannerFileName)
   delete  colCount;      colCount     = NULL;
   delete  lineBuff;      lineBuff     = NULL;
   delete  flowRateData;  flowRateData = NULL;
-  delete  in;            in = NULL;
+  delete  in;            in           = NULL;
 
 }  /* MergeInFlowRateData */
 
@@ -1404,23 +1321,13 @@ void  MergeInFlowRateData (const KKStr&  scannerFileName)
 
 void  MergeInFlowRateDataForAllFiles ()
 {
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM\\Larcos_FM_20140302-144248.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_001\\Larcos_FM_001_20140302-144525.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_002\\Larcos_FM_002_20140302-144942.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_003\\Larcos_FM_003_20140302-145652.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_004\\Larcos_FM_004_20140302-150009.lsc");
-  MergeInFlowRateData ("E:\\Larcos\\ScannerFiles\\2014-03-02_Larcos_FM_005\\Larcos_FM_005_20140302-150241.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM\\Larcos_FM_20140302-144248.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_001\\Larcos_FM_001_20140302-144525.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_002\\Larcos_FM_002_20140302-144942.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_003\\Larcos_FM_003_20140302-145652.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_004\\Larcos_FM_004_20140302-150009.lsc");
+  MergeInFlowRateData ("E:\\TFTC\\ScannerFiles\\2014-03-02_Larcos_FM_005\\Larcos_FM_005_20140302-150241.lsc");
 }  /* MergeInFlowRateDataForAllFiles */
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1430,7 +1337,7 @@ void  main (int  argc,  char** argv)
     MsgQueuePtr  msgQueue = new MsgQueue ("Test1");
     MsgQueuePtr  msgQueue2 = new MsgQueue ("Test2");
 
-    LarcosCounterManager*  manager = new LarcosCounterManager (msgQueue, msgQueue2, 4);
+    CounterManager*  manager = new CounterManager (msgQueue, msgQueue2, 4);
   }
 
   {
@@ -1482,10 +1389,10 @@ void  main (int  argc,  char** argv)
       << "Description"
       << endl;
 
-    ScannerFileCharacteristics_ProcessDirTree ("F:\\Larcos\\ScannerFiles\\2013-07-02_FGCU_ModelT", "", o);
-    ScannerFileCharacteristics_ProcessDirTree ("F:\\Larcos\\ScannerFiles\\2013-07-03_FGCU_ModelT", "", o);
-    ScannerFileCharacteristics_ProcessDirTree ("F:\\Larcos\\ScannerFiles\\2013-07-05_FGCU_ModelT", "", o);
-    //ScannerFileCharacteristics_ProcessDirTree ("E:\\Larcos\\ScannerFiles", "", o);
+    ScannerFileCharacteristics_ProcessDirTree ("F:\\TFTC\\ScannerFiles\\2013-07-02_FGCU_ModelT", "", o);
+    ScannerFileCharacteristics_ProcessDirTree ("F:\\TFTC\\ScannerFiles\\2013-07-03_FGCU_ModelT", "", o);
+    ScannerFileCharacteristics_ProcessDirTree ("F:\\TFTC\\ScannerFiles\\2013-07-05_FGCU_ModelT", "", o);
+    //ScannerFileCharacteristics_ProcessDirTree ("E:\\TFTC\\ScannerFiles", "", o);
     o.close ();
     exit (-1);
   }
@@ -1494,4 +1401,3 @@ void  main (int  argc,  char** argv)
   app.InitalizeApplication (argc, argv);
   app.ProcessDirectory ();
 }
-
