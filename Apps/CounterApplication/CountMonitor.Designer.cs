@@ -134,7 +134,7 @@
       this.TabDisplayed = new System.Windows.Forms.TabControl();
       this.Throughput = new System.Windows.Forms.TabPage();
       this.SecondaryToDisplay = new System.Windows.Forms.ComboBox();
-      this.ThroughPutDataToDiosplay = new System.Windows.Forms.ComboBox();
+      this.ThroughPutDataToDisplay = new System.Windows.Forms.ComboBox();
       this.ThroughputChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
       this.liveCamera = new System.Windows.Forms.TabPage();
       this.SampleBeforeFlatField = new System.Windows.Forms.CheckBox();
@@ -888,7 +888,7 @@
       // Throughput
       // 
       this.Throughput.Controls.Add(this.SecondaryToDisplay);
-      this.Throughput.Controls.Add(this.ThroughPutDataToDiosplay);
+      this.Throughput.Controls.Add(this.ThroughPutDataToDisplay);
       this.Throughput.Controls.Add(this.ThroughputChart);
       this.Throughput.Location = new System.Drawing.Point(4, 29);
       this.Throughput.Name = "Throughput";
@@ -909,16 +909,16 @@
       this.SecondaryToDisplay.Text = "Count";
       this.SecondaryToDisplay.SelectedIndexChanged += new System.EventHandler(this.SecondaryToDisplay_SelectedIndexChanged);
       // 
-      // ThroughPutDataToDiosplay
+      // ThroughPutDataToDisplay
       // 
-      this.ThroughPutDataToDiosplay.FormattingEnabled = true;
-      this.ThroughPutDataToDiosplay.Location = new System.Drawing.Point(0, 427);
-      this.ThroughPutDataToDiosplay.MaxDropDownItems = 9;
-      this.ThroughPutDataToDiosplay.Name = "ThroughPutDataToDiosplay";
-      this.ThroughPutDataToDiosplay.Size = new System.Drawing.Size(188, 28);
-      this.ThroughPutDataToDiosplay.TabIndex = 1;
-      this.ThroughPutDataToDiosplay.Text = "Count";
-      this.ThroughPutDataToDiosplay.SelectedIndexChanged += new System.EventHandler(this.ThroughPutDataToDisplay_SelectedIndexChanged);
+      this.ThroughPutDataToDisplay.FormattingEnabled = true;
+      this.ThroughPutDataToDisplay.Location = new System.Drawing.Point(0, 427);
+      this.ThroughPutDataToDisplay.MaxDropDownItems = 9;
+      this.ThroughPutDataToDisplay.Name = "ThroughPutDataToDisplay";
+      this.ThroughPutDataToDisplay.Size = new System.Drawing.Size(188, 28);
+      this.ThroughPutDataToDisplay.TabIndex = 1;
+      this.ThroughPutDataToDisplay.Text = "Count";
+      this.ThroughPutDataToDisplay.SelectedIndexChanged += new System.EventHandler(this.ThroughPutDataToDisplay_SelectedIndexChanged);
       // 
       // ThroughputChart
       // 
@@ -1771,7 +1771,7 @@
     private System.Windows.Forms.ProgressBar PlayBackProgress;
     private System.Windows.Forms.TabPage Throughput;
     private System.Windows.Forms.DataVisualization.Charting.Chart ThroughputChart;
-    private System.Windows.Forms.ComboBox ThroughPutDataToDiosplay;
+    private System.Windows.Forms.ComboBox ThroughPutDataToDisplay;
     private System.Windows.Forms.Label SmaplingIntervalLabel;
     private System.Windows.Forms.NumericUpDown SnapshotInterval2;
     private System.Windows.Forms.Label BackGroundPixelTHLabel;

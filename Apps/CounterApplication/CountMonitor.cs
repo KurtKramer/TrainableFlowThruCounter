@@ -121,15 +121,15 @@ namespace CounterApplication
       {
         SampleBeforeFlatField.Visible    = true;
         SampleBeforeFlatField.Enabled    = true;
-        ThroughPutDataToDiosplay.Visible = true;
-        ThroughPutDataToDiosplay.Enabled = true;
+        ThroughPutDataToDisplay.Visible = true;
+        ThroughPutDataToDisplay.Enabled = true;
       }
       else
       {
         SampleBeforeFlatField.Visible    = false;
         SampleBeforeFlatField.Enabled    = false;
-        ThroughPutDataToDiosplay.Visible = false;
-        ThroughPutDataToDiosplay.Enabled = false;
+        ThroughPutDataToDisplay.Visible = false;
+        ThroughPutDataToDisplay.Enabled = false;
       }
       SetUpFlowMeterIncluded ();
     }
@@ -158,7 +158,7 @@ namespace CounterApplication
       toolTip.SetToolTip (DataIsToBeCounted,             "Typically Checked; indicates whether to count Shrimp.");
       toolTip.SetToolTip (SaveParticleImages,            "NOT Typically Checked;  When selected will write individual images for each particle encountered, where images will be arranged by sub-directory indicating classification; you would do this during a Play-Back session.");
       toolTip.SetToolTip (PlayingBackRealTime,           "NOT Typically Checked;  When selected the playback will try to match the speed of the camera during the original recoding session.");
-      toolTip.SetToolTip (ThroughPutDataToDiosplay,      "Select the data that you wish to Chart.");
+      toolTip.SetToolTip (ThroughPutDataToDisplay,      "Select the data that you wish to Chart.");
       toolTip.SetToolTip (SecondaryToDisplay,            "Select  'Capacity'  or  'Flow Rate'  to display on secondary axis.");
       toolTip.SetToolTip (CameraTemparature,             "Camera Temperature.");
       toolTip.SetToolTip (FlowRate,                      "Flow rate in Meters/Second");
@@ -187,7 +187,7 @@ namespace CounterApplication
 
     private  void  PopulateThroughPutDataToDisplayChoices ()
     {
-      ThroughPutDataToDiosplay.DataSource = StatusSnapshotManaged.DataFieldIdxNames ();
+      ThroughPutDataToDisplay.DataSource = StatusSnapshotManaged.DataFieldIdxNames ();
     }
 
 
@@ -377,7 +377,7 @@ namespace CounterApplication
 
       UpdateDefaultOperatingParametersTab ();
 
-      ThroughPutDataToDiosplay.Text = StatusSnapshotManaged.SnapShotFieldIdxToStr (throughPutField);
+      ThroughPutDataToDisplay.Text = StatusSnapshotManaged.SnapShotFieldIdxToStr (throughPutField);
       SecondaryToDisplay.Text = secondaryToDisplay;
 
       CropLeft.Text               = cameraManager.CropLeft ().ToString ();
@@ -1190,7 +1190,7 @@ namespace CounterApplication
       LogMsgs.Height += deltaHeight;
       LogMsgs.Width  += deltaWidth;
 
-      ThroughPutDataToDiosplay.Top += deltaHeight;
+      ThroughPutDataToDisplay.Top += deltaHeight;
       SecondaryToDisplay.Top += deltaHeight;
       SecondaryToDisplay.Left += deltaWidth;
       ThroughputChart.Height += deltaHeight;
@@ -1283,7 +1283,7 @@ namespace CounterApplication
       }
       else
       {
-        StatusSnapshotManaged.FieldIdx  newThroughPutField = StatusSnapshotManaged.SnapShotFieldIdxFromStr ((String)ThroughPutDataToDiosplay.SelectedItem);
+        StatusSnapshotManaged.FieldIdx  newThroughPutField = StatusSnapshotManaged.SnapShotFieldIdxFromStr ((String)ThroughPutDataToDisplay.SelectedItem);
         if  (newThroughPutField != StatusSnapshotManaged.FieldIdx.Null)
         {
           runLog.WriteLn  (10, "ThroughPutDataToDisplay_SelectedIndexChanged   Changed to " + newThroughPutField + ".");
@@ -1322,7 +1322,7 @@ namespace CounterApplication
 
     private  void  UpdateThrouputChartData ()
     {
-      ThroughputChart.Series[0].LegendText = (String)ThroughPutDataToDiosplay.SelectedItem;
+      ThroughputChart.Series[0].LegendText = (String)ThroughPutDataToDisplay.SelectedItem;
       ThroughputChart.Series[0].Points.Clear ();
       ThroughputChart.Series[1].LegendText = secondaryToDisplay;
       ThroughputChart.Series[1].Points.Clear ();

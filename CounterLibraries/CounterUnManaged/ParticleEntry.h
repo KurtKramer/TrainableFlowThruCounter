@@ -25,6 +25,10 @@ using  namespace  KKLSC;
 
 namespace CounterUnManaged
 {
+  /**
+   *@brief Represents an individual particle in a scanner file; describes info such as 
+   * location in scanner file, class, orientation, etc... 
+   */
   class  ParticleEntry
   {
   public:
@@ -114,7 +118,7 @@ namespace CounterUnManaged
     float             breakTie;
     FeatureVectorPtr  featureVector;    /**<  If not null;  add to end of FeatureVectr list
                                          * that is being built for the entire run.
-                                         *  This was done so ewe could get the FeatureVectors
+                                         *  This was done so we could get the FeatureVectors
                                          * of all particles in a ScannerFile for test purposes.
                                          * In production this should always be NULL.
                                          */
