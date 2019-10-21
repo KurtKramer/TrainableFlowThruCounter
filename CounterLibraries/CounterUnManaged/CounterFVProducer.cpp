@@ -12,7 +12,10 @@
 #include <vector>
 #if  defined(WIN32)
 #include <windows.h>
+#else
+#include <string.h>
 #endif
+#include <math.h>
 #include "MemoryDebug.h"
 using namespace std;
 

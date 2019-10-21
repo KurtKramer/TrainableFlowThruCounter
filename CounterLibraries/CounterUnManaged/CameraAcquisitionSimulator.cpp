@@ -359,11 +359,13 @@ void  CameraAcquisitionSimulator::Run ()
       if  (playingBackRealTime)
       {
 
+#if defined(KKOS_WINDOWS)
         MMRESULT zed = timeBeginPeriod (1);
         if  (zed == TIMERR_NOCANDO)
         {
           kkuint64  xxx = zed;
         }
+#endif
 
         // We need to sleep long enough to emulate frame rate of camera,
         kkuint64  endOfLastFrameInMiliSecs = (kkuint32)(osGetSystemTimeInMiliSecs ());
@@ -377,8 +379,9 @@ void  CameraAcquisitionSimulator::Run ()
         }
         startOfPeriodMiliSecs = endOfLastFrameInMiliSecs;
 
+#if defined(KKOS_WINDOWS)
         timeEndPeriod (1);
-
+#endif
       }
       else
       {
