@@ -8,7 +8,7 @@
  *@namespace CounterBase  CounterVariables.h
  *@brief Classes and structures that are needed to support TFTC applications.
  *@details The only class in this namespcace is 'CounterVariables' it provides global 
- * information to all LARCIOS applications such as the Counter home directory.
+ * information to all TFTC applications such as the Counter home directory.
  */
 
 namespace  CounterBase 

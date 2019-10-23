@@ -30,23 +30,12 @@
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashScreen));
-      this.pictureBox1 = new System.Windows.Forms.PictureBox();
       this.SplashScreenTimer = new System.Windows.Forms.Timer(this.components);
       this.panel1 = new System.Windows.Forms.Panel();
-      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+      this.pictureBox1 = new System.Windows.Forms.PictureBox();
       this.panel1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
-      // 
-      // pictureBox1
-      // 
-      this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-      this.pictureBox1.Location = new System.Drawing.Point(17, 17);
-      this.pictureBox1.Name = "pictureBox1";
-      this.pictureBox1.Size = new System.Drawing.Size(552, 340);
-      this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-      this.pictureBox1.TabIndex = 0;
-      this.pictureBox1.TabStop = false;
-      this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
       // 
       // SplashScreenTimer
       // 
@@ -62,6 +51,17 @@
       this.panel1.Size = new System.Drawing.Size(589, 376);
       this.panel1.TabIndex = 1;
       // 
+      // pictureBox1
+      // 
+      this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+      this.pictureBox1.Location = new System.Drawing.Point(17, 17);
+      this.pictureBox1.Name = "pictureBox1";
+      this.pictureBox1.Size = new System.Drawing.Size(552, 340);
+      this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+      this.pictureBox1.TabIndex = 0;
+      this.pictureBox1.TabStop = false;
+      this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+      // 
       // SplashScreen
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -71,16 +71,15 @@
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "SplashScreen";
       this.Text = "K-Square File Viewer";
-      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.panel1.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.ResumeLayout(false);
 
     }
 
     #endregion
-
-    private System.Windows.Forms.PictureBox pictureBox1;
     private System.Windows.Forms.Timer SplashScreenTimer;
     private System.Windows.Forms.Panel panel1;
+    private System.Windows.Forms.PictureBox pictureBox1;
   }
 }
