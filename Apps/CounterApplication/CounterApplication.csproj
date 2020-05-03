@@ -350,7 +350,6 @@
     <Content Include="Resources\ZOIS_Logo_Small.png" />
     <Content Include="zois.ico" />
     <Content Include="zois_icon.ico" />
-    <Content Include="zois_icon_fKj_icon.ico" />
     <None Include="Resources\ZOIS_Logo.png" />
     <None Include="Resources\KSquareLogo.png" />
     <None Include="app.config" />
@@ -358,12 +357,9 @@
     <None Include="GoForward.bmp" />
     <None Include="GoBackward.bmp" />
     <None Include="KSquareLogo.png" />
-    <Content Include="LarcosLogoSmall.ico" />
     <None Include="SkipToPrev.bmp" />
     <None Include="SkipToNext.bmp" />
     <None Include="Stop.bmp" />
-    <None Include="LarcosLogoSmall2.jpg" />
-    <None Include="LarcosLogoSmall.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />

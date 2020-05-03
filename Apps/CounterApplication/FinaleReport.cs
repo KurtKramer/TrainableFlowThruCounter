@@ -185,89 +185,96 @@ namespace CounterApplication
 
     private  void  SaveConfiguration ()
     {
-      System.IO.StreamWriter  o = null;
-      try{o = new System.IO.StreamWriter (configFileName);}  catch  (Exception){o = null; return;}
-      
-      o.WriteLine ("//FinaleReport Configuration File");
-      o.WriteLine ("//");
-      o.WriteLine ("//DateTime Saved" + "\t" + DateTime.Now.ToString ("F"));
-      o.WriteLine ("//");
-      o.WriteLine ("WidthLast"            + "\t" + widthLast);
-      o.WriteLine ("HeightLast"           + "\t" + heightLast);
-      o.WriteLine ("Maximized"            + "\t" + (formIsMaximized ? "YES":"NO"));
+      try
+      {
+        using (System.IO.StreamWriter o = new System.IO.StreamWriter(configFileName))
+        {
 
-      o.WriteLine ("TimeIntervals"        + "\t" + TimeIntervals.Value.ToString ());
-      o.WriteLine ("SizeInterval"         + "\t" + SizeInterval.Value.ToString ());
+          o.WriteLine("//FinaleReport Configuration File");
+          o.WriteLine("//");
+          o.WriteLine("//DateTime Saved" + "\t" + DateTime.Now.ToString("F"));
+          o.WriteLine("//");
+          o.WriteLine("WidthLast" + "\t" + widthLast);
+          o.WriteLine("HeightLast" + "\t" + heightLast);
+          o.WriteLine("Maximized" + "\t" + (formIsMaximized ? "YES" : "NO"));
 
-      o.WriteLine ("LastDirectorySavedTo" + "\t" + lastDirectorySavedTo);
+          o.WriteLine("TimeIntervals" + "\t" + TimeIntervals.Value.ToString());
+          o.WriteLine("SizeInterval" + "\t" + SizeInterval.Value.ToString());
 
-      o.Close ();
-      o = null;
+          o.WriteLine("LastDirectorySavedTo" + "\t" + lastDirectorySavedTo);
+        }
+      }
+      catch (Exception e)
+      {
+        runLog.WriteLine($"SaveConfiguration  exception writting {configFileName}: " + e.ToString());
+      }
     }
 
 
 
-    private  void   LoadConfigurationFile ()
+    private void  LoadConfigurationFile ()
     {
-      System.IO.StreamReader i = null;
+      int savedWidth = this.Width;
+      int savedHeight = this.Height;
+      bool screenWasMaximized = WindowState == FormWindowState.Maximized;
 
-      try {i = new System.IO.StreamReader (configFileName);}  catch  (Exception) {i = null;}
-      if  (i == null)
-        return;
-
-      int  savedWidth  = 0;
-      int  savedHeight = 0;
-      bool screenWasMaximized = false;
-
-      string  nextLine = null;
-
-      while  (true)
+      try
       {
-        try  {nextLine = i.ReadLine ();}  catch (Exception) {break;}
-        if  (nextLine == null)
-          break;
+        using (System.IO.StreamReader i = new System.IO.StreamReader(configFileName))
+        {
+          string nextLine = null;
 
-        nextLine = nextLine.Trim ();
-        
-        if  ((nextLine.Length < 3)  ||  (nextLine.Substring (0, 2) == "//"))
-          continue;
+          while (true)
+          {
+            try { nextLine = i.ReadLine(); } catch (Exception) { break; }
+            if (nextLine == null)
+              break;
 
-        string[] fields = nextLine.Split ('\t');
-        if  (fields.Length < 2)
-          continue;
+            nextLine = nextLine.Trim();
 
-        string  fieldName  = fields[0];
-        string  fieldValue = fields[1];
+            if ((nextLine.Length < 3) || (nextLine.Substring(0, 2) == "//"))
+              continue;
 
-        switch  (fieldName)
-        { 
-          case  "WidthLast":
-            savedWidth = UmiKKStr.StrToInt (fieldValue);
-            break;
+            string[] fields = nextLine.Split('\t');
+            if (fields.Length < 2)
+              continue;
 
-          case  "HeightLast":
-            savedHeight = UmiKKStr.StrToInt (fieldValue);
-            break;
+            string fieldName = fields[0];
+            string fieldValue = fields[1];
 
-          case  "LastDirectorySavedTo":
-            lastDirectorySavedTo = fieldValue;
-            break;
+            switch (fieldName)
+            {
+              case "WidthLast":
+                savedWidth = UmiKKStr.StrToInt(fieldValue);
+                break;
 
-          case  "Maximized":
-            screenWasMaximized  = (fieldValue.ToUpper () == "YES");
-            break;
+              case "HeightLast":
+                savedHeight = UmiKKStr.StrToInt(fieldValue);
+                break;
 
-          case  "TimeIntervals":
-            TimeIntervals.Value = (decimal)UmiKKStr.StrToFloat (fieldValue);
-            break;
+              case "LastDirectorySavedTo":
+                lastDirectorySavedTo = fieldValue;
+                break;
 
-          case  "SizeInterval":
-            SizeInterval.Value = (decimal)UmiKKStr.StrToFloat (fieldValue);
-            break;
+              case "Maximized":
+                screenWasMaximized = (fieldValue.ToUpper() == "YES");
+                break;
+
+              case "TimeIntervals":
+                TimeIntervals.Value = (decimal)UmiKKStr.StrToFloat(fieldValue);
+                break;
+
+              case "SizeInterval":
+                SizeInterval.Value = (decimal)UmiKKStr.StrToFloat(fieldValue);
+                break;
+            }
+          }
         }
       }
-
-      i.Close ();
+      catch (Exception e)
+      {
+        runLog.WriteLine($"LoadConfigurationFile  exception reading {configFileName}: " + e.ToString ());
+      }
 
       if  (savedWidth > Screen.PrimaryScreen.Bounds.Width)
         savedWidth = Screen.PrimaryScreen.Bounds.Width;

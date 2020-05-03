@@ -138,7 +138,6 @@ namespace CounterManagedRoutines
 
 
 
-
     private  static  void  BlockStart ()
     {
       blocker.StartBlock ();
@@ -150,7 +149,6 @@ namespace CounterManagedRoutines
     {
       blocker.EndBlock ();
     }  /* BlockEnd */
-
 
 
 
@@ -177,6 +175,7 @@ namespace CounterManagedRoutines
     }
 
 
+
     public  static  UmiClassList  Model1ListOfClasses ()
     {
       UmiClassList  classes = null;
@@ -185,6 +184,7 @@ namespace CounterManagedRoutines
       BlockEnd ();
       return  classes;
     }
+
 
 
     public  static  UmiTrainingModel2  Model2 ()
@@ -196,7 +196,6 @@ namespace CounterManagedRoutines
       BlockEnd ();
       return  model;
     }
-
 
 
 
@@ -240,6 +239,7 @@ namespace CounterManagedRoutines
     }  /* MakePredictions */
 
 
+
     /// <summary>
     /// Using supplied 'Raster' data it will call each currently active model and return there predictions.
     /// </summary>
@@ -274,7 +274,6 @@ namespace CounterManagedRoutines
 
 
 
-
     public  static  void  MakePredictions (UmiFeatureVector       featureVector,
                                            ref UmiPredictionList  model1Predictions,
                                            ref UmiPredictionList  model2Predictions,
@@ -294,7 +293,6 @@ namespace CounterManagedRoutines
 
       return;
     }  /* MakePredictions */
-
 
 
 
@@ -326,7 +324,6 @@ namespace CounterManagedRoutines
         return  modelName;
       }
     }
-
 
 
 
@@ -383,9 +380,6 @@ namespace CounterManagedRoutines
     
 
 
-
-
-
     public  static  void  SaveConfiguration ()
     {
       BlockStart ();
@@ -405,8 +399,6 @@ namespace CounterManagedRoutines
 
       BlockEnd ();
     }  /* LoadConfiguration */
-    
-
 
 
 
@@ -457,11 +449,6 @@ namespace CounterManagedRoutines
 
 
 
-
-
-
-
-
     public  static  void  SetModel2 (String            _model2Name,
                                      bool              _forceRebuild,
                                      DoneLoadingEvent  _doneLoadingEvent
@@ -505,7 +492,6 @@ namespace CounterManagedRoutines
 
 
 
-
    static  private  void  Model1LoadStart (String            _model1Name,
                                            bool              _forceRebuild,
                                            DoneLoadingEvent  _doneLoadingEvent
@@ -523,10 +509,7 @@ namespace CounterManagedRoutines
     }  /* Model1LoadStart */
 
 
-
-
-
-
+    
    static  private  void  Model2LoadStart (String            _model2Name,
                                            bool              _forceRebuild,
                                            DoneLoadingEvent  _doneLoadingEvent
@@ -545,10 +528,6 @@ namespace CounterManagedRoutines
 
 
 
-
-
-
-
     static  private  void  Model1LoadCompletion (TrainingModelStatus  sender)
     {
       if  (!sender.ValidModel ())
@@ -561,10 +540,6 @@ namespace CounterManagedRoutines
         doneLoadingModel1Event (model1);
     }  /* Model1LoadCompletion */
 
-  
-  
-  
-  
 
 
     static  private  void  Model2LoadCompletion (TrainingModelStatus  sender)
@@ -578,7 +553,5 @@ namespace CounterManagedRoutines
       if  (doneLoadingModel2Event != null)
         doneLoadingModel2Event (model2);
     }  /* Model2LoadCompletion */
-
-  
   }
 }

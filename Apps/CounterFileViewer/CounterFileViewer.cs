@@ -20,8 +20,6 @@ namespace CounterFileViewer
 {
   public partial class CounterFileViewer : Form
   {
-    private  int  zed = 0;
-       
     private  Queue<String>               alarms                = new Queue<string> ();
     private  Queue<String>               alarmFileNames        = new Queue<string> ();
                               
@@ -135,77 +133,71 @@ namespace CounterFileViewer
 
     private  void  LoadCounterFileViewerConfiuration ()
     {
-      StreamReader f = null;
-
       try
       {
-        f = new StreamReader (CounterFileViewerConfigFileName);
-      }
-      catch (Exception)
-      {
-        return;
-      }
-
-      string txtLine = f.ReadLine ();
-      while (txtLine != null)
-      {
-        if (txtLine.Substring (0, 2) != "//")
+        using (StreamReader f = new StreamReader (CounterFileViewerConfigFileName))
         {
-          String[]  fields = txtLine.Split ('\t');
-          if  (fields.Length > 1)
+
+          string txtLine = f.ReadLine();
+          while (txtLine != null)
           {
-            string   rowType = fields[0].ToLower ().Trim ();
-          
-            if  (rowType == "lastfileopenedname")
+            if (txtLine.Substring(0, 2) != "//")
             {
-              if  (fields.Length >= 2)
-                lastFileOpenedName = fields[1];
+              String[] fields = txtLine.Split('\t');
+              if (fields.Length > 1)
+              {
+                string rowType = fields[0].ToLower().Trim();
+
+                if (rowType == "lastfileopenedname")
+                {
+                  if (fields.Length >= 2)
+                    lastFileOpenedName = fields[1];
+                }
+
+                else if (rowType == "endoffile")
+                  break;
+              }
             }
 
-            else if  (rowType == "endoffile")
-              break;
+            txtLine = f.ReadLine();
           }
+
+          if (String.IsNullOrEmpty (initialFileName) && (!String.IsNullOrEmpty (lastFileOpenedName)))
+            initialFileName = lastFileOpenedName;
         }
-        
-        txtLine = f.ReadLine();
       }
-
-			if  (String.IsNullOrEmpty(initialFileName) && (!String.IsNullOrEmpty(lastFileOpenedName)))
-				initialFileName = lastFileOpenedName;
-
-      f.Close();
+      catch (Exception e)
+      {
+        runLog.WriteLine ($"LoadCounterFileViewerConfiuration  Exception reading {CounterFileViewerConfigFileName}: " + e.ToString ());
+      }
     }  /* LoadCounterFileViewerConfiuration */
 
 
     
     private  void  SaveCounterFileViewerConfiguration ()
     {
-      StreamWriter w = null;
       try
       {
-        w = new StreamWriter (CounterFileViewerConfigFileName);
+        using (StreamWriter w = new StreamWriter(CounterFileViewerConfigFileName))
+        {
+          w.WriteLine("// CounterFileViewer Configuration");
+          w.WriteLine("// DateTime" + "\t" + DateTime.Now.ToString());
+          w.WriteLine("//");
+          w.WriteLine("//");
+          w.WriteLine("//  The next line specifies the last Scanner-File opened.");
+          w.WriteLine("LastFileOpenedName" + "\t" + lastFileOpenedName);
+          w.WriteLine("//");
+          w.WriteLine("//");
+
+          w.WriteLine("EndOfFile");
+        }
       }
       catch (Exception e)
       {
-        MessageBox.Show ("Exception Writing File Viewer Configuration.  [" + e.ToString() + "]");
-        return;
+        runLog.WriteLine($"SaveCounterFileViewerConfiguration  exception writing {CounterFileViewerConfigFileName}: " + e.ToString ());
       }
-
-      w.WriteLine ("// CounterFileViewer Configuration");
-      w.WriteLine ("// DateTime" + "\t" + DateTime.Now.ToString());
-      w.WriteLine ("//");
-      w.WriteLine ("//");
-      w.WriteLine ("//  The next line specifies the last Scanner-File opened.");
-      w.WriteLine ("LastFileOpenedName" + "\t" + lastFileOpenedName);
-      w.WriteLine ("//");
-      w.WriteLine ("//");
-
-      w.WriteLine ("EndOfFile");
-
-      w.Close();
-      
       return;
-    }  /* SaveConfiguration */
+    }  /* SaveCounterFileViewerConfiguration */
 
 
 
@@ -228,7 +220,6 @@ namespace CounterFileViewer
 
 
 
-
     private  void  SetUpDataStructuresForNewFile ()
     {
       DisposeExistingDataStructures ();
@@ -240,7 +231,6 @@ namespace CounterFileViewer
       
       imageEditors = new ArrayList ();
     } /* SetUpDataStructuresForNewFile */
-
 
 
     
@@ -324,8 +314,7 @@ namespace CounterFileViewer
           SanLinesTotal.Text = file.LargestKnownScanLine ().ToString ("###,###,##0");
     } /* UpdateStats */
 
-
-
+    
 
     private  void  UpdateScreenForNewSize ()
     {
@@ -380,8 +369,6 @@ namespace CounterFileViewer
 
 
 
-
-
     private  void  UpdateVerticleScrollBar ()
     {
       int   maxNumDisplayRows = 20000;
@@ -403,7 +390,6 @@ namespace CounterFileViewer
       vScrollBar1.LargeChange = parameters.DisplayRowsToDisplay ();
       vScrollBar1.SmallChange = 2;
     }  /* UpdateVerticleScrollBar */
-
 
 
 
@@ -429,7 +415,6 @@ namespace CounterFileViewer
         parameters.PaintWholePanel ();
       }
     }  /* ScrollToPropperPlaceInScannerFile */
-
 
 
 
@@ -483,7 +468,6 @@ namespace CounterFileViewer
       
       autoDetect.Checked = parameters.ExtractBlobs ();
     }  /* CounterFileViewer_Load */
-
 
 
 
@@ -990,6 +974,8 @@ namespace CounterFileViewer
         }
       }
     }
+
+
 
     private void autoDetectionToolStripMenuItem1_Click (object sender, EventArgs e)
     {

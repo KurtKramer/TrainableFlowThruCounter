@@ -60,7 +60,6 @@ namespace CounterApplication
 
     public  CounterApplication ()
     {
-      int  zed = 100;
       SplashScreen sc = new SplashScreen ();
       sc.Show (this);
 
@@ -330,48 +329,46 @@ namespace CounterApplication
 
 
 
-    private bool  loadConfigurationInProgress = true;
+    private bool  loadConfigurationInProgress = false;
 
-    private  void  LoadConfiguration ()
+    private void LoadConfiguration()
     {
-      loadConfigurationInProgress  = true;
+      loadConfigurationInProgress = true;
 
-      StreamReader f = null;
-      try  {f = new StreamReader (configFileName);}
-      catch (Exception)  {return;}
-
-      if  (f == null)
+      try
       {
-        loadConfigurationInProgress  = false;
-        return;
-      }
-
-      string txtLine = f.ReadLine ();
-      while (txtLine != null)
-      {
-        if  ((txtLine.Length > 1)  &&  (txtLine.Substring (0, 2) != "//"))
+        using (StreamReader f = new StreamReader(configFileName))
         {
-          String[]  fields = txtLine.Split ('\t');
-          if  (fields.Length > 1)
+          string txtLine = f.ReadLine();
+          while (txtLine != null)
           {
-            String  rowType = fields[0].ToLower ().Trim ();
-            String  fieldValue = fields[1];
+            if ((txtLine.Length > 1) && (txtLine.Substring(0, 2) != "//"))
+            {
+              String[] fields = txtLine.Split('\t');
+              if (fields.Length > 1)
+              {
+                String rowType = fields[0].ToLower().Trim();
+                String fieldValue = fields[1];
 
-            if  (rowType == "height")
-              startUpHeight = UmiKKStr.StrToInt (fieldValue);
+                if (rowType == "height")
+                  startUpHeight = UmiKKStr.StrToInt(fieldValue);
 
-            else if  (rowType == "width")
-              startUpWidth  = UmiKKStr.StrToInt (fieldValue);
+                else if (rowType == "width")
+                  startUpWidth = UmiKKStr.StrToInt(fieldValue);
 
-            else if  (rowType == "endoffile")
-              break;
+                else if (rowType == "endoffile")
+                  break;
+              }
+            }
+
+            txtLine = f.ReadLine();
           }
         }
-        
-        txtLine = f.ReadLine();
       }
-
-      f.Close();
+      catch (Exception e)
+      {
+        runLog.WriteLine($"Exception reading {configFileName}: " + e.ToString());
+      }
 
       SampleBeforeFlatField.Checked = cameraManager.SampleLastFrameBeforeFlatField ();
 
@@ -423,27 +420,31 @@ namespace CounterApplication
 
 
 
-    public  void  SaveConfiguration ()
+    public void  SaveConfiguration ()
     {
-      if  (loadConfigurationInProgress)
-        return;
-
-      StreamWriter w = null;
-      try  {w = new StreamWriter (configFileName);}
-      catch (Exception e)
+      if (loadConfigurationInProgress)
       {
-        MessageBox.Show ("Exception Writing File Viewer Configuration.  [" + e.ToString() + "]");
+        MessageBox.Show("SaveConfiguration  'loadConfigurationInProgress' is set to True!!!");
         return;
       }
-      
-      w.WriteLine ("// Counter Configuration");
-      w.WriteLine ("// DateTime" + "\t" + DateTime.Now.ToString());
-      w.WriteLine ("//");
-      w.WriteLine ("//");
-      w.WriteLine ("Height" + "\t" + Height.ToString ()); 
-      w.WriteLine ("Width"  + "\t" + Width.ToString ()); 
-      w.WriteLine ("EndOfFile");
-      w.Close();
+      try
+      {
+        using (StreamWriter w = new StreamWriter(configFileName))
+        {
+          w.WriteLine("// Counter Configuration");
+          w.WriteLine("// DateTime" + "\t" + DateTime.Now.ToString());
+          w.WriteLine("//");
+          w.WriteLine("//");
+          w.WriteLine("Height" + "\t" + Height.ToString());
+          w.WriteLine("Width" + "\t" + Width.ToString());
+          w.WriteLine("EndOfFile");
+        }
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show($"SaveConfiguration  exception writting {configFileName}: " + e.ToString());
+      }
+
       return;
     }  /* SaveConfiguration */
 
@@ -1009,7 +1010,7 @@ namespace CounterApplication
 
       else if  (curState == UmiCounterState.Connected)
       {
-        runLog.WriteLn  (10, "Starting new session.");
+        runLog.WriteLn (10, "Starting new session.");
         bool  successful = false;
         String  errMsg = "";
 
