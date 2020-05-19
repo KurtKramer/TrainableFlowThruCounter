@@ -624,7 +624,7 @@ void  HistogramSize::ProcessImage (const KKStr& fullFileName)
       RasterPtr  imageWithLine = origImage->ToColor ();
 
 
-      for  (kkint32 x = 1;  x < results->QueueSize ();  ++x)
+      for  (kkuint32 x = 1;  x < results->QueueSize ();  ++x)
       {
         PointPtr p1 = results->IdxToPtr (x - 1);
         PointPtr p2 = results->IdxToPtr (x);
@@ -677,10 +677,11 @@ using namespace  KKLSC;
 bool  OkToRenameFile (const KKStr&  fn)
 {
   auto idx = fn.Find ("_2013");
-  if  (idx < 0)
+  if  (!idx.has_value ())
     idx = fn.Find ("_2012");
 
-  if  (idx < 0)  return false;
+  if  (!idx.has_value ())
+    return false;
 
   KKStr  part1 = fn.SubStrSeg (0, idx);
   KKStr  rest = fn.SubStrPart (idx + 1);

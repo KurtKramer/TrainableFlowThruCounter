@@ -132,9 +132,9 @@ CounterManager::CounterOperatingModes  CounterManager::CounterOperatingModeFromS
 
 
 CounterManager::CounterManager (MsgQueuePtr  _msgQueue,
-                                            MsgQueuePtr  _loggedMsgs,
-                                            int          _maxNumOfThreads
-                                           ):
+                                MsgQueuePtr  _loggedMsgs,
+                                int          _maxNumOfThreads
+                               ):
     configurationFileName          (),
     curState                       (CounterState::Stopped),
     operatingMode                  (CounterOperatingModes::User),
@@ -2396,7 +2396,7 @@ void   CounterManager::StartFrameBuilderAndProcessingThreads (bool&  _successful
     logicalFrameEntries = new LogicalFrameEntryList (true);
   
   if  (!droppedFrames)
-    droppedFrames = new LogicalFrameEntryQueue ("DroppedFrames", true);
+    droppedFrames = new LogicalFrameEntryQueue (true, "DroppedFrames");
 
   if  (!particleEntryBuffer)
     particleEntryBuffer = new ParticleEntryBuffer ();
@@ -2491,8 +2491,8 @@ void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
 
 
 void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
-                                            bool          _fieldValue
-                                           )
+                                      bool          _fieldValue
+                                     )
 {
   headerFields->Add (_fieldName, _fieldValue);
 }
@@ -2500,8 +2500,8 @@ void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
 
 
 void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
-                                            kkint32       _fieldValue
-                                           )
+                                      kkint32       _fieldValue
+                                     )
 {
   headerFields->Add (_fieldName, _fieldValue);
 }
@@ -2509,8 +2509,8 @@ void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
 
 
 void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
-                                            kkint64       _fieldValue
-                                           )
+                                      kkint64       _fieldValue
+                                     )
 {
   headerFields->Add (_fieldName, _fieldValue);
 }
@@ -2518,8 +2518,8 @@ void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
 
 
 void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
-                                            float         _fieldValue
-                                           )
+                                      float         _fieldValue
+                                     )
 {
   headerFields->Add (_fieldName, _fieldValue);
 }
@@ -2527,8 +2527,8 @@ void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
 
 
 void  CounterManager::AddHeaderField (const KKStr&  _fieldName,
-                                            double        _fieldValue
-                                           )
+                                      double        _fieldValue
+                                     )
 {
   headerFields->Add (_fieldName, _fieldValue);
 }

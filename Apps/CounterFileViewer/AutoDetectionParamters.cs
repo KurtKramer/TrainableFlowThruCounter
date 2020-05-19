@@ -81,25 +81,25 @@ namespace CounterFileViewer
 
     private  string  LoadTextFile (string  fileName)
     {
-      string  result = "";
-
-      StreamReader  sr = null;
+      string result = "";
       try
       {
-        sr = new StreamReader (fileName);
+        using (StreamReader sr = new StreamReader(fileName))
+        {
+
+          while (!sr.EndOfStream)
+          {
+            result += sr.ReadLine() + "\n";
+          }
+
+          sr.Close();
+        }
       }
-      catch (Exception)
+      catch (Exception e)
       {
-        return  result;
+        System.Console.WriteLine ($"LoadTextFile exception reading {fileName}: " + e.ToString ());
       }
 
-
-      while  (!sr.EndOfStream)
-      {
-        result += sr.ReadLine () + "\n";
-      }
-
-      sr.Close ();
       return  result;
     }  /* LoadTextFile */
 
@@ -119,8 +119,7 @@ namespace CounterFileViewer
 
     private  bool  TrainingLibrary_SelectedIndexChangedAlreadyCalled = false;
     
-
-
+    
 
     private void UpdateButton_Click (object sender, EventArgs e)
     {

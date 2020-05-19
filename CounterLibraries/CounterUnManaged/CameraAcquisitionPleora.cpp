@@ -695,9 +695,9 @@ void   CameraAcquisitionPleora::CameraParametersPopulate (PvGenParameterArray*  
   cameraParams.FrameHeight      ((kkint32)GetPvParameterInteger (params, "Height",            0));
   cameraParams.FrameWidth       ((kkint32)GetPvParameterInteger (params, "Width",             0));
   cameraParams.Model            (GetPvParameterString           (params, "DeviceModelName",  ""));
-  cameraParams.SensitivityMode  (GetPvParameterEnumStr          (params, "SensitivityMode",  -1));
+  cameraParams.SensitivityMode  (GetPvParameterEnumStr          (params, "SensitivityMode",  ""));
 
-  kkint64  ipAddr = GetPvParameterInteger (params, "GevCurrentIPAddress",    0);
+  kkint64  ipAddr = GetPvParameterInteger (params, "GevCurrentIPAddress", 0);
   cameraParams.IpAddress (Int64ToIpAddress (ipAddr));
 
   if  (cameraParams.DeviceModelName ().EqualIgnoreCase ("DiviinaLM1GE"))

@@ -236,7 +236,7 @@ UmiClass^  UmiClassList::LoadSingleClass (String^  fileName)
   StreamReader^  sr = nullptr;
   try  {sr = gcnew StreamReader (fileName);}
   catch (Exception^)  {sr = nullptr;}
-        
+
   if  (sr == nullptr)
     return  nullptr;
           
