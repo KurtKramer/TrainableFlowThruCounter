@@ -120,7 +120,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <BrowseInformation>true</BrowseInformation>
       <EnablePREfast>false</EnablePREfast>
@@ -173,7 +173,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -203,7 +203,6 @@
     <ClCompile Include="CameraAcquisitionPleora.cpp" />
     <ClCompile Include="CameraAcquisitionSimulator.cpp" />
     <ClCompile Include="CameraAutoGainThread.cpp" />
-    <ClCompile Include="CameraFlatFieldCorrection.cpp" />
     <ClCompile Include="CameraFrame.cpp" />
     <ClCompile Include="CameraFrameBuffer.cpp" />
     <ClCompile Include="CameraParameters.cpp" />
@@ -244,7 +243,6 @@
     <ClInclude Include="CameraAcquisitionPleora.h" />
     <ClInclude Include="CameraAcquisitionSimulator.h" />
     <ClInclude Include="CameraAutoGainThread.h" />
-    <ClInclude Include="CameraFlatFieldCorrection.h" />
     <ClInclude Include="CameraFrame.h" />
     <ClInclude Include="CameraFrameBuffer.h" />
     <ClInclude Include="CameraParameters.h" />

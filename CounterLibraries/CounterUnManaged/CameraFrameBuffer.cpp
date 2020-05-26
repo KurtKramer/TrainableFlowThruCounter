@@ -25,7 +25,7 @@ using namespace KKB;
 using namespace KKLSC;
 
 #include "CameraFrameBuffer.h"
-#include "CameraFlatFieldCorrection.h"
+#include "FlatFieldCorrection.h"
 #include "CameraFrame.h"
 #include "CounterStats.h"
 #include "CounterManager.h"
@@ -81,10 +81,10 @@ CameraFrameBuffer::CameraFrameBuffer (CounterManagerPtr _manager,
   GoalKeeper::Create ("CameraFrameBuffer_" + name, gateKeeper);
   IncreaseBufferSize (_bufferSize);
 
-  flatFieldCorrection = new CameraFlatFieldCorrection (20, 
-                                                       frameWidth, 
-                                                       compensationTable
-                                                      );
+  flatFieldCorrection = new FlatFieldCorrection (20, 
+                                                 frameWidth, 
+                                                 compensationTable
+                                                );
 
   LastFramesAllocate ();
 }
@@ -330,9 +330,6 @@ void  CameraFrameBuffer::UpdateLastFrame (uchar*  cameraData,
 
 
 
-
-
-
 /**
  * This method creates a copy of the most current frame retrieved from the camera.
  * We are not using yet;  not sure this is the best way to do it.
@@ -369,12 +366,12 @@ RasterPtr  CameraFrameBuffer::SnapShotLatestFrame (kkint32  cropLeft,
 
   for  (int x = 0;  x < lastFramesSize;  ++x)
   {
-    kkint32  frameHeight = lastFrames[nextIdx]->Height ();
-    kkint32  frameWidth  = lastFrames[nextIdx]->Width  ();
+    kkint32  lastFrameHeight = lastFrames[nextIdx]->Height ();
+    kkint32  lastFrameWidth  = lastFrames[nextIdx]->Width  ();
     uchar** srcRows = lastFrames[nextIdx]->Green ();
-    for  (kkint32  y = 0;  y < frameHeight;  ++y, --destRowIdx)
+    for  (kkint32  y = 0;  y < lastFrameHeight;  ++y, --destRowIdx)
     {
-      KKStr::MemCpy (destRows[destRowIdx], srcRows[y], frameWidth);
+      KKStr::MemCpy (destRows[destRowIdx], srcRows[y], lastFrameWidth);
     }
 
     ++nextIdx;
@@ -418,26 +415,25 @@ VectorUcharPtr CameraFrameBuffer::LastFrameAverageScanLine()  const
   kkint32  row = 0;
   kkint32  col = 0;
 
-  kkint32  frameHeight = lastFrames[lastFramesIdx]->Height ();
-  kkint32  frameWidth  = lastFrames[lastFramesIdx]->Width  ();
-  kkuint32*  colTotals = new kkuint32[frameWidth];
-  for  (col = 0;  col < frameWidth;  ++col)
-    colTotals[col] = 0;
+  const kkint32  lastFrameHeight = lastFrames[lastFramesIdx]->Height ();
+  const kkint32  lastFrameWidth  = lastFrames[lastFramesIdx]->Width  ();
+  kkuint32*  colTotals = new kkuint32[lastFrameWidth];
+  memset (colTotals, 0, sizeof (kkuint32) * lastFrameWidth);
 
   uchar** srcData = lastFrames[lastFramesIdx]->Green ();
 
-  for  (row = 0;  row < frameHeight;  ++row)
+  for  (row = 0;  row < lastFrameHeight;  ++row)
   {
     uchar*  srcRow = srcData[row];
-    for  (col = 0;  col < frameWidth;  ++col)
+    for  (col = 0;  col < lastFrameWidth;  ++col)
       colTotals[col] += srcRow[col];
   }
 
   gateKeeper->EndBlock ();
 
-  VectorUcharPtr result = new VectorUchar (frameWidth, 0);
-  for  (col = 0;  col < frameWidth;  ++col)
-    (*result)[col] = (int)(0.5f + (float)(colTotals[col]) / (float)frameHeight);
+  VectorUcharPtr result = new VectorUchar (lastFrameWidth, 0);
+  for  (col = 0;  col < lastFrameWidth;  ++col)
+    (*result)[col] = (uchar)(0.5f + (float)(colTotals[col]) / (float)lastFrameHeight);
 
   delete[]  colTotals;
   colTotals = NULL;
@@ -460,18 +456,18 @@ VectorUcharPtr CameraFrameBuffer::LastFrameHighValuesScanLine()  const
   kkint32  row = 0;
   kkint32  col = 0;
 
-  kkint32  frameHeight = lastFrames[lastFramesIdx]->Height ();
-  kkint32  frameWidth  = lastFrames[lastFramesIdx]->Width  ();
-  uchar*  colValues = new uchar[frameWidth];
-  for  (col = 0;  col < frameWidth;  ++col)
+  kkint32  lastFrameHeight = lastFrames[lastFramesIdx]->Height ();
+  kkint32  lastFrameWidth  = lastFrames[lastFramesIdx]->Width  ();
+  uchar*  colValues = new uchar[lastFrameWidth];
+  for  (col = 0;  col < lastFrameWidth;  ++col)
     colValues[col] = 0;
 
   uchar** srcData = lastFrames[lastFramesIdx]->Green ();
 
-  for  (row = 0;  row < frameHeight;  ++row)
+  for  (row = 0;  row < lastFrameHeight;  ++row)
   {
     uchar*  srcRow = srcData[row];
-    for  (col = 0;  col < frameWidth;  ++col)
+    for  (col = 0;  col < lastFrameWidth;  ++col)
     {
       uchar  b = srcRow[col];
       if  (b > colValues[col])
@@ -481,8 +477,8 @@ VectorUcharPtr CameraFrameBuffer::LastFrameHighValuesScanLine()  const
 
   gateKeeper->EndBlock ();
 
-  VectorUcharPtr result = new VectorUchar (frameWidth, 0);
-  for  (col = 0;  col < frameWidth;  ++col)
+  VectorUcharPtr result = new VectorUchar (lastFrameWidth, 0);
+  for  (col = 0;  col < lastFrameWidth;  ++col)
     (*result)[col] = colValues[col];
 
   delete[]  colValues;
@@ -490,8 +486,6 @@ VectorUcharPtr CameraFrameBuffer::LastFrameHighValuesScanLine()  const
 
   return result;
 }  /* LastFrameHighValuesScanLine */
-
-
 
 
 
@@ -701,22 +695,19 @@ VectorUcharPtr  CameraFrameBuffer::CameraHighPointsFromLastNSampleLines (kkint32
 }
 
 
-void   CameraFrameBuffer::ScanRateChanged (float _newScanRate)
+
+void  CameraFrameBuffer::ScanRateChanged (float _newScanRate)
 {
-  ComputeFlatFeildSamplingInterval ();
+  ComputeFlatFeildSamplingInterval (_newScanRate);
 }
 
 
 
-void  CameraFrameBuffer::ComputeFlatFeildSamplingInterval ()
+void  CameraFrameBuffer::ComputeFlatFeildSamplingInterval (float newScanRate)
 {
-  float  scanRate = manager->RequestedScanRate ();
-  if  ((scanRate < 100.0f)  ||  (scanRate > 50000))
-    scanRate = 10000.0f;
-
   int  numSampleLines = 20;
   if  (flatFieldCorrection != NULL)
     numSampleLines = flatFieldCorrection->NumSampleLines ();
 
-  flatFeildSamplingInterval = (kkint32)(0.5f + ((20.0f * scanRate) / numSampleLines) / frameHeight);
+  flatFeildSamplingInterval = (kkint32)(0.5f + ((20.0f * newScanRate) / numSampleLines) / frameHeight);
 }

@@ -29,7 +29,6 @@ using  namespace  CounterUnManaged;
 
 
 
-
 CameraThread::CameraThread (CounterManagerPtr _manager,
                             const KKStr&            _threadName,
                             MsgQueuePtr             _msgQueue
@@ -53,12 +52,16 @@ void  CameraThread::CropSettingsChanged (kkint32  _cropLeft,
                                          kkint32  _cropRight
                                         )
 {
+  if  (log.Level () <= 50)
+      log.Level (50) << "CameraThread::CropSettingsChanged  _cropLeft: " << _cropLeft << "  _cropRight: " << _cropRight << "." << endl;
 }
 
 
 
-void   CameraThread::ScanRateChanged (float _newScanRate)
+void  CameraThread::ScanRateChanged (float _newScanRate)
 {
+  if (log.Level () <= 50)
+    log.Level (50) << "CameraThread::ScanRateChanged  _newScanRate: " << _newScanRate << "." << endl;
 }
 
 
@@ -70,12 +73,10 @@ void  CameraThread::TerminateFlagChanged ()
 
 
 
-
 kkMemSize  CameraThread::MemoryConsumedEstimated ()  const
 {
   return  KKThread::MemoryConsumedEstimated () + log.MemoryConsumedEstimated ();
 }
-
 
 
 
@@ -89,17 +90,10 @@ void  CameraThread::Run ()
 
 
 
-
 CameraThreadList::CameraThreadList (bool _owner):
    KKQueue<CameraThread> (_owner)
 {
 }
-
-
-//CameraThreadList::CameraThreadList (const CameraThreadList&  list):
-//  KKQueue<CameraThread> (list)
-//{
-//}
 
 
 
@@ -216,7 +210,6 @@ void  CameraThreadList::TerminateAllButSpecifiedThread (CameraThreadPtr specifie
 
 
 
-
 void  CameraThreadList::DeleteAllStoppedThreads ()
 {
   CameraThreadList threadsToDelete (false);
@@ -236,5 +229,3 @@ void  CameraThreadList::DeleteAllStoppedThreads ()
     ct = NULL;
   }
 }  /* DeleteAllStoppedThreads */
-
-

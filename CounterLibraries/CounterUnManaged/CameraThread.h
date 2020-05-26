@@ -18,6 +18,8 @@ namespace  CounterUnManaged
   #if  !defined(_COUNTERMANAGER_)
   class  CounterManager;
   typedef  CounterManager*  CounterManagerPtr;
+  typedef  const CounterManager CounterManagerConst;
+  typedef  CounterManagerConst* CounterManagerConstPtr;
   #endif
 
 
@@ -44,7 +46,7 @@ namespace  CounterUnManaged
     CounterManagerPtr  Manager () {return   manager;}
 
 
-    const CounterManagerPtr  ManagerConst () const {return  (const CounterManagerPtr)manager;}
+    CounterManagerConstPtr  ManagerConst () const {return  (CounterManagerConstPtr)manager;}
 
 
     /**  Returns an estimate of the amount of memory consumed in bytes.  This will 
@@ -61,8 +63,7 @@ namespace  CounterUnManaged
 
 
     /**
-     *@brief  The CounterManager will call this method for all 'CameraThread' based instances 
-     * one of the Crop Settings Change.
+     *@brief  The CounterManager will call this method for all 'CameraThread' based instances when one of the Crop Settings Change.
      */
     virtual
     void  CropSettingsChanged (kkint32  _cropLeft,

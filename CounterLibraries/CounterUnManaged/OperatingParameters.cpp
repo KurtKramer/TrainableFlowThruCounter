@@ -194,7 +194,7 @@ void  OperatingParameters::UpdateFromScannerFile (ScannerFilePtr  sf)
   if  (sf == NULL)
     return;
   
-  backGroundPixelTH       = GetScannerFileValueInt32 (sf, "BackGroundPixelTH",      backGroundPixelTH);
+  backGroundPixelTH       = GetScannerFileValueUchar (sf, "BackGroundPixelTH",      backGroundPixelTH);
   connectedComponentDist  = GetScannerFileValueInt32 (sf, "ConnectedComponentDist", connectedComponentDist);
   erosionStructSize       = GetScannerFileValueInt32 (sf, "ErosionStructSize",      erosionStructSize);
   minSizeThreshold        = GetScannerFileValueInt32 (sf, "MinSizeThreshold",       minSizeThreshold);
@@ -231,7 +231,7 @@ void  OperatingParameters::UpdateFromDataField (const KKStr&  fieldName,
   fieldFound = false;
   if  (fieldName.EqualIgnoreCase ("BackGroundPixelTH"))
   {
-    backGroundPixelTH = fieldValue.ToInt32 ();
+    backGroundPixelTH = (uchar)fieldValue.ToInt32 ();
     fieldFound = true;
   }
 
@@ -474,6 +474,7 @@ void  OperatingParameters::ReadXML (XmlStream&      s,
                                     RunLog&         log
                                    )
 {
+  log.Level (30) << "OperatingParameters::ReadXML   t->Name():" << tag->Name () << endl;
   KKStr  svmParametersStr;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))

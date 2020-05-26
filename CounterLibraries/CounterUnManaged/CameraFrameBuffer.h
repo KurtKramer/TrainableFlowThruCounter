@@ -7,6 +7,7 @@
 
 #include  "GoalKeeperSimple.h"
 #include  "Raster.h"
+#include  "FlatFieldCorrection.h"
 
 #if  !defined(_FLOWMETERTRACKER_)
 namespace  KKLSC
@@ -32,11 +33,6 @@ namespace CounterUnManaged
   typedef  CameraFrameList* CameraFrameListPtr;
   #endif
 
-  #if  !defined(_CAMERAFLATFIELDCORRECTION_)
-  class  CameraFlatFieldCorrection;
-  typedef  CameraFlatFieldCorrection*  CameraFlatFieldCorrectionPtr;
-  #endif
-
   #if  !defined(_COUNTERSTATS_)
     class  CounterStats;
     typedef  CounterStats*  CounterStatsPtr;
@@ -44,7 +40,7 @@ namespace CounterUnManaged
 
   /**
    *@class  CameraFrameBuffer
-   *@brief  Will manage buffer that will allow two separate threads, one reading form the camera 
+   *@brief  Will manage buffer that will allow two separate threads, one reading from the camera 
    * and the other processing the frames. 
    *@details  You will need one instance of this class for each Camera that you want to buffer data for.
    * It is meant to be used in a multi-threaded environment, specifically three threads, but more or
@@ -182,7 +178,7 @@ namespace CounterUnManaged
 
   private:
     /**@brief  Call this method when ever FlatField is enabled and/or ScanRate is changed. */
-    void  ComputeFlatFeildSamplingInterval ();
+    void  ComputeFlatFeildSamplingInterval (float newScanRate);
 
     void  IncreaseBufferSize (kkuint32 numNewFrameBuffers);
 
@@ -210,10 +206,10 @@ namespace CounterUnManaged
     bool                    dataIsToBeCounted;          /**< When adding data to frame buffer flag it to be processed for counting.  */
     bool                    dataIsToBeRecorded;         /**< When adding data to frame buffer flag it to be written to disk.         */
 
-    CameraFlatFieldCorrectionPtr flatFieldCorrection;
+    FlatFieldCorrectionPtr  flatFieldCorrection;
 
-    kkint32                 flatFeildSamplingInterval; /**< Sampling interval in frames fort Flat-Field correction
-                                                        * This value will be computed such that we sample 10 seconds
+    kkint32                 flatFeildSamplingInterval; /**< Sampling interval in frames for Flat-Field correction
+                                                        * This value will be computed such that the sampling lines covers 10 seconds
                                                         * of imagery; ex if FlatField is maintaining a history of 20 sampling lines
                                                         * and scan rate is 10,000 lps  we would need to sample once every
                                                         * 5,000 scan lines.

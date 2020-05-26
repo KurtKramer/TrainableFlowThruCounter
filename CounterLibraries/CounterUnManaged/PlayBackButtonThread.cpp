@@ -13,7 +13,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 using namespace KKB;
 

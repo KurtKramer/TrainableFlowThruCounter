@@ -271,7 +271,7 @@ namespace CounterManaged
     /** 
      *@brief Returns an array representing the highest pixel values for each column over 
      * all the sampling lines maintained by the FlatFieldCorrection routine.
-     *@details It ultimately calls the "CameraFlatFieldCorrection::CameraHighPoints" method. 
+     *@details It ultimately calls the "FlatFieldCorrection::CameraHighPoints" method. 
      * The array returned will be the same length as the width of the camera.
      */
     array<byte>^  CameraHighPoints ();

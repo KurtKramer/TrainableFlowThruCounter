@@ -412,7 +412,7 @@ namespace CounterUnManaged
      *@brief  Using list of ImageFileNames in a file('fileName') create a new PostLarvaeFVList instance 
      * with examples in order based off contents of file. If error occurs will return NULL.
      */
-    PostLarvaeFVListPtr    OrderUsingNamesFromAFile (const KKStr&  fileName,
+    PostLarvaeFVListPtr    OrderUsingNamesFromAFile (const KKStr&  namesFileName,
                                                      RunLog&       log
                                                     );
 
@@ -527,7 +527,7 @@ namespace CounterUnManaged
       }
 
 
-      const_iterator&   operator++ (int x)
+      const_iterator&   operator++ (int)
       {
         idx++;
         return  *this;
@@ -582,7 +582,7 @@ namespace CounterUnManaged
         return  idx == right.idx;
       }
 
-      iterator&   operator++ (int x)
+      iterator&   operator++ (int)
       {
         idx++;
         return  *this;

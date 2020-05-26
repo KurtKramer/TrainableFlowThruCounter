@@ -85,7 +85,7 @@ namespace CounterUnManaged
     void  ScanLinesWritten                (kkint32  _scanLinesWritten)               {scanLinesWritten               = _scanLinesWritten;}
     void  ScanRate                        (float    _scanRate)                       {scanRate                       = _scanRate;}
     void  TotalBytesToRead                (kkint64  _totalBytesToRead)               {totalBytesToRead               = _totalBytesToRead;}
-    void  TotalLostPackets                (kkint32 _totalLostPackets)               {totalLostPackets               = _totalLostPackets;}
+    void  TotalLostPackets                (kkint32 _totalLostPackets)                {totalLostPackets               = _totalLostPackets;}
     void  WaitingToWriteToDisk            (kkint32  _waitingToWriteToDisk)           {waitingToWriteToDisk           = _waitingToWriteToDisk;}
 
   private:

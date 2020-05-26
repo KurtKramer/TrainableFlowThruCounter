@@ -74,7 +74,7 @@ namespace  CounterUnManaged
                                                                );
 
     virtual
-    void  Save (const KKStr&  fileName)  const;
+    void  Save (const KKStr&  fileNameToSaveTo)  const;
 
     const OperatingParameters*  OperatingParms ()  const  {return operatingParms;}
 
