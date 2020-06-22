@@ -78,7 +78,7 @@ using namespace  CounterBase;
 using  namespace  CounterUnManaged;
 
 
-#define  MemoryWillingToAllocateToCameraFrameBuffers 251658240
+#define  MemoryWillingToAllocateToCameraFrameBuffers  1024 * 1024 * 256
 
 
 GoalKeeperPtr  CounterManager::goalie = nullptr;
@@ -163,7 +163,7 @@ CounterManager::CounterManager (MsgQueuePtr  _msgQueue,
     cropRight                      (2047),
 
     frameHeightMax                 (14000),
-    logicalFrameQueueSizeMax       (10),
+    logicalFrameQueueSizeMax       (20),
 
     liveVideoHeight                (848),
     liveVideoWidth                 (400),
@@ -1767,7 +1767,6 @@ void  CounterManager::CloseOutCountingAndOrRecording (VolConstBool&  terminateFl
   // the flag to true.  Depending on how many logical frames have been dropped the "LogicalFrameBuilder"
   // may take a while to stop.
 
-
   if  (droppedFrames  &&  (!stopImmediately))
   {
     if  (droppedFrames->QueueSize () > 0)
@@ -2403,11 +2402,11 @@ void   CounterManager::StartFrameBuilderAndProcessingThreads (bool&  _successful
 
   //int numFrameProcessesToStart = Min (5, Max (1, (maxNumOfThreads - 2)));
 
-  int  maxNumFrameildsers = 5;
+  int  maxNumFrameHandelers = maxNumOfThreads - 4;
   if  (this->cameraFrameBuffer->FrameWidth () > 2048)
-    maxNumFrameildsers = 2;
+    maxNumFrameHandelers /= 2;
 
-  int numFrameProcessesToStart = Min (maxNumFrameildsers, Max (1, (maxNumOfThreads - 3)));
+  int numFrameProcessesToStart = Min (maxNumFrameHandelers, Max (1, (maxNumOfThreads - 3)));
   //int numFrameProcessesToStart = 1;
 
   for  (kkint32 x = 0;  x < numFrameProcessesToStart;  ++x)
@@ -2740,8 +2739,8 @@ kkint32  CounterManager::GetLastSessionId ()
 
 
 void  CounterManager::GetLogicalFrameStats (kkint32&  _logicalFramesOnQueue,
-                                                  kkint32&  _logicalFrameProcessorsAvailable
-                                                 )
+                                            kkint32&  _logicalFrameProcessorsAvailable
+                                           )
 {
   if  (logicalFrames)
     _logicalFramesOnQueue = logicalFrames->NumWaitingToBeProcessed ();
