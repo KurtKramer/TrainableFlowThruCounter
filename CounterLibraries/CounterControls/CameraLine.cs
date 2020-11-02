@@ -819,6 +819,11 @@ namespace CounterControls
       RequestedAnalogGain.Value = (Decimal)cameraManager.RequestedAnalogGain ();
       RequestedDigitalGain.Value = (Decimal)Math.Max (100, cameraManager.RequestedDigitalGain ());
       RequestedSensitivityModeCB.Text = cameraManager.RequestedSensitivityMode ();
-    } 
+    }
+
+    private void cameraLineWindow_MouseClick(object sender, MouseEventArgs e)
+    {
+
+    }
   }
 }
