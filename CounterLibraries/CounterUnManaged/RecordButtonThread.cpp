@@ -59,9 +59,7 @@ void  RecordButtonThread::Run ()
 {
   log.Level (10) << "RecordButtonThread::Run" << endl;
   Status (ThreadStatus::Running);
-  Manager ()->StartRecordingAndOrCounting (successful,
-                                           errMsg
-                                          );
+  Manager ()->StartRecordingAndOrCounting (successful, errMsg);
 
   log.Level (10) << "RecordButtonThread::Run   Exiting   TerminateFlag: " << TerminateFlag () <<  "  ShutdownFlag: " << ShutdownFlag () << endl;
 

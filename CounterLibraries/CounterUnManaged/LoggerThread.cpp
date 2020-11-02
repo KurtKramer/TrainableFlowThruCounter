@@ -30,6 +30,7 @@ using namespace  CounterBase;
 using  namespace  CounterUnManaged;
 
 
+
 LoggerThread::LoggerThread (MsgQueuePtr  _msgQueue,
                             MsgQueuePtr  _loggedMsgs,
                             const KKStr& _threadName

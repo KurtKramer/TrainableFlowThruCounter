@@ -256,7 +256,7 @@ namespace CounterUnManaged
      *@brief  Using list of ImageFileNames in a file('fileName') create a new CounterFeatureVectorList instance 
      * with examples in order based off contents of file. If error occurs will return NULL.
      */
-    CounterFeatureVectorListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName,
+    CounterFeatureVectorListPtr   OrderUsingNamesFromAFile (const KKStr&  orderFileName,
                                                             RunLog&       log);
 
     CounterFeatureVectorPtr       PopFromBack ();
@@ -366,7 +366,7 @@ namespace CounterUnManaged
       }
       
 
-      const_iterator&   operator++ (int x)
+      const_iterator&   operator++ (int)
       {
         idx++;
         return  *this;
@@ -419,7 +419,7 @@ namespace CounterUnManaged
         return  idx == right.idx;
       }
 
-      iterator&   operator++ (int x)
+      iterator&   operator++ (int)
       {
         idx++;
         return  *this;

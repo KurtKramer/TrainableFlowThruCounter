@@ -332,9 +332,6 @@ CounterFeatureVectorPtr  CounterFVProducer::ComputeFeatureVector (const Raster& 
   kkint32 areaBeforeReduction = 0;
   float  weighedSizeBeforeReduction = 0.0f;
 
-  kkint32 row = 0;
-  kkint32 col = 0;
-
   kkuint32  intensityHistBuckets[8];
   srcImage.CalcAreaAndIntensityFeatures (areaBeforeReduction, 
                                          weighedSizeBeforeReduction,
@@ -359,7 +356,6 @@ CounterFeatureVectorPtr  CounterFVProducer::ComputeFeatureVector (const Raster& 
     reducedSquareArea = reducedHeight * reducedWidth;
   }
 
-  kkint32  reductionMultipleSquared = reductionMultiple * reductionMultiple;
   float    totalReductionMultiple = priorReductionFactor * (float)reductionMultiple;
   float    totalReductionMultipleSquared = totalReductionMultiple * totalReductionMultiple;
 
@@ -371,7 +367,7 @@ CounterFeatureVectorPtr  CounterFVProducer::ComputeFeatureVector (const Raster& 
   uchar*  wp2 = workRaster2Area;
   uchar*  wp3 = workRaster3Area;
 
-  for  (row = 0;  row < reducedHeight; ++row)
+  for  (int row = 0;  row < reducedHeight; ++row)
   {
     workRaster1Rows[row] = wp1;
     workRaster2Rows[row] = wp2;
@@ -580,8 +576,6 @@ CounterFeatureVectorPtr  CounterFVProducer::ComputeFeatureVector (const Raster& 
   featureData[IntensityHist7Index] = ((float)intensityHistBuckets[7] / areaD);
 
   {
-    RasterPtr  darkSpots = NULL;
-
     BinarizeImageByThreshold (200, 255, *initRaster, *wr1); 
    
     wr1->Erosion (wr2, MorphOp::MaskTypes::SQUARE3);
@@ -739,6 +733,7 @@ FileDescConstPtr  CounterFVProducerFactory::FileDesc ()  const
 
 CounterFVProducerPtr  CounterFVProducerFactory::ManufactureInstance (RunLog&  runLog)
 {
+  runLog.Level (30) << "CounterFVProducerFactory::ManufactureInstance" << endl;
   return new CounterFVProducer (this);
 } /* ManufactureInstance */
 
@@ -752,10 +747,11 @@ TrainingConfiguration2Ptr  CounterFVProducerFactory::ManufacturTrainingConfigura
 
 
 CounterFeatureVectorListPtr  CounterFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
-                                                                                  RunLog&  runLog
-                                                                                 )
+                                                                                    RunLog&  runLog
+                                                                                   )
                                                                                  const
 {
+  runLog.Level (30) << "CounterFVProducerFactory::ManufacturFeatureVectorList"  << endl;
   return new CounterFeatureVectorList (CounterFVProducer::DefineFileDescStatic (), owner);
 }
 

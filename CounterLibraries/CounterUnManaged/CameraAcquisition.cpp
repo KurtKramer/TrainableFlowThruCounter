@@ -15,7 +15,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "GoalKeeper.h"
 #include "OSservices.h"
@@ -473,13 +472,13 @@ float  CameraAcquisition::ScanRate ()  const
 
 float  CameraAcquisition::ComputeFlowRateFromFlowRateRatio ()  const
 {
-  const CounterManagerPtr  manager = ManagerConst ();
-  const InstallationConfigPtr  instalation = manager->Installation ();
+  const CounterManagerConstPtr  managerConst = ManagerConst ();
+  const InstallationConfigPtr  instalation = managerConst->Installation ();
 
   float  chamberWidthSpatialy = instalation->ImagingChamberWidth ();
   float  scanRate             = ScanRate ();
-  float  flowRateRatio        = manager->FlowRateFactor ();
-  float  chamberWidthPixels   = (float)(1 + manager->CropRight () - manager->CropLeft ());
+  float  flowRateRatio        = managerConst->FlowRateFactor ();
+  float  chamberWidthPixels   = (float)(1 + managerConst->CropRight () - managerConst->CropLeft ());
 
   float  flowRate = (chamberWidthSpatialy * scanRate) / (flowRateRatio * chamberWidthPixels);
  

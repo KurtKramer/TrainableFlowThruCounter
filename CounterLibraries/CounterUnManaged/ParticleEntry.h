@@ -94,9 +94,9 @@ namespace CounterUnManaged
                  );
 
     bool  ExactMatch (kkint32  _scannerRow,
-                      kkint16  _scannerCol,
-                      kkint16  _height,
-                      kkint16  _width
+                      kkint32  _scannerCol,
+                      kkint32  _height,
+                      kkint32  _width
                      );
 
     void  GivingOwnershipOfFeatureVector (FeatureVectorPtr  _featureVector) {featureVector = _featureVector;}
@@ -149,9 +149,9 @@ namespace CounterUnManaged
     ParticleEntryPtr  LocateParticle (ParticleEntryPtr  pe);
 
     ParticleEntryPtr  LocateParticle (kkint32  scannerRow,
-                                      kkint16  scannerCol,
-                                      kkint16  height,
-                                      kkint16  width
+                                      kkint32  scannerCol,
+                                      kkint32  height,
+                                      kkint32  width
                                      );
 
     VectorFloatPtr  CountFrequencyByTimeIntervals (int    interval,

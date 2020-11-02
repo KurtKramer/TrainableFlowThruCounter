@@ -157,13 +157,11 @@ bool  ShrimpLengthComputer::OccludedImage (RasterPtr  i)
 
   int  heightTH = Min ((int)((float)height * 0.2f), occlusiionLimit);
 
-  bool  imageIsOccluded = ((pixelCountTopRow   > occlusiionLimit)  ||
-                           (pixelCountBotRow   > occlusiionLimit)  ||
-                           (pixelCountLeftCol  > heightTH)        ||
-                           (pixelCountRightCol > heightTH)
-                          );
-
-  return  imageIsOccluded;
+  return ((pixelCountTopRow   > occlusiionLimit)  ||
+          (pixelCountBotRow   > occlusiionLimit)  ||
+          (pixelCountLeftCol  > heightTH)        ||
+          (pixelCountRightCol > heightTH)
+         );
 }  /* OccludedImage */
 
 
@@ -492,9 +490,9 @@ void  ShrimpLengthComputer::ProcessImage (RasterPtr  origImage,
 
         for  (kkuint32 x = 1;  x < centerPoints->QueueSize ();  ++x)
         {
-          PointPtr p1 = centerPoints->IdxToPtr (x - 1);
-          PointPtr p2 = centerPoints->IdxToPtr (x);
-          demoImage->DrawFatLine (*p1, *p2, PixelValue::Red, 0.80f);
+          PointPtr demoP1 = centerPoints->IdxToPtr (x - 1);
+          PointPtr demoP2 = centerPoints->IdxToPtr (x);
+          demoImage->DrawFatLine (*demoP1, *demoP2, PixelValue::Red, 0.80f);
         }
 
         if  (saveDebugImages)

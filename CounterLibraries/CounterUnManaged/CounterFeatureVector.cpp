@@ -163,23 +163,16 @@ CounterFeatureVectorList::CounterFeatureVectorList (const CounterFeatureVectorLi
 
 
 CounterFeatureVectorList::CounterFeatureVectorList (const FeatureVectorList&  featureVectorList,
-                                                  bool                      _owner
-                                                 ):
+                                                    bool                      _owner
+                                                   ):
 
   FeatureVectorList (featureVectorList.FileDesc (), _owner)
 {
-  if  (typeid (featureVectorList) == typeid (CounterFeatureVectorList))
-  {
-    const CounterFeatureVectorList&  examples = dynamic_cast<const CounterFeatureVectorList&> (featureVectorList);
-  }
-
-
   if  (_owner)
   {
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for (auto idx: featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
+      FeatureVectorPtr featureVector = idx;
       
       // The constructor below will detect what the underlying type of 'featureVector' is.  
       // If (underlying type is a 'CounterFeatureVector' object)  then
@@ -197,10 +190,9 @@ CounterFeatureVectorList::CounterFeatureVectorList (const FeatureVectorList&  fe
     // Since we will not own the contents but just point to an existing instances we will 
     // have to make sure that the existing instances of 'FeatureVector' objects have a 
     // underlying type of 'CounterFeatureVector'.
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for (auto idx : featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
+      FeatureVectorPtr featureVector = idx;
       if  (typeid (*featureVector) == typeid (CounterFeatureVector))
       {
         CounterFeatureVectorPtr example = dynamic_cast<CounterFeatureVectorPtr>(featureVector);
@@ -210,7 +202,7 @@ CounterFeatureVectorList::CounterFeatureVectorList (const FeatureVectorList&  fe
       {
         // ****    ERROR  ****
         KKStr  errMsg;
-        errMsg << "CounterFeatureVectorList   ***ERROR***   One Elements not a 'CounterFeatureVector'  type  FileName[" << featureVector->ExampleFileName () << "]";
+        errMsg << "CounterFeatureVectorList   ***ERROR***   One Elements not a 'CounterFeatureVector'  type  FileName: '" << featureVector->ExampleFileName () << "'.";
         cerr << endl << errMsg << endl << endl;
         throw KKException (errMsg);
       }
@@ -220,21 +212,17 @@ CounterFeatureVectorList::CounterFeatureVectorList (const FeatureVectorList&  fe
 
 
 
-
-
 //****************************************************************************
 //*  Will Create a list of examples that are a subset of the ones in _examples.  *
 //* The subset will consist of the examples who's mlClass is one of the     *
 //* ones in mlClasses.                                                    *
 //****************************************************************************
-CounterFeatureVectorList::CounterFeatureVectorList (MLClassList&              _mlClasses,
-                                                  CounterFeatureVectorList&  _examples
-                                                 ):
+CounterFeatureVectorList::CounterFeatureVectorList (MLClassList&               _mlClasses,
+                                                    CounterFeatureVectorList&  _examples
+                                                   ):
   FeatureVectorList (_mlClasses, _examples)
-  
 {
 }
-
 
 
 
@@ -243,18 +231,11 @@ CounterFeatureVectorList::CounterFeatureVectorList (const FeatureVectorList&  fe
                      featureVectorList.Owner ()
                     )
 {
-  if  (typeid (featureVectorList) == typeid (CounterFeatureVectorList))
-  {
-    const CounterFeatureVectorList&  examples = dynamic_cast<const CounterFeatureVectorList&> (featureVectorList);
-  }
-
-
   if  (featureVectorList.Owner ())
   {
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for  (auto idx: featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
+      FeatureVectorPtr featureVector = idx;
       
       // The constructor below will detect what the underlying type of 'FeatureVector' is.  
       // If (underlying type is a 'CounterFeatureVector' object)  then
@@ -272,10 +253,9 @@ CounterFeatureVectorList::CounterFeatureVectorList (const FeatureVectorList&  fe
     // Since we will not own the contents but just point to existing instances we will 
     // have to make sure that the existing instances of 'FeatureVector' objects have a 
     // underlying type of 'CounterFeatureVector'.
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for  (auto idx: featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
+      FeatureVectorPtr featureVector = idx;
       if  (typeid (*featureVector) == typeid (CounterFeatureVector))
       {
         CounterFeatureVectorPtr example = dynamic_cast<CounterFeatureVectorPtr>(featureVector);
@@ -296,15 +276,9 @@ CounterFeatureVectorList::CounterFeatureVectorList (const FeatureVectorList&  fe
 
 
 
-
-
 CounterFeatureVectorList::~CounterFeatureVectorList ()
 {
 }
-
-
-
-
 
 
 
@@ -312,8 +286,6 @@ CounterFeatureVectorPtr  CounterFeatureVectorList::IdxToPtr (kkint32 idx)  const
 {
   return  (CounterFeatureVectorPtr)FeatureVectorList::IdxToPtr (idx);
 }  /* IdxToPtr */
-
-
 
 
 
@@ -335,7 +307,6 @@ CounterFeatureVectorPtr  CounterFeatureVectorList::BackOfQueue ()
 
 
 
-
 CounterFeatureVectorPtr  CounterFeatureVectorList::PopFromBack ()
 {
   if  (size () < 1)  return NULL;
@@ -354,7 +325,6 @@ CounterFeatureVectorPtr  CounterFeatureVectorList::PopFromBack ()
 
 
 
-
 void  CounterFeatureVectorList::AddQueue (CounterFeatureVectorList&  imagesToAdd)
 {
   FeatureVectorList::AddQueue (imagesToAdd);
@@ -362,12 +332,10 @@ void  CounterFeatureVectorList::AddQueue (CounterFeatureVectorList&  imagesToAdd
 
 
 
-
 CounterFeatureVectorPtr  CounterFeatureVectorList::BinarySearchByName (const KKStr&  _imageFileName)  const
 {
   return  (CounterFeatureVectorPtr)FeatureVectorList::BinarySearchByName (_imageFileName);
 }  /* BinarySearchByName */
-
 
 
 
@@ -385,9 +353,6 @@ CounterFeatureVectorPtr  CounterFeatureVectorList::LookUpByRootName (const KKStr
 
 
 
-
-
-
 CounterFeatureVectorPtr  CounterFeatureVectorList::LookUpByImageFileName (const KKStr&  _imageFileName)  const
 {
   return  (CounterFeatureVectorPtr)FeatureVectorList::LookUpByImageFileName (_imageFileName);
@@ -395,21 +360,16 @@ CounterFeatureVectorPtr  CounterFeatureVectorList::LookUpByImageFileName (const 
 
 
 
-
-
-CounterFeatureVectorListPtr  CounterFeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName,
-                                                                               RunLog&       log
-                                                                              )
+CounterFeatureVectorListPtr  CounterFeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  orderFileName,
+                                                                                 RunLog&       log
+                                                                                )
 {
-  FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (fileName, log);
+  FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (orderFileName, log);
   examples->Owner (false);
   CounterFeatureVectorListPtr  orderedImages = new CounterFeatureVectorList (*examples);
   delete  examples;
   return  orderedImages;
 }  /* OrderUsingNamesFromAFile */
-
-
-
 
 
 
@@ -517,12 +477,10 @@ void   CounterFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvPro
 
 
 
-
 CounterFeatureVectorListPtr   CounterFeatureVectorList::Duplicate (bool _owner)  const
 {
   return new CounterFeatureVectorList (*this, _owner);
 }  /* Duplicate */
-
 
 
 
@@ -592,7 +550,7 @@ void  CounterFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryF
     osAddLastSlash (fullFileName);
     fullFileName << example->ExampleFileName ();
 
-    bool   validFile;
+    bool  validFile = false;
     RasterPtr  raster = new Raster (fullFileName, validFile);
     if  (!validFile)
     {
@@ -633,8 +591,6 @@ void  CounterFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryF
 
 
 
-
-
 CounterFeatureVectorListPtr  CounterFeatureVectorList::ExtractDuplicatesByRootImageFileName ()
 {
   FeatureVectorListPtr  duplicateFeatureVectorObjects = FeatureVectorList::ExtractDuplicatesByRootImageFileName ();
@@ -643,9 +599,6 @@ CounterFeatureVectorListPtr  CounterFeatureVectorList::ExtractDuplicatesByRootIm
   delete  duplicateFeatureVectorObjects;  duplicateFeatureVectorObjects = NULL;
   return  duplicateImageFeaturesObjects;
 }  /* ExtractDuplicatesByRootImageFileName */
-
-
-
 
 
 
@@ -694,6 +647,3 @@ CounterFeatureVectorListPtr  CounterFeatureVectorList::StratifyAmoungstClasses (
   delete stratifiedFeatureVectors;  stratifiedFeatureVectors = NULL;
   return  stratifiedImagefeatures;
 }  /* StratifyAmoungstClasses */
-
-
-

@@ -32,6 +32,7 @@ using namespace  KKMLL;
 using  namespace  CounterUnManaged;
 
 
+
 PostLarvaeFVProducer::PostLarvaeFVProducer (FactoryFVProducerPtr  factory):
     FeatureVectorProducer ("PostLarvaeFV",
                            factory
@@ -52,10 +53,21 @@ PostLarvaeFVPtr  PostLarvaeFVProducer::ComputeFeatureVector (const Raster&     i
                                                              const MLClassPtr  knownClass,
                                                              RasterListPtr     intermediateImages,
                                                              float             priorReductionFactor,
-                                                             RunLog&           runLog
+                                                             RunLog&
                                                             )
 {
-  return new  PostLarvaeFV (image, knownClass, intermediateImages);
+  if (priorReductionFactor == 1.0f)
+  {
+    return new PostLarvaeFV (image, knownClass, intermediateImages);
+  }
+  else
+  {
+    RasterPtr resizedImage = image.ReduceByFactor (priorReductionFactor);
+    auto fv = new PostLarvaeFV (*resizedImage, knownClass, intermediateImages);
+    delete resizedImage;
+    resizedImage = nullptr;
+    return fv;
+  }
 }
 
 
@@ -129,7 +141,7 @@ FileDescConstPtr  PostLarvaeFVProducerFactory::FileDesc ()  const
 
 
 
-PostLarvaeFVProducerPtr  PostLarvaeFVProducerFactory::ManufactureInstance (RunLog&  runLog)
+PostLarvaeFVProducerPtr  PostLarvaeFVProducerFactory::ManufactureInstance (RunLog&)
 {
   return new PostLarvaeFVProducer (this);
 }

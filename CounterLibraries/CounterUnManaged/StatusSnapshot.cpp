@@ -240,7 +240,7 @@ StatusSnapshotBuffer::StatusSnapshotBuffer ():
 
 
 
-StatusSnapshotBuffer::StatusSnapshotBuffer (const StatusSnapshotList&  list):
+StatusSnapshotBuffer::StatusSnapshotBuffer (const StatusSnapshotList&):
   goalie (NULL)
 {
   GoalKeeper::Create ("StatusSnapshotList", goalie);

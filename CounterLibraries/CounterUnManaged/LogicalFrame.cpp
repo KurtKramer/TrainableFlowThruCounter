@@ -27,27 +27,25 @@ using  namespace  CounterUnManaged;
 
 
 LogicalFrame::LogicalFrame (kkint32  _frameHeight,
-                            kkint32  _frameWidth,
-                            RunLog&  _logger
+                            kkint32  _frameWidth
                            ):
 
-    logicalFrameEntry      (NULL),
-    backGroundPixelTH      (31),
-    bytesAllocated         (0),
-    flowRateRatio          (1.0f),
-    flowRate               (1.0f),
+    logicalFrameEntry     (NULL),
+    backGroundPixelTH     (31),
+    bytesAllocated        (0),
+    flowRateRatio         (1.0f),
+    flowRate              (1.0f),
 
-    frameHeight            (_frameHeight),
-    frameWidth             (_frameWidth),
-    frameHeightUsed        (0),
-    frameAreaUsed          (0),
-    frameLinesArea         (NULL),
-    frameLines             (NULL),
-    scanLineNumStart       (0),
-    scanLineNumStartCurSF  (0),
-    scannerFileEntry       (NULL),
-    frameSeqNum            (0)
-
+    frameHeight           (_frameHeight),
+    frameWidth            (_frameWidth),
+    frameHeightUsed       (0),
+    frameAreaUsed         (0),
+    frameLinesArea        (NULL),
+    frameLines            (NULL),
+    scanLineNumStart      (0),
+    scanLineNumStartCurSF (0),
+    scannerFileEntry      (NULL),
+    frameSeqNum           (0)
 {
   AllocateMemmory ();
 }
@@ -207,9 +205,10 @@ kkMemSize  LogicalFrameList::MemoryConsumedEstimated ()  const
 
 void  LogicalFrameList::AllocateInitialFrames (RunLog& _logger)
 {
+  _logger.Level (30) << "LogicalFrameList::AllocateInitialFrames" << endl;
   while  (numFramesAllocated < maxNumFramesAllowed)
   {
-    LogicalFramePtr  f = new LogicalFrame (frameHeight, frameWidth, _logger);
+    LogicalFramePtr  f = new LogicalFrame (frameHeight, frameWidth);
     allFrames.push_back (f);
     availableFrames.push (f);
     ++numFramesAllocated;
@@ -218,7 +217,7 @@ void  LogicalFrameList::AllocateInitialFrames (RunLog& _logger)
 
 
 
-LogicalFramePtr  LogicalFrameList::GetAvailableFrame (RunLog&  log)
+LogicalFramePtr  LogicalFrameList::GetAvailableFrame ()
 {
   LogicalFramePtr  availableFrame = NULL;
   goalKeeper->StartBlock ();
@@ -231,7 +230,7 @@ LogicalFramePtr  LogicalFrameList::GetAvailableFrame (RunLog&  log)
 
   else if  (numFramesAllocated < maxNumFramesAllowed)
   {
-    availableFrame = new LogicalFrame (frameHeight, frameWidth, log);
+    availableFrame = new LogicalFrame (frameHeight, frameWidth);
     allFrames.push_back (availableFrame);
     ++numFramesAllocated;
   }

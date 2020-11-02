@@ -736,7 +736,7 @@ void  LogicalFrameProcessor::ProcessFrame ()
   }
 
   //ExtractBlobs (workLinesArea, workLines);
-  ExtractBlobs (scanLinesArea, scanLines);
+  ExtractBlobs (scanLines);
 
   kkint32  idx;
 
@@ -784,11 +784,11 @@ void  LogicalFrameProcessor::ProcessFrame ()
         if  (blob->Height () > 2000)
         {
           divisor = (kkint32)ceil ((float)blob->Height () / (float)2000);
-          i = ExtractABlob2 (scanLinesArea, scanLines, blob, divisor);
+          i = ExtractABlob2 (scanLines, blob, divisor);
         }
         else
         {
-          i = ExtractABlob (scanLinesArea, scanLines, blob);
+          i = ExtractABlob (scanLines, blob);
         }
 
         KKStr  subDirName = osAddSlash (particlesDirName + "NoiseParticles");
@@ -809,11 +809,11 @@ void  LogicalFrameProcessor::ProcessFrame ()
       if  (blob->Height () > 8000)
       {
         divisor = (kkint32)ceil ((float)blob->Height () / (float)8000);
-        i = ExtractABlob2 (scanLinesArea, scanLines, blob, divisor);
+        i = ExtractABlob2 (scanLines, blob, divisor);
       }
       else
       {
-        i = ExtractABlob (scanLinesArea, scanLines, blob);
+        i = ExtractABlob (scanLines, blob);
       }
 
       i->BackgroundPixelTH (backGroundPixelTH);
@@ -872,7 +872,7 @@ void  LogicalFrameProcessor::AnalyseParticleStraightCount (RasterPtr  particle,
                                                           )
 {
   if  (saveParticleImages)
-    SaveParticle (particle, 1, unknownClass, scanRow, scanCol);
+    SaveParticle (particle, unknownClass, scanRow, scanCol);
 
   AddParticleEntry (scanRow, scanCol, particle, unknownClass, blob, 1.0f, 0.0f, NULL);
 
@@ -895,24 +895,24 @@ void  LogicalFrameProcessor::AnalyseParticlePostLarvae (RasterPtr  particle,
   darkSpots->Erosion (MorphOp::MaskTypes::SQUARE3);
   darkSpots->Erosion (MorphOp::MaskTypes::SQUARE3);
 
-  KKB::BlobListPtr  blobs = darkSpots->ExtractBlobs (1);
+  KKB::BlobListPtr  darkSpotBlobs = darkSpots->ExtractBlobs (1);
   kkint32 countThisParticle = 0;
   {
     int  th = 4;
     KKB::BlobList::iterator  idx;
-    for  (idx = blobs->begin ();  idx != blobs->end ();  ++idx)
+    for  (idx = darkSpotBlobs->begin ();  idx != darkSpotBlobs->end ();  ++idx)
     {
-      KKB::BlobPtr  blob = idx->second;
-      if  (blob->PixelCount () > th)
+      KKB::BlobPtr  darkSpotBlob = idx->second;
+      if  (darkSpotBlob->PixelCount () > th)
         ++countThisParticle;
     }
   }
 
-  //kkint32 countThisParticle = blobs->QueueSize ();
+  //kkint32 countThisParticle = darkSpotBlobs->QueueSize ();
   if  (countThisParticle < 1)
     countThisParticle = 1;
 
-  delete  blobs;      blobs     = NULL;
+  delete  darkSpotBlobs;      darkSpotBlobs     = NULL;
   delete  darkSpots;  darkSpots = NULL;
 
   KKStr  className = "Shrimp_" + StrFormatInt (countThisParticle, "000");
@@ -922,7 +922,7 @@ void  LogicalFrameProcessor::AnalyseParticlePostLarvae (RasterPtr  particle,
     particle->Title (ic->Name ());
 
   if  (saveParticleImages)
-    SaveParticle (particle, countThisParticle, ic, scanRow, scanCol);
+    SaveParticle (particle, ic, scanRow, scanCol);
   AddParticleEntry (scanRow, scanCol, particle, ic, blob, 1.0f, 0.0f, NULL);
 
   kkint32 particleSize = particle->ForegroundPixelCount ();
@@ -982,7 +982,7 @@ void  LogicalFrameProcessor::AnalyseParticleUsingClassifier (RasterPtr  particle
     if  (saveParticleImages)
     {
       fvForParticle = fv->Duplicate ();
-      SaveParticle (particle, (kkint32)(predictedClass->CountFactor ()), predictedClass, scanRow, scanCol);
+      SaveParticle (particle, predictedClass, scanRow, scanCol);
     }
     AddParticleEntry (scanRow, scanCol, particle, predictedClass, blob, (float)probability, (float)breakTie, fvForParticle);
     fvForParticle = NULL;
@@ -1047,7 +1047,6 @@ void  LogicalFrameProcessor::AddParticleEntry (kkint32          scanRow,
 
 
 void  LogicalFrameProcessor::SaveParticle (RasterPtr   particle,
-                                           kkint32     countThisParticle,
                                            MLClassPtr  mlClass,
                                            kkint32     scanRow,
                                            kkint32     scanCol
@@ -1087,9 +1086,7 @@ void  LogicalFrameProcessor::SaveParticle (RasterPtr   particle,
 
 
 
-void  LogicalFrameProcessor::UpdateCounts (kkint32  size,
-                                           float  numCounted
-                                          )
+void  LogicalFrameProcessor::UpdateCounts (kkint32, float numCounted)
 {
   particlesCounted += (kkint32)(numCounted + 0.5f);
 }
@@ -1158,9 +1155,7 @@ BlobIdType  LogicalFrameProcessor::NearestNeighborUpperRight (kkint32  row,
    
 
 
-void   LogicalFrameProcessor::ExtractBlobs (uchar*  rowsArea,
-                                            uchar** rows
-                                           )
+void   LogicalFrameProcessor::ExtractBlobs (uchar** rows)
 {
   uchar*        curRow         = NULL;
   BlobIdType*   curRowBlobIds  = NULL;
@@ -1218,7 +1213,7 @@ void   LogicalFrameProcessor::ExtractBlobs (uchar*  rowsArea,
           {
             curBlob = blobs->LookUpByBlobId (nearBlobId);
             if  (!curBlob)  {
-              KKStr  errMsg = "LogicalFrameProcessor::ExtractBlobs   ***ERROR***   nearBlobId: " + StrFromInt16(nearBlobId) + " Not Found";
+              KKStr  errMsg = "LogicalFrameProcessor::ExtractBlobs   ***ERROR***   nearBlobId: " + StrFromInt32(nearBlobId) + " Not Found";
               cerr << endl << errMsg << endl << endl;
               throw KKException (errMsg);
             }
@@ -1276,8 +1271,7 @@ void   LogicalFrameProcessor::ExtractBlobs (uchar*  rowsArea,
 
 
 
-RasterPtr  LogicalFrameProcessor::ExtractABlob (uchar*         rowsArea,
-                                                uchar**        rows,
+RasterPtr  LogicalFrameProcessor::ExtractABlob (uchar**        rows,
                                                 const BlobPtr  blob
                                                )
 {
@@ -1331,8 +1325,7 @@ RasterPtr  LogicalFrameProcessor::ExtractABlob (uchar*         rowsArea,
 
 
 
-RasterPtr  LogicalFrameProcessor::ExtractABlob2 (uchar*         rowsArea,
-                                                 uchar**        rows,
+RasterPtr  LogicalFrameProcessor::ExtractABlob2 (uchar**        rows,
                                                  const BlobPtr  blob,
                                                  kkint32        divisor
                                                 )
@@ -1384,7 +1377,7 @@ RasterPtr  LogicalFrameProcessor::ExtractABlob2 (uchar*         rowsArea,
       }
 
       if  (totPVcount > 0)
-        destRow[rasterCol] = (totPV / totPVcount);
+        destRow[rasterCol] = (uchar)(totPV / totPVcount);
       else
         destRow[rasterCol] = 0;
 

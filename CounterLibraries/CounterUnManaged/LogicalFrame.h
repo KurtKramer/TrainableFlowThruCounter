@@ -23,10 +23,11 @@ namespace CounterUnManaged
   public:
     typedef  LogicalFrame*  LogicalFramePtr;
 
+    LogicalFrame() = delete;
+
     /** @brief  Constructs an instance of a logical frame. */
     LogicalFrame (kkint32  _frameHeight,
-                  kkint32  _frameWidth,
-                  RunLog&  _log
+                  kkint32  _frameWidth
                  );
 
     ~LogicalFrame ();
@@ -133,7 +134,7 @@ namespace CounterUnManaged
 
     ~LogicalFrameList ();
 
-    LogicalFramePtr  GetAvailableFrame (RunLog&  log);
+    LogicalFramePtr  GetAvailableFrame ();
 
     void  QueueFrameForProcessing (LogicalFramePtr  _frame);
 

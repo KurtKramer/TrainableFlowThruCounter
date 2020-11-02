@@ -343,6 +343,7 @@ void  InstallationConfig::Load (const KKStr&  _name,
 
 void  InstallationConfig::Save (RunLog& _log)  const
 {
+  _log.Level (30) << "InstallationConfig::Save" << endl;
   osCreateDirectoryPath (InstallationDirPath ());
 
   KKStr  fullFileName = DeriveFullFleName (name);
@@ -366,14 +367,6 @@ void  InstallationConfig::Save (RunLog& _log)  const
 }  /* Save */
 
 
-/*
-  typedef  InstallationConfig*  InstallationConfigPtr;
-
-  class  InstallationConfigList: public KKQueue<InstallationConfig>
-  {
-  public:
-    typedef  InstallationConfigList* InstallationConfigListPtr;
-*/
 
 InstallationConfigList::InstallationConfigList (bool  _owner):
     KKQueue<InstallationConfig> (_owner)

@@ -363,7 +363,7 @@ void  CameraAcquisitionSimulator::Run ()
         MMRESULT zed = timeBeginPeriod (1);
         if  (zed == TIMERR_NOCANDO)
         {
-          kkuint64  xxx = zed;
+          cerr << "CameraAcquisitionSimulator::Run   ***WARNING***   'TIMERR_NOCANDO'." << endl;
         }
 #endif
 
@@ -372,7 +372,6 @@ void  CameraAcquisitionSimulator::Run ()
         kkuint64  miliSecsSoFar = (kkuint32)(endOfLastFrameInMiliSecs - startOfPeriodMiliSecs);
         while  (pausePerFrameInMiliSecs > miliSecsSoFar)
         {
-          kkuint32 timeLeft = (kkint32)(pausePerFrameInMiliSecs - miliSecsSoFar);
           osSleepMiliSecs (1);
           endOfLastFrameInMiliSecs = osGetSystemTimeInMiliSecs ();
           miliSecsSoFar = (kkuint32)(endOfLastFrameInMiliSecs - startOfPeriodMiliSecs);

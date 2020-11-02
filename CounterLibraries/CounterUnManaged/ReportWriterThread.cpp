@@ -25,7 +25,9 @@ using namespace  KKLSC;
 
 #include "ReportWriterThread.h"
 #include "CameraThread.h"
+#include "CounterStats.h"
 #include "InstallationConfig.h"
+
 #include "CounterManager.h"
 #include "SessionParameters.h"
 #include "OperatingParameters.h"
@@ -84,7 +86,7 @@ kkMemSize  ReportWriterThread::MemoryConsumedEstimated ()
 
 
 
-void  ReportWriterThread::GetStats (CounterStats&  stats)  const
+void  ReportWriterThread::GetStats (CounterStats&)  const
 {
 }
 

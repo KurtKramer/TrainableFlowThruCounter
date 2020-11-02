@@ -32,6 +32,7 @@ using namespace KKB;
 #include "TrainingConfiguration2.h"
 using namespace KKMLL;
 
+
 #include "CounterVariables.h"
 using namespace  CounterBase;
 
@@ -51,8 +52,6 @@ using namespace CounterUnManaged;
 
 #include "UmiTrainingModel2.h"
 using namespace CounterManaged;
-
-
 
 
 
@@ -301,7 +300,6 @@ void  UmiTrainingModel2::CleanUpUnmanagedResources ()
     crossProbTable = NULL;
   }
 
-
   if  (runLog)
   {
     (*runLog).Level (10) << "UmiTrainingModel2::CleanUpUnmanagedResources  Done Cleaning Up." << std::endl;
@@ -309,7 +307,7 @@ void  UmiTrainingModel2::CleanUpUnmanagedResources ()
     runLog = NULL;
   }
 
-    GC::Collect ();
+  GC::Collect ();
 }  /* CleanUpUnmanagedResources */
 
 

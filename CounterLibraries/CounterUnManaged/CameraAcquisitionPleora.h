@@ -164,11 +164,11 @@ namespace CounterUnManaged
 
     void  SetCameraParametersForFlowMeter ();
 
-    void  SetGainTap         (kkint64 gainTap);
-    void  SetAnalogGain      (float   requestedAnalogGain);
-    void  SetDigitalGain     (kkint32 requestedDigitalGain);
-    void  SetScanRate        (float   requestedScanRate);
-    void  SetSensitivityMode (const   KKStr& requestedSensitivityMode);
+    void  SetGainTap         (kkint64      gainTap);
+    void  SetAnalogGain      (float        analogGainToSet);
+    void  SetDigitalGain     (kkint32      digitalGainToSet);
+    void  SetScanRate        (float        scanRateToSet);
+    void  SetSensitivityMode (KKStrConst&  sensitivityModeToSet);
     
     void  SetPvParameterEnum (const KKStr&  paramName,
                               const KKStr&  value,

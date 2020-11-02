@@ -36,6 +36,7 @@ namespace CounterApplication
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       Application.Run (new CounterApplication ());
+      System.GC.Collect();
     }
   }
 }

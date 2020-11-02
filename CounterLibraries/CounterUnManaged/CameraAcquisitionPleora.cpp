@@ -771,7 +771,7 @@ KKStr  CameraAcquisitionPleora::PvResultToStr (PvResult&  r)
 
 
 
-void  CameraAcquisitionPleora::SetSensitivityMode (const KKStr& requestedSensitivityMode)
+void  CameraAcquisitionPleora::SetSensitivityMode (const KKStr& sensitivityModeToSet)
 {
   if  (!lSensitivityMode)
   {
@@ -793,16 +793,16 @@ void  CameraAcquisitionPleora::SetSensitivityMode (const KKStr& requestedSensiti
   if  (lTLLocked)
     lTLLocked->SetValue (0);
 
-  PvString  str (requestedSensitivityMode.Str ());
+  PvString  str (sensitivityModeToSet.Str ());
   PvResult result = lSensitivityMode->SetValue (str);
   if  (result.IsOK ())
   {
-    log.Level (10) << "SetSensitivityMode   Sensitivity Mode set to :" << curSensitivityMode << endl;
+    log.Level (10) << "SetSensitivityMode   Sensitivity Mode set to :" << sensitivityModeToSet << endl;
   }
   else
   {
     KKStr msg (128);
-    msg << "SetSensitivityMode   ***ERROR***  Set SensitivityMode Failure Mode :" << requestedSensitivityMode << "  Result code :" << PvResultToStr (result);
+    msg << "SetSensitivityMode   ***ERROR***  Set SensitivityMode Failure Mode :" << sensitivityModeToSet << "  Result code :" << PvResultToStr (result);
     log.Level (-1) << msg << endl;
   }
 
@@ -833,34 +833,35 @@ void  CameraAcquisitionPleora::SetSensitivityMode (const KKStr& requestedSensiti
   else
   {
     KKStr msg (128);
-    msg << "SetSensitivityMode   ***ERROR***   Start command failed :" <<  PvResultToStr (startResult);
+    msg << "SetSensitivityMode   ***ERROR***   Start command failed :" << PvResultToStr (startResult);
     log.Level (-1) << msg << endl;
   }
 }   /* SetSensitivityMode */
 
 
 
-void  CameraAcquisitionPleora::SetScanRate  (float requestedScanRate)
+void  CameraAcquisitionPleora::SetScanRate  (float scanRateToSet)
 {
-  KKStr  requestedScanRateStr = StrFormatDouble (requestedScanRate, "-ZZZ,ZZ0.0");
-  if  (requestedScanRate < 1.0f)
+  if  (scanRateToSet < 1.0f)
   {
-    log.Level (-1) << "CameraAcquisitionPleora::SetScanRate   ***ERROR***  Invalid RequestedScanRate :" << requestedScanRateStr << endl;
+    log.Level (-1) << "CameraAcquisitionPleora::SetScanRate   ***ERROR***  Invalid RequestedScanRate :" << scanRateToSet << endl;
     return;
   }
 
+  KKStr  scanRateToSetStr = StrFormatDouble (scanRateToSet, "-ZZZ,ZZ0.0");
+  
   if  (cameraParams->DeviceModelName ().EqualIgnoreCase ("DiviinaLM1GE"))
   {
-    int64_t  acquisitionLinePeriod = (int)(0.5f + 1000000.0f / requestedScanRate);
+    int64_t  acquisitionLinePeriod = (int)(0.5f + 1000000.0f / scanRateToSet);
 
     if  (acquisitionLinePeriod < 55)
     {
-      requestedScanRate = 1000000.0f / 55.0f;
-      KKStr newRequestedScanRateStr = StrFormatDouble (requestedScanRate, "-ZZZ,ZZ0.0");
+      scanRateToSet = 1000000.0f / 55.0f;
+      KKStr newScanRateToSetStr = StrFormatDouble (scanRateToSet, "-ZZZ,ZZ0.0");
       KKStr warnMsg (128);
-      warnMsg  << "CameraAcquisitionPleora::SetScanRate   RequestedScanRate: " << requestedScanRateStr << "  too fast; adjusted to: " << StrFormatDouble (requestedScanRate, "###,##0.00");
+      warnMsg  << "CameraAcquisitionPleora::SetScanRate   RequestedScanRate: " << scanRateToSetStr << "  too fast; adjusted to: " << StrFormatDouble (scanRateToSet, "###,##0.00");
       log.Level (20) << warnMsg << endl;
-      requestedScanRateStr = newRequestedScanRateStr;
+      scanRateToSetStr = newScanRateToSetStr;
       acquisitionLinePeriod = 55;
     }
 
@@ -889,10 +890,10 @@ void  CameraAcquisitionPleora::SetScanRate  (float requestedScanRate)
   {
     if  (lScanRate)
     {
-      PvResult pvr = lScanRate->SetValue (requestedScanRate);
+      PvResult pvr = lScanRate->SetValue (scanRateToSet);
       if  (!pvr.IsOK ())
       {
-        log.Level (-1) << "CameraAcquisitionPleora::SetScanRate   ***ERROR***  Error setting ScanRate :" << requestedScanRate << " :" << PvResultToStr (pvr) << endl;
+        log.Level (-1) << "CameraAcquisitionPleora::SetScanRate   ***ERROR***  Error setting ScanRate :" << scanRateToSet << " :" << PvResultToStr (pvr) << endl;
       }
 
       double  scanRateD = 0.0;
@@ -910,14 +911,14 @@ void  CameraAcquisitionPleora::SetScanRate  (float requestedScanRate)
 
 
 
-void  CameraAcquisitionPleora::SetAnalogGain  (float requestedAnalogGain)
+void  CameraAcquisitionPleora::SetAnalogGain  (float analogGainToSet)
 {
-  log.Level (40) << "SetAnalogGain   :" << requestedAnalogGain << endl;
+  log.Level (40) << "SetAnalogGain   :" << analogGainToSet << endl;
   if  (cameraParams->DeviceModelName ().EqualIgnoreCase ("DiviinaLM1GE"))
   {
     //analogGain = (float)GetPvParameterInteger (params, "Gain", -1);
 
-    int64_t  adjGain = (int)(800.0f * ((requestedAnalogGain + 10.0f) / 20.0f));
+    int64_t  adjGain = (int)(800.0f * ((analogGainToSet + 10.0f) / 20.0f));
 
     PvResult  pvr = lGain->SetValue (adjGain);
     if  (!pvr.IsOK ())
@@ -939,7 +940,7 @@ void  CameraAcquisitionPleora::SetAnalogGain  (float requestedAnalogGain)
     {
       SetGainTap (0);
 
-      PvResult  pvSetResult = lAnalogGainAbs->SetValue (requestedAnalogGain);
+      PvResult  pvSetResult = lAnalogGainAbs->SetValue (analogGainToSet);
       if  (!pvSetResult.IsOK ())
         log.Level (-1) << "SetAnalogGain   ***ERROR***   Error setting 'GainAbs' :" << PvResultToStr (pvSetResult) << endl;
 
@@ -957,17 +958,17 @@ void  CameraAcquisitionPleora::SetAnalogGain  (float requestedAnalogGain)
 
 
 
-void  CameraAcquisitionPleora::SetDigitalGain  (kkint32 requestedDigitalGain)
+void  CameraAcquisitionPleora::SetDigitalGain  (kkint32 digitalGainToSet)
 {
   if  (lDigitalGainRaw)
   {
     SetGainTap (0);
 
-    PvResult digitalGainRawSet = lDigitalGainRaw->SetValue (requestedDigitalGain);
+    PvResult digitalGainRawSet = lDigitalGainRaw->SetValue (digitalGainToSet);
 
     if  (!digitalGainRawSet.IsOK ())
     {
-      KKStr  msg = "SetDigitalGain   ***ERROR***  Setting DigitalGainRaw :" + StrFormatInt (requestedDigitalGain, "###,##0") + "  :" + PvResultToStr (digitalGainRawSet);
+      KKStr  msg = "SetDigitalGain   ***ERROR***  Setting DigitalGainRaw :" + StrFormatInt (digitalGainToSet, "###,##0") + "  :" + PvResultToStr (digitalGainRawSet);
       log.Level (-1) << msg << endl;
     }
 
@@ -1182,9 +1183,9 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
   // Connect to the GEV Device
   lDevice = new PvDeviceGEV ();
 
-  KKStr  status;
-  status << "Connecting to Mac Address: " << MacAddress ();
-  log.Level (10) << status << endl;
+  KKStr  msgTxt;
+  msgTxt << "Connecting to Mac Address: " << MacAddress ();
+  log.Level (10) << msgTxt << endl;
 
   PvString  pcMacAddress = MacAddress ().Str ();
 
@@ -1192,11 +1193,11 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
   PvResult  pvConnectResult = lDevice->Connect (pcMacAddress);
   if   (!pvConnectResult.IsOK ())
   {
-    status = "";
-    status << "Unable to connect to Mac-Address: " << MacAddress ();
+    msgTxt = "";
+    msgTxt << "Unable to connect to Mac-Address: " << MacAddress ();
     log.Level (-1) << "ConnectToCamera   ***ERROR*** Trying to connect :" << PvResultToStr (pvConnectResult) << endl
-                   << "   " << status << endl;
-    StartStatus (StartStatusType::ConnectionFailed, status);
+                   << "   " << msgTxt << endl;
+    StartStatus (StartStatusType::ConnectionFailed, msgTxt);
 
     PvString  pvIpAddress               = cameraParams->IpAddress  ().Str ();
     PvString  pvMacAddress              = cameraParams->MacAddress ().Str ();
@@ -1233,9 +1234,9 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
     }
   }
 
-  status = "";
-  status << "Successfully connected to MacAddress: " << MacAddress ();
-  log.Level (10) << status << endl;
+  msgTxt = "";
+  msgTxt << "Successfully connected to MacAddress: " << MacAddress ();
+  log.Level (10) << msgTxt << endl;
 
   //PrintDeviceParameters ();
 
@@ -1321,7 +1322,6 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
     log.Level (40) << "ConnectToCamera  Camera Stream Opened :" << PvResultToStr (streamOpenResult) << endl;
   }
 
-
   lPipeline = new PvPipeline (lStream);
 
   int64_t payloadSize = 0;
@@ -1331,7 +1331,6 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
     log.Level (-1) << "ConnectToCamera   ***ERROR***  Error retrieving PayLoadSize :" << PvResultToStr (getPayloadSizeResult) << endl;
   else
     log.Level (40) << "ConnectToCamera   PayLoadSize Retrieved :" << (kkint64)payloadSize << " :" << PvResultToStr (getPayloadSizeResult) << endl;
-
 
   lPipeline->SetBufferSize (static_cast<uint32_t> (payloadSize));
 
@@ -1389,8 +1388,7 @@ void  CameraAcquisitionPleora::ConnectToCamera (bool&  connectionSuccessful)
     else
       log.Level (-1) << "ConnectToCamera  ***ERROR***  'GevTimestampControlReset' execute failed :" << PvResultToStr (timestampControlResetResult) << endl;
   }
-
-
+  
   {
     // Setting "MaximumResendGroupSize" to 30;  this helps to reduce if not eliminate 
     // "2819,TOO_MANY_CONSECUTIVE_RESENDS"  errors when retrieving camera frame buffers.
@@ -1571,7 +1569,7 @@ void  CameraAcquisitionPleora::Run ()
 
   log.Level (10) << "CameraAcquisitionPleora::Run" << endl;
 
-  KKStr  status (128);
+  KKStr  msgTxt (128);
 
   StartStatus (StartStatusType::Connecting, "Connecting to Camera.");
 
@@ -1581,9 +1579,9 @@ void  CameraAcquisitionPleora::Run ()
   {
     StartStatus (StartStatusType::ConnectionFailed, "Connection FAILED!!!.");
     Manager ()->AddSecondaryMsg ("");
-    status = "";
-    status << "Unable to connect to Mac-Address: " << MacAddress ();
-    log.Level (10) << status << endl;
+    msgTxt = "";
+    msgTxt << "Unable to connect to Mac-Address: " << MacAddress ();
+    log.Level (10) << msgTxt << endl;
     DisconnectFromCamera ();
     Status (ThreadStatus::Stopping);
     Crashed (true);
@@ -1682,7 +1680,7 @@ void  CameraAcquisitionPleora::Run ()
           PvImage* i = lBuffer->GetImage ();
           kkuint32  imageSize = i->GetImageSize ();
 
-          kkuint64  blockId = lBuffer->GetBlockID ();
+          kkint64  blockId = lBuffer->GetBlockID ();
           kkint64   numBlocksSkipped = blockId - (lastBlockId + 1);
           if  (numBlocksSkipped < 0)
             numBlocksSkipped += 65535;
@@ -1782,10 +1780,10 @@ void  CameraAcquisitionPleora::Run ()
           ++physicalFramesRead;
           scanLinesRead += FrameHeight ();
 
-          float flowRate = 0.0f;
-          float flowRateRatio = -1.0f;
-          flowMeter->GetFlowRateTrend (flowRate, flowRateRatio);
-          frameBuffer->AddFrame ((uchar*)rawData, imageSize, FrameHeight (), FrameWidth (), flowMeterCounter, flowMeterCounterScanLine, flowRateRatio, flowRate);
+          float flowRateTrend      = 0.0f;
+          float flowRateRatioTrend = -1.0f;
+          flowMeter->GetFlowRateTrend (flowRateTrend, flowRateRatioTrend);
+          frameBuffer->AddFrame ((uchar*)rawData, imageSize, FrameHeight (), FrameWidth (), flowMeterCounter, flowMeterCounterScanLine, flowRateRatioTrend, flowRateTrend);
 
           PvResult releaseBufferResult = lPipeline->ReleaseBuffer (lBuffer);
           if  (!releaseBufferResult.IsOK ())
@@ -2076,7 +2074,11 @@ CameraParametersPtr  CameraAcquisitionPleora::GetCameraParameters (const KKStr& 
                                                                    RunLog&       _runLog
                                                                   )
 {
-  _runLog.Level (40) << "CameraAcquisitionPleora::GetCameraParameters    MacAddress[" << _macAddress << "]." << endl;
+  KKStr msgTxt = "CameraAcquisitionPleora::GetCameraParameters   MacAddress: '" + _macAddress + "'.";
+  _runLog.Level (40) << msgTxt << endl;
+
+  _msgQueue->AddMsg (msgTxt);
+  
   CameraParametersPtr  result = NULL;
   PvString macAddress (_macAddress.Str ());
 
