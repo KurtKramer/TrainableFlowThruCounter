@@ -35,7 +35,20 @@ namespace CounterApplication
 
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run (new CounterApplication ());
+      try
+      {
+        Application.Run(new CounterApplication());
+      }
+      catch (Exception e)
+      {
+        using (var r = new System.IO.StreamWriter(@"C:\Temp\TrainableFlowThruCounter.log", append:true))
+        {
+          r.WriteLine(DateTime.Now.ToLongTimeString () + "  " + e.ToString ());
+          r.WriteLine();
+          r.WriteLine(e.StackTrace);
+          r.WriteLine();
+        }
+      }
       System.GC.Collect();
     }
   }

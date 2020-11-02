@@ -760,7 +760,6 @@ namespace CounterFileViewer
 
 
 
-
     private  void  PaintRectangle  (Graphics  g,
                                     Color     lineColor,
                                     Blob      b
@@ -964,7 +963,7 @@ namespace CounterFileViewer
         ComputeParameters ();
         PaintWholePanel ();
       }
-    } /* ReleaseLeftCrop */
+    } /* ReleaseRightCrop */
 
 
 
@@ -1001,7 +1000,7 @@ namespace CounterFileViewer
         ComputeParameters ();
         PaintWholePanel ();
       }
-    } /* SetLeftCrop */
+    } /* SetRightCrop */
 
 
 
