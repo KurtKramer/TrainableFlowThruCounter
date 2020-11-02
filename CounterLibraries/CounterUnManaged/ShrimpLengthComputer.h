@@ -49,11 +49,9 @@ namespace CounterUnManaged
     float      OrientationAngle          () const  {return orientationAngle;}
     float      OrientationAngleInDegrees () const  {return orientationAngleInDegrees;}
 
-
     void  ErosionStructSize (kkint32 _erosionStructSize)  {erosionStructSize = _erosionStructSize;}
 
     void  PixelsPerScanLine (kkint32 _pixelsPerScanLine);
-
 
     Point  DerivePreRotatedPoint (kkint32 height,
                                   kkint32 width,
@@ -103,8 +101,6 @@ namespace CounterUnManaged
   };  /* ShrimpLengthComputer */
 
   typedef  ShrimpLengthComputer*  ShrimpLengthComputerPtr;
-
-
 
 }  /* CounterUnManaged */
 

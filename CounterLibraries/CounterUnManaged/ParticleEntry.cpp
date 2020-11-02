@@ -145,9 +145,9 @@ void  ParticleEntry::Assign (const ParticleEntry&   _entry)
 
 
 bool  ParticleEntry::ExactMatch (kkint32  _scannerRow,
-                                 kkint16  _scannerCol,
-                                 kkint16  _height,
-                                 kkint16  _width
+                                 kkint32  _scannerCol,
+                                 kkint32  _height,
+                                 kkint32  _width
                                 )
 {
   return  (_scannerRow == scannerRow)  &&  
@@ -386,9 +386,9 @@ ParticleEntryPtr  ParticleEntryList::LocateParticle (ParticleEntryPtr  pe)
 
 
 ParticleEntryPtr  ParticleEntryList::LocateParticle (kkint32  scannerRow,
-                                                     kkint16  scannerCol,
-                                                     kkint16  height,
-                                                     kkint16  width
+                                                     kkint32  scannerCol,
+                                                     kkint32  height,
+                                                     kkint32  width
                                                     )
 {
   if  (sortedByScanLine)
@@ -509,7 +509,7 @@ void  ParticleEntryList::ProcessFieldDefinitions (const KKStr&  value)
   numFields = (kkint32)fields.size () - 1;
 
   kkuint32  idx = 1;
-  kkuint32  defIDX = 0;
+  kkuint16  defIDX = 0;
   while  (idx < fields.size ())
   {
     KKStr  fieldName = fields[idx];
@@ -563,8 +563,6 @@ ParticleEntryPtr  ParticleEntryList::ParseParticleImageLine (const KKStr&  value
   if  ((kkint32)fields.size () < numFields)
     return NULL;
 
-  KKStr  scannerFileRootName = "";
-
   kkint32  scanRow       = 0;
   kkint16  scanCol       = 0;
   kkint16  height        = 0;
@@ -610,11 +608,6 @@ void  ParticleEntryList::LoadFile (RunLog&  _log)
 
   baseScannerName = scannerFileRootName;
 
-  // Total number of scanner rows read;  since sometimes a recording session can span multiple scanner files
-  // we will accumulate scanner rows of all prev read scanner files.
-  kkint32  scannerRowsTotal = 0;
-  kkint32  scannerRowLargestCurrentScannerFile = 0;
-
   ifstream*  sr = NULL;
   sr = new ifstream (reportFileName.Str (), ios_base::in);
   if  ((sr == NULL)  ||  (!sr->is_open ()))
@@ -639,7 +632,7 @@ void  ParticleEntryList::LoadFile (RunLog&  _log)
       description = value.ExtractQuotedStr ("", true);
 
     else if  (name.EqualIgnoreCase ("erosionstructsize"))
-      erosionStructSize = value.ToInt32 ();
+      erosionStructSize = value.ToInt16 ();
 
     else if  (name.EqualIgnoreCase ("flowratefactor"))
       flowRateFactor = value.ToFloat ();
@@ -801,11 +794,11 @@ VectorFloatPtr  ParticleEntryList::FlowRateRatioByTimeIntervals (int    interval
     }
   }
 
-  for  (kkint32  interval = 0;  interval < maxIntervals;  ++interval)
+  for  (kkint32  intervalIdx = 0;  intervalIdx < maxIntervals;  ++intervalIdx)
   {
-    kkint32 z = (*patrticleCountByIntervals)[interval];
+    kkint32 z = (*patrticleCountByIntervals)[intervalIdx];
     if  (z > 0)
-     (*flowRateRatioByIntervals)[interval] /= z;
+     (*flowRateRatioByIntervals)[intervalIdx] /= z;
   }
 
   delete  patrticleCountByIntervals;   patrticleCountByIntervals = NULL;
@@ -848,11 +841,11 @@ VectorFloatPtr  ParticleEntryList::FlowRateByTimeIntervals (int    interval,
     }
   }
 
-  for  (kkint32  interval = 0;  interval < maxIntervals;  ++interval)
+  for  (kkint32  intervalIdx = 0;  intervalIdx < maxIntervals;  ++intervalIdx)
   {
-    kkint32 z = (*patrticleCountByIntervals)[interval];
+    kkint32 z = (*patrticleCountByIntervals)[intervalIdx];
     if  (z > 0)
-     (*flowRateByIntervals)[interval] /= z;
+     (*flowRateByIntervals)[intervalIdx] /= z;
   }
 
   delete  patrticleCountByIntervals;   patrticleCountByIntervals = NULL;

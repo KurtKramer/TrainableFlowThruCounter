@@ -24,7 +24,8 @@ using namespace  KKLSC;
 #include "CounterTrainingConfiguration.h"
 using  namespace  CounterUnManaged;
 
-
+#undef min
+#undef max
 
 CounterDataRec::CounterDataRec (const KKStr&  _scannerFilePrefix,
                                 const KKStr&  _sectionName
@@ -175,6 +176,32 @@ DateTime  CounterDataRec::GetScannerFileValueDateTime (ScannerFilePtr  sf,
     return DateTime (dateTimeStr);
 }
 
+
+
+uchar  CounterDataRec::GetScannerFileValueUchar (ScannerFilePtr  sf,
+                                                 const KKStr&    fieldName,
+                                                 uchar           curValue
+                                                )
+{
+  const KKStr&  fv1 = GetScannerFileValue (sf, fieldName);
+  if (!fv1.Empty ())
+  {
+    kkint64 v = fv1.ToInt64 ();
+    if  (v < 0  ||  v > numeric_limits<uchar>::max ())
+    {
+      cerr << endl << "CounterDataRec::GetScannerFileValueUchar   ***ERROR***  fv1: '" << fv1 << "' excceds capacity of uchar." << endl;
+      return curValue;
+    }
+    else
+    {
+      return (uchar)v;
+    }
+  }
+  else
+  {
+    return curValue;
+  }
+}
 
 
 kkint32  CounterDataRec::GetScannerFileValueInt32 (ScannerFilePtr  sf, 

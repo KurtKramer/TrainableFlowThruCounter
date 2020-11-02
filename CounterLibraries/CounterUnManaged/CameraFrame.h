@@ -13,11 +13,6 @@
 
 namespace CounterUnManaged
 {
-  #if  !defined(_CAMERAFLATFIELDCORRECTION_)
-  class  CameraFlatFieldCorrection;
-  typedef  CameraFlatFieldCorrection*  CameraFlatFieldCorrectionPtr;
-  #endif
-
   class  CameraFrame
   {
   public:

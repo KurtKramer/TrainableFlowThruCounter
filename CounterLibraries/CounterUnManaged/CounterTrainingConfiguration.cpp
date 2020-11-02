@@ -109,9 +109,9 @@ FactoryFVProducerPtr   CounterTrainingConfiguration::DefaultFeatureVectorProduce
 
 
 
-void  CounterTrainingConfiguration::Save (const KKStr& fileName)  const
+void  CounterTrainingConfiguration::Save (const KKStr& fileNameToSaveTo)  const
 {
-  ofstream  o (fileName.Str ());
+  ofstream  o (fileNameToSaveTo.Str ());
 
   TrainingConfiguration2::Save (o);
 
@@ -137,7 +137,6 @@ CounterTrainingConfigurationPtr  CounterTrainingConfiguration::CreateFromFeature
                                                     )
 {
   _log.Level (10) << "CounterTrainingConfiguration::CreateFromFeatureVectorList" << endl;
-  FileDescConstPtr  fileDesc = _examples.FileDesc ();
 
   MLClassListPtr  mlClasses = _examples.ExtractListOfClasses ();
   mlClasses->SortByName ();
@@ -271,6 +270,7 @@ void   CounterTrainingConfiguration::ReadXML (XmlStream&      s,
                                              )
 
 {
+  log.Level (30) << "CounterTrainingConfiguration::ReadXML   tag->name: '" << tag->Name () << "'." << endl;
   XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {

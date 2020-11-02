@@ -24,6 +24,8 @@ using  namespace  CounterUnManaged;
 KKStr  SessionLogger::lastSessionIdFileName  = KKB::osAddSlash (CounterVariables::ConfigurationDir ()) + "LastSessionId.txt";
 KKStr  SessionLogger::sessionLogFileName     = KKB::osAddSlash (CounterVariables::LoggingDir       ()) + "SessionLog.txt";
 
+
+
 kkint32  SessionLogger::GetNextSessionId ()
 {
   GlobalGoalKeeper::StartBlock ();

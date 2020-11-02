@@ -19,7 +19,6 @@ using namespace KKB;
 using namespace  KKLSC;
 
 #include "CameraFrame.h"
-#include "CameraFlatFieldCorrection.h"
 using  namespace  CounterUnManaged;
 
 

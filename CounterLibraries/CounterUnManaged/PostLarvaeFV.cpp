@@ -54,6 +54,7 @@ public:
   }
 
 
+  
   void  AddDarkSpotsList (KKB::BlobListPtr  blobs)
   {
     ++count;
@@ -249,9 +250,9 @@ void  CounterUnManaged::PostLarvaeFVPrintReport (ostream& o)
 
 
 
-void  CounterUnManaged::PostLarvaeFVAddBlobList (MLClassPtr     c,
-                                                  KKB::BlobListPtr  blobs 
-                                                 )
+void  CounterUnManaged::PostLarvaeFVAddBlobList (MLClassPtr        c,
+                                                 KKB::BlobListPtr  blobs 
+                                                )
 {
   if  (darkSportStats001)
     darkSportStats001->AddDarkSpotsList (c, blobs);
@@ -1063,19 +1064,11 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList,
                      _owner
                     )
 {
-  //if  (strcmp (featureVectorList.UnderlyingClass (), "PostLarvaeFVList") == 0)
-  if  (typeid (featureVectorList) == typeid (PostLarvaeFVList))
-  {
-    const PostLarvaeFVList&  examples = dynamic_cast<const PostLarvaeFVList&> (featureVectorList);
-  }
-
-
   if  (_owner)
   {
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for  (auto idx: featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
+      FeatureVectorPtr featureVector = idx;
       
       // The constructor below will detect what the underlying type of 'featureVector' is.  
       // If (underlying type is a 'PostLarvaeFV' object)  then
@@ -1093,11 +1086,9 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList,
     // Since we will not own the contents but just point to an existing instances we will 
     // have to make sure that the existing instances of 'FeatureVector' objects have a 
     // underlying type of 'PostLarvaeFV'.
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for  (auto idx: featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
-      //if  (strcmp (featureVector->UnderlyingClass (), "PostLarvaeFV") == 0)
+      FeatureVectorPtr featureVector = idx;
       if  (typeid (*featureVector) == typeid (PostLarvaeFV))
       {
         PostLarvaeFVPtr example = dynamic_cast<PostLarvaeFVPtr>(featureVector);
@@ -1136,18 +1127,11 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)
                      featureVectorList.Owner ()
                     )
 {
-  //if  (strcmp (featureVectorList.UnderlyingClass (), "PostLarvaeFVList") == 0)
-  if  (typeid (featureVectorList) == typeid (PostLarvaeFVList))
-  {
-    const PostLarvaeFVList&  examples = dynamic_cast<const PostLarvaeFVList&> (featureVectorList);
-  }
-
   if  (featureVectorList.Owner ())
   {
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for  (auto idx: featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
+      FeatureVectorPtr featureVector = idx;
       
       // The constructor below will detect what the underlying type of 'featureVector' is.  
       // If (underlying type is a 'PostLarvaeFV' object)  then
@@ -1165,10 +1149,9 @@ PostLarvaeFVList::PostLarvaeFVList (const FeatureVectorList&  featureVectorList)
     // Since we will not own the contents but just point to existing instances we will 
     // have to make sure that the existing instances of 'FeatureVector' objects have a 
     // underlying type of 'PostLarvaeFV'.
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for  (auto idx: featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
+      FeatureVectorPtr featureVector = idx;
       if  (typeid (*featureVector) == typeid (PostLarvaeFV))
       {
         PostLarvaeFVPtr example = dynamic_cast<PostLarvaeFVPtr>(featureVector);
@@ -1280,11 +1263,11 @@ PostLarvaeFVPtr  PostLarvaeFVList::LookUpByImageFileName (const KKStr&  _imageFi
 
 
 
-PostLarvaeFVListPtr  PostLarvaeFVList::OrderUsingNamesFromAFile (const KKStr&  fileName,
+PostLarvaeFVListPtr  PostLarvaeFVList::OrderUsingNamesFromAFile (const KKStr&  namesFileName,
                                                                  RunLog&       log
                                                                 )
 {
-  FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (fileName, log);
+  FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (namesFileName, log);
   examples->Owner (false);
   PostLarvaeFVListPtr  orderedImages = new PostLarvaeFVList (*examples);
   delete  examples;
@@ -1324,8 +1307,6 @@ void   PostLarvaeFVList::FeatureExtraction (KKStr       _dirName,
 
   KKStrList::iterator  fnIDX = fileNameList->begin ();
 
-  bool  successfull;
-
   KKStrPtr imageFileName = NULL;
 
   kkint32  numOfImages = fileNameList->QueueSize ();
@@ -1344,6 +1325,7 @@ void   PostLarvaeFVList::FeatureExtraction (KKStr       _dirName,
       continue;
 
     KKStr  fullFileName = osAddSlash (_dirName) + (*imageFileName);
+    bool successfull = false;
     PostLarvaeFVPtr example = new PostLarvaeFV (fullFileName, _mlClass, successfull, NULL);
     if  (!example)
     {
@@ -1460,7 +1442,7 @@ void  PostLarvaeFVList::RecalcFeatureValuesFromImagesInDirTree (KKStr    rootDir
     osAddLastSlash (fullFileName);
     fullFileName << example->ExampleFileName ();
 
-    bool   validFile;
+    bool   validFile = false;
     RasterPtr  raster = new Raster (fullFileName, validFile);
     if  (!validFile)
     {

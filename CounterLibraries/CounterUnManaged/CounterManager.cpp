@@ -32,7 +32,6 @@ using namespace  KKB;
 #include "ScannerFileEntry.h"
 using namespace  KKLSC;
 
-
 #include "Classifier2.h"
 #include "TrainingProcess2.h"
 #include "CounterFeatureVector.h"
@@ -45,17 +44,15 @@ using namespace  CounterBase;
 
 #include "CounterManager.h"
 
-
-#include "DiskWriterThread.h"
-
 #include "CameraFrameBuffer.h"
 #include "CameraAcquisitionPleora.h"
 #include "CameraAcquisitionSimulator.h"
 #include "CameraAutoGainThread.h"
 #include "CameraParameters.h"
 #include "ConnectButtonThread.h"
-#include "InstallationConfig.h"
 #include "CounterTrainingConfiguration.h"
+#include "DiskWriterThread.h"
+#include "InstallationConfig.h"
 #include "LoggerThread.h"
 #include "LogicalFrameEntry.h"
 #include "LogicalFrameBuilder.h"
@@ -81,16 +78,16 @@ using namespace  CounterBase;
 using  namespace  CounterUnManaged;
 
 
-#define  MemoryWillingToAllocateToCameraFrameBuffers 251658240
+#define  MemoryWillingToAllocateToCameraFrameBuffers  1024 * 1024 * 256
 
 
-GoalKeeperPtr  CounterManager::goalie = NULL;
+GoalKeeperPtr  CounterManager::goalie = nullptr;
 
 KKStr  CounterManager::CounterStateToStr (CounterState  state)
 {
   switch  (state)
   {
-  case  CounterState::Null:               return "NULL";
+  case  CounterState::Null:               return "nullptr";
   case  CounterState::Stopped:            return "Stopped";
   case  CounterState::Stopping:           return "Stopping";
   case  CounterState::Connected:          return "Connected";
@@ -101,11 +98,11 @@ KKStr  CounterManager::CounterStateToStr (CounterState  state)
   case  CounterState::PlayingBack:        return "PlayingBack";
   case  CounterState::DroppedFrames:      return "DroppedFrames";
   }
-  return  "NULL";
+  return  "nullptr";
 }
 
 
-const  KKStr  CounterManager::counterOperatingModeStrs[] = {"NULL", "User", "Advanced", "Invalid"};
+const  KKStr  CounterManager::counterOperatingModeStrs[] = {"nullptr", "User", "Advanced", "Invalid"};
 
 
 const KKStr&  CounterManager::CounterOperatingModeToStr (CounterOperatingModes om)
@@ -141,32 +138,32 @@ CounterManager::CounterManager (MsgQueuePtr  _msgQueue,
     throughPutField                (StatusSnapshot::FieldIdx::Count),
     secondaryMsgs                  ("SecondaryMsgs"),
 
-    installation                   (NULL),
+    installation                   (nullptr),
 
     maxNumOfThreads                (_maxNumOfThreads),
-    allThreads                     (NULL),
-    acquisitionThread              (NULL),
-    cameraAutoGainThread           (NULL),
-    connectButtonThread            (NULL),
-    diskWriterThread               (NULL),
-    frameProcessors                (NULL),
-    reportWriterThread             (NULL),
-    loggerThread                   (NULL),
-    logicalFrameBuilderThread      (NULL),
-    playBackButtonThread           (NULL),
-    startButtonThread              (NULL),
-    snapshotThread                 (NULL),
-    stopButtonThread               (NULL),
+    allThreads                     (nullptr),
+    acquisitionThread              (nullptr),
+    cameraAutoGainThread           (nullptr),
+    connectButtonThread            (nullptr),
+    diskWriterThread               (nullptr),
+    frameProcessors                (nullptr),
+    reportWriterThread             (nullptr),
+    loggerThread                   (nullptr),
+    logicalFrameBuilderThread      (nullptr),
+    playBackButtonThread           (nullptr),
+    startButtonThread              (nullptr),
+    snapshotThread                 (nullptr),
+    stopButtonThread               (nullptr),
 
     cameraMacAddress               (),
 
-    headerFields                   (NULL),
+    headerFields                   (nullptr),
 
     cropLeft                       (0),
     cropRight                      (2047),
 
     frameHeightMax                 (14000),
-    logicalFrameQueueSizeMax       (10),
+    logicalFrameQueueSizeMax       (20),
 
     liveVideoHeight                (848),
     liveVideoWidth                 (400),
@@ -174,21 +171,21 @@ CounterManager::CounterManager (MsgQueuePtr  _msgQueue,
     playingBackRealTime            (true),
     sampleLastFrameBeforeFlatField (false),
 
-    snapshotBuffer                 (NULL),
+    snapshotBuffer                 (nullptr),
     snapshotInterval               (5),
 
-    flowMeter                      (NULL),
-    cameraFrameBuffer              (NULL),
-    classifier                     (NULL),
-    lastParticlesProcessed         (NULL),
-    logicalFrames                  (NULL),
-    logicalFrameEntries            (NULL),
-    droppedFrames                  (NULL),
-    particleEntryBuffer            (NULL),
-    finaleStats                    (NULL),
+    flowMeter                      (nullptr),
+    cameraFrameBuffer              (nullptr),
+    classifier                     (nullptr),
+    lastParticlesProcessed         (nullptr),
+    logicalFrames                  (nullptr),
+    logicalFrameEntries            (nullptr),
+    droppedFrames                  (nullptr),
+    particleEntryBuffer            (nullptr),
+    finaleStats                    (nullptr),
     totalBytesToRead               (0),
     totalBytesRead                 (0),
-    trainer                        (NULL),
+    trainer                        (nullptr),
     trainerCancelFlag              (false),
     trainerStatusMsg               (),
     memoryPreasure                 (0),
@@ -199,9 +196,9 @@ CounterManager::CounterManager (MsgQueuePtr  _msgQueue,
     srcScannerFileName             (),
     srcScannerFileFormat           (ScannerFile::Format::sfUnKnown),
     particlesDirName               (),
-    sessionParameters              (NULL),
-    operatingParameters            (NULL),
-    defaultOperatingParameters     (NULL),
+    sessionParameters              (nullptr),
+    operatingParameters            (nullptr),
+    defaultOperatingParameters     (nullptr),
     cameraBuffSizeMax              (256),
     cameraFrameHeight              (480),
     cameraFrameWidth               (2048),
@@ -209,17 +206,17 @@ CounterManager::CounterManager (MsgQueuePtr  _msgQueue,
     generateFinaleReport           (false),
     msgQueue                       (_msgQueue),
     loggedMsgs                     (_loggedMsgs),
-    runLog                         (NULL),
+    runLog                         (nullptr),
     saveDebugImages                (false)
 {
-  ValidateCounterInstallation ();
-
   configurationFileName = osAddSlash (CounterVariables::ConfigurationDir ()) + "CounterManager.txt";
 
   loggerThread = LoggerThread::CreateAndStartInstance (msgQueue, loggedMsgs, "LoggerThread");
   runLog = new RunLog (msgQueue);
   runLog->SetLevel (CounterVariables::DebugLevel ());
   runLog->Level (40) << "CounterManager::CounterManager   MaxNumThreads: " << _maxNumOfThreads << endl;
+
+  ValidateCounterInstallation ();
 
   allThreads                 = new CameraThreadList (true);
   frameProcessors            = new LogicalFrameProcessorList (false);
@@ -262,10 +259,10 @@ void  CounterManager::Initialize ()
     if  (cameraMacAddress.Empty ())
     {
       CameraParametersListPtr  cameras = CounterManager::GetCameraList (msgQueue);
-      if  ((cameras != NULL)  &&  (cameras->QueueSize () == 1))
+      if  ((cameras != nullptr)  &&  (cameras->QueueSize () == 1))
         cameraMacAddress = (*cameras)[0].MacAddress ();
       delete  cameras;
-      cameras = NULL;
+      cameras = nullptr;
     }
   }
 
@@ -275,7 +272,7 @@ void  CounterManager::Initialize ()
   if  (!sessionParameters->TrainingModelName ().Empty ())
   {
     bool  successful = false;
-    SetTrainingModel (sessionParameters->TrainingModelName (), successful, NULL);
+    SetTrainingModel (sessionParameters->TrainingModelName (), successful, nullptr);
   }
 }  /* Initialize  */
 
@@ -316,41 +313,41 @@ void  CounterManager::CleanUpMemory ()
 
   // 'allThreads'  owns 'acquisitionThread', 'diskWriterThread', 'logicalFrameBuilderThread' and 'frameProcessors' contents.
 
-  delete  allThreads;                  allThreads                 = NULL;
-                                       acquisitionThread          = NULL;
-                                       cameraAutoGainThread       = NULL;
-                                       connectButtonThread        = NULL;
-                                       diskWriterThread           = NULL;
-                                       logicalFrameBuilderThread  = NULL;
-                                       reportWriterThread         = NULL;
-                                       startButtonThread          = NULL;
-                                       playBackButtonThread       = NULL;
-                                       stopButtonThread           = NULL;
-                                       snapshotThread             = NULL;
+  delete  allThreads;                  allThreads                 = nullptr;
+                                       acquisitionThread          = nullptr;
+                                       cameraAutoGainThread       = nullptr;
+                                       connectButtonThread        = nullptr;
+                                       diskWriterThread           = nullptr;
+                                       logicalFrameBuilderThread  = nullptr;
+                                       reportWriterThread         = nullptr;
+                                       startButtonThread          = nullptr;
+                                       playBackButtonThread       = nullptr;
+                                       stopButtonThread           = nullptr;
+                                       snapshotThread             = nullptr;
 
-  delete  flowMeter;                   flowMeter                  = NULL;
-  delete  frameProcessors;             frameProcessors            = NULL;
-  delete  cameraFrameBuffer;           cameraFrameBuffer          = NULL;
-  delete  logicalFrames;               logicalFrames              = NULL;
-  delete  logicalFrameEntries;         logicalFrameEntries        = NULL;
-  delete  droppedFrames;               droppedFrames              = NULL;
-  delete  lastParticlesProcessed;      lastParticlesProcessed     = NULL;
-  delete  particleEntryBuffer;         particleEntryBuffer        = NULL;
-  delete  snapshotBuffer;              snapshotBuffer             = NULL;
-  delete  trainer;                     trainer                    = NULL;
-  delete  classifier;                  classifier                 = NULL;
-  delete  headerFields;                headerFields               = NULL;
-  delete  runLog;                      runLog                     = NULL;
-  delete  finaleStats;                 finaleStats                = NULL;
+  delete  flowMeter;                   flowMeter                  = nullptr;
+  delete  frameProcessors;             frameProcessors            = nullptr;
+  delete  cameraFrameBuffer;           cameraFrameBuffer          = nullptr;
+  delete  logicalFrames;               logicalFrames              = nullptr;
+  delete  logicalFrameEntries;         logicalFrameEntries        = nullptr;
+  delete  droppedFrames;               droppedFrames              = nullptr;
+  delete  lastParticlesProcessed;      lastParticlesProcessed     = nullptr;
+  delete  particleEntryBuffer;         particleEntryBuffer        = nullptr;
+  delete  snapshotBuffer;              snapshotBuffer             = nullptr;
+  delete  trainer;                     trainer                    = nullptr;
+  delete  classifier;                  classifier                 = nullptr;
+  delete  headerFields;                headerFields               = nullptr;
+  delete  runLog;                      runLog                     = nullptr;
+  delete  finaleStats;                 finaleStats                = nullptr;
 
-  delete  sessionParameters;           sessionParameters          = NULL;
-  delete  operatingParameters;         operatingParameters        = NULL;
-  delete  defaultOperatingParameters;  defaultOperatingParameters = NULL;
+  delete  sessionParameters;           sessionParameters          = nullptr;
+  delete  operatingParameters;         operatingParameters        = nullptr;
+  delete  defaultOperatingParameters;  defaultOperatingParameters = nullptr;
 
-  delete  installation;                installation               = NULL;
+  delete  installation;                installation               = nullptr;
 
   // loggerThread is not derived from CameraThread and is not managed by 'allThreads' ;  we want to make this the last thread to be deleted.
-  delete  loggerThread;                loggerThread               = NULL; 
+  delete  loggerThread;                loggerThread               = nullptr; 
 }  /* CleanUpMemory */
 
 
@@ -366,10 +363,10 @@ void  CounterManager::ValidateCounterInstallation ()
   bool  successful = false;
 
   delete  installation;
-  RunLog  runLog;
-  installation = new InstallationConfig ("ModelA", successful, runLog);
+  
+  installation = new InstallationConfig ("ModelA", successful, *runLog);
   if  (!successful)
-    installation->Save (runLog);
+    installation->Save (*runLog);
 }  /* ValidateCounterInstallation */
 
 
@@ -472,20 +469,21 @@ void  CounterManager::CreateGoalie ()
 void  CounterManager::CleanUp ()
 {
   GoalKeeper::Destroy (goalie);
-  goalie = NULL;
+  goalie = nullptr;
 }
+
 
 
 void  CounterManager::AddMsg (KKStrPtr  msg)
 {
-  if  (msgQueue == NULL)
+  if  (msgQueue == nullptr)
   {
     cerr << endl 
          << "CounterManager::AddMsg   ***ERROR***    msgQuue is not defined."  << endl
          << "                               Msg[" << *msg << "]." << endl
          << endl;
     delete  msg;
-    msg = NULL;
+    msg = nullptr;
   }
   else
   {
@@ -493,16 +491,15 @@ void  CounterManager::AddMsg (KKStrPtr  msg)
     *s << osGetThreadId () << " - " << osGetLocalDateTime ().Time () << "->" << (*msg);
     msgQueue->AddMsg (s);
     delete  msg;
-    msg = NULL;
+    msg = nullptr;
   }
 }  /* AddMsg */
 
 
 
-
 void  CounterManager::AddMsg (const KKStr&  msg)
 {
-  if  (msgQueue == NULL)
+  if  (msgQueue == nullptr)
   {
     cerr << endl 
          << "CounterManager::AddMsg   ***ERROR***    msgQuue is not defined."  << endl
@@ -539,7 +536,7 @@ void   CounterManager::ControlNumValidityCheck (const KKStr&  controlNum,
   for  (int idx = 0;  idx < len;  ++idx)
   {
     char c = controlNum[idx];
-    if  (KKStr::StrChr (validChars, c) == NULL)
+    if  (KKStr::StrChr (validChars, c) == nullptr)
        errMsg << "\n" << "ControlNum Invalid Character[" << c << "]";
   }
 }  /* ControlNumValidityCheck */
@@ -620,17 +617,17 @@ CameraParametersPtr  CounterManager::PromptForCamera (RunLog&  runLog)
   runLog.Level (10) << "CounterManager::PromptForCamera" << endl;
   CreateGoalie ();
   goalie->StartBlock ();
-  CameraParametersPtr  result = NULL;
+  CameraParametersPtr  result = nullptr;
 
   KKStr  macAddress = CameraAcquisitionPleora::PromptForCameraMacAddress ();
   if  (macAddress.Empty ())
   {
     runLog.Level (10) << "CounterManager::PromptForCamera   No Camera Selected." << endl;
-    result = NULL;
+    result = nullptr;
   }
   else
   {
-    result = CameraAcquisitionPleora::GetCameraParameters (macAddress, NULL, runLog);
+    result = CameraAcquisitionPleora::GetCameraParameters (macAddress, nullptr, runLog);
     runLog.Level (10) << "CounterManager::PromptForCamera   MacAddress :" << macAddress.QuotedStr () << " selected." << endl;
   }
 
@@ -748,13 +745,13 @@ void  CounterManager::ConnectToCamera (bool&  _successful)
   TerminateAndDeleteAllButConnectButtonThread ();
 
   delete  cameraFrameBuffer;
-  cameraFrameBuffer = NULL;
+  cameraFrameBuffer = nullptr;
 
   goalie->EndBlock ();
 
   KKStr  macAddress = "";
 
-  CameraParametersPtr  cameraParameters = NULL;
+  CameraParametersPtr  cameraParameters = nullptr;
 
   if  (cameraMacAddress.Empty ())
   {
@@ -775,7 +772,7 @@ void  CounterManager::ConnectToCamera (bool&  _successful)
   secondaryMsgs.AddMsg ("Retrieving Camera Parameters.");
   
   delete  cameraParameters;
-  cameraParameters = NULL;
+  cameraParameters = nullptr;
   cameraParameters = CameraAcquisitionPleora::GetDeviceInfo (cameraMacAddress, 'M', *runLog);
   if  (cameraParameters)
   {
@@ -885,7 +882,7 @@ void  CounterManager::BuildDestScannerFileName (bool playingBackExistingFile)
     }
     else
     {
-      kkint32  seqNum = 0;
+      seqNum = 0;
       while  (true)
       {
         particlesDirName = osAddSlash (destScannerFileDir) +  baseRootName + "_" + StrFormatInt (seqNum, "00");
@@ -1008,7 +1005,7 @@ void  CounterManager::ValidateTrainingModel (const KKStr&  trainingModelName,
         successful = false;
         errMsg = trainerStatusMsg;
         delete  trainer;
-        trainer = NULL;
+        trainer = nullptr;
         secondaryMsgs.AddMsg ("Error Building Classifier");
       }
       else
@@ -1018,11 +1015,11 @@ void  CounterManager::ValidateTrainingModel (const KKStr&  trainingModelName,
       }
 
       delete  trainer;
-      trainer = NULL;
+      trainer = nullptr;
       curState = origState;
     }
     delete  config;
-    config = NULL;
+    config = nullptr;
   }
 }  /* ValidateTrainingModel */
 
@@ -1073,12 +1070,12 @@ void  CounterManager::StartRecordingAndOrCounting (bool&   _successful,
 
   ResetCounts ();
 
-  delete  classifier;           classifier          = NULL;
-  delete  trainer;              trainer             = NULL;
-  delete  logicalFrames;        logicalFrames       = NULL;
-  delete  logicalFrameEntries;  logicalFrameEntries = NULL;
-  delete  droppedFrames;        droppedFrames       = NULL;
-  delete  particleEntryBuffer;  particleEntryBuffer = NULL;
+  delete  classifier;           classifier          = nullptr;
+  delete  trainer;              trainer             = nullptr;
+  delete  logicalFrames;        logicalFrames       = nullptr;
+  delete  logicalFrameEntries;  logicalFrameEntries = nullptr;
+  delete  droppedFrames;        droppedFrames       = nullptr;
+  delete  particleEntryBuffer;  particleEntryBuffer = nullptr;
   goalie->EndBlock ();
 
   BuildDestScannerFileName (false);  // false = We are NOT playing back an existing Scanner-File.
@@ -1353,17 +1350,17 @@ void  CounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileName,
   AddHeaderField ("SrcScannerFileName", srcScannerFileName);
   AddHeaderFields ();
 
-  delete trainer;             trainer             = NULL;
-  delete classifier;          classifier          = NULL;
-  delete cameraFrameBuffer;   cameraFrameBuffer   = NULL;
-  delete logicalFrames;       logicalFrames       = NULL;
-  delete logicalFrameEntries; logicalFrameEntries = NULL;
-  delete droppedFrames;       droppedFrames       = NULL;
-  delete particleEntryBuffer; particleEntryBuffer = NULL;
+  delete trainer;             trainer             = nullptr;
+  delete classifier;          classifier          = nullptr;
+  delete cameraFrameBuffer;   cameraFrameBuffer   = nullptr;
+  delete logicalFrames;       logicalFrames       = nullptr;
+  delete logicalFrameEntries; logicalFrameEntries = nullptr;
+  delete droppedFrames;       droppedFrames       = nullptr;
+  delete particleEntryBuffer; particleEntryBuffer = nullptr;
 
   float scanRate = 0.0f;
 
-  ScannerHeaderFieldsPtr scannerFileHeaderFields = NULL;
+  ScannerHeaderFieldsPtr scannerFileHeaderFields = nullptr;
 
   ScannerFile::GetScannerFileParameters (srcScannerFileName,
                                          scannerFileHeaderFields,
@@ -1381,23 +1378,23 @@ void  CounterManager::PlayBackScannerFile (const KKStr&  _srcScannerFileName,
     _successful = false;
     curState = origState;
     delete  scannerFileHeaderFields;
-    scannerFileHeaderFields = NULL;
+    scannerFileHeaderFields = nullptr;
     goalie->EndBlock ();
     return;
   }
 
-  //if  ((scannerFileHeaderFields != NULL)  &&  scannerFileHeaderFields->FieldExists ("Installation:Name"))
+  //if  ((scannerFileHeaderFields != nullptr)  &&  scannerFileHeaderFields->FieldExists ("Installation:Name"))
   //{
   //  // Since the specified Scanner-File has 'Installation' parameters defined we will build a new instance 
   //  // of 'installation' from these header fields.
   //  delete  installation;
   //  installation = new InstallationConfig (scannerFileHeaderFields, *runLog);
   //  delete  scannerFileHeaderFields;
-  //  scannerFileHeaderFields = NULL;
+  //  scannerFileHeaderFields = nullptr;
   //}
 
   delete  scannerFileHeaderFields;
-  scannerFileHeaderFields = NULL;
+  scannerFileHeaderFields = nullptr;
 
   if  ((cameraFrameWidth < 1)  ||  (cameraFrameWidth > 10000))
   {
@@ -1616,7 +1613,7 @@ bool  CounterManager::OkToPressStop (KKStr&  errMsg)
 {
   bool  okToPressStop = false;
   errMsg = "";
-  if  ((stopButtonThread != NULL)  &&  (stopButtonThread->Status () != CameraThread::ThreadStatus::Stopped))
+  if  ((stopButtonThread != nullptr)  &&  (stopButtonThread->Status () != CameraThread::ThreadStatus::Stopped))
   {
     errMsg = "Counter is already Stopping.";
   }
@@ -1741,7 +1738,7 @@ void  CounterManager::CloseOutCountingAndOrRecording (VolConstBool&  terminateFl
 
   ShutDownCameraAutoGainThread ();
 
-  if  (PlayingBack ()  &&  (acquisitionThread != NULL))
+  if  (PlayingBack ()  &&  (acquisitionThread != nullptr))
   {
     acquisitionThread->TerminateThread ();
     acquisitionThread->WaitForThreadToStop (10);
@@ -1769,7 +1766,6 @@ void  CounterManager::CloseOutCountingAndOrRecording (VolConstBool&  terminateFl
   // We set the "ShutDownFlag" to true by calling "ShutdownThread ()", this method only sets 
   // the flag to true.  Depending on how many logical frames have been dropped the "LogicalFrameBuilder"
   // may take a while to stop.
-
 
   if  (droppedFrames  &&  (!stopImmediately))
   {
@@ -1800,7 +1796,7 @@ void  CounterManager::CloseOutCountingAndOrRecording (VolConstBool&  terminateFl
 
   operatingParameters->PlayingBack (false);
 
-  if  ((acquisitionThread != NULL)  &&  (acquisitionThread->StartStatus () == CameraAcquisition::StartStatusType::Connected))
+  if  ((acquisitionThread != nullptr)  &&  (acquisitionThread->StartStatus () == CameraAcquisition::StartStatusType::Connected))
     curState = CounterState::Connected;
   else
     curState = CounterState::Stopped;
@@ -1896,7 +1892,7 @@ void  CounterManager::WaitForAllButCameraThreadsToStop (kkint32  maxSecsToWait,
                                                               bool&  allThreadsStopped
                                                              )
 {
-  if  (allThreads != NULL)
+  if  (allThreads != nullptr)
     return;
 
   runLog->Level (40) << "CounterManager::WaitForAllButCameraThreadsToStop." << endl
@@ -1918,7 +1914,7 @@ void  CounterManager::WaitForAllButCameraThreadsToStop (kkint32  maxSecsToWait,
   tempList->WaitForAllThreadsToStop ((float)maxSecsToWait, allThreadsStopped);
 
   delete  tempList;
-  tempList = NULL;
+  tempList = nullptr;
 
   if  (!allThreadsStopped)
     runLog->Level (-1) << "WaitForAllButCameraThreadsToStop   ***ERROR***   Not all threads stopped." << endl;
@@ -1930,7 +1926,7 @@ void  CounterManager::WaitForAllButCameraThreadsToStop (kkint32  maxSecsToWait,
 
 void  CounterManager::ShutdownOneThread (CameraThreadPtr  t)
 {
-  if  (t == NULL)
+  if  (t == nullptr)
     return;
 
   runLog->Level (20) << "ShutDownOneThread   Thread: " << t->ThreadName () << "  Status: " << t->StatusStr () << endl;
@@ -2038,7 +2034,7 @@ void  CounterManager::DeleteOneThread (CameraThreadPtr &t)
     {
       allThreads->DeleteEntry (t);
       delete  t;
-      t = NULL;
+      t = nullptr;
     }
   }
 }  /* DeleteOneThread */
@@ -2100,7 +2096,7 @@ void  CounterManager::DeleteLogicalFrameProcessorThreads ()
   }
 
   LogicalFrameProcessorPtr  fp = frameProcessors->PopFromBack ();
-  while  (fp != NULL)
+  while  (fp != nullptr)
   {
     if  (fp->ThreadStillProcessing ())
       runLog->Level (-1) << "DeleteLogicalFrameProcessorThreads   ***ERROR***  LogicalFrameProcessor: " << fp->ThreadName () << "  Status: " << fp->StatusStr () << "   Still processing." << endl;
@@ -2109,12 +2105,12 @@ void  CounterManager::DeleteLogicalFrameProcessorThreads ()
 
     allThreads->DeleteEntry (fp);
     delete  fp;
-    fp = NULL;
+    fp = nullptr;
     fp = frameProcessors->PopFromBack ();
   }
 
   delete  frameProcessors;
-  frameProcessors = NULL;
+  frameProcessors = nullptr;
   runLog->Level (20) << "DeleteLogicalFrameProcessorThreads   Exiting." << endl;
 }  /* DeleteLogicalFrameProcessorThreads */
 
@@ -2243,43 +2239,43 @@ void   CounterManager::DeleteAllThreads ()
     {
       CameraThreadPtr  t = allThreads->PopFromFront ();
       delete  t;
-      t = NULL;
+      t = nullptr;
     }
   }
 
   delete  frameProcessors;
   frameProcessors = new LogicalFrameProcessorList (false);
 
-  acquisitionThread         = NULL;
-  cameraAutoGainThread      = NULL;
-  diskWriterThread          = NULL;
-  reportWriterThread        = NULL;
-  logicalFrameBuilderThread = NULL;
-  startButtonThread         = NULL;
-  playBackButtonThread      = NULL;
-  stopButtonThread          = NULL;
-  connectButtonThread       = NULL;
+  acquisitionThread         = nullptr;
+  cameraAutoGainThread      = nullptr;
+  diskWriterThread          = nullptr;
+  reportWriterThread        = nullptr;
+  logicalFrameBuilderThread = nullptr;
+  startButtonThread         = nullptr;
+  playBackButtonThread      = nullptr;
+  stopButtonThread          = nullptr;
+  connectButtonThread       = nullptr;
 }  /* DeleteAllThreads */
 
 
 
-void  CounterManager::StartCameraAcquisitionThread (CameraAcquisitionPtr  acquisitionThread, 
-                                                          bool&                 _successful
-                                                         )
+void  CounterManager::StartCameraAcquisitionThread (CameraAcquisitionPtr  acquisitionThreadToStart, 
+                                                    bool&                 _successful
+                                                   )
 {
   secondaryMsgs.AddMsg ("Starting Camera Acquisition.");
 
-  acquisitionThread->RequestedCameraParameters (operatingParameters);
+  acquisitionThreadToStart->RequestedCameraParameters (operatingParameters);
 
-  acquisitionThread->CropSettingsChanged (cropLeft, cropRight);
+  acquisitionThreadToStart->CropSettingsChanged (cropLeft, cropRight);
 
-  acquisitionThread->Start (ThreadPriority::High, _successful);
+  acquisitionThreadToStart->Start (ThreadPriority::High, _successful);
   if  (_successful)
   {
-    while  (acquisitionThread->StartStatus() != CameraAcquisition::StartStatusType::Connected)
+    while  (acquisitionThreadToStart->StartStatus() != CameraAcquisition::StartStatusType::Connected)
     {
       osSleep (0.1f);
-      if  (acquisitionThread->Crashed ())
+      if  (acquisitionThreadToStart->Crashed ())
       {
         _successful = false;
         break;
@@ -2406,11 +2402,11 @@ void   CounterManager::StartFrameBuilderAndProcessingThreads (bool&  _successful
 
   //int numFrameProcessesToStart = Min (5, Max (1, (maxNumOfThreads - 2)));
 
-  int  maxNumFrameildsers = 5;
+  int  maxNumFrameHandelers = maxNumOfThreads - 4;
   if  (this->cameraFrameBuffer->FrameWidth () > 2048)
-    maxNumFrameildsers = 2;
+    maxNumFrameHandelers /= 2;
 
-  int numFrameProcessesToStart = Min (maxNumFrameildsers, Max (1, (maxNumOfThreads - 3)));
+  int numFrameProcessesToStart = Min (maxNumFrameHandelers, Max (1, (maxNumOfThreads - 3)));
   //int numFrameProcessesToStart = 1;
 
   for  (kkint32 x = 0;  x < numFrameProcessesToStart;  ++x)
@@ -2546,7 +2542,7 @@ void  CounterManager::AddMessageToCurrentScannerFile (const KKStr&  msg)
 VectorUcharPtr  CounterManager::CameraHighPoints ()
 {
   if  (!cameraFrameBuffer)
-    return NULL;
+    return nullptr;
   VectorUcharPtr  cameraHighs = cameraFrameBuffer->CameraHighPoints ();
   return  cameraHighs;
 }
@@ -2556,7 +2552,7 @@ VectorUcharPtr  CounterManager::CameraHighPoints ()
 VectorUcharPtr  CounterManager::CameraHighPointsFromLastNSampleLines (kkint32 n)  const
 {
   if  (!cameraFrameBuffer)
-    return NULL;
+    return nullptr;
   VectorUcharPtr  cameraHighs = cameraFrameBuffer->CameraHighPointsFromLastNSampleLines (n);
   return  cameraHighs;
 }
@@ -2566,7 +2562,7 @@ VectorUcharPtr  CounterManager::CameraHighPointsFromLastNSampleLines (kkint32 n)
 VectorUcharPtr  CounterManager::LastFrameAverageScanLine()  const
 {
   if  (!cameraFrameBuffer)
-    return NULL;
+    return nullptr;
   VectorUcharPtr  avgScanLine = cameraFrameBuffer->LastFrameAverageScanLine ();
   return  avgScanLine;
 }
@@ -2576,7 +2572,7 @@ VectorUcharPtr  CounterManager::LastFrameAverageScanLine()  const
 VectorUcharPtr  CounterManager::LastFrameHighValuesScanLine()  const
 {
   if  (!cameraFrameBuffer)
-    return NULL;
+    return nullptr;
   VectorUcharPtr  avgScanLine = cameraFrameBuffer->LastFrameHighValuesScanLine ();
   return  avgScanLine;
 }
@@ -2650,7 +2646,7 @@ const CameraParametersPtr   CounterManager::CameraParams ()  const
   if  (acquisitionThread)
     return acquisitionThread->CameraParams ();
   else
-    return NULL;
+    return nullptr;
 }
 
 
@@ -2743,8 +2739,8 @@ kkint32  CounterManager::GetLastSessionId ()
 
 
 void  CounterManager::GetLogicalFrameStats (kkint32&  _logicalFramesOnQueue,
-                                                  kkint32&  _logicalFrameProcessorsAvailable
-                                                 )
+                                            kkint32&  _logicalFrameProcessorsAvailable
+                                           )
 {
   if  (logicalFrames)
     _logicalFramesOnQueue = logicalFrames->NumWaitingToBeProcessed ();
@@ -2782,14 +2778,14 @@ int  CounterManager::FrameProcessorsCount () const
 
 bool  CounterManager::LogicalFrameBuilderRunning ()
 {
-  return  ((logicalFrameBuilderThread != NULL)  &&  (logicalFrameBuilderThread->Status () == ThreadStatus::Running));
+  return  ((logicalFrameBuilderThread != nullptr)  &&  (logicalFrameBuilderThread->Status () == ThreadStatus::Running));
 }
 
 
 
 const KKStr&  CounterManager::ControlNum ()
 {
-  if  (sessionParameters == NULL)
+  if  (sessionParameters == nullptr)
     return KKStr::EmptyStr ();
   else
     return sessionParameters->ControlNum ();
@@ -2799,7 +2795,7 @@ const KKStr&  CounterManager::ControlNum ()
 
 const KKStr&  CounterManager::Description () const
 {
-  if  (sessionParameters == NULL)
+  if  (sessionParameters == nullptr)
     return KKStr::EmptyStr ();
   else
     return sessionParameters->SessionDescription ();
@@ -2819,7 +2815,7 @@ bool  CounterManager::EmbeddedFlowMeter () const
 
 const KKStr&  CounterManager::TrainingModelName () const
 {
-  if  (sessionParameters == NULL)
+  if  (sessionParameters == nullptr)
     return KKStr::EmptyStr ();
   else
     return sessionParameters->TrainingModelName ();
@@ -2829,14 +2825,14 @@ const KKStr&  CounterManager::TrainingModelName () const
 
 bool  CounterManager::DiskWritingThreadRunning ()  const
 {
-  return  ((diskWriterThread != NULL)  &&  (diskWriterThread->Status () == ThreadStatus::Running));
+  return  ((diskWriterThread != nullptr)  &&  (diskWriterThread->Status () == ThreadStatus::Running));
 }
 
 
 
 bool  CounterManager::CameraAutoGainThreadRunning ()  const
 {
-  return  ((cameraAutoGainThread != NULL)  &&  (cameraAutoGainThread->Status () == ThreadStatus::Running));
+  return  ((cameraAutoGainThread != nullptr)  &&  (cameraAutoGainThread->Status () == ThreadStatus::Running));
 }
 
 
@@ -2857,9 +2853,9 @@ bool  CounterManager::CameraFrameBufferEmpty ()
 
 bool  CounterManager::LogicalFrameBuffersAreEmpty ()
 {
-  if  (((logicalFrames       != NULL)  &&  (logicalFrames->NumWaitingToBeProcessed () > 0))  ||
-       ((droppedFrames       != NULL)  &&  (droppedFrames->QueueSize               () > 0))  ||
-       ((particleEntryBuffer != NULL)  &&  (particleEntryBuffer->DataAvailable     ()))
+  if  (((logicalFrames       != nullptr)  &&  (logicalFrames->NumWaitingToBeProcessed () > 0))  ||
+       ((droppedFrames       != nullptr)  &&  (droppedFrames->QueueSize               () > 0))  ||
+       ((particleEntryBuffer != nullptr)  &&  (particleEntryBuffer->DataAvailable     ()))
       )
   {
     return false;
@@ -2879,7 +2875,7 @@ StatusSnapshotListPtr  CounterManager::SnapshotsRetrieve (KKB::DateTime  rangeSt
   if  (snapshotBuffer)
     return snapshotBuffer->Retrieve (rangeStart, rangeEnd);
   else
-    return NULL;
+    return nullptr;
 }
 
 
@@ -2889,14 +2885,14 @@ const StatusSnapshotPtr  CounterManager::SnapshotLastEntry ()
   if  (snapshotBuffer)
     return snapshotBuffer->LastEntry ();
   else
-    return NULL;
+    return nullptr;
 }
 
 
 
 RasterPtr  CounterManager::GetLastParticle ()
 {
-  RasterPtr  lastParticle = NULL;
+  RasterPtr  lastParticle = nullptr;
 
   if  (lastParticlesProcessed)
     lastParticle = lastParticlesProcessed->GetNextRaster ();
@@ -2960,8 +2956,8 @@ void  CounterManager::SetLiveVideoDimensions (kkint32  _liveVideoHeight,
 RasterPtr  CounterManager::SnapShotLatestFrame ()
 {
   goalie->StartBlock ();
-  RasterPtr  lastVideoFrame = NULL;
-  if  (cameraFrameBuffer != NULL)
+  RasterPtr  lastVideoFrame = nullptr;
+  if  (cameraFrameBuffer != nullptr)
     lastVideoFrame = cameraFrameBuffer->SnapShotLatestFrame (CropLeft (), CropRight ());
   goalie->EndBlock ();
   return  lastVideoFrame;
@@ -2973,7 +2969,7 @@ bool  CounterManager::CameraThreadRunning ()  const
 {
   bool  cameraThreadRunning = false;
   goalie->StartBlock ();
-  cameraThreadRunning = ((acquisitionThread != NULL)  &&  acquisitionThread->ThreadStillProcessing ());
+  cameraThreadRunning = ((acquisitionThread != nullptr)  &&  acquisitionThread->ThreadStillProcessing ());
   goalie->EndBlock ();
   return  cameraThreadRunning;
 }
@@ -3000,14 +2996,14 @@ void  CounterManager::BackGroundPixelTH (uchar _backGroundPixelTH)
 
 
 
-kkint32 CounterManager::CropLeft ()
+kkint32 CounterManager::CropLeft () const
 {
   return  cropLeft;
 }
 
 
 
-kkint32  CounterManager::CropRight ()
+kkint32  CounterManager::CropRight () const
 {
   return  cropRight;
 }
@@ -3062,8 +3058,8 @@ float  CounterManager::CurScanRate () const
 
 
 void  CounterManager::CropSettingsChanged (kkint32  _cropLeft,
-                                                 kkint32  _cropRight
-                                                )
+                                           kkint32  _cropRight
+                                          )
 {
   cropLeft  = _cropLeft;
   cropRight = _cropRight;
@@ -3080,15 +3076,17 @@ void  CounterManager::CropSettingsChanged (kkint32  _cropLeft,
 
 
 
-void   CounterManager::ScanRateChanged (float _newScanRate)
+void  CounterManager::ScanRateChanged (float _newScanRate)
 {
-  CameraThreadList::iterator idx;
-
   if  (flowMeter)
     flowMeter->ScanRateChanged (_newScanRate);
-  for  (idx = allThreads->begin ();  idx != allThreads->end ();  ++idx)
+
+  if  (cameraFrameBuffer)
+    cameraFrameBuffer->ScanRateChanged (_newScanRate);
+
+  for  (auto idx: *allThreads)
   {
-    CameraThreadPtr  ct = *idx;
+    CameraThreadPtr  ct = idx;
     ct->ScanRateChanged (_newScanRate);
   }
 }
@@ -3127,7 +3125,7 @@ void  CounterManager::MinSizeThreshold (kkint32 _minSizeThreshold)
 bool  CounterManager::WeAreRecordingToDisk ()
 {
   return  (((curState == CounterState::Running)  ||  (curState == CounterState::PlayingBack))             &&
-           (diskWriterThread  != NULL)  &&  (acquisitionThread != NULL)           &&
+           (diskWriterThread  != nullptr)  &&  (acquisitionThread != nullptr)           &&
            (diskWriterThread->WeAreRecordingToDisk ())                            &&
            (acquisitionThread->StartStatus () == CameraAcquisition::StartStatusType::Connected)  &&
            (acquisitionThread->Status ()      == ThreadStatus::Running)
@@ -3213,7 +3211,7 @@ void  CounterManager::Status (KKStr&    statusMsg,
   {
     secondaryMsg = *nextMsg;
     delete  nextMsg;
-    nextMsg = NULL;
+    nextMsg = nullptr;
   }
   else
   {
@@ -3277,7 +3275,7 @@ void  CounterManager::Status (KKStr&    statusMsg,
 
   color = "White";
 
-  if  (acquisitionThread == NULL)
+  if  (acquisitionThread == nullptr)
   {
     color = "White";
     statusMsg = "Not Connected";
@@ -3370,7 +3368,7 @@ void  CounterManager::SetTrainingModel (const KKStr&            _trainingModelNa
 
   runLog->Level (40) << "CounterManager::SetTrainingModel   TrainingModelName: " << _trainingModelName << endl;
 
-  CounterTrainingConfigurationPtr  config = NULL;
+  CounterTrainingConfigurationPtr  config = nullptr;
 
   if  (_trainingModelName.EqualIgnoreCase ("PostLarvae")    ||  
        _trainingModelName.EqualIgnoreCase ("Post Larvae")   ||
@@ -3427,7 +3425,7 @@ void  CounterManager::SetTrainingModel (const KKStr&            _trainingModelNa
   }
 
   delete  config;
-  config = NULL;
+  config = nullptr;
 
   goalie->EndBlock ();
 }  /* SetTrainingModel */
@@ -3494,7 +3492,6 @@ void  CounterManager::ReadConfiguration ()
 
   bool  eol = false;
   bool  eof = false;
-  bool  fieldFound = false;
 
   while (!eof)
   {
@@ -3512,7 +3509,7 @@ void  CounterManager::ReadConfiguration ()
     {
       KKStrPtr restOfLine = osReadRestOfLine (i, eof);
       delete  restOfLine;
-      restOfLine = NULL;
+      restOfLine = nullptr;
     }
 
     else
@@ -3573,7 +3570,7 @@ void  CounterManager::ReadConfiguration ()
         playingBackRealTime = restOfLine->ToBool ();
 
       delete restOfLine;
-      restOfLine = NULL;
+      restOfLine = nullptr;
     }
   }
 
@@ -3586,19 +3583,18 @@ void  CounterManager::ReadConfiguration ()
   if  (!trainModelName.Empty ())
   {
     // retrieve any parameters specified in the default training model.
-    FileDescConstPtr  fileDesc = CounterFVProducer::DefineFileDescStatic ();
     CounterTrainingConfigurationPtr  config = new CounterTrainingConfiguration ();
     config->Load (trainModelName, operatingParameters, false, *runLog);
     if  (!config->FormatGood ())
     {
-      runLog->Level (-1) << "ReadConfiguration   ***ERROR***  Default Training Model: " << trainModelName << "  is Invalid." << endl;
+      runLog->Level (-1) << "ReadConfiguration   ***ERROR***  Default Training Model: '" << trainModelName << "'  is Invalid." << endl;
     }
     else
     {
       operatingParameters->Assign (*(config->OperatingParms ()));
     }
     delete  config;
-    config = NULL;
+    config = nullptr;
   }
 
   if  ((operatingMode != CounterOperatingModes::Advanced)  ||  

@@ -158,8 +158,6 @@ namespace CounterUnManaged
     static  CameraParametersPtr  PromptForCamera (RunLog&  runLog);
 
 
-
-
     //************************************************************************************************************************************
     // Methods that are called in response to user requests such as when a button is pressed; such as "Start-A-Recording-Session"
 
@@ -199,9 +197,6 @@ namespace CounterUnManaged
                              bool&   _successful,
                              KKStr&  _errMsg
                             );
-
-
-
 
 
     //************************************************************************************************************************************
@@ -318,8 +313,8 @@ namespace CounterUnManaged
     kkint32       CameraFrameHeight              () const {return cameraFrameHeight;}
     kkint32       CameraFrameWidth               () const {return cameraFrameWidth;}
     kkint32       ConnectedComponentDist         () const {return operatingParameters->ConnectedComponentDist ();}
-    kkint32       CropLeft                       ();
-    kkint32       CropRight                      ();
+    kkint32       CropLeft                       () const;
+    kkint32       CropRight                      () const;
     float         CurAnalogGain                  () const;
     kkint32       CurDigitalGain                 () const;
     float         CurScanRate                    () const;
@@ -468,7 +463,6 @@ namespace CounterUnManaged
      * objects owned by this manager will be informed of the change.
      */
     void   ScanRateChanged (float _newScanRate);
-
 
 
   private:
@@ -620,11 +614,10 @@ namespace CounterUnManaged
                                            );
 
     /**@brief returns true if the camera is connected and running and the CameraDiskWritting object is recoding to disk. */
-    bool   WeAreRecordingToDisk       ();
-
-
-    void  SaveConfiguration ();
-    void  ReadConfiguration ();
+    bool   WeAreRecordingToDisk ();
+    
+    void   SaveConfiguration ();
+    void   ReadConfiguration ();
 
     static  const KKStr  counterOperatingModeStrs[];   /**<  Displayable strings of the different CounterOperatingModes values. */
 
@@ -680,8 +673,7 @@ namespace CounterUnManaged
     StatusSnapshotThreadPtr       snapshotThread;
     RecordButtonThreadPtr         startButtonThread;
     StopButtonThreadPtr           stopButtonThread;
-
-
+    
     KKStr                         cameraMacAddress;
 
     KKLSC::ScannerHeaderFieldsPtr headerFields;            /**< Keep track of fields that need to be added to every ScannerFile. */
@@ -759,6 +751,8 @@ namespace CounterUnManaged
   };  /* CounterManager */
 
   typedef  CounterManager*  CounterManagerPtr;
+  typedef  const CounterManager CounterManagerConst;
+  typedef  CounterManagerConst* CounterManagerConstPtr;
 
 }  /* CounterUnManaged */
 

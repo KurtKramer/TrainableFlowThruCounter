@@ -27,9 +27,6 @@
     <ClCompile Include="CameraAutoGainThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CameraFlatFieldCorrection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CameraFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -144,9 +141,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CameraAutoGainThread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraFlatFieldCorrection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CameraFrame.h">

@@ -85,7 +85,7 @@ namespace CounterUnManaged
     kkint32              CameraTemparature           ()  const  {return cameraTemparature;}
     kkint32              FrameWidth                  ()  const;
     const KKStr&         IpAddress                   ()  const;
-    kkuint64             LastBlockId                 ()  const  {return lastBlockId;}
+    kkint64              LastBlockId                 ()  const  {return lastBlockId;}
     const KKStr&         MacAddress                  ()  const;
     kkint32              PhysicalFramesRead          ()  const  {return physicalFramesRead;}
     kkint32              PhysicalSeqNumsSkipped      ()  const  {return physicalSeqNumsSkipped;}  /**< Indicates the number of frames not retrieved from the Pleora driver (Dropped) since last call to "ResetCounts". */
@@ -200,7 +200,7 @@ namespace CounterUnManaged
     CameraFrameBufferPtr   frameBuffer;            /**< We will not own this instance    */
     float                  frameRate;              /**< Frames per second;  updated every tenth frame. */  
 
-    kkuint64               lastBlockId;            /**< Pleora assigns a sequential number to all frames that wraps around at 65535. */
+    kkint64                lastBlockId;            /**< Pleora assigns a sequential number to all frames that wraps around at 65535. */
     kkint32                outputQueueSize;
     kkint32                physicalFramesRead;
     kkint32                physicalSeqNumsSkipped; /**<  Frames that were skipped when retrieving from the camera. */

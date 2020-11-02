@@ -193,9 +193,8 @@ namespace CounterUnManaged
 
     const StatusSnapshotPtr  LastEntry ();
 
-
-	/**@brief  Empties the buffer; you would call this before you start a recording/ counting  session.  */
-	void  Reset ();
+	  /**@brief  Empties the buffer; you would call this before you start a recording/ counting  session.  */
+	  void  Reset ();
 
     StatusSnapshotListPtr  Retrieve (KKB::DateTime  rangeStart,
                                      KKB::DateTime  rangeEnd

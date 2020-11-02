@@ -36,6 +36,7 @@ System::DateTime   UmiMethods::DateKKUtoSystem (const  KKB::DateType&  date)
 }
 
 
+
 KKB::DateType   UmiMethods::DateSystemToKKU (System::DateTime   dt)
 {
   
@@ -81,6 +82,7 @@ KKB::DateTime   UmiMethods::DateTimeSystemToKKU (System::DateTime   dt)
   
   return  KKB::DateTime (dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
 }
+
 
 
 kkint32  UmiMethods::DebugLevel ()

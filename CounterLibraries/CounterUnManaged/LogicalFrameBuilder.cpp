@@ -327,7 +327,7 @@ void  LogicalFrameBuilder::AddFrameToScanLineArea (CameraFramePtr f)
         pixelCount++;
     }
 
-    pixelsOnScanLine         [nextRowToUse] = pixelCount;
+    pixelsOnScanLine         [nextRowToUse] = (ushort)pixelCount;
     flowRateOnScanLine       [nextRowToUse] = f->FlowRate ();
     flowRateRatioOnScanLine  [nextRowToUse] = f->FlowRateRatio ();
 
@@ -387,11 +387,11 @@ void  LogicalFrameBuilder::PlaceRasterDataIntoLogicalFrameList (ScannerFileEntry
   // If we are playing back a existing Scanner file and we are not simulating real 
   // time then we do not want to drop any data.  So when 'dontDropFrames' is true we 
   // will stay in loop until a logical from is available.
-  frame = logicalFrames->GetAvailableFrame (log);
+  frame = logicalFrames->GetAvailableFrame ();
   while  (dontDropFrames  &&  (frame == NULL)  &&  (!TerminateFlag ()))
   {
     osSleepMiliSecs (10);
-    frame = logicalFrames->GetAvailableFrame (log);
+    frame = logicalFrames->GetAvailableFrame ();
   }
 
   float  flowRate      = (flowRateOnScanLine      [0] + flowRateOnScanLine      [height - 1]) / 2.0f;
@@ -558,11 +558,11 @@ void  LogicalFrameBuilder::LoadLogicalFrame (ScannerFilePtr        sf,
   }
   nextRowToUse = linesRead;
 
-  LogicalFramePtr  frame = logicalFrames->GetAvailableFrame (log);
+  LogicalFramePtr  frame = logicalFrames->GetAvailableFrame ();
   while  ((frame == NULL)  &&  (!TerminateFlag ()))
   {
     osSleepMiliSecs (10);
-    frame = logicalFrames->GetAvailableFrame (log);
+    frame = logicalFrames->GetAvailableFrame ();
   }
 
   log.Level (20) << "LoadLogicalFrame  Queuing FrameNum: " << frameEntry->FrameNum () << endl;

@@ -31,7 +31,7 @@ namespace CounterUnManaged
   class  LogicalFrameProcessor:  public  CameraThread
   {
   public:
-    typedef  kkint16  BlobIdType;
+    typedef  kkint32  BlobIdType;
     typedef  vector<BlobIdType>  BlobIdVectorType;
 
     enum  class  CountingMethods  
@@ -144,17 +144,13 @@ namespace CounterUnManaged
                                            kkint32  col
                                           );
 
-    void   ExtractBlobs (uchar*  rowsArea,
-                         uchar** rows
-                        );
+    void   ExtractBlobs (uchar** rows);
 
-    RasterPtr  ExtractABlob (uchar*         rowsArea,
-                             uchar**        rows,
+    RasterPtr  ExtractABlob (uchar**        rows,
                              const BlobPtr  blob
                             );
 
-    RasterPtr  ExtractABlob2 (uchar*         rowsArea,
-                              uchar**        rows,
+    RasterPtr  ExtractABlob2 (uchar**        rows,
                               const BlobPtr  blob,
                               kkint32        divisor
                              );
@@ -185,7 +181,6 @@ namespace CounterUnManaged
 
 
     void  SaveParticle (RasterPtr   particle,
-                        kkint32     countThisParticle,
                         MLClassPtr  mlClass,
                         kkint32     scanRow,
                         kkint32     scanCol

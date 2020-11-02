@@ -16,7 +16,6 @@
 
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "DateTime.h"
 #include "ImageIO.h"
@@ -159,13 +158,15 @@ VectorInt  FeatureFileIOKK::CreateIndirectionTable (const VectorKKStr&  fields,
 
 FileDescConstPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
                                                 istream&        _in,
-                                                MLClassListPtr  _classes,
+                                                MLClassListPtr,
                                                 kkint32&        _estSize,
                                                 KKStr&          _errorMessage,
                                                 RunLog&         _log
                                                )
 {
+  _log.Level (30) << "FeatureFileIOKK::GetFileDesc   _fileName: '" << _fileName << "'." << endl;
   _errorMessage = "";
+  _estSize = 0;
   
   bool  eof = false;
   KKStr  firstLine = osReadRestOfLine2 (_in, eof);
@@ -173,45 +174,35 @@ FileDescConstPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
 
   if  (!firstLine.StartsWith ("FEATURE_DATA_FILE"))
   {
-    // We are looking at a very old RAW file,  need to scan for number of fields.
-    // Lets count the number of fields in each lime,  
-    _log.Level (-1) << endl << endl 
-                    << "FeatureFileIOKK::GetFileDesc    ***ERROR***    the first line must contain" << endl
-                    << "                                                  'FEATURE_DATA_FILE'" << endl
-                    << endl;
+    _log.Level (-1)  << "FeatureFileIOKK::GetFileDesc   ***ERROR***   the first line must contain 'FEATURE_DATA_FILE'." << endl;
     _errorMessage = "The first line must contain FEATURE_DATA_FILE.";
-    return NULL;
+    return nullptr;
   }
   
   kkint32  version       = -1;
   kkint32  numOfFeatures = -1;
   kkint32  numOfExamples = -1;
   Parse_FEATURE_DATA_FILE_Line (firstLine, version, numOfFeatures, numOfExamples);
-   if  (version < 39)
+  if  (version < 39)
   {
-    _log.Level (-1) << endl << "FeatureFileIOKK::GetFileDesc   ***ERROR***   Version Number[" << version << "]  Can not load versions prior to 39." << endl << endl;
-    _errorMessage << "Version[" << version << "]  is prior to '39'.";
-    return NULL;
+     _errorMessage << "Version: " << version << " is prior to '39'; Can not load versions prior to 39.";
+     _log.Level (-1) << endl << "FeatureFileIOKK::GetFileDesc   ***ERROR***   " << _errorMessage << endl;
+    return nullptr;
   }
 
   KKStr  fieldDescLn = osReadRestOfLine2 (_in, eof);
   VectorKKStr  fields = fieldDescLn.Split ("\n\r\t");
   if  (fields.size () < (kkuint32)numOfFeatures)
   {
-    _log.Level (-1) << endl << endl << endl
-                    << "FeatureFileIOKK::GetFileDesc     **** Error ***"  << endl
-                    << endl
-                    << "               Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl
-                    << endl
-                    << endl;
-    _errorMessage << "Number fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl;
-    return NULL;
+    _errorMessage << "Number fields: " << (kkuint32)fields.size () << " is less than the number specified." << endl;
+    _log.Level (-1) << endl << "FeatureFileIOKK::GetFileDesc   ***ERROR***   " << _errorMessage << endl;
+    return nullptr;
   }
    
   FileDescPtr  fd = new FileDesc ();
-  fd->Version (version);
+  fd->Version ((kkint16)version);
 
-  bool  alreadyExists;
+  bool  alreadyExists = false;
   kkint32  featureNum = 0;
   for  (featureNum = 0;  featureNum < numOfFeatures;  featureNum++)
   {
@@ -219,16 +210,9 @@ FileDescConstPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
     fd->AddAAttribute (fieldName, AttributeType::Numeric, alreadyExists);
     if  (alreadyExists)
     {
-      _log.Level (-1) << endl << endl 
-                      << "FeatureFileIOKK::GetFileDesc   ***ERROR***"  << endl
-                      << endl
-                      << "                     Duplicate Attribute Name[" << fieldName << "]" << endl
-                      << endl;
-      _errorMessage << "Duplicate Attribute Name[" << fieldName << "]";
-
-      // Can not delete an instance of a 'FileDesc' class once it has been created.
-      // delete  fd;
-      return NULL;
+      _errorMessage << "Duplicate Attribute Name: '" << fieldName << "'.";
+      _log.Level (-1) << endl << "FeatureFileIOKK::GetFileDesc   ***ERROR***   " << _errorMessage << endl;
+      return nullptr;
     }
   }
 
@@ -237,18 +221,19 @@ FileDescConstPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
 
 
 
-CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&     _fileName,
-                                                       FileDescConstPtr  _fileDesc,
-                                                       MLClassList&      _classes, 
-                                                       istream&          _in,
-                                                       OptionUInt32      _maxCount,
-                                                       VolConstBool&     _cancelFlag,
-                                                       bool&             _changesMade,
-                                                       KKStr&            _errorMessage,
-                                                       RunLog&           _log
-                                                      )
+CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
+                                                        FileDescConstPtr  _fileDesc,
+                                                        MLClassList&      _classes, 
+                                                        istream&          _in,
+                                                        OptionUInt32      _maxCount,
+                                                        VolConstBool&     _cancelFlag,
+                                                        bool&             _changesMade,
+                                                        KKStr&            _errorMessage,
+                                                        RunLog&           _log
+                                                       )
 {
   _log.Level (10) << "FeatureFileIOKK::LoadFile   Loading file[" << _fileName << "]." << endl;
+  _log.Level (50) << "FeatureFileIOKK::LoadFile  Initial class list: " << _classes.ToTabDelimitedStr () << endl;
   _log.Flush ();
   
   VectorInt  featureFieldIndexTable;
@@ -270,10 +255,7 @@ CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&     _fileNa
   Parse_FEATURE_DATA_FILE_Line (firstLine, version, numOfFeatures, numOfExamples);
   if  (version < 38)
   {
-    _log.Level (-1) << endl << endl << endl
-                   << "FeatureFileIOKK::LoadFile     ***Error***    File version[" << version << "]  prior to 38.   can not load."
-                   << endl
-                   << endl;
+    _log.Level (-1) << endl << "FeatureFileIOKK::LoadFile   ***ERROR***   File version[" << version << "]  prior to 38.   can not load." << endl << endl;
     _errorMessage << "File version[" << version << "]  prior to 38.   can not load.";
     return  NULL;
   }
@@ -293,7 +275,7 @@ CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&     _fileNa
 
   CounterFeatureVectorListPtr  examples = new CounterFeatureVectorList (_fileDesc, true);
 
-  examples->Version (version);
+  examples->Version ((kkint16)version);
 
   kkint32  fieldNum = 0;
 
@@ -331,7 +313,7 @@ CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&     _fileNa
       // We have an example.
       fieldNum  = 0;
       CounterFeatureVectorPtr  example = new CounterFeatureVector (numOfFeatures);
-      example->Version (version);
+      example->Version ((kkint16)version);
 
       while  ((!eol)  &&  (!eof))
       {
@@ -466,7 +448,7 @@ CounterFeatureVectorListPtr  FeatureFileIOKK::LoadFile (const KKStr&     _fileNa
     GetToken (_in, ",\t", field, eof, eol);
   }
 
-  _log.Level (10) << "LoadFile - Loaded [" << (kkint32)examples->size () << "] images from file[" << _fileName << "]." << endl;
+  _log.Level (10) << "LoadFile - Loaded: " << (kkint32)examples->size () << "  file: '" << _fileName << "' _changesMade: " << _changesMade << "." << endl;
 
   return  examples;
 }  /* LoadFile */
@@ -495,28 +477,24 @@ kkint32  GetClassIdx (const map<MLClassPtr, kkint32>&  classIdx,
 
 
 
-void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
-                                  const KKStr&          _fileName,
-                                  FeatureNumListConst&  _selFeatures,
-                                  ostream&              _out,
-                                  kkuint32&             _numExamplesWritten,
-                                  VolConstBool&         _cancelFlag,
-                                  bool&                 _successful,
-                                  KKStr&                _errorMessage,
-                                  RunLog&               _log
-                                 )
+void  FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
+                                 const KKStr&          _fileName,
+                                 FeatureNumListConst&  _selFeatures,
+                                 ostream&              _out,
+                                 kkuint32&             _numExamplesWritten,
+                                 VolConstBool&         _cancelFlag,
+                                 bool&                 _successful,
+                                 KKStr&                _errorMessage,
+                                 RunLog&               _log
+                                )
 {
+  _log.Level (30) << "FeatureFileIOKK::SaveFile  _fileName:'" << _fileName <<"'." << endl;
   CounterFeatureVectorListPtr  examples  = NULL;
 
+  _errorMessage == "";
   _numExamplesWritten = 0;
 
   bool  weOwnImages = false;
-
-  const type_info& _dataTI     = typeid(_data);
-  const type_info& _counterFVTI = typeid(CounterFeatureVectorList);
-
-  const type_info* _dataTIPtr    =  &(typeid(_data));
-  const type_info* _counterFVTIPtr = &(typeid(CounterFeatureVectorList));
 
   if  (typeid (_data) == typeid (CounterFeatureVectorList))
   {
@@ -537,7 +515,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
   if  (fileVersionNum < 1)
   {
     fileVersionNum = _CounterFVProducer_VersionNum_;
-    examples->Version (fileVersionNum);
+    examples->Version ((kkint16)fileVersionNum);
   }
 
   map<MLClassPtr, kkint32>  classIdx;
@@ -590,7 +568,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
   {
     // Write out the actual examples.
     CounterFeatureVectorPtr   example = NULL;
-    for  (kkint32 idx = 0; idx < (kkint32)examples->size (); idx++)
+    for  (kkint32 idx = 0;  (idx < (kkint32)examples->size ())  &&  (!_cancelFlag);  idx++)
     {
       example = examples->IdxToPtr (idx);
 
@@ -628,10 +606,18 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&    _data,
   if  (weOwnImages)
   {
     delete  examples;
-    examples = NULL;
+    examples = nullptr;
   }
 
-  _successful = true;
+  if (_cancelFlag)
+  {
+    _out << endl << "SaveFile CANCELED!!!" << endl;
+    _successful = false;
+  }
+  else
+  {
+    _successful = true;
+  }
   return;
 
 }  /* SaveFile */

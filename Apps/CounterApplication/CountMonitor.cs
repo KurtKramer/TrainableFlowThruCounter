@@ -1275,7 +1275,6 @@ namespace CounterApplication
 
 
 
-
     private void ThroughPutDataToDisplay_SelectedIndexChanged (object sender, EventArgs e)
     {
       if  (cameraManager.OperatingMode () != UmiCounterOperatingModes.Advanced)

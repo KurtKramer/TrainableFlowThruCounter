@@ -127,18 +127,22 @@ namespace CounterUnManaged
                                                  KKB::DateTime   defaultValue
                                                 );
 
+     uchar    GetScannerFileValueUchar (ScannerFilePtr  sf,
+                                        const KKStr&    fieldName,
+                                        uchar           curValue
+                                       );
 
-     kkint32  GetScannerFileValueInt32   (ScannerFilePtr  sf, 
-                                          const KKStr&    fieldName,
-                                          kkint32         curValue
-                                         );
+     kkint32  GetScannerFileValueInt32 (ScannerFilePtr  sf, 
+                                        const KKStr&    fieldName,
+                                        kkint32         curValue
+                                       );
 
-     float  GetScannerFileValueFloat   (ScannerFilePtr  sf,
+     float    GetScannerFileValueFloat (ScannerFilePtr  sf,
                                         const KKStr&    fieldName,
                                         float           curValue
                                        );
 
-     bool  GetScannerFileValueBool     (ScannerFilePtr  sf, 
+     bool     GetScannerFileValueBool  (ScannerFilePtr  sf, 
                                         const KKStr&    fieldName,
                                         bool            curValue
                                        );
